@@ -14,6 +14,7 @@ O dono do projeto (pedromargutti) pediu: **toda mudança feita no pack em uma co
 ## Cuidados
 - Nunca enviar `core/dados/` nem `core/AVANTIPACK.lnk` (são do PC de cada pessoa).
 - **Pasta principal limpa:** no pack só ficam `AVANTIPACK.exe`, `LEIA-ME.txt`, `apps/`, `core/` e `guias/`. Arquivos só do GitHub (README, docs, ferramentas, CLAUDE.md) têm `export-ignore` no `.gitattributes`.
+- O `AVANTIPACK.bat` da raiz é só um stub para o atualizador antigo (v0.7.3/0.7.4) achar o pack; o motor apaga ele na primeira execução. Pode ser removido quando ninguém mais usar essas versões.
 - O `AVANTIPACK.exe` é compilado de `ferramentas/launcher/` (veja COMO_COMPILAR.txt); ao mudar a versão, atualize também `res.rc` e recompile.
 - `core/config.txt` deve manter `GITHUB_REPO=pedromargutti/AVANTIPACK`.
 - Não incluir programas que proíbem redistribuição (DDU, HWiNFO, Process Lasso, Autoruns). O NVIDIA Profile Inspector (MIT) pode ir.
