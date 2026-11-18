@@ -65,6 +65,7 @@ function Write-Log([string]$m) {
 }
 $script:BX = @{ H = [string][char]0x2550; TL = [string][char]0x2554; TR = [string][char]0x2557; BL = [string][char]0x255A; BR = [string][char]0x255D; V = [string][char]0x2551; FULL = [string][char]0x2588; LIGHT = [string][char]0x2591 }
 function Write-Title([string]$m) {
+    $script:UiUltimoTitulo = $m
     $w = [math]::Max(60, $m.Length + 6)
     $pad = $w - $m.Length - 4
     Write-Host ''

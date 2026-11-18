@@ -28,6 +28,15 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 > **Versão mais nova:** [veja o que mudou](../../releases/latest) · [histórico completo](core/NOVIDADES.md)
 
 <details open>
+<summary><b>v0.8.3</b> — menu estável em qualquer tamanho de janela</summary>
+
+- 🛠️ A tela **não desce mais sozinha** com as setas
+- 🪟 **Tela cheia / restaurar** sem bugar: redesenha sozinho
+- 📏 Cabeçalho menor automático em janela baixa
+
+</details>
+
+<details>
 <summary><b>v0.8.2</b> — tela mais legível e organizada</summary>
 
 - 🔠 Fonte **Consolas** grande e janela **no meio da tela**, ajustadas ao seu monitor
@@ -45,16 +54,6 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 
 </details>
 
-<details>
-<summary><b>v0.8.0</b> — menu com setas, teste de FPS e relatório</summary>
-
-- ⌨️ **Menu com as setas** do teclado (↑ ↓ e ENTER)
-- 📊 **Teste de FPS antes e depois**: FPS médio, 1% low e travadinhas, com histórico
-- 🧠 **Checagem de dual channel** da memória
-- 💻 **Notebook com 2 placas**: jogos sempre na placa dedicada
-- 🆘 **Relatório para ajuda** pronto para mandar
-
-</details>
 
 
 

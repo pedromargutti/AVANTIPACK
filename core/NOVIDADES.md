@@ -2,6 +2,12 @@
 
 Tudo o que mudou em cada versão. A mais nova fica sempre em cima.
 
+## v0.8.3 — 18/11/2026
+- 🛠️ **A tela não desce mais sozinha** quando você aperta as setas: o menu sempre cabe na janela
+- 🪟 **Tela cheia / restaurar sem bugar**: o menu se redesenha sozinho quando a janela muda de tamanho (nada de tela preta ou cortada)
+- 📏 Janela baixa? O menu usa um **cabeçalho menor** automaticamente para caber tudo
+- 🔎 Diagnóstico da fonte em `core\dados\logs\tela.log` (para corrigir PCs em que a letra não troca)
+
 ## v0.8.2 — 18/11/2026
 - 🔠 **Fonte Consolas grande de verdade**: o pack agora arruma a janela depois que ela abre (antes a fonte de pixel antiga podia continuar)
 - 📐 Janela no **tamanho certo e no meio da tela**, de acordo com o seu monitor
