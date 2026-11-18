@@ -14,34 +14,56 @@ Atualização automática pelo GitHub: quando sai versão nova, o menu avisa.
 📋 Menu
 Opção	O que faz
 [1] Otimizar meu PC	Automático (só o que é seguro), Personalizado (você marca por categoria) ou Reaplicar (refaz suas escolhas depois de uma atualização do Windows)
+
 [2] Verificar meu PC	Mostra as peças e aponta problemas (RAM sem XMP, monitor em 60 Hz, driver antigo...), faz o teste de input lag com pontuação e testa a internet
+
 [3] Consertar um problema	19 reparos: sem internet, sem som, microfone, Loja, Windows Update, Alt+Tab no 24H2...
+
 [4] Programas úteis	16 programas com tutorial para AMD e Intel. Instala pelo winget ou abre o site oficial e move o download para a pasta certa sozinho
+
 [5] Guias	Painéis NVIDIA/AMD/Intel ilustrados, BIOS por fabricante, limite de FPS e configurações dentro dos jogos
+
 [6] Desfazer / recolocar	Desfaz tudo ou só uma função (impressora, clipes do Xbox...), reinstala apps removidos e religa funções do Windows
+
 [7] Modo avançado	Cada módulo separado, com explicação antes de aplicar
+
 [U] Atualizar	Aparece quando há versão nova
+
 ⚙️ Ajustes (45, em 9 categorias)
+
 Limpeza (debloat): remove apps inúteis e telemetria, e desliga serviços e tarefas desnecessários
+
 Sistema: Modo de Jogo, prioridade para o jogo, menos efeitos visuais, mouse sem aceleração
+
 Energia: plano de alto desempenho conforme o processador e sem economia de energia nos dispositivos
+
 Placa de vídeo:
 NVIDIA: painel configurado pelo NVIDIA Profile Inspector e perfil por jogo competitivo (Reflex Ultra no driver, pré-renderização 1, clock máximo)
+
 AMD: Anti-Lag ligado, Chill desligado, ULPS desligado
+
 Monitor: colocado na maior taxa de atualização (Hz)
+
 Internet: ajustes conservadores, teste e troca de DNS pelo mais rápido, diagnóstico de ping/jitter/perda (roteador × internet)
+
 Armazenamento: TRIM, limpeza e ajustes para SSD/HD
+
 Jogos: detecta mais de 110 jogos (Steam, Epic, Riot...) e dá prioridade alta a eles
+
 Inicialização: escolha o que abre junto com o Windows
+
 Avançado (com risco, nunca no automático): Integridade de memória, modo MSI, FSO e hypervisor, com aviso sobre anti-cheats (Vanguard/FACEIT)
+
 🔁 Manutenção
 Aviso após atualização do Windows: o menu avisa quando um update grande desfez ajustes. Um clique reaplica.
 Manutenção semanal (opcional): limpeza leve e TRIM, todo domingo.
 Aviso de driver de vídeo antigo.
+
 💻 Requisitos
 Windows 10 (21H2 ou mais novo) ou Windows 11
 Executar como administrador
 winget 1.8+ para baixar programas automaticamente (já vem no Windows 11)
+
 🚀 Como usar
 Baixe o .zip da versão mais recente em Releases.
 Extraia a pasta (não rode de dentro do zip).
