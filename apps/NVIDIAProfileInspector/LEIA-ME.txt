@@ -1,0 +1,41 @@
+NVIDIA PROFILE INSPECTOR (só NVIDIA - avançado)
+=====================================================================
+O QUE É: edita as configurações do driver NVIDIA, inclusive opções
+escondidas que não aparecem no Painel de Controle.
+
+ANTES DE TUDO
+  • Clique em "Export user defined profiles" e salve um backup .nip.
+  • Mexa no perfil "_GLOBAL_DRIVER_PROFILE (Base Profile)" para valer
+    em todos os jogos, ou escolha o perfil de um jogo específico.
+  • Clique em "Apply changes" no canto superior direito para salvar.
+
+AJUSTES RECOMENDADOS
+  Sync and Refresh
+    • Vertical Sync ........................ Force off
+      (com G-SYNC: veja guias\LIMITE_DE_FPS.txt)
+  Common
+    • Power management mode ................ Prefer maximum performance
+    • Shader Cache - Cachesize ............. 10GB ou Unlimited
+    • Threaded optimization ................ Auto
+    • Low Latency Mode (se aparecer) ....... On
+  Texture Filtering
+    • Texture filtering - Quality .......... High performance
+    • Texture filtering - Negative LOD bias  Allow
+  NÃO MEXA sem saber
+    • "rBAR" forçado em jogos fora da lista oficial: pode dar MAIS
+      ou MENOS FPS, depende do jogo. Teste um por vez.
+    • Antialiasing forçado: costuma quebrar jogos modernos.
+
+PARA VOLTAR AO PADRÃO
+  Botão "Restore current profile to NVIDIA defaults" (ícone NVIDIA).
+
+USO AUTOMÁTICO PELO AVANTIPACK
+  Este app JÁ VEM no pack (licença MIT permite). A opção 1 (Otimizar
+  automaticamente) usa ele para configurar o painel NVIDIA sozinho:
+    1. Salva o perfil global atual em backup\nvidia_base_backup.nip
+    2. Grava o perfil AVANTIPACK (data\avantipack_nvidia.nip) no driver
+    3. A opção 6 (Desfazer) reimporta o backup e volta tudo como era.
+  Requer .NET Framework 4.8 (já vem no Windows 10 1903+ e Windows 11).
+
+LICENÇA: código aberto, MIT (veja LICENSE-MIT.txt). Versão incluída:
+3.0.2.3, baixada do GitHub oficial (Orbmu2k/nvidiaProfileInspector).

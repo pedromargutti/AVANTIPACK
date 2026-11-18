@@ -1,0 +1,14 @@
+GPU-Z - PLACA DE VÍDEO
+=====================================================================
+Coloque o .exe aqui: apps\GPU-Z (pode rodar sem instalar).
+
+O QUE CONFERIR
+  • "Bus Interface": por exemplo "PCIe x16 4.0 @ x16 4.0".
+      - Clique no "?" ao lado para rodar um teste de carga: em repouso
+        a placa baixa a velocidade para economizar, é normal.
+      - Se aparecer x4 ou x8 numa placa x16: placa no slot errado
+        ou mal encaixada.
+  • "Resizable BAR": Enabled (aba Advanced > Resizable BAR).
+  • "Driver Version": confirma qual driver está instalado.
+  • Aba "Sensors": clocks, temperatura e "PerfCap Reason" (o que está
+    limitando a placa: Pwr = energia, Thrm = temperatura).

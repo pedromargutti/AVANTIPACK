@@ -1,0 +1,118 @@
+# AVANTIPACK - jogos conhecidos: Nome | executavel1, executavel2
+# O pack (Otimizar automaticamente / Avancado > Prioridade dos jogos) procura estes executaveis nas pastas de jogos e da prioridade ALTA a eles.
+7 Days to Die | 7DaysToDie.exe
+American Truck Simulator | amtrucks.exe
+Apex Legends | r5apex.exe
+ARC Raiders | PioneerGame.exe
+Arena Breakout Infinite | UAGame.exe
+ARK Survival Ascended | ArkAscended.exe
+ARK Survival Evolved | ShooterGame.exe
+Assetto Corsa | acs.exe
+Assetto Corsa Competizione | AC2-Win64-Shipping.exe
+Baldur's Gate 3 | bg3.exe, bg3_dx11.exe
+Battlefield 2042 | BF2042.exe
+Battlefield 4 | bf4.exe
+Battlefield 6 | bf6.exe
+BeamNG.drive | BeamNG.drive.x64.exe
+Black Myth Wukong | b1-Win64-Shipping.exe
+Blood Strike | BloodStrike.exe
+Borderlands 4 | OakGame-Win64-Shipping.exe
+Brawlhalla | Brawlhalla.exe
+Call of Duty (Black Ops 6/7, Warzone) | cod.exe
+Chivalry 2 | Chivalry2-Win64-Shipping.exe
+Choo Choo Charles | Obscure-Win64-Shipping.exe
+Clair Obscur Expedition 33 | SandFall-Win64-Shipping.exe
+Counter-Strike 2 | cs2.exe
+Crossfire | crossfire.exe
+Cult of the Lamb | Cult Of The Lamb.exe
+Cuphead | Cuphead.exe
+Cyberpunk 2077 | Cyberpunk2077.exe
+Dark Souls 3 | DarkSoulsIII.exe
+Days Gone | DaysGone.exe
+DayZ | DayZ_x64.exe
+Dead By Daylight | DeadByDaylight-Win64-Shipping.exe
+Deadlock | deadlock.exe
+Death Stranding 1 e 2 | ds.exe, DeathStranding.exe
+Delta Force | DeltaForceClient-Win64-Shipping.exe
+Diablo IV | Diablo IV.exe
+DOOM Eternal | DOOMEternalx64vk.exe
+DOOM The Dark Ages | DOOMTheDarkAges.exe
+Dota 2 | dota2.exe
+Dying Light 1 e 2 | DyingLightGame.exe, DyingLightGame_x64_rwdi.exe
+Dying Light The Beast | DyingLightGame_TheBeast_x64_rwdi.exe
+EA Sports FC 26 | FC26.exe
+eFootball | eFootball.exe
+Elden Ring | eldenring.exe
+Escape from Tarkov | EscapeFromTarkov.exe
+Euro Truck Simulator 1 e 2 | eurotrucks.exe, eurotrucks2.exe
+F1 25 | F1_25.exe
+Farming Simulator 22 | FarmingSimulator2022Game.exe
+Farming Simulator 25 | FarmingSimulator2025Game.exe
+Final Fantasy XIV | ffxiv_dx11.exe, ffxiv.exe
+FiveM | FiveM_b3095_GTAProcess.exe, FiveM_b3258_GTAProcess.exe
+Fortnite | FortniteClient-Win64-Shipping.exe
+Forza Horizon 4 | ForzaHorizon4.exe
+Forza Horizon 5 | ForzaHorizon5.exe
+Free Fire (BlueStacks) | HD-Player.exe
+Genshin Impact | GenshinImpact.exe, YuanShen.exe
+Ghost of Tsushima | GhostOfTsushima.exe
+God of War 2018 e Ragnarok | GoW.exe, GoWR.exe
+GTA V | GTA5.exe, GTA5_Enhanced.exe
+Hell Let Loose | HLL-Win64-Shipping.exe
+Helldivers 2 | helldivers2.exe
+Hogwarts Legacy | HogwartsLegacy.exe
+Hollow Knight | hollow_knight.exe
+Hytale | Hytale.exe
+Indiana Jones and the Great Circle | TheGreatCircle.exe
+League of Legends | League of Legends.exe
+Left 4 Dead 1 e 2 | left4dead.exe, left4dead2.exe
+Lethal Company | Lethal Company.exe
+Lies of P | LOP-Win64-Shipping.exe
+Marvel Rivals | Marvel-Win64-Shipping.exe
+Meccha Chameleon | MecchaChameleon.exe
+Metro Exodus | MetroExodus.exe
+Minecraft | Minecraft.Windows.exe
+Monster Hunter Wilds | MonsterHunterWilds.exe
+Monster Hunter World | MonsterHunterWorld.exe
+MTA | Multi Theft Auto.exe, gta_sa.exe
+My Summer Car | mysummercar.exe
+No Man's Sky | NMS.exe
+Overwatch 2 | Overwatch.exe
+Palworld | Palworld-Win64-Shipping.exe
+Path of Exile | PathOfExileSteam.exe, PathOfExile_x64.exe
+PES | PES2017.exe, PES2018.exe, PES2019.exe, PES2020.exe, PES2021.exe
+Phasmophobia | Phasmophobia.exe
+Point Blank | PointBlank.exe, PB.exe
+Poppy Playtime | Poppy_Playtime-Win64-Shipping.exe, Playtime_Prototype4-Win64-Shipping.exe
+Project Zomboid | ProjectZomboid64.exe, ProjectZomboid32.exe
+PUBG | TslGame.exe
+Rainbow Six Siege | RainbowSix.exe, RainbowSix_Vulkan.exe
+Ready or Not | ReadyOrNot-Win64-Shipping.exe
+Red Dead Redemption 2 | RDR2.exe
+Rematch | Rematch-Win64-Shipping.exe
+Resident Evil 2 Remake | re2.exe
+Resident Evil 4 Remake | re4.exe
+Resident Evil Requiem | re9.exe
+Resident Evil Village | re8.exe
+Roblox | RobloxPlayerBeta.exe
+Rocket League | RocketLeague.exe
+Rust | RustClient.exe
+S.T.A.L.K.E.R. 2 | Stalker2-Win64-Shipping.exe
+Sekiro Shadows Die Twice | sekiro.exe
+Silent Hill 2 Remake | SHProto-Win64-Shipping.exe
+Skyrim | TESV.exe, SkyrimSE.exe
+SnowRunner | SnowRunner.exe
+Sons of the Forest | SonsOfTheForest.exe
+Street Fighter 6 | StreetFighter6.exe
+Subnautica e Below Zero | Subnautica.exe, SubnauticaZero.exe
+Team Fortress 2 | tf_win64.exe, hl2.exe
+Terraria | Terraria.exe
+THE FINALS | Discovery.exe
+The Forest | TheForest.exe
+The Isle | TheIsleClient-Win64-Shipping.exe
+The Last of Us Part I e II | tlou-i.exe, tlou-ii.exe
+ULTRAKILL | ULTRAKILL.exe
+Valorant | VALORANT-Win64-Shipping.exe
+Warframe | Warframe.x64.exe, Warframe.exe
+Wuthering Waves | Client-Win64-Shipping.exe
+Zenless Zone Zero | ZenlessZoneZero.exe

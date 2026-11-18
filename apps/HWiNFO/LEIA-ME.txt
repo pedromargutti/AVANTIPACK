@@ -1,0 +1,33 @@
+HWINFO - TEMPERATURAS E SENSORES
+=====================================================================
+O QUE É: mostra todos os sensores do PC. Serve para achar a CAUSA
+da queda de FPS (temperatura, limite de energia, gargalo).
+
+COMO USAR
+  • Baixe a versão "Portable" e extraia aqui: apps\HWiNFO
+  • Abra o HWiNFO64.exe > marque "Sensors-only" > Start.
+  • Jogue 15-20 min com ele aberto e depois olhe a coluna "Maximum".
+
+O QUE OLHAR - PROCESSADOR
+  Intel: "CPU Package" (temperatura)
+    • Até 85°C em jogo: ok. 95-100°C: está reduzindo clock.
+    • "Thermal Throttling" ou "Package/Ring Thermal Throttling" = Yes
+      -> refrigeração insuficiente.
+  AMD: "CPU (Tctl/Tdie)"
+    • Ryzen 7000/9000: até 95°C é comportamento NORMAL de projeto.
+    • Ryzen 5000 e anteriores: até ~85°C em jogo ok.
+    • "Thermal Throttling (HTC)" = Yes -> problema.
+
+O QUE OLHAR - PLACA DE VÍDEO
+  • "GPU Temperature" até ~80°C ok; "GPU Hot Spot" até ~100°C ok.
+  • NVIDIA: "Performance Limit - Thermal" = Yes -> esquentando.
+    "Performance Limit - Power" = Yes é normal em placas no limite.
+  • "GPU Memory Usage" perto do máximo da placa = VRAM cheia: baixe
+    texturas. Isso causa travadas fortes.
+  • "GPU Core Load": em jogo pesado deve ficar em 95-99%. Se fica
+    bem abaixo e o FPS está baixo, o gargalo é o processador ou a RAM.
+
+DICA: o HWiNFO pode mandar os dados para o overlay do RTSS
+(Settings > RTSS) e mostrar a temperatura dentro do jogo.
+
+LICENÇA: grátis para uso pessoal; não redistribuir sem autorização.

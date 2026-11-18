@@ -1,0 +1,7 @@
+DRIVER NVIDIA (oficial)
+=====================================================================
+• No site: escolha sua placa e o tipo "Game Ready".
+• Ou use o NVCleanstall (recomendado), que baixa o mesmo driver e
+  instala sem telemetria.
+• Driver com problema? Use o DDU antes (veja apps\DDU).
+• Configuração depois de instalar: guias\GPU_NVIDIA.txt

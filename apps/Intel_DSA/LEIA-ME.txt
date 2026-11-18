@@ -1,0 +1,12 @@
+INTEL DRIVER & SUPPORT ASSISTANT (processador Intel)
+=====================================================================
+Instala e atualiza: chipset, Intel Management Engine (ME), vídeo
+integrado, Wi-Fi e Bluetooth Intel.
+
+• Instale, abra e clique em "Baixar tudo" / "Instalar tudo".
+• Placa de vídeo NVIDIA ou AMD com processador Intel: instale chipset
+  e ME. O driver de vídeo da Intel só é necessário se você usa o
+  vídeo integrado.
+• Notebook: dê preferência aos drivers do site do fabricante do
+  notebook (Dell, Lenovo, Acer...). Alguns drivers são customizados.
+• Lembre: 13ª/14ª geração precisa de BIOS atualizada (guias\CPU_INTEL.txt).

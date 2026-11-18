@@ -1,0 +1,22 @@
+PRINTS REAIS PARA O GUIA VISUAL (opcional)
+=====================================================================
+O guia PAINEIS_VISUAL.html usa telas ilustradas. Se você salvar aqui
+um print real com o nome certo, ele aparece automaticamente embaixo da
+ilustração do passo correspondente.
+
+Tire o print com Win + Shift + S e salve em PNG com estes nomes:
+
+NVIDIA - Painel de Controle      AMD - Adrenalin
+  nv-abrir.png                     amd-abrir.png
+  nv-3d.png                        amd-graf.png
+  nv-hz.png                        amd-adv.png
+  nv-gsync.png                     amd-tela.png
+  nv-physx.png                     amd-rec.png
+  nv-escala.png                    amd-sam.png
+
+NVIDIA App                       Intel
+  nvapp-rec.png                    intel-graf.png
+                                   intel-rebar.png
+Windows
+  win-hz.png   win-graf.png   win-gpu-app.png
+  win-jogos.png   win-energia.png   win-mouse.png

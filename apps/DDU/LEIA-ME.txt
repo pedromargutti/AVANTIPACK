@@ -1,0 +1,39 @@
+DDU - DISPLAY DRIVER UNINSTALLER
+=====================================================================
+O QUE É: remove o driver de vídeo por completo, sem deixar restos.
+
+QUANDO USAR
+  • Trocou de placa de vídeo (principalmente de NVIDIA para AMD ou
+    o contrário).
+  • Stutter, tela preta ou crash que apareceu depois de atualizar o
+    driver.
+  • Antes de uma instalação limpa de driver.
+  Não precisa usar a cada atualização normal.
+
+PASSO A PASSO
+  1. Baixe ANTES o driver novo (NVIDIA/AMD/Intel) e deixe na Área de
+     Trabalho.
+  2. Desconecte a internet (cabo/Wi-Fi). Isso impede o Windows Update
+     de instalar um driver genérico no meio do processo.
+  3. Abra o DDU. Ele oferece reiniciar em Modo Seguro: aceite
+     (é o recomendado).
+  4. No Modo Seguro, abra o DDU de novo:
+       • Tipo de dispositivo: GPU
+       • Fabricante: NVIDIA, AMD ou Intel (o da placa que vai sair)
+       • Clique em "Limpar e reiniciar".
+  5. Depois de reiniciar, instale o driver novo e só depois
+     reconecte a internet.
+
+OPÇÕES RECOMENDADAS (menu Options, na 1ª vez)
+  • "Prevent downloads of drivers from Windows Update when Windows
+    search for a driver for a device" - marque.
+
+NVIDIA x AMD x INTEL
+  • Processador AMD ou Intel não faz diferença no DDU.
+  • Notebook / PC com vídeo integrado + placa dedicada: limpe SÓ o
+    fabricante da placa que está com problema. Não remova o driver do
+    vídeo integrado sem necessidade.
+
+LICENÇA: gratuito, mas o autor não permite redistribuir o arquivo.
+Baixe sempre pelo site oficial (o menu "Programas uteis" (opcao 4) abre o link).
+Coloque a pasta extraída aqui dentro: apps\DDU

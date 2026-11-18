@@ -1,0 +1,68 @@
+=====================================================================
+  AVANTIPACK - COLOCAR NO GITHUB E LIGAR A ATUALIZAÇÃO AUTOMÁTICA
+=====================================================================
+
+  COMO FUNCIONA
+  ---------------------------------------------------------------
+  Você publica cada versão nova do pack como uma "Release" no GitHub.
+  Quem tem o pack abre o menu e vê "NOVA VERSÃO DISPONÍVEL - aperte U".
+  O pack baixa, troca os arquivos e abre de novo sozinho. Os backups,
+  logs e dados de cada PC NÃO são apagados.
+
+
+  PARTE 1 - SÓ NA PRIMEIRA VEZ (uns 10 minutos)
+  ---------------------------------------------------------------
+  1. Crie uma conta grátis em https://github.com
+  2. Clique no "+" (canto superior direito) > New repository
+       Repository name:  AVANTIPACK
+       Public            (precisa ser público para os amigos atualizarem
+                          sem login)
+       Clique em "Create repository".
+  3. No seu PC, abra o arquivo  core\config.txt  e preencha:
+       GITHUB_REPO=SEU_USUARIO/AVANTIPACK
+     (ex: se o seu usuário é avantigames ->  GITHUB_REPO=avantigames/AVANTIPACK)
+     Salve. A partir daqui, toda cópia do pack sabe onde procurar.
+  4. (Opcional, mas recomendado) Suba o código para o repositório:
+       Na página do repositório: "uploading an existing file"
+       Arraste o CONTEÚDO da pasta AVANTIPACK (não arraste as pastas
+       backup, logs e data, que são do seu PC) > "Commit changes".
+     Ou use o programa GitHub Desktop (https://desktop.github.com),
+     que é mais fácil para as próximas vezes.
+  5. Gere e publique a primeira versão (Parte 2).
+
+
+  PARTE 2 - TODA VEZ QUE LANÇAR UMA VERSÃO NOVA
+  ---------------------------------------------------------------
+  1. Dê dois cliques em  ferramentas\GERAR_RELEASE.bat
+     Ele pergunta o número da versão (ex.: 0.7.1), atualiza o
+     VERSION.txt e cria  ferramentas\saida\AVANTIPACK_v0.7.1.zip
+     (sem os seus backups e logs).
+  2. No GitHub, abra o repositório > Releases (coluna da direita) >
+     "Draft a new release" (ou "Create a new release").
+  3. "Choose a tag": digite  v0.7.1  > "Create new tag: v0.7.1".
+  4. Título: AVANTIPACK v0.7.1. Na descrição, escreva o que mudou.
+  5. Arraste o arquivo AVANTIPACK_v0.7.1.zip para o quadro de anexos
+     ("Attach binaries...").
+  6. Clique em "Publish release".
+  Pronto: em até 12 horas, todo mundo vê o aviso no menu. Para testar
+  na hora, use Modo avançado > "Atualizar o pack".
+
+
+  REGRAS IMPORTANTES
+  ---------------------------------------------------------------
+  • O número da tag tem que ser MAIOR que o do VERSION.txt de quem
+    vai atualizar (0.7.1 > 0.7.0). Nunca reutilize um número.
+  • Sempre anexe o ZIP gerado pelo GERAR_RELEASE: ele já vem com a
+    pasta certa. Se não houver ZIP anexado, o pack usa o código do
+    repositório.
+  • Não coloque nos releases programas que proíbem redistribuição
+    (DDU, HWiNFO, Process Lasso, Autoruns). O GERAR_RELEASE copia a
+    pasta apps\ como está: apague esses programas da sua pasta apps\
+    antes de gerar, ou deixe só os LEIA-ME (o pack baixa pelo menu).
+  • O NVIDIA Profile Inspector (MIT) pode ir junto sem problema.
+
+
+  QUER AJUDA?
+  ---------------------------------------------------------------
+  Se você criar o repositório e me passar o nome (usuario/AVANTIPACK),
+  eu posso preparar e publicar a primeira versão por aqui.

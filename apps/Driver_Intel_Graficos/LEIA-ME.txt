@@ -1,0 +1,8 @@
+DRIVER INTEL ARC / GRÁFICOS INTEL
+=====================================================================
+• Use o Intel Driver & Support Assistant ou baixe o "Intel Arc &
+  Iris Xe Graphics Driver" no site da Intel.
+• Intel Arc: SEMPRE o driver mais recente. A Intel ganha muito
+  desempenho a cada versão.
+• Intel Arc precisa do Resizable BAR ligado na BIOS (Guia de BIOS).
+• Configuração: guias\GPU_INTEL.txt

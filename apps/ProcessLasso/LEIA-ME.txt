@@ -1,0 +1,26 @@
+PROCESS LASSO (opcional / avançado)
+=====================================================================
+Controla prioridade e núcleos usados por cada programa.
+É INSTALADO normalmente (não vai nesta pasta).
+A maioria dos PCs NÃO precisa dele. Use para casos específicos.
+
+QUANDO AJUDA
+  • PC fraco que faz stream/Discord junto com o jogo: o "ProBalance"
+    evita que um programa de fundo roube a CPU do jogo.
+  • Jogo antigo que trava em processador com muitos núcleos.
+
+CUIDADOS POR PROCESSADOR
+  AMD Ryzen X3D de 2 CCDs (7900X3D/7950X3D/9900X3D/9950X3D):
+    • NÃO ative o plano "Bitsum Highest Performance".
+    • Avançado: dá para fixar um jogo nos núcleos com cache (CCD0,
+      geralmente os primeiros núcleos) via "CPU Sets", caso o
+      driver da AMD erre a detecção.
+  Intel híbrido (12ª-14ª, Core Ultra):
+    • Não force o jogo só nos E-cores. Evite mexer em afinidade sem
+      teste.
+  Todos:
+    • Não use "Performance Mode" do Lasso junto com o plano do
+      AVANTIPACK: escolha um.
+
+LICENÇA: programa pago com versão gratuita que mostra aviso. Não pode
+ser redistribuído.

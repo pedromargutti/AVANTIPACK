@@ -1,0 +1,30 @@
+NVCLEANSTALL (só NVIDIA)
+=====================================================================
+O QUE É: instala o driver NVIDIA só com o que você precisa, sem
+telemetria e sem programas extras.
+
+PASSO A PASSO
+  1. Abra e escolha "Install best possible driver for my hardware"
+     (ou escolha uma versão específica).
+  2. Componentes - marque:
+       • Display Driver (obrigatório)
+       • PhysX
+       • HD Audio Driver: SÓ se o som sai pelo monitor/TV (HDMI/DP)
+       • NVIDIA App: opcional (gravação, filtros, override de DLSS)
+     Desmarque o resto se não usa (ex: driver de óculos 3D, USB-C).
+  3. Tela de "Tweaks", marque:
+       • Disable Installer Telemetry & Advertising
+       • Perform a Clean Installation
+       • Disable Driver Telemetry
+       • Enable Message Signaled Interrupts (MSI) - pode deixar a
+         prioridade como "Undefined"
+     Opcional:
+       • Disable Multiplane Overlay (MPO): só se tiver flicker ou tela
+         piscando, principalmente com 2 monitores.
+  4. Avance e instale com "Express"/"Automatic". Reinicie no final.
+
+PROCESSADOR AMD x INTEL
+  Não muda nada aqui. Funciona igual nos dois.
+
+LICENÇA: gratuito (TechPowerUp). Baixe pelo site oficial e coloque o
+.exe nesta pasta: apps\NVCleanstall

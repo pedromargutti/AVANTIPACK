@@ -1,0 +1,93 @@
+=====================================================================
+  AVANTIPACK - COMO TIRAR, COLOCAR OU MUDAR AJUSTES NO CÓDIGO
+=====================================================================
+
+  Todos os ajustes ficam numa lista só: core\catalogo.ps1 ($CATALOGO).
+  Cada ajuste tem um código (ex.: C1) e o bloco que faz a mudança fica
+  no módulo da categoria. Abra os arquivos no Bloco de Notas ou no
+  VS Code. Não use o Word.
+
+  ONDE FICA CADA CATEGORIA
+  ---------------------------------------------------------------
+  S  Segurança ........... core\avanti.ps1   (função Mod-Restore)
+  B  Limpeza/privacidade . core\modulos.ps1  (função Mod-Debloat)
+  C  Sistema/input lag ... core\modulos.ps1  (função Mod-Sistema)
+  D  Energia/processador . core\modulos.ps1  (função Mod-Energia)
+  E  Vídeo/monitor ....... core\gpu.ps1      (funções Mod-GPU e Test-GPU)
+  F  Internet ............ core\modulos.ps1  (função Mod-Rede) e core\dns.ps1
+  G  SSD/HD/memória ...... core\modulos.ps1  (função Mod-Armazenamento)
+  H  Jogos ............... core\games.ps1 e a lista core\jogos.txt
+  I  Avançado (riscos) ... core\modulos.ps1  (função Mod-Avancado)
+
+
+  1) TIRAR UM AJUSTE DO MODO AUTOMÁTICO (mas deixar opcional)
+  ---------------------------------------------------------------
+  Em core\catalogo.ps1, na linha do ajuste, troque  Padrao=$true
+  por  Padrao=$false.
+  Exemplo, para o pack não remover mais apps no automático:
+     @{ Id='B6'; Cat='B'; Padrao=$false; Nome='Remover apps ...' ...
+
+
+  2) TIRAR UM AJUSTE DE VEZ (não aparece em lugar nenhum)
+  ---------------------------------------------------------------
+  a) Em core\catalogo.ps1, apague a linha  @{ Id='XX' ... }
+  b) No módulo da categoria (tabela acima), apague o bloco
+        if (Want 'XX') {
+            ...
+        }
+     inteiro, até a chave } que fecha.
+
+
+  3) COLOCAR UM AJUSTE NOVO
+  ---------------------------------------------------------------
+  a) Escolha um código livre na categoria (ex.: C10).
+  b) No módulo da categoria, dentro da função, crie o bloco:
+
+        if (Want 'C10') {
+            Set-Reg 'HKCU:\Caminho\Da\Chave' 'NomeDoValor' 1 | Out-Null
+            Write-Ok 'Mensagem que aparece para quem usa.'
+        }
+
+     Use SEMPRE Set-Reg (registro), Set-Svc (serviço), Disable-Task
+     (tarefa) ou Add-Undo (outros comandos): assim o valor original
+     é salvo e a opção 6 (Desfazer) funciona.
+        Texto  ->  Set-Reg 'HKCU:\...' 'Nome' 'valor' 'String'
+        Número ->  Set-Reg 'HKLM:\...' 'Nome' 1
+        Comando que não é registro ->
+                   & powercfg.exe /x ...
+                   Add-Undo 'id_unico' 'comando que desfaz'
+  c) Na função da categoria, acrescente o código na lista do WantAny
+     (primeira linha da função), por exemplo:
+        if (-not (WantAny @('C1','C2', ... ,'C9','C10'))) { return }
+  d) Em core\catalogo.ps1, acrescente a linha no $CATALOGO:
+        @{ Id='C10'; Cat='C'; Padrao=$true; Nome='Nome curto';
+           Desc='Explicação de uma linha para leigo.' }
+     Opcionais:
+        Risco='alto'                       -> nunca entra no automático
+        Cond={ param($h) $h.LAPTOP -ne '1' } -> só aparece se for verdade
+     Campos de hardware disponíveis em $h: CPU_VENDOR (AMD/INTEL),
+     GPU_VENDOR (NVIDIA/AMD/AMD_IGPU/INTEL_ARC/INTEL_IGPU), LAPTOP (1/0),
+     WIN11 (1/0), RAM_GB, DISK (NVME/SSD/HDD), CPU_X3D_DUAL, CPU_HIBRIDO.
+
+
+  4) MUDAR UM VALOR
+  ---------------------------------------------------------------
+  Ache o bloco do código e troque o valor no Set-Reg. Exemplo, para
+  usar Win32PrioritySeparation 0x28 em vez de 0x26 (item C5):
+     Set-Reg '...\PriorityControl' 'Win32PrioritySeparation' 0x28
+
+
+  5) ADICIONAR JOGO NA PRIORIDADE / APP NO MENU
+  ---------------------------------------------------------------
+  Jogo:  uma linha em core\jogos.txt ->  Nome do Jogo | jogo.exe
+  App:   uma linha em apps\apps.txt (o formato está no topo do arquivo)
+         + uma pasta apps\NomeDaPasta com um LEIA-ME.txt.
+
+
+  6) DEPOIS DE EDITAR
+  ---------------------------------------------------------------
+  • Salve os .ps1 SEM acentos dentro do código (o PowerShell 5.1 do
+    Windows lê errado e o pack quebra). Acentos só nos .txt.
+  • Teste no seu PC antes de mandar. Erro de digitação aparece em
+    vermelho quando o módulo roda.
+  • Atualize guias\LISTA_DE_AJUSTES.txt se mudou nome ou padrão.
