@@ -94,56 +94,42 @@ function Get-DefaultSelection($hw) {
 }
 
 function Show-Categoria([string]$cat, $sel, $hw) {
-    while ($true) {
-        Write-Title ("CATEGORIA: " + $CATEGORIAS[$cat].ToUpper())
-        $its = @($CATALOGO | Where-Object { $_.Cat -eq $cat })
-        for ($i = 0; $i -lt $its.Count; $i++) {
-            $it = $its[$i]
-            $ap = Test-ItemAplica $it $hw
-            $mark = if (-not $ap) { '[n/a]' } elseif ($sel[$it.Id]) { '[ X ]' } else { '[   ]' }
-            $cor = if (-not $ap) { 'DarkGray' } elseif ($it.Risco -eq 'alto') { 'Yellow' } elseif ($sel[$it.Id]) { 'Green' } else { 'White' }
-            Write-Host ("  {0,2}. {1} {2}" -f ($i + 1), $mark, $it.Nome) -ForegroundColor $cor
-            $extra = if (-not $ap) { ' (nao se aplica a este PC)' } elseif ($it.Risco -eq 'alto') { ' (RISCO: leia antes)' } else { '' }
-            Write-Host ("            {0}{1}" -f $it.Desc, $extra) -ForegroundColor DarkGray
-        }
-        Write-Host ''
-        $op = Read-Host '  Numeros para MARCAR/DESMARCAR (ex: 1,3)  |  T = marcar todos  |  N = desmarcar todos  |  ENTER volta'
-        if (-not $op) { return }
-        if ($op -match '^[tT]$') { foreach ($it in $its) { if (Test-ItemAplica $it $hw) { $sel[$it.Id] = $true } }; continue }
-        if ($op -match '^[nN]$') { foreach ($it in $its) { $sel[$it.Id] = $false }; continue }
-        foreach ($n in $op.Split(',')) {
-            $n = $n.Trim()
-            if ($n -match '^\d+$' -and [int]$n -ge 1 -and [int]$n -le $its.Count) {
-                $it = $its[[int]$n - 1]
-                if (Test-ItemAplica $it $hw) { $sel[$it.Id] = -not $sel[$it.Id] }
-            }
-        }
+    Write-Title ("CATEGORIA: " + $CATEGORIAS[$cat].ToUpper())
+    Write-Note 'Marque o que quer aplicar. Amarelo = tem risco (leia a explicacao). Cinza = nao serve para este PC.'
+    Write-Host ''
+    $its = @($CATALOGO | Where-Object { $_.Cat -eq $cat })
+    $itens = foreach ($it in $its) {
+        $ap = Test-ItemAplica $it $hw
+        $extra = if (-not $ap) { ' (nao se aplica a este PC)' } elseif ($it.Risco -eq 'alto') { ' (RISCO: leia antes)' } else { '' }
+        @{ K = $it.Id; T = $it.Nome; D = ($it.Desc + $extra); On = ($ap -and [bool]$sel[$it.Id]); Bloq = (-not $ap)
+           C = $(if ($ap -and $it.Risco -eq 'alto') { 'Yellow' } else { $null }) }
     }
+    $r = Select-Varios @($itens) -Concluir 'PRONTO, voltar para as categorias'
+    if ($null -eq $r) { return }
+    foreach ($it in $its) { $sel[$it.Id] = (@($r) -contains $it.Id) }
 }
 
 function Mod-Escolher($hw) {
     $sel = Get-DefaultSelection $hw
+    $ultimo = 0
     while ($true) {
         Write-Title 'PERSONALIZADO: ESCOLHA O QUE APLICAR'
         Write-Note 'Ja vem marcado o mesmo que o modo Automatico. Entre numa categoria para marcar ou tirar itens.'
         Write-Host ''
-        $k = 1; $mapa = @{}
+        $k = 1; $mapa = @{}; $op = @()
         foreach ($c in $CATEGORIAS.Keys) {
             $its = @($CATALOGO | Where-Object { $_.Cat -eq $c -and (Test-ItemAplica $_ $hw) })
             $on = @($its | Where-Object { $sel[$_.Id] }).Count
-            $cor = if ($c -eq 'I') { 'Yellow' } else { 'White' }
-            Write-Host ("  [{0}] {1,-30} {2,2} de {3,2} marcados" -f $k, $CATEGORIAS[$c], $on, $its.Count) -ForegroundColor $cor
+            $op += @{ K = "$k"; T = ("{0,-32} {1,2} de {2,2} marcados" -f $CATEGORIAS[$c], $on, $its.Count); C = $(if ($c -eq 'I') { 'Yellow' } else { 'White' }) }
             $mapa["$k"] = $c; $k++
         }
-        Write-Host ''
-        Write-Host '  [A] APLICAR o que esta marcado' -ForegroundColor Green
-        Write-Host '  [P] Voltar ao padrao recomendado      [0] Cancelar'
-        Write-Host ''
-        $op = Read-Host '  Escolha'
-        if ($op -eq '0' -or -not $op) { return $null }
-        if ($op -match '^[aA]$') { return $sel }
-        if ($op -match '^[pP]$') { $sel = Get-DefaultSelection $hw; continue }
-        if ($mapa.ContainsKey($op)) { Show-Categoria $mapa[$op] $sel $hw }
+        $op += @{ K = 'A'; T = 'APLICAR o que esta marcado'; C = 'Green' }
+        $op += @{ K = 'P'; T = 'Voltar ao padrao recomendado'; C = 'Gray' }
+        $r = Select-Opcao $op -Voltar 'Cancelar' -Inicio $ultimo
+        if ($r -eq '0') { return $null }
+        if ($r -eq 'A') { return $sel }
+        if ($r -eq 'P') { $sel = Get-DefaultSelection $hw; continue }
+        if ($mapa.ContainsKey($r)) { $ultimo = [int]$r - 1; Show-Categoria $mapa[$r] $sel $hw }
     }
 }
 
@@ -189,22 +175,18 @@ function Mod-Otimizar {
     Write-Title 'OTIMIZAR MEU PC'
     Write-Host '  Como voce quer fazer?' -ForegroundColor White
     Write-Host ''
-    Write-Host '  [1] AUTOMATICO (recomendado)' -ForegroundColor Green
-    Write-Note '    O pack escolhe tudo que e seguro e serve para ESTE PC. Voce nao precisa saber nada.'
-    Write-Host ''
-    Write-Host '  [2] PERSONALIZADO' -ForegroundColor Cyan
-    Write-Note '    Voce ve cada ajuste separado por categoria e marca ou desmarca o que quiser.'
-    Write-Host ''
     $ult = Get-UltimaSelecao
+    $op = @(
+        @{ K = '1'; T = 'AUTOMATICO (recomendado)'; C = 'Green'; D = 'O pack escolhe tudo que e seguro e serve para ESTE PC.' },
+        @{ K = '2'; T = 'PERSONALIZADO'; D = 'Voce ve cada ajuste por categoria e marca ou desmarca o que quiser.' }
+    )
     if ($ult) {
-        Write-Host '  [3] REAPLICAR o que eu escolhi da ultima vez' -ForegroundColor Yellow
-        if (Test-PrecisaReaplicar) { Write-Note '    O Windows foi atualizado: recomendado reaplicar.' } else { Write-Note '    Use depois de atualizacoes grandes do Windows.' }
-        Write-Host ''
+        $dr = if (Test-PrecisaReaplicar) { 'O Windows foi atualizado: recomendado reaplicar.' } else { 'Use depois de atualizacoes grandes do Windows.' }
+        $op += @{ K = '3'; T = 'REAPLICAR o que eu escolhi da ultima vez'; C = 'Yellow'; D = $dr }
     }
-    Write-Host '  [0] Voltar'
-    Write-Host ''
-    $op = Read-Host '  Escolha'
-    switch ($op) {
+    $ini = if ($ult -and (Test-PrecisaReaplicar)) { 2 } else { 0 }
+    $r = Select-Opcao $op -Inicio $ini
+    switch ($r) {
         '1' { $sel = Get-DefaultSelection $hw }
         '2' { $sel = Mod-Escolher $hw; if (-not $sel) { return } }
         '3' { if ($ult) { Mod-Reaplicar }; return }

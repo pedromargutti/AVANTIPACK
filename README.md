@@ -28,6 +28,15 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 > **Versão mais nova:** [veja o que mudou](../../releases/latest) · [histórico completo](core/NOVIDADES.md)
 
 <details open>
+<summary><b>v0.8.1</b> — setas em todas as telas e jogos atualizados</summary>
+
+- ⌨️ **Setas em todas as telas** e listas de marcar com ESPAÇO
+- 🖥️ Tela **centralizada** em tela cheia, fonte **Consolas** nítida
+- 🎮 **Configurações de 19 jogos atualizadas** (nov/2026), incluindo Battlefield 6, ARC Raiders e GTA V Enhanced
+
+</details>
+
+<details>
 <summary><b>v0.8.0</b> — menu com setas, teste de FPS e relatório</summary>
 
 - ⌨️ **Menu com as setas** do teclado (↑ ↓ e ENTER)
@@ -47,14 +56,6 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 
 </details>
 
-<details>
-<summary><b>v0.7.4</b> — programas instalados sozinhos</summary>
-
-- 📦 **[A] INSTALAR TUDO**: baixa e instala os programas certos para o seu PC, cada um na sua pasta
-- 🌐 **Drivers**: abre o site, você clica em BAIXAR e o pack faz o resto
-- 🔠 Letra maior e atalho **"ABRIR AVANTIPACK"** com a logo
-
-</details>
 
 
 

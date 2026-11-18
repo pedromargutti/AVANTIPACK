@@ -30,9 +30,10 @@ function Get-TelaReal {
 # --- bloco de propriedades do console (MS-SHLLINK ConsoleDataBlock) ----
 function New-ConsoleBlock {
     $t = Get-TelaReal
-    # letra maior e fonte mais espacada (Cascadia Mono no Windows 11, Consolas no 10)
-    $fh = if ($t.H -ge 1400) { 26 } elseif ($t.H -ge 1000) { 20 } else { 18 }
-    $fonte = if (Test-Path (Join-Path $env:WINDIR 'Fonts\CascadiaMono.ttf')) { 'Cascadia Mono' } else { 'Consolas' }
+    # Consolas: e a fonte nitida que o console classico SEMPRE aceita (com a Cascadia
+    # ele voltava para a fonte de pixel antiga). Tamanho pela altura da tela.
+    $fh = if ($t.H -ge 1400) { 28 } elseif ($t.H -ge 1000) { 20 } else { 18 }
+    $fonte = 'Consolas'
     $fw = [math]::Round($fh * 0.55)
     $cols = 96
     $rows = [math]::Min(44, [math]::Floor(($t.H * 0.86) / $fh))

@@ -92,30 +92,27 @@ function Mod-Inicializacao {
         Write-Title 'PROGRAMAS QUE INICIAM COM O WINDOWS'
         Write-Note 'Cada programa aqui abre junto com o Windows e fica rodando enquanto voce joga.'
         Write-Note 'Desligar NAO desinstala: o programa so para de abrir sozinho. Da para religar aqui ou no Desfazer.'
-        Write-Note 'Itens marcados (manter) sao drivers/seguranca/perifericos: deixe ligados.'
+        Write-Note 'MARCADO = abre com o Windows. Desmarque o que nao precisa abrir sozinho.'
+        Write-Note 'Os marcados como (manter) sao drivers, seguranca ou perifericos: deixe ligados.'
         Write-Host ''
         $its = @(Get-StartupItems)
         if ($its.Count -eq 0) { Write-Ok 'Nenhum programa na inicializacao.'; return }
-        for ($i = 0; $i -lt $its.Count; $i++) {
-            $x = $its[$i]
-            $st = if ($x.Ligado) { 'LIGADO   ' } else { 'desligado' }
-            $cor = if ($x.Essencial) { 'DarkGray' } elseif ($x.Ligado) { 'White' } else { 'DarkGray' }
-            $tag = if ($x.Essencial) { '  (manter)' } else { '' }
-            Write-Host ("  [{0,2}] {1}  {2}{3}" -f ($i + 1), $st, $x.Nome, $tag) -ForegroundColor $cor
-        }
-        Write-Host ''
-        $op = Read-Host '  Numeros para LIGAR/DESLIGAR (ex: 2,5,7)  |  ENTER volta'
-        if (-not $op) { return }
-        foreach ($n in $op.Split(',')) {
-            $n = $n.Trim()
-            if ($n -notmatch '^\d+$' -or [int]$n -lt 1 -or [int]$n -gt $its.Count) { continue }
-            $x = $its[[int]$n - 1]
+        $r = Select-Varios @(for ($i = 0; $i -lt $its.Count; $i++) {
+                $x = $its[$i]
+                @{ K = "$i"; T = ($x.Nome + $(if ($x.Essencial) { '  (manter)' } else { '' })); On = [bool]$x.Ligado; C = $(if ($x.Essencial) { 'Yellow' } else { $null }) }
+             }) -Concluir 'SALVAR' -SemTodos
+        if ($null -eq $r) { return }
+        $mud = @(for ($i = 0; $i -lt $its.Count; $i++) { if ([bool]$its[$i].Ligado -ne (@($r) -contains "$i")) { $i } })
+        if ($mud.Count -eq 0) { Write-Skip 'Nada mudou.'; return }
+        foreach ($n in $mud) {
+            $x = $its[[int]$n]
             $byte0 = if ($x.Ligado) { 3 } else { 2 }
             $val = [byte[]](@($byte0) + @(0) * 11)
             if (Set-Reg $x.Apr $x.Nome $val 'Binary') {
                 if ($x.Ligado) { Write-Ok "$($x.Nome): nao abre mais com o Windows." } else { Write-Ok "$($x.Nome): volta a abrir com o Windows." }
             }
         }
+        Write-Host ''
         Read-Host '  ENTER para ver a lista atualizada' | Out-Null
     }
 }

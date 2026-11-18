@@ -400,25 +400,22 @@ function Mod-Apps {
     if ($apps.Count -eq 0) { Write-Warn 'apps\apps.txt nao encontrado.'; return }
     while ($true) {
         Write-Title 'PROGRAMAS UTEIS'
-        Write-Host '  [A]  INSTALAR TUDO AUTOMATICO (o que serve para este PC)' -ForegroundColor Green
-        Write-Note '      Baixa, instala, coloca na pasta apps\ e deixa o passo a passo de cada um.'
+        Write-Note 'Cinza = feito para outra peca (nao e do seu PC).'
         Write-Host ''
+        $itens = @(@{ K = 'A'; T = 'INSTALAR TUDO AUTOMATICO (o que serve para este PC)'; C = 'Green' })
         for ($i = 0; $i -lt $apps.Count; $i++) {
             $a   = $apps[$i]
             $meu = Test-AppMatch $a.Para $hw
-            if ($a.Fonte -eq 'site') { $st = 'site oficial'; $cs = 'Cyan' }
-            elseif (Resolve-AppExe $a) { $st = 'PRONTO'; $cs = 'Green' }
-            else { $st = 'instalar'; $cs = 'Yellow' }
-            if (-not $meu) { $cs = 'DarkGray' }
-            Write-Host ("  [{0,2}] {1,-36}" -f ($i + 1), $a.Nome) -ForegroundColor $(if ($meu) { 'White' } else { 'DarkGray' }) -NoNewline
-            Write-Host $st -ForegroundColor $cs
+            if ($a.Fonte -eq 'site') { $st = 'site oficial' }
+            elseif (Resolve-AppExe $a) { $st = 'PRONTO' }
+            else { $st = 'instalar' }
+            $cor = if (-not $meu) { 'DarkGray' } elseif ($st -eq 'PRONTO') { 'Green' } else { 'White' }
+            $itens += @{ K = "$($i + 1)"; T = ("{0,-38} {1}" -f $a.Nome, $st); C = $cor }
         }
-        Write-Host ''
-        Write-Note 'Cinza = feito para outra peca (nao e do seu PC).'
-        Write-Host '  [T]  Baixar todos para DENTRO do pack, sem instalar (para mandar junto)' -ForegroundColor DarkCyan
-        Write-Host ''
-        $op = Read-Host '  Numero do app, A ou T (ENTER volta)'
-        if (-not $op) { return }
+        $itens += @{ K = 'T'; T = 'Baixar todos para DENTRO do pack, sem instalar (para mandar junto)'; C = 'DarkCyan' }
+        $op = Select-Opcao $itens -Inicio $(if ($op -match '^\d+$') { [int]$op } else { 0 })
+        if ($op -eq '0') { return }
+
         if ($op -match '^[aAbB]$') { Install-RecommendedApps $hw; Read-Host '  ENTER para voltar a lista' | Out-Null; continue }
         if ($op -match '^[tT]$') { Save-AllAppsToFolders; continue }
         if ($op -notmatch '^\d+$' -or [int]$op -lt 1 -or [int]$op -gt $apps.Count) { continue }

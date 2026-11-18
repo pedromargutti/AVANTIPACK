@@ -106,8 +106,7 @@ function Confirm-Step([string]$q, $Auto = $null) {
         Write-Log "AUTO $q -> $Auto"
         return [bool]$Auto
     }
-    $r = Read-Host "  $q (S/N)"
-    return ($r -match '^[sSyY]')
+    return (Select-SimNao $q ($Auto -ne $false))
 }
 
 # ---------------------------------------------------------------------
@@ -444,16 +443,12 @@ function Mod-Undo {
     if ($script:BackupCache.Count -eq 0) { Write-Skip 'Nada para desfazer: nenhum ajuste foi aplicado ainda.'; return }
 
     $mods = @($script:BackupCache | Group-Object Module | Sort-Object Name)
-    for ($i = 0; $i -lt $mods.Count; $i++) {
-        Write-Host ("  [{0}] {1,-16} {2} alteracao(oes)" -f ($i + 1), $mods[$i].Name, $mods[$i].Count)
-    }
-    Write-Host '  [T] Desfazer TUDO'
+    $itens = @(for ($i = 0; $i -lt $mods.Count; $i++) { @{ K = $mods[$i].Name; T = ("{0,-16} {1} alteracao(oes)" -f $mods[$i].Name, $mods[$i].Count) } })
+    Write-Note 'Marque as partes que voce quer desfazer:'
     Write-Host ''
-    $op = Read-Host '  Escolha (ENTER cancela)'
-    if (-not $op) { return }
-    if ($op -match '^[tT]$') { $alvo = @($mods | ForEach-Object { $_.Name }) }
-    elseif ($op -match '^\d+$' -and [int]$op -ge 1 -and [int]$op -le $mods.Count) { $alvo = @($mods[[int]$op - 1].Name) }
-    else { Write-Warn 'Opcao invalida.'; return }
+    $alvo = Select-Varios $itens -Concluir 'DESFAZER o que esta marcado'
+    if ($null -eq $alvo -or @($alvo).Count -eq 0) { return }
+    $alvo = @($alvo)
 
     $rows = @($script:BackupCache)
     $ok = 0
@@ -489,26 +484,28 @@ function Mod-Guias {
         @('GITHUB_PASSO_A_PASSO.txt', 'Para quem distribui: GitHub e atualizacao automatica')
     )
     Write-Title 'GUIAS'
-    for ($i = 0; $i -lt $g.Count; $i++) {
+    $itens = @(for ($i = 0; $i -lt $g.Count; $i++) {
         $rec = ''
         if ($g[$i][0] -eq 'CPU_AMD.txt'    -and $hw.CPU_VENDOR -eq 'AMD')    { $rec = '  <- seu processador' }
         if ($g[$i][0] -eq 'CPU_INTEL.txt'  -and $hw.CPU_VENDOR -eq 'INTEL')  { $rec = '  <- seu processador' }
         if ($g[$i][0] -eq 'GPU_NVIDIA.txt' -and $hw.GPU_VENDOR -eq 'NVIDIA') { $rec = '  <- sua placa de video' }
         if ($g[$i][0] -eq 'GPU_AMD.txt'    -and $hw.GPU_VENDOR -like 'AMD*') { $rec = '  <- sua placa de video' }
         if ($g[$i][0] -eq 'GPU_INTEL.txt'  -and $hw.GPU_VENDOR -like 'INTEL*'){ $rec = '  <- sua placa de video' }
-        Write-Host ("  [{0}] {1}{2}" -f ($i + 1), $g[$i][1], $rec)
-    }
-    Write-Host ''
-    $op = Read-Host '  Numero do guia (ENTER volta)'
-    if ($op -match '^\d+$' -and [int]$op -ge 1 -and [int]$op -le $g.Count) {
+        @{ K = "$($i + 1)"; T = ($g[$i][1] + $rec); C = $(if ($rec) { 'Green' } else { $null }) }
+    })
+    while ($true) {
+        $op = Select-Opcao $itens
+        if ($op -eq '0' -or $op -notmatch '^\d+$') { return }
         $arq = Join-Path $Root ('guias\' + $g[[int]$op - 1][0])
         if ($arq -like '*.html') { Start-Process $arq } else { Start-Process notepad.exe $arq }
+        Write-Ok 'Guia aberto. Escolha outro ou ESC para voltar.'
     }
 }
 
 # ---------------------------------------------------------------------
 #  Modulos em arquivos separados
 # ---------------------------------------------------------------------
+. (Join-Path $PSScriptRoot 'ui.ps1')
 . (Join-Path $PSScriptRoot 'modulos.ps1')
 . (Join-Path $PSScriptRoot 'gpu.ps1')
 . (Join-Path $PSScriptRoot 'catalogo.ps1')
