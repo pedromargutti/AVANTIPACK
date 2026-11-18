@@ -133,6 +133,8 @@
     configurações de 19 jogos atualizadas.
   • v0.8.2: fonte grande e janela no meio da tela (ajustadas ao seu
     monitor), menus por seção e explicação numa caixa embaixo.
+  • v0.8.3: menu estável (não rola sozinho, aguenta tela cheia e
+    restaurar a janela).
 
 
   PASTAS

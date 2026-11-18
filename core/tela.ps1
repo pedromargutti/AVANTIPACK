@@ -8,6 +8,12 @@
 #  No Terminal do Windows nada disso se aplica (ele tem a fonte dele).
 # =====================================================================
 $ErrorActionPreference = 'SilentlyContinue'
+# registro do que aconteceu (para descobrir por que a fonte nao troca em algum PC)
+$logDir = Join-Path $PSScriptRoot 'dados\logs'
+New-Item -ItemType Directory -Path $logDir -Force | Out-Null
+$log = Join-Path $logDir 'tela.log'
+function Log([string]$m) { try { Add-Content -Path $log -Value ((Get-Date -Format 'yyyy-MM-dd HH:mm:ss') + '  ' + $m) } catch {} }
+Log ('---- inicio | PS ' + $PSVersionTable.PSVersion + ' | modo de linguagem: ' + $ExecutionContext.SessionState.LanguageMode)
 try {
     Add-Type -ErrorAction Stop -TypeDefinition @'
 using System;
@@ -24,6 +30,8 @@ public static class AvTela {
     static extern IntPtr CreateFileW(string n, uint a, uint s, IntPtr sec, uint c, uint f, IntPtr t);
     [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
     static extern bool SetCurrentConsoleFontEx(IntPtr h, bool max, ref FONTE f);
+    [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+    static extern bool GetCurrentConsoleFontEx(IntPtr h, bool max, ref FONTE f);
     [DllImport("kernel32.dll")] static extern bool GetConsoleMode(IntPtr h, out uint m);
     [DllImport("kernel32.dll")] static extern bool SetConsoleMode(IntPtr h, uint m);
     [DllImport("kernel32.dll")] public static extern IntPtr GetConsoleWindow();
@@ -32,12 +40,21 @@ public static class AvTela {
     [DllImport("user32.dll")] public static extern bool SetWindowPos(IntPtr h, IntPtr z, int x, int y, int cx, int cy, uint f);
     [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr h, int c);
 
-    public static bool Fonte(string nome, short altura) {
+    // devolve "" se deu certo, ou o codigo de erro do Windows
+    public static string Fonte(string nome, short altura) {
         IntPtr o = CreateFileW("CONOUT$", 0xC0000000, 3, IntPtr.Zero, 3, 0, IntPtr.Zero);
+        if (o == new IntPtr(-1)) { return "CONOUT falhou, erro " + Marshal.GetLastWin32Error(); }
         FONTE f = new FONTE();
         f.cbSize = (uint)Marshal.SizeOf(f); f.X = 0; f.Y = altura;
         f.FontFamily = 0x36; f.FontWeight = 400; f.FaceName = nome;
-        return SetCurrentConsoleFontEx(o, false, ref f);
+        if (!SetCurrentConsoleFontEx(o, false, ref f)) { return "SetCurrentConsoleFontEx falhou, erro " + Marshal.GetLastWin32Error(); }
+        return "";
+    }
+    public static string FonteAtual() {
+        IntPtr o = CreateFileW("CONOUT$", 0xC0000000, 3, IntPtr.Zero, 3, 0, IntPtr.Zero);
+        FONTE f = new FONTE(); f.cbSize = (uint)Marshal.SizeOf(f);
+        if (!GetCurrentConsoleFontEx(o, false, ref f)) { return "? (erro " + Marshal.GetLastWin32Error() + ")"; }
+        return f.FaceName + " " + f.X + "x" + f.Y + " familia " + f.FontFamily;
     }
     public static void SemEdicaoRapida() {
         IntPtr i = CreateFileW("CONIN$", 0xC0000000, 3, IntPtr.Zero, 3, 0, IntPtr.Zero);
@@ -45,11 +62,13 @@ public static class AvTela {
     }
 }
 '@
-} catch { exit 0 }
+} catch { Log ('Add-Type falhou: ' + $_.Exception.Message); exit 0 }
+Log 'Add-Type ok'
 
 try { [void][AvTela]::SetProcessDPIAware() } catch {}
 $h = [AvTela]::GetConsoleWindow()
-if ($h -eq [IntPtr]::Zero) { exit 0 }
+if ($h -eq [IntPtr]::Zero) { Log 'sem janela de console (Terminal do Windows?)'; exit 0 }
+Log ('fonte antes: ' + [AvTela]::FonteAtual())
 
 # tamanho da tela (pixels reais)
 try {
@@ -59,7 +78,11 @@ try {
 
 # fonte: ~ 1/46 da altura da tela  (1080p -> 22, 768p -> 16, 1440p -> 30)
 $alt = [int][math]::Max(16, [math]::Min(32, [math]::Round($wa.Height / 46)))
-try { [void][AvTela]::Fonte('Consolas', [int16]$alt) } catch {}
+try {
+    $e = [AvTela]::Fonte('Consolas', [int16]$alt)
+    if ($e) { Log ("trocar fonte: $e") } else { Log "trocar fonte: ok (Consolas $alt)" }
+} catch { Log ('trocar fonte: ' + $_.Exception.Message) }
+Log ('fonte depois: ' + [AvTela]::FonteAtual())
 try { [AvTela]::SemEdicaoRapida() } catch {}
 
 # janela: 100 colunas, altura que cabe na tela (com rolagem longa)
@@ -73,7 +96,8 @@ try {
     [Console]::SetWindowSize(1, 1)
     [Console]::SetBufferSize($cols, 9000)
     [Console]::SetWindowSize($cols, $lin)
-} catch {}
+    Log "janela: $cols x $lin (tela $($wa.Width)x$($wa.Height))"
+} catch { Log ('tamanho da janela: ' + $_.Exception.Message) }
 
 # no meio da tela
 try {

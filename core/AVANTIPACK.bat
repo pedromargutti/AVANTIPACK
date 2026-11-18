@@ -37,7 +37,7 @@ exit /b
 :inicio
 cd /d "%AVROOT%"
 :: fonte Consolas, tamanho e posicao da janela (funciona mesmo sem o atalho)
-if exist "%~dp0tela.ps1" powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0tela.ps1" >nul 2>&1
+if exist "%~dp0tela.ps1" powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0tela.ps1"
 for /F %%a in ('echo prompt $E ^| cmd') do set "ESC=%%a"
 set "AZ=%ESC%[94m"
 set "BR=%ESC%[97m"
@@ -70,6 +70,9 @@ set "MOD="
 set "op="
 call :carregarhw
 call :calcpad
+:: o menu com setas desenha a tela inteira (cabecalho + opcoes) do tamanho da janela
+call :menusetas principal
+if not defined SETAS_FALHOU goto menu_escolha
 cls
 call :banner
 echo %PAD%  %CI%Seu PC:%RS% %HW_CPU%  %CI%+%RS%  %HW_GPU%
@@ -80,8 +83,6 @@ if defined HW_ATUALIZACAO echo %PAD%  %FVD% NOVA VERSAO %HW_ATUALIZACAO% DO AVAN
 if defined HW_REAPLICAR echo %PAD%  %FAM% O WINDOWS FOI ATUALIZADO - use a opcao 1 e depois 3 (Reaplicar) %RS%
 if defined HW_AVISO echo %PAD%  %FAM% %HW_AVISO% %RS%
 echo %PAD%  %CI%==================================================================%RS%
-call :menusetas principal
-if not defined SETAS_FALHOU goto menu_escolha
 echo.
 echo %PAD%  %VD%[1]  OTIMIZAR MEU PC%RS%   %AM%^<-- comece por aqui%RS%
 echo %PAD%       %CI%Automatico (o pack escolhe tudo) ou Personalizado (voce marca por%RS%
@@ -133,12 +134,12 @@ goto menu
 set "MOD="
 set "op="
 call :calcpad
+call :menusetas avancado
+if not defined SETAS_FALHOU goto avancado_escolha
 cls
 call :banner
 echo %PAD%  %BR%MODO AVANCADO%RS%  %CI%- escolha cada ajuste separado. Cada um explica o que faz antes.%RS%
 echo.
-call :menusetas avancado
-if not defined SETAS_FALHOU goto avancado_escolha
 echo %PAD%  %AZ%[1]%RS%  Ver hardware e alertas              %AZ%[2]%RS%  Checar placa de video e monitor
 echo %PAD%  %AZ%[3]%RS%  Criar ponto de restauracao
 echo.

@@ -28,15 +28,6 @@ function Split-UiTexto([string]$t, [int]$w) {
     if ($l.Trim()) { $out += $l.Trim() }
     return $out
 }
-# caixa com a explicacao do item selecionado (sempre 4 linhas, para a tela nao "pular")
-function Write-UiCaixaDesc([string]$d) {
-    $ls = @(Split-UiTexto $d 72)
-    while ($ls.Count -lt 2) { $ls += '' }
-    Write-UiLinha ("  " + $script:UiBTL + ([string]$script:UiBH * 76) + $script:UiBTR) 'DarkGray'
-    foreach ($x in $ls[0..1]) { Write-UiLinha ("  " + $script:UiBV + ' ' + $x.PadRight(74) + ' ' + $script:UiBV) 'White' }
-    Write-UiLinha ("  " + $script:UiBBL + ([string]$script:UiBH * 76) + $script:UiBBR) 'DarkGray'
-}
-
 function Get-UiPad {
     try { $w = [Console]::WindowWidth } catch { return '' }
     $p = [math]::Floor(($w - $script:UiLarg) / 2)
@@ -70,23 +61,65 @@ function Read-Host {
 }
 
 # Escreve uma linha "crua" (sem passar pelo Write-Host acima), do tamanho certo
-function Write-UiLinha([string]$txt, [string]$fg = 'Gray', [string]$bg = $null) {
+function Get-UiUtil {
     $pad = Get-UiPad
-    $l = $script:UiLarg - 2
-    if ($txt.Length -lt $l) { $txt = $txt.PadRight($l) } else { $txt = $txt.Substring(0, $l) }
-    if ($pad) { Microsoft.PowerShell.Utility\Write-Host $pad -NoNewline }
-    if ($bg) { Microsoft.PowerShell.Utility\Write-Host $txt -ForegroundColor $fg -BackgroundColor $bg }
-    else { Microsoft.PowerShell.Utility\Write-Host $txt -ForegroundColor $fg }
+    $w = 80; try { $w = [Console]::WindowWidth } catch {}
+    return @{ Pad = $pad; Util = [math]::Max(20, [math]::Min($script:UiLarg - 2, $w - 1 - $pad.Length)); Resto = $w - 1 - $pad.Length }
+}
+function Write-UiLinha([string]$txt, [string]$fg = 'Gray', [string]$bg = $null) {
+    $u = Get-UiUtil
+    if ($txt.Length -gt $u.Util) { $txt = $txt.Substring(0, $u.Util) }
+    if ($u.Pad) { Microsoft.PowerShell.Utility\Write-Host $u.Pad -NoNewline }
+    if ($bg) { Microsoft.PowerShell.Utility\Write-Host $txt -ForegroundColor $fg -BackgroundColor $bg -NoNewline }
+    else { Microsoft.PowerShell.Utility\Write-Host $txt -ForegroundColor $fg -NoNewline }
+    $r = $u.Resto - $txt.Length
+    if ($r -gt 0) { Microsoft.PowerShell.Utility\Write-Host (' ' * $r) -NoNewline }
+    Microsoft.PowerShell.Utility\Write-Host ''
+    $script:UiInicioLinha = $true
+}
+function Write-UiLinhaSel([string]$txt) {
+    $u = Get-UiUtil
+    $t = $txt.PadRight([math]::Min(72, $u.Util))
+    if ($t.Length -gt $u.Util) { $t = $t.Substring(0, $u.Util) }
+    if ($u.Pad) { Microsoft.PowerShell.Utility\Write-Host $u.Pad -NoNewline }
+    Microsoft.PowerShell.Utility\Write-Host $t -ForegroundColor White -BackgroundColor DarkBlue -NoNewline
+    $r = $u.Resto - $t.Length
+    if ($r -gt 0) { Microsoft.PowerShell.Utility\Write-Host (' ' * $r) -NoNewline }
+    Microsoft.PowerShell.Utility\Write-Host ''
     $script:UiInicioLinha = $true
 }
 
-function Write-UiLinhaSel([string]$txt) {
-    $pad = Get-UiPad
-    if ($pad) { Microsoft.PowerShell.Utility\Write-Host $pad -NoNewline }
-    $t = $txt.PadRight(72); if ($t.Length -gt ($script:UiLarg - 2)) { $t = $t.Substring(0, $script:UiLarg - 2) }
-    Microsoft.PowerShell.Utility\Write-Host $t -ForegroundColor White -BackgroundColor DarkBlue -NoNewline
-    Microsoft.PowerShell.Utility\Write-Host (' ' * [math]::Max(0, $script:UiLarg - 2 - $t.Length))
-    $script:UiInicioLinha = $true
+# Antes de desenhar uma lista: se ela nao cabe embaixo do que ja esta na tela,
+# limpa a tela e comeca do topo (repetindo o titulo da tela). Devolve a linha inicial.
+$script:UiUltimoTitulo = ''
+function Get-UiTopo([int]$altura, [switch]$Forcar) {
+    $topo = [Console]::CursorTop
+    $fim = [Console]::WindowTop + [Console]::WindowHeight - 1
+    if ($Forcar -or ($topo + $altura -gt $fim)) {
+        [Console]::Clear()
+        if ($script:UiUltimoTitulo) { Write-Title $script:UiUltimoTitulo }
+        $topo = [Console]::CursorTop
+    }
+    return $topo
+}
+# espera uma tecla; devolve $null se a janela mudou de tamanho (para redesenhar)
+function Read-UiTecla {
+    $w = [Console]::WindowWidth; $h = [Console]::WindowHeight
+    while (-not [Console]::KeyAvailable) {
+        Start-Sleep -Milliseconds 60
+        if ([Console]::WindowWidth -ne $w -or [Console]::WindowHeight -ne $h) { Start-Sleep -Milliseconds 150; return $null }
+    }
+    return [Console]::ReadKey($true)
+}
+# caixa com a explicacao do item selecionado (sempre 4 linhas)
+function Write-UiCaixaDesc([string]$d) {
+    $u = Get-UiUtil
+    $lw = [math]::Max(20, [math]::Min(72, $u.Util - 6))
+    $ls = @(Split-UiTexto $d $lw)
+    while ($ls.Count -lt 2) { $ls += '' }
+    Write-UiLinha ("  " + $script:UiBTL + ([string]$script:UiBH * ($lw + 2)) + $script:UiBTR) 'DarkGray'
+    foreach ($x in $ls[0..1]) { Write-UiLinha ("  " + $script:UiBV + ' ' + $x.PadRight($lw) + ' ' + $script:UiBV) 'White' }
+    Write-UiLinha ("  " + $script:UiBBL + ([string]$script:UiBH * ($lw + 2)) + $script:UiBBR) 'DarkGray'
 }
 
 # ---------------------------------------------------------------------
@@ -105,19 +138,24 @@ function Select-Opcao {
     }
     $sel = [math]::Max(0, [math]::Min($Inicio, $lista.Count - 1))
     $dig = ''
-    $topo = [Console]::CursorTop
     $temDesc = @($lista | Where-Object { $_.D }).Count -gt 0
-    $livre = [Console]::WindowHeight - 10 - $(if ($temDesc) { 4 } else { 0 })
-    $porItem = if ($lista.Count * 2 -le $livre) { 2 } else { 1 }      # espaco entre as opcoes quando cabe
+    $extra = 4 + $(if ($temDesc) { 4 } else { 0 })          # setas de "mais", espaco, dica, opcao (+ caixa)
+    $topo = -1
     try { [Console]::CursorVisible = $false } catch {}
     try {
         while ($true) {
-            # quantos itens cabem na janela
-            $cabe = [math]::Max(4, [math]::Floor($livre / $porItem))
-            if ($cabe -ge $lista.Count) { $ini = 0; $cabe = $lista.Count }
-            else { $ini = [math]::Max(0, [math]::Min($sel - [math]::Floor($cabe / 2), $lista.Count - $cabe)) }
+            # medidas da janela (refeitas a cada volta: aguenta mudar de tamanho)
+            $wh = [Console]::WindowHeight
+            $espaco = if ($topo -lt 0) { $wh - 1 - ([Console]::CursorTop - [Console]::WindowTop) } else { $wh - 1 - ($topo - [Console]::WindowTop) }
+            $maxLin = [math]::Max(6, $wh - 4)                  # o que cabe numa tela limpa (com titulo)
+            $porItem = if (($lista.Count * 2 + $extra) -le [math]::Min($espaco, $maxLin) -and $lista.Count -le 12) { 2 } else { 1 }
+            $cabe = [math]::Min($lista.Count, [math]::Max(3, [math]::Floor(($maxLin - $extra - 3) / $porItem)))
+            $altura = $cabe * $porItem + $extra
+            if ($topo -lt 0) { $topo = Get-UiTopo $altura }
             [Console]::SetCursorPosition(0, $topo)
-            if ($cabe -lt $lista.Count) { Write-UiLinha $(if ($ini -gt 0) { "     $($script:UiCima) mais opcoes acima" } else { '' }) 'DarkGray' }
+            if ($cabe -ge $lista.Count) { $ini = 0 }
+            else { $ini = [math]::Max(0, [math]::Min($sel - [math]::Floor($cabe / 2), $lista.Count - $cabe)) }
+            Write-UiLinha $(if ($ini -gt 0) { "     $($script:UiCima) mais opcoes acima" } else { '' }) 'DarkGray'
             for ($i = $ini; $i -lt $ini + $cabe; $i++) {
                 $it = $lista[$i]
                 $c = if ($it.C) { $it.C } else { 'Cyan' }
@@ -126,14 +164,14 @@ function Select-Opcao {
                 else { Write-UiLinha ("     $tag $($it.T)") $c }
                 if ($porItem -eq 2) { Write-UiLinha '' }
             }
-            if ($cabe -lt $lista.Count) { Write-UiLinha $(if ($ini + $cabe -lt $lista.Count) { "     $($script:UiBaixo) mais opcoes abaixo" } else { '' }) 'DarkGray' }
-            Write-UiLinha ''
+            Write-UiLinha $(if ($ini + $cabe -lt $lista.Count) { "     $($script:UiBaixo) mais opcoes abaixo" } else { '' }) 'DarkGray'
             if ($temDesc) { Write-UiCaixaDesc ([string]$lista[$sel].D) }
             $h = "  $($script:UiCima) $($script:UiBaixo) escolher     ENTER confirmar     ESC voltar     (ou digite o numero)"
             if ($Dica) { $h = "  $Dica" }
             Write-UiLinha $h 'DarkCyan'
             Write-UiLinha $(if ($dig) { "  Opcao: $dig" + '_' } else { '' }) 'White'
-            $k = [Console]::ReadKey($true)
+            $k = Read-UiTecla
+            if ($null -eq $k) { $topo = Get-UiTopo 0 -Forcar; continue }     # mudou o tamanho da janela
             switch ($k.Key) {
                 'UpArrow'   { $sel = ($sel - 1 + $lista.Count) % $lista.Count; $dig = '' }
                 'DownArrow' { $sel = ($sel + 1) % $lista.Count; $dig = '' }
@@ -166,7 +204,7 @@ function Select-Opcao {
 }
 
 # ---------------------------------------------------------------------
-#  Lista de marcar.  $Itens = @( @{K='B1'; T='Texto'; D='desc'; On=$true; Off=$false (n/a); C='Yellow'} )
+#  Lista de marcar.  $Itens = @( @{K='B1'; T='Texto'; D='desc'; On=$true; Bloq=$false (n/a); C='Yellow'} )
 #  Devolve as chaves marcadas (array) ou $null se cancelar (ESC).
 # ---------------------------------------------------------------------
 function Select-Varios {
@@ -180,18 +218,23 @@ function Select-Varios {
     }
     $n = $lista.Count            # posicao $n = botao CONCLUIR
     $sel = 0
-    $topo = [Console]::CursorTop
     $temDesc = @($lista | Where-Object { $_.D }).Count -gt 0
-    $livre = [Console]::WindowHeight - 12 - $(if ($temDesc) { 4 } else { 0 })
-    $porItem = if ($n * 2 -le $livre) { 2 } else { 1 }
+    $extra = 6 + $(if ($temDesc) { 4 } else { 0 })
+    $topo = -1
     try { [Console]::CursorVisible = $false } catch {}
     try {
         while ($true) {
-            $cabe = [math]::Max(4, [math]::Floor($livre / $porItem))
-            if ($cabe -ge $n) { $ini = 0; $cabe = $n }
-            else { $ini = [math]::Max(0, [math]::Min([math]::Min($sel, $n - 1) - [math]::Floor($cabe / 2), $n - $cabe)) }
+            $wh = [Console]::WindowHeight
+            $espaco = if ($topo -lt 0) { $wh - 1 - ([Console]::CursorTop - [Console]::WindowTop) } else { $wh - 1 - ($topo - [Console]::WindowTop) }
+            $maxLin = [math]::Max(8, $wh - 4)
+            $porItem = if (($n * 2 + $extra) -le [math]::Min($espaco, $maxLin) -and $n -le 12) { 2 } else { 1 }
+            $cabe = [math]::Min($n, [math]::Max(3, [math]::Floor(($maxLin - $extra - 3) / $porItem)))
+            $altura = $cabe * $porItem + $extra
+            if ($topo -lt 0) { $topo = Get-UiTopo $altura }
             [Console]::SetCursorPosition(0, $topo)
-            if ($cabe -lt $n) { Write-UiLinha $(if ($ini -gt 0) { "     $($script:UiCima) mais itens acima" } else { '' }) 'DarkGray' }
+            if ($cabe -ge $n) { $ini = 0 }
+            else { $ini = [math]::Max(0, [math]::Min([math]::Min($sel, $n - 1) - [math]::Floor($cabe / 2), $n - $cabe)) }
+            Write-UiLinha $(if ($ini -gt 0) { "     $($script:UiCima) mais itens acima" } else { '' }) 'DarkGray'
             for ($i = $ini; $i -lt $ini + $cabe; $i++) {
                 $it = $lista[$i]
                 $box = if ($it.Bloq) { '[n/a]' } elseif ($it.On) { '[ X ]' } else { '[   ]' }
@@ -200,11 +243,10 @@ function Select-Varios {
                 else { Write-UiLinha ("     $box $($it.T)") $c }
                 if ($porItem -eq 2) { Write-UiLinha '' }
             }
-            if ($cabe -lt $n) { Write-UiLinha $(if ($ini + $cabe -lt $n) { "     $($script:UiBaixo) mais itens abaixo" } else { '' }) 'DarkGray' }
-            Write-UiLinha ''
+            Write-UiLinha $(if ($ini + $cabe -lt $n) { "     $($script:UiBaixo) mais itens abaixo" } else { '' }) 'DarkGray'
             $marc = @($lista | Where-Object { $_.On }).Count
-            $txtC = "     >> $Concluir   ($marc marcado(s))"
-            if ($sel -eq $n) { Write-UiLinha ("   $($script:UiSeta) >> $Concluir   ($marc marcado(s))").PadRight(72) 'Black' 'Green' } else { Write-UiLinha $txtC 'Green' }
+            if ($sel -eq $n) { Write-UiLinha ("   $($script:UiSeta) >> $Concluir   ($marc marcado(s))").PadRight(72) 'Black' 'Green' }
+            else { Write-UiLinha "     >> $Concluir   ($marc marcado(s))" 'Green' }
             Write-UiLinha ''
             if ($temDesc) {
                 $dd = if ($sel -lt $n) { [string]$lista[$sel].D } else { 'Confirma as escolhas e continua.' }
@@ -213,7 +255,9 @@ function Select-Varios {
             $dica = "  $($script:UiCima) $($script:UiBaixo) mover   ESPACO/ENTER marcar   ESC cancelar"
             if (-not $SemTodos) { $dica += '   T todos   N nenhum' }
             Write-UiLinha $dica 'DarkCyan'
-            $k = [Console]::ReadKey($true)
+            Write-UiLinha ''
+            $k = Read-UiTecla
+            if ($null -eq $k) { $topo = Get-UiTopo 0 -Forcar; continue }
             switch ($k.Key) {
                 'UpArrow'   { $sel = ($sel - 1 + $n + 1) % ($n + 1) }
                 'DownArrow' { $sel = ($sel + 1) % ($n + 1) }
@@ -247,22 +291,29 @@ function Select-SimNao([string]$Pergunta, [bool]$Padrao = $true) {
         return ($r -match '^[sSyY]')
     }
     $sim = $Padrao
-    Write-Host "  $Pergunta" -ForegroundColor White
+    $topo = Get-UiTopo 3
+    Write-UiLinha ''
+    Write-UiLinha "  $Pergunta" 'White'
     $topo = [Console]::CursorTop
     try { [Console]::CursorVisible = $false } catch {}
     try {
         while ($true) {
             [Console]::SetCursorPosition(0, $topo)
-            $pad = Get-UiPad
-            if ($pad) { Microsoft.PowerShell.Utility\Write-Host $pad -NoNewline }
+            $u = Get-UiUtil
+            if ($u.Pad) { Microsoft.PowerShell.Utility\Write-Host $u.Pad -NoNewline }
             Microsoft.PowerShell.Utility\Write-Host '     ' -NoNewline
-            if ($sim) { Microsoft.PowerShell.Utility\Write-Host '  SIM  ' -ForegroundColor Black -BackgroundColor Green -NoNewline }
-            else { Microsoft.PowerShell.Utility\Write-Host '  Sim  ' -ForegroundColor Gray -NoNewline }
-            Microsoft.PowerShell.Utility\Write-Host '     ' -NoNewline
-            if (-not $sim) { Microsoft.PowerShell.Utility\Write-Host '  NAO  ' -ForegroundColor White -BackgroundColor DarkRed -NoNewline }
-            else { Microsoft.PowerShell.Utility\Write-Host '  Nao  ' -ForegroundColor Gray -NoNewline }
-            Microsoft.PowerShell.Utility\Write-Host ("      $($script:UiEsq) $($script:UiDir) e ENTER  (ou S / N)          ") -ForegroundColor DarkCyan
-            $k = [Console]::ReadKey($true)
+            if ($sim) { Microsoft.PowerShell.Utility\Write-Host '   SIM   ' -ForegroundColor Black -BackgroundColor Green -NoNewline }
+            else { Microsoft.PowerShell.Utility\Write-Host '   Sim   ' -ForegroundColor Gray -NoNewline }
+            Microsoft.PowerShell.Utility\Write-Host '    ' -NoNewline
+            if (-not $sim) { Microsoft.PowerShell.Utility\Write-Host '   NAO   ' -ForegroundColor White -BackgroundColor DarkRed -NoNewline }
+            else { Microsoft.PowerShell.Utility\Write-Host '   Nao   ' -ForegroundColor Gray -NoNewline }
+            $txt = "     $($script:UiEsq) $($script:UiDir) e ENTER   (ou S / N)"
+            $r = $u.Resto - 27 - $txt.Length
+            Microsoft.PowerShell.Utility\Write-Host $txt -ForegroundColor DarkCyan -NoNewline
+            if ($r -gt 0) { Microsoft.PowerShell.Utility\Write-Host (' ' * $r) -NoNewline }
+            Microsoft.PowerShell.Utility\Write-Host ''
+            $k = Read-UiTecla
+            if ($null -eq $k) { $topo = Get-UiTopo 0 -Forcar; Write-UiLinha "  $Pergunta" 'White'; $topo = [Console]::CursorTop; continue }
             switch ($k.Key) {
                 'LeftArrow'  { $sim = -not $sim }
                 'RightArrow' { $sim = -not $sim }
