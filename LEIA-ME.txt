@@ -1,0 +1,118 @@
+=====================================================================
+  AVANTIPACK v0.7 - Otimização do Windows para jogos
+=====================================================================
+
+  COMO USAR (3 PASSOS)
+  ---------------------------------------------------------------
+  1. Extraia a pasta INTEIRA (não rode de dentro do ZIP).
+  2. Dê dois cliques em AVANTIPACK.bat e clique em "Sim" quando o
+     Windows pedir permissão.
+  3. Digite 1 e aperte ENTER ("OTIMIZAR MEU PC") e depois 1 de novo
+     ("AUTOMATICO"). Pronto: ele faz tudo sozinho e no fim pede para
+     reiniciar. Quer escolher? Use 2 ("PERSONALIZADO") e marque ou
+     desmarque cada ajuste por categoria.
+
+  Requisitos: Windows 10 (21H2 ou mais novo) ou Windows 11.
+
+
+  O QUE CADA OPÇÃO DO MENU FAZ
+  ---------------------------------------------------------------
+  [1] OTIMIZAR MEU PC   <- comece por aqui
+      Automático: o pack escolhe. Personalizado: você vê as 9 categorias
+      (Segurança, Limpeza, Sistema/input lag, Energia, Vídeo, Internet,
+      SSD/memória, Jogos, Avançado) e marca ou desmarca cada ajuste.
+      Lista completa: guias\LISTA_DE_AJUSTES.txt
+      Cria ponto de restauração e backup, e então: tira telemetria,
+      anúncios e apps inúteis; ajusta mouse, teclado e prioridade de
+      jogos; plano de energia certo para o SEU processador; verifica
+      e configura a placa de vídeo (painel NVIDIA automático); ajusta
+      a placa de rede e testa o DNS mais rápido; ajusta SSD/HD e
+      limpa arquivos temporários; dá prioridade aos jogos instalados.
+      Só pergunta uma coisa (se o monitor tem G-SYNC/FreeSync, em PCs
+      com NVIDIA). Opções com risco NÃO entram aqui.
+
+  [2] VERIFICAR MEU PC
+      Mostra as peças e avisa problemas: memória sem XMP, pente único,
+      Windows em HD, driver de vídeo velho, placa no slot errado,
+      Resizable BAR desligado, monitor abaixo do máximo de Hz (corrige
+      na hora) e monitor ligado na placa-mãe. Faz o TESTE DE INPUT LAG
+      (18 itens, com pontuação e correção automática) e, se quiser, o
+      teste da internet (ping, variação e perda, separando o problema da
+      sua casa do problema do provedor).
+
+  [3] CONSERTAR UM PROBLEMA
+      18 reparos: internet/Wi-Fi, áudio, microfone, câmera, Bluetooth,
+      Microsoft Store, Windows Update, arquivos corrompidos (DISM+SFC),
+      disco, menu Iniciar, ícones, impressora, Xbox/Game Pass,
+      pesquisa, instalador .msi, tela preta, o que está pesando no PC
+      e sites que não abrem.
+
+  [4] PROGRAMAS ÚTEIS
+      DDU, NVCleanstall, HWiNFO, CPU-Z, GPU-Z, CrystalDiskInfo, RTSS,
+      OCCT, Autoruns... cada um com tutorial. Branco = serve para o seu
+      PC. Ao escolher um app: mostra onde estão as melhores
+      configurações (LEIA-ME da pasta), baixa sozinho ou abre o SITE
+      OFICIAL e, quando o download termina, pega o arquivo da pasta
+      Downloads e coloca em apps\<app> automaticamente.
+      Opção B instala os recomendados; opção T baixa todos para dentro
+      do pack (para mandar a alguém com tudo junto).
+
+  [5] GUIAS PASSO A PASSO
+      Guia com imagens dos painéis NVIDIA / AMD / Intel / Windows,
+      BIOS (XMP, Resizable BAR...), processador, placa de vídeo, limite
+      de FPS e "o que não fazemos".
+
+  [6] DESFAZER / RECOLOCAR FUNÇÕES E APPS
+      [1] Desfazer TUDO: volta o PC como era antes do pack.
+      [2] Recolocar UMA função: escolha na lista (ex.: "gravar clipes
+          do Xbox", "impressora", "efeitos de transparência").
+      [3] Reinstalar apps que o pack removeu (pela Microsoft Store).
+      [4] Religar funções do Windows (impressora, Bluetooth, Windows
+          Hello, pesquisa, Xbox, Loja, hibernação...).
+      [5] Ponto de restauração do Windows.
+
+  [7] MODO AVANÇADO
+      Cada ajuste separado, com explicação antes: debloat, sistema,
+      energia, placa de vídeo, rede, armazenamento, prioridade de jogos,
+      DNS, programas que iniciam com o Windows, teste de input lag,
+      diagnóstico da internet e ajustes com risco (Integridade de
+      memória, modo MSI, FSO, hypervisor).
+      Também: manutenção semanal automática, perfil NVIDIA por jogo
+      competitivo e atualização do pack.
+
+  [U] ATUALIZAR (aparece quando sai versão nova)
+      O menu mostra uma faixa verde. Digite U: o pack baixa a nova
+      versão e reabre sozinho, sem perder backups.
+
+  [8] Reiniciar o PC      [0] Sair
+
+
+  NOVO NA v0.7
+  ---------------------------------------------------------------
+  • Depois de uma atualização grande do Windows, o menu avisa (faixa
+    amarela) para usar "Otimizar > Reaplicar": refaz as mesmas escolhas.
+  • Manutenção semanal opcional (limpeza leve + TRIM), domingo 14h.
+  • Perfil NVIDIA por jogo competitivo (Reflex do driver em Ultra,
+    pré-renderização 1, clock máximo), com desfazer.
+  • Guia de configurações dentro dos jogos: guias\CONFIG_DOS_JOGOS.txt
+  • Atualização automática pelo GitHub (veja guias\GITHUB_PASSO_A_PASSO.txt).
+  • Desfazer reformulado: tudo, ou só a função que você precisa de volta.
+  • Barra de progresso por etapa e caixa de resultado no fim.
+
+
+  PASTAS
+  ---------------------------------------------------------------
+  core\    motor do pack (não mexa)
+  guias\   guias e o guia com imagens (PAINEIS_VISUAL.html)
+  apps\    uma pasta por programa, cada uma com LEIA-ME.txt
+  backup\  backup das alterações (usado pelo Desfazer)
+  logs\    registro de tudo que foi feito, por dia
+  data\    hardware detectado e últimas escolhas (para o Reaplicar)
+  ferramentas\  GERAR_RELEASE.bat (só para quem publica versões)
+
+
+  AVISO
+  ---------------------------------------------------------------
+  Otimizações de sistema e de BIOS são por conta e risco de quem usa.
+  Cada PC responde de um jeito. O pack cria ponto de restauração e
+  guarda tudo para o Desfazer, mas BIOS e overclock são com você.

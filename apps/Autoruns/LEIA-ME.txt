@@ -1,0 +1,17 @@
+AUTORUNS (Microsoft Sysinternals) - PROGRAMAS NA INICIALIZAÇÃO
+=====================================================================
+Mostra TUDO que inicia junto com o Windows (bem mais completo que o
+Gerenciador de Tarefas). Extraia o ZIP aqui: apps\Autoruns
+
+COMO USAR COM SEGURANÇA
+  1. Abra o Autoruns64.exe como administrador.
+  2. Menu Options: marque "Hide Microsoft Entries" e "Hide Windows
+     Entries".
+  3. Aba "Logon": desmarque (NÃO apague) o que não precisa iniciar
+     com o PC: launchers de jogos, atualizadores, Spotify, etc.
+  4. Desmarcar é reversível: é só marcar de novo.
+
+NÃO DESMARQUE
+  • Nada na aba "Drivers" ou "Services" se você não sabe o que é.
+  • Driver de áudio (Realtek), touchpad, software do teclado/mouse
+    que você usa, antivírus, anti-cheat (Vanguard, FACEIT, EAC).

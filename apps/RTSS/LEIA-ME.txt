@@ -1,0 +1,23 @@
+RTSS - RIVATUNER STATISTICS SERVER (limitador de FPS)
+=====================================================================
+O QUE É: o limitador de FPS com o frametime mais estável. Também
+mostra o overlay de FPS/temperatura (junto com HWiNFO ou MSI
+Afterburner). RTSS é INSTALADO normalmente (não vai nesta pasta). O
+pack acha ele sozinho em Arquivos de Programas.
+
+CONFIGURAÇÃO
+  1. Abra o RTSS (ícone na bandeja, ao lado do relógio).
+  2. Em "Global":
+       • Framerate limit: o valor desejado (veja guias\LIMITE_DE_FPS.txt)
+         - Com G-SYNC/FreeSync: Hz do monitor menos 3 (ex: 141 em 144 Hz)
+       • Framerate limiting: "async" (padrão)
+       • Application detection level: Low
+       • Stealth mode: liga se algum jogo/anti-cheat reclamar
+  3. Para um jogo específico, clique em "Add" e escolha o .exe dele.
+
+QUANDO NÃO USAR
+  • Jogo com NVIDIA Reflex ligado: deixe o Reflex limitar.
+  • Jogo com limitador próprio bom (CS2, Valorant): prefira o do jogo.
+  • Use só UM limitador por vez.
+
+NVIDIA x AMD x INTEL: funciona igual em qualquer placa.

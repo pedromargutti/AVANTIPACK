@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AVANTIPACK — Guia visual dos painéis</title>
+<style>
+/* ===================== Página ===================== */
+:root{--bg:#0b0f17;--bg2:#111827;--card:#151c2b;--line:#243049;--txt:#e6ebf5;--mut:#93a0b8;--azul:#3b82f6;--azul2:#60a5fa;--ok:#22c55e;--am:#f59e0b;--pin:#facc15}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font:15px/1.55 "Segoe UI",system-ui,-apple-system,sans-serif}
+header{padding:26px 24px 6px;max-width:1120px;margin:0 auto}
+.logo{font-weight:800;letter-spacing:.18em;color:var(--azul);font-size:26px}
+header p{color:var(--mut);margin:6px 0 0;max-width:820px}
+nav.tabs{position:sticky;top:0;z-index:10;background:rgba(11,15,23,.94);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+nav.tabs .in{max-width:1120px;margin:0 auto;display:flex;gap:6px;padding:10px 24px;overflow-x:auto}
+nav.tabs button{all:unset;cursor:pointer;padding:8px 14px;border-radius:8px;color:var(--mut);font-weight:600;white-space:nowrap;border:1px solid transparent}
+nav.tabs button:hover{color:var(--txt);background:var(--bg2)}
+nav.tabs button[aria-selected=true]{color:var(--txt);background:var(--card);border-color:var(--line)}
+nav.tabs button i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;vertical-align:1px}
+main{max-width:1120px;margin:0 auto;padding:16px 24px 70px}
+.intro{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:22px;color:#cdd6e8}
+.intro b{color:#fff}
+.legend{display:flex;flex-wrap:wrap;gap:16px;color:var(--mut);font-size:13px;margin-top:8px}
+.tag{font-size:11px;font-weight:700;letter-spacing:.05em;padding:2px 7px;border-radius:5px;vertical-align:2px}
+.tag.auto{background:rgba(34,197,94,.15);color:var(--ok)} .tag.man{background:rgba(245,158,11,.15);color:var(--am)}
+/* indice */
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 26px}
+.toc a{color:#cdd6e8;text-decoration:none;font-size:13px;padding:5px 10px;border:1px solid var(--line);border-radius:999px}
+.toc a:hover{border-color:var(--azul);color:#fff}
+/* passo */
+.step{border:1px solid var(--line);background:linear-gradient(180deg,#121a29,#0f1522);border-radius:14px;padding:18px 18px 20px;margin:0 0 26px;scroll-margin-top:70px}
+.step-h{display:flex;gap:14px;align-items:flex-start}
+.num{flex:0 0 42px;height:42px;border-radius:12px;background:var(--azul);color:#fff;display:grid;place-items:center;font-weight:800;font-size:18px}
+.step h3{margin:2px 0 2px;font-size:18px}
+.step .sub{color:var(--mut);margin:0}
+.onde{margin:14px 0 14px;padding:12px 14px;border-radius:10px;background:#0c1220;border:1px dashed #2b3a5a}
+.onde h4{margin:0 0 6px;font-size:13px;letter-spacing:.06em;color:var(--azul2);text-transform:uppercase}
+.onde ol{margin:0;padding-left:0;list-style:none;counter-reset:n}
+.onde li{margin:5px 0;display:flex;gap:10px;align-items:flex-start}
+.p{display:inline-grid;place-items:center;flex:0 0 22px;width:22px;height:22px;border-radius:50%;background:var(--pin);color:#111;font-weight:800;font-size:12px;box-shadow:0 0 0 3px rgba(250,204,21,.25)}
+.shot{margin:6px 0 4px;overflow-x:auto}
+.expl{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
+.expl h4{margin:0 0 8px;font-size:13px;letter-spacing:.06em;color:var(--azul2);text-transform:uppercase}
+.item{display:grid;grid-template-columns:26px 1fr;gap:10px;padding:9px 0;border-bottom:1px solid #1d2638}
+.item:last-child{border-bottom:0}
+.item .nm{font-weight:700;color:#fff}
+.item .vl{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:5px;background:rgba(59,130,246,.15);color:#bcd5ff;font-size:13px;font-weight:600}
+.item .tx{color:#c3cbdb;font-size:14px;margin-top:2px}
+.tip{margin-top:12px;padding:10px 12px;border-radius:8px;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);color:#f3d9a7;font-size:14px}
+.real{margin:12px 0 0} .real img{max-width:100%;border-radius:8px;border:1px solid var(--line)}
+.real figcaption{color:var(--mut);font-size:12px}
+.foot{color:var(--mut);font-size:12.5px;border-top:1px solid var(--line);padding-top:14px;margin-top:30px}
+.pin{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--pin);color:#111!important;font:800 11px/1 "Segoe UI",sans-serif;box-shadow:0 0 0 3px rgba(250,204,21,.35);margin:0 4px;vertical-align:middle;flex:0 0 20px}
+.adr .top .t.glow,.adr .subt span.glow,.nvapp .stabs span.glow{padding:0 8px;gap:4px}
+.glow{outline:2px solid var(--pin)!important;outline-offset:-2px;box-shadow:0 0 0 4px rgba(250,204,21,.25)!important}
+
+/* ===================== Menu do botão direito (Windows 11) ===================== */
+.ctx{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;font:13px "Segoe UI",sans-serif}
+.ctx .m{background:#2b2b2b;border:1px solid #3d3d3d;border-radius:8px;padding:5px;min-width:260px;color:#eee;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.ctx .m div{padding:6px 10px;border-radius:4px;display:flex;align-items:center;gap:10px}
+.ctx .m div .ic{width:16px;text-align:center;opacity:.8}
+.ctx .m hr{border:0;border-top:1px solid #444;margin:4px 6px}
+.ctx .m.old{background:#f2f2f2;color:#111;border-color:#ccc;border-radius:0;padding:2px}
+.ctx .m.old div{border-radius:0;padding:4px 22px}
+.ctx .m.old hr{border-top-color:#ccc}
+.ctx .arrow{align-self:center;font-size:26px;color:var(--mut)}
+
+/* ===================== Painel de Controle NVIDIA (estilo) ===================== */
+.nvcp{min-width:820px;background:#f0f0f0;color:#000;border:1px solid #7a7a7a;font:12px "Segoe UI",Tahoma,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.nvcp .tb{display:flex;align-items:center;padding:6px 8px;background:#fff;border-bottom:1px solid #d9d9d9}
+.nvcp .tb .t{flex:1;padding-left:4px}
+.nvcp .tb .wb{display:flex;gap:16px;color:#333;padding-right:6px}
+.nvcp .mn{display:flex;gap:2px;padding:2px 4px;background:#f5f5f5;border-bottom:1px solid #d9d9d9}
+.nvcp .mn span{padding:2px 8px}
+.nvcp .tl{display:flex;gap:10px;align-items:center;padding:4px 8px;border-bottom:1px solid #c9c9c9;background:linear-gradient(#fbfbfb,#ececec);color:#333}
+.nvcp .tl .b{display:inline-flex;align-items:center;gap:4px;padding:2px 6px;border:1px solid transparent}
+.nvcp .bd{display:grid;grid-template-columns:250px 1fr;min-height:330px}
+.nvcp .tree{background:#fff;border-right:1px solid #b9b9b9;padding:6px 0}
+.nvcp .tree .h{padding:2px 8px 6px;color:#555}
+.nvcp .tree .g{padding:2px 6px;font-weight:600;display:flex;align-items:center;gap:4px}
+.nvcp .tree .g:before{content:"⊟";font-weight:400;color:#555}
+.nvcp .tree .i{padding:2px 6px 2px 26px;display:flex;align-items:center;color:#0b3fa8}
+.nvcp .tree .i.on{background:#cce4f7;border:1px dotted #333;color:#000}
+.nvcp .pane{background:#fff;display:flex;flex-direction:column}
+.nvcp .ban{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:3px solid #76b900;background:linear-gradient(90deg,#fafafa,#eef3e6)}
+.nvcp .ban .tt{font-size:17px;font-weight:600;color:#222}
+.nvcp .ban .bk{margin-left:auto;font-size:11px;color:#0b3fa8}
+.nvcp .ds{padding:8px 14px;color:#333}
+.nvcp .sec{padding:6px 14px 2px;font-weight:600;color:#1a1a1a}
+.nvcp .tabsx{display:flex;padding:0 14px;margin-top:6px}
+.nvcp .tabsx span{padding:4px 12px;border:1px solid #b9b9b9;border-bottom:0;background:#e9e9e9;margin-right:2px;display:inline-flex;align-items:center}
+.nvcp .tabsx span.on{background:#fff;position:relative;top:1px}
+.nvcp .box{margin:0 14px;border:1px solid #b9b9b9;padding:8px}
+.nvcp .grid{width:100%;border-collapse:collapse;border:1px solid #a9a9a9}
+.nvcp .grid th{background:linear-gradient(#fff,#e8e8e8);border:1px solid #c9c9c9;text-align:left;font-weight:400;padding:3px 6px}
+.nvcp .grid td{border-bottom:1px solid #eee;padding:3px 6px;white-space:nowrap}
+.nvcp .grid tr.sel td{background:#3399ff;color:#fff}
+.nvcp .grid tr.sel td .dd{background:#fff;color:#000}
+.nvcp .dd{display:inline-flex;align-items:center;justify-content:space-between;gap:12px;min-width:200px;border:1px solid #7a7a7a;background:#fff;padding:1px 4px}
+.nvcp .dd:after{content:"▼";font-size:8px;color:#333}
+.nvcp .row{display:flex;align-items:center;gap:8px;padding:4px 0}
+.nvcp .lbl{min-width:220px}
+.nvcp .chk{display:inline-block;width:13px;height:13px;border:1px solid #333;background:#fff;text-align:center;line-height:11px;font-size:11px}
+.nvcp .rad{display:inline-block;width:12px;height:12px;border:1px solid #333;border-radius:50%;background:#fff;position:relative}
+.nvcp .rad.on:after{content:"";position:absolute;inset:2px;border-radius:50%;background:#1a1a1a}
+.nvcp .list{border:1px solid #a9a9a9;background:#fff;width:260px;height:88px;overflow:hidden}
+.nvcp .list div{padding:1px 4px}.nvcp .list div.on{background:#3399ff;color:#fff}
+.nvcp .ft{display:flex;justify-content:flex-end;gap:8px;padding:10px 14px;margin-top:auto;border-top:1px solid #e3e3e3}
+.nvcp .btn{min-width:72px;text-align:center;padding:3px 10px;border:1px solid #adadad;background:linear-gradient(#f6f6f6,#dedede);border-radius:2px;display:inline-flex;align-items:center;justify-content:center}
+.nvcp .st{display:flex;align-items:center;gap:6px;padding:4px 8px;border-top:1px solid #c9c9c9;background:#f0f0f0;color:#0b3fa8}
+
+/* ===================== NVIDIA App (estilo) ===================== */
+.nvapp{min-width:820px;background:#1a1a1a;color:#e8e8e8;border:1px solid #333;border-radius:8px;overflow:hidden;font:13px "Segoe UI",sans-serif;display:grid;grid-template-columns:64px 1fr;min-height:300px;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.nvapp .rail{background:#111;border-right:1px solid #2a2a2a;display:flex;flex-direction:column;align-items:center;padding-top:12px;gap:6px}
+.nvapp .rail div{width:52px;padding:7px 0;border-radius:6px;text-align:center;font-size:10px;color:#aaa;display:flex;flex-direction:column;align-items:center;gap:2px}
+.nvapp .rail div b{font-size:17px;font-weight:400}
+.nvapp .rail div.on{background:#262626;color:#76b900}
+.nvapp .mainx{padding:16px 20px}
+.nvapp h5{margin:0 0 4px;font-size:20px;font-weight:600}
+.nvapp .stabs{display:flex;gap:18px;border-bottom:1px solid #333;margin:10px 0 12px}
+.nvapp .stabs span{padding:6px 0;color:#aaa;display:inline-flex;align-items:center}
+.nvapp .stabs span.on{color:#fff;border-bottom:2px solid #76b900}
+.nvapp .r{display:flex;align-items:center;justify-content:space-between;background:#232323;border-radius:6px;padding:10px 12px;margin-bottom:6px}
+.nvapp .r small{display:block;color:#999}
+.sw{display:inline-block;width:40px;height:20px;border-radius:20px;background:#555;position:relative;vertical-align:middle;flex:0 0 40px}
+.sw:after{content:"";position:absolute;left:3px;top:3px;width:14px;height:14px;border-radius:50%;background:#ddd}
+.sw.on:after{left:23px;background:#fff}
+.nvapp .sw.on{background:#76b900}
+
+/* ===================== AMD Adrenalin (estilo) ===================== */
+.adr{min-width:860px;background:#141416;color:#eaeaea;border:1px solid #2c2c30;border-radius:8px;overflow:hidden;font:13px "Segoe UI",sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.adr .top{display:flex;align-items:center;gap:22px;padding:0 16px;height:46px;background:#0d0d0f;border-bottom:1px solid #26262a}
+.adr .top .brand{font-weight:700;letter-spacing:.04em;color:#fff}
+.adr .top .t{color:#b7b7bd;display:inline-flex;align-items:center;height:46px}
+.adr .top .t.on{color:#fff;border-bottom:3px solid #e8343b}
+.adr .top .ic{margin-left:auto;display:flex;gap:16px;color:#b7b7bd;align-items:center}
+.adr .subt{display:flex;gap:20px;padding:0 16px;height:38px;align-items:center;border-bottom:1px solid #26262a;background:#17171a}
+.adr .subt span{color:#a5a5ab;display:inline-flex;align-items:center;height:38px}
+.adr .subt span.on{color:#fff;border-bottom:2px solid #e8343b}
+.adr .cont{padding:14px 16px 16px}
+.adr .profs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px}
+.adr .profs div{background:#1f1f23;border:1px solid #2e2e33;border-radius:6px;padding:10px;text-align:center;color:#c9c9cf;display:flex;align-items:center;justify-content:center;gap:4px}
+.adr .profs div.on{border-color:#e8343b;color:#fff;background:#2a1517}
+.adr .r{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:10px 12px;border-bottom:1px solid #232327}
+.adr .r small{display:block;color:#8d8d94;font-size:12px}
+.adr .sw.on{background:#e8343b}
+.adr .sel{display:inline-flex;justify-content:space-between;align-items:center;gap:14px;min-width:200px;padding:5px 10px;border:1px solid #3a3a40;border-radius:4px;background:#1c1c20}
+.adr .sel:after{content:"⌄";color:#999}
+.adr .adv{margin-top:8px;padding:10px 12px;background:#1b1b1e;border-radius:6px;color:#ddd;display:flex;align-items:center;gap:6px}
+
+/* ===================== Configurações do Windows 11 (estilo) ===================== */
+.w11{min-width:860px;background:#202020;color:#fff;border:1px solid #3a3a3a;border-radius:8px;overflow:hidden;font:13px "Segoe UI Variable","Segoe UI",sans-serif;display:grid;grid-template-columns:250px 1fr;min-height:320px;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.w11 .side{padding:14px 8px;background:#1c1c1c}
+.w11 .side .usr{display:flex;gap:10px;align-items:center;padding:4px 8px 12px}
+.w11 .side .usr i{width:38px;height:38px;border-radius:50%;background:#3a3a3a;display:block}
+.w11 .side .srch{margin:0 6px 10px;padding:6px 10px;border-radius:4px;background:#2b2b2b;color:#999;border-bottom:1px solid #777}
+.w11 .side div.n{display:flex;gap:10px;align-items:center;padding:7px 10px;border-radius:4px;color:#e5e5e5}
+.w11 .side div.n.on{background:#2d2d2d;position:relative}
+.w11 .side div.n.on:before{content:"";position:absolute;left:0;top:9px;bottom:9px;width:3px;border-radius:3px;background:#4cc2ff}
+.w11 .mainw{padding:18px 22px}
+.w11 .bc{font-size:24px;font-weight:600;margin-bottom:14px;display:flex;align-items:center;flex-wrap:wrap;gap:4px}
+.w11 .bc span{color:#bbb;font-weight:400}
+.w11 .card{display:flex;align-items:center;gap:14px;background:#2b2b2b;border-radius:6px;padding:12px 14px;margin-bottom:4px}
+.w11 .card .ic{width:22px;text-align:center;opacity:.85}
+.w11 .card .tx{flex:1}
+.w11 .card small{display:block;color:#aaa}
+.w11 .sw.on{background:#4cc2ff}.w11 .sw.on:after{background:#000}
+.w11 .dd{display:inline-flex;justify-content:space-between;align-items:center;gap:14px;min-width:170px;padding:5px 10px;border-radius:4px;background:#2d2d2d;border:1px solid #3d3d3d}
+.w11 .dd:after{content:"⌄";color:#bbb}
+.w11 .chev{color:#aaa}
+/* Janela clássica (Propriedades de Mouse) */
+.cls{width:420px;background:#f0f0f0;color:#000;border:1px solid #7a7a7a;font:12px "Segoe UI",Tahoma,sans-serif;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.cls .tb{background:#fff;padding:6px 8px;border-bottom:1px solid #ddd}
+.cls .tbs{display:flex;padding:6px 6px 0}
+.cls .tbs span{padding:3px 8px;border:1px solid #b9b9b9;border-bottom:0;background:#e9e9e9;margin-right:2px;display:inline-flex;align-items:center}
+.cls .tbs span.on{background:#fff}
+.cls .pg{margin:0 6px;background:#fff;border:1px solid #b9b9b9;padding:10px}
+.cls fieldset{border:1px solid #c9c9c9;margin:0 0 8px;padding:6px 10px}
+.cls legend{padding:0 4px}
+.cls .chk{display:inline-block;width:13px;height:13px;border:1px solid #333;background:#fff;vertical-align:middle;margin-right:6px}
+.cls .ft{display:flex;justify-content:flex-end;gap:6px;padding:8px 6px}
+.cls .btn{min-width:72px;text-align:center;padding:3px 8px;border:1px solid #adadad;background:#e1e1e1}
+
+/* ===================== Intel Graphics Software (estilo) ===================== */
+.intl{min-width:820px;background:#0f1724;color:#e8eef8;border:1px solid #23314a;border-radius:8px;overflow:hidden;font:13px "Segoe UI",sans-serif;display:grid;grid-template-columns:200px 1fr;min-height:260px;box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.intl .side{background:#0a111c;padding:14px 8px}
+.intl .side div{padding:8px 10px;border-radius:4px;color:#b8c4d8;display:flex;align-items:center}
+.intl .side div.on{background:#16233a;color:#fff;border-left:3px solid #0ea5e9}
+.intl .mainx{padding:16px 20px}
+.intl h5{margin:0 0 12px;font-size:19px;font-weight:600}
+.intl .r{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:#132036;border-radius:6px;margin-bottom:6px}
+.intl .r small{display:block;color:#90a0ba}
+.intl .sw.on{background:#0ea5e9}
+.intl .sel{display:inline-flex;justify-content:space-between;align-items:center;gap:14px;min-width:190px;padding:5px 10px;border:1px solid #2b3b58;border-radius:4px;background:#0f1a2c}
+.intl .sel:after{content:"⌄";color:#9fb0cc}
+@media (max-width:760px){main{padding:12px}.step{padding:14px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">AVANTIPACK</div>
+  <p>Guia visual passo a passo. Cada tela imita o painel de verdade. Os <span class="pin">1</span> amarelos mostram, em ordem, <b>onde clicar</b>, e embaixo de cada tela tem a explicação, em português simples, do que cada opção faz.</p>
+</header>
+<nav class="tabs"><div class="in" id="tabs"></div></nav>
+<main>
+  <div class="intro">
+    <b>Como usar:</b> escolha a aba da sua placa de vídeo lá em cima. Não sabe qual é a sua? No menu do AVANTIPACK ela aparece na linha <b>GPU</b>
+    (NVIDIA = GeForce/RTX/GTX, AMD = Radeon RX, Intel = Arc/UHD/Iris). Depois faça a aba <b>Windows</b>, que vale para todo mundo.
+    <div class="legend">
+      <span><span class="tag auto">AUTO</span> o AVANTIPACK já faz sozinho, abra só para conferir</span>
+      <span><span class="tag man">MANUAL</span> você faz, leva poucos segundos</span>
+      <span>Os nomes podem mudar um pouco conforme a versão do driver.</span>
+    </div>
+  </div>
+  <div class="toc" id="toc"></div>
+  <div id="conteudo"></div>
+  <div class="foot">AVANTIPACK v0.7 · Quer trocar a ilustração por um print real? Salve o print em <b>guias\img\</b> com o nome indicado embaixo de cada passo, e ele aparece aqui automaticamente.<br>
+  Algo ficou pior depois de mudar? Volte a opção para o valor anterior ou use a opção <b>6 (Desfazer)</b> no menu do pack.</div>
+</main>
+
+<script>
+/* ---------- utilidades de desenho ---------- */
+const P = n => n ? `<span class="pin">${n}</span>` : '';
+const sw = (on) => `<span class="sw ${on?'on':''}"></span>`;
+const G = (n) => n ? ' glow' : '';
+
+/* ---------- Menu do botão direito ---------- */
+function telaCtx(o){
+  return `<div class="ctx">
+   <div class="m">
+     <div><span class="ic">▦</span>Exibir</div><div><span class="ic">⇅</span>Classificar por</div><div><span class="ic">↻</span>Atualizar</div>
+     <hr><div><span class="ic">＋</span>Novo</div><hr>
+     <div><span class="ic">🖥</span>Configurações de exibição</div><div><span class="ic">🖌</span>Personalizar</div><hr>
+     <div><span class="ic">⌨</span>Abrir no Terminal</div><hr>
+     <div class="glow"><span class="ic">⋯</span>Mostrar mais opções ${P(1)}</div>
+   </div>
+   <div class="arrow">→</div>
+   <div class="m old">
+     <div>Exibir</div><div>Classificar por</div><div>Atualizar</div><hr>
+     <div class="glow">${o.item} ${P(2)}</div><hr>
+     <div>Novo</div><hr><div>Configurações de exibição</div><div>Personalizar</div>
+   </div></div>`;
+}
+
+/* ---------- Painel de Controle NVIDIA ---------- */
+const NV_TREE = [
+  ['Configurações 3D', ['Ajustar as configurações de imagem com visualização','Gerenciar as configurações 3D','Configurar Surround, PhysX']],
+  ['Exibição', ['Alterar resolução','Ajustar as configurações de cor da área de trabalho','Girar a exibição','Ver o status do HDCP','Configurar o áudio digital','Ajustar o tamanho e a posição da área de trabalho','Configurar G-SYNC','Configurar várias telas']],
+  ['Vídeo', ['Ajustar as configurações de cor do vídeo','Ajustar as configurações de imagem do vídeo']],
+];
+function telaNvcp(o){
+  const tree = NV_TREE.map(([g,its]) => `<div class="g">${g}</div>` + its.map(i =>
+     `<div class="i ${i===o.ativo?'on':''}${i===o.ativo&&o.pinNav?' glow':''}">${i}${i===o.ativo?P(o.pinNav):''}</div>`).join('')).join('');
+  return `<div class="nvcp">
+    <div class="tb"><span class="t">Painel de controle NVIDIA</span><span class="wb">─ ☐ ✕</span></div>
+    <div class="mn"><span>Arquivo</span><span>Editar</span><span>Desktop</span><span>Configurações 3D</span><span>Ajuda</span></div>
+    <div class="tl"><span class="b">◀ Voltar</span><span class="b">▶</span><span class="b">⌂</span></div>
+    <div class="bd"><div class="tree"><div class="h">Selecione uma tarefa...</div>${tree}</div>
+      <div class="pane"><div class="ban"><span class="tt">${o.ativo}</span><span class="bk">Restaurar padrões</span></div>
+        <div class="ds">${o.desc||''}</div>${o.corpo}
+        ${o.botoes?`<div class="ft">${o.botoes.map(([b,p])=>`<span class="btn${G(p)}">${b}${P(p)}</span>`).join('')}</div>`:''}
+      </div></div>
+    <div class="st">ⓘ Informações do sistema</div></div>`;
+}
+function nvGrid(linhas, pinTab, pinSel){
+  return `<div class="tabsx"><span class="on${G(pinTab)}">Configurações globais ${P(pinTab)}</span><span>Configurações do programa</span></div>
+    <div class="box"><div style="margin-bottom:6px">Configurações:</div><table class="grid"><tr><th>Recurso</th><th>Configuração</th></tr>${
+     linhas.map(([n,v,p]) => `<tr class="${p===pinSel?'sel':''}"><td>${P(p)}${n}</td><td>${p===pinSel?`<span class="dd">${v}</span>`:v}</td></tr>`).join('')}</table></div>`;
+}
+
+/* ---------- NVIDIA App ---------- */
+function telaNvapp(o){
+  const rail = [['⌂','Início'],['⬇','Drivers'],['▣','Gráficos'],['⚙','Configurações']];
+  return `<div class="nvapp"><div class="rail">${rail.map(([i,t])=>`<div class="${t===o.ativo?'on':''}${t===o.ativo?G(o.pinNav):''}"><b>${i}</b>${t}${t===o.ativo?P(o.pinNav):''}</div>`).join('')}</div>
+   <div class="mainx"><h5>${o.ativo}</h5><div class="stabs">${o.abas.map(([a,p])=>`<span class="${p?'on':''}${G(p)}">${a}${P(p)}</span>`).join('')}</div>
+   ${o.linhas.map(([n,d,on,p])=>`<div class="r${G(p)}"><div>${P(p)}${n}<small>${d}</small></div>${sw(on)}</div>`).join('')}</div></div>`;
+}
+
+/* ---------- AMD Adrenalin ---------- */
+function telaAdr(o){
+  const tops = ['Início','Jogos','Gravar e transmitir','Desempenho'];
+  return `<div class="adr"><div class="top"><span class="brand">AMD Software</span>${tops.map(t=>`<span class="t ${t===o.top?'on':''}${t===o.top?G(o.pinTop):''}">${t}${t===o.top?P(o.pinTop):''}</span>`).join('')}
+     <span class="ic"><span>🔍</span><span>🔔</span><span class="${G(o.pinGear)}">⚙${P(o.pinGear)}</span></span></div>
+   ${o.sub?`<div class="subt">${o.sub.map(([s,p,on])=>`<span class="${on?'on':''}${G(p)}">${s}${P(p)}</span>`).join('')}</div>`:''}
+   <div class="cont">${o.perfis?`<div class="profs">${o.perfis.map(([n,on,p])=>`<div class="${on?'on':''}${G(p)}">${n}${P(p)}</div>`).join('')}</div>`:''}
+   ${o.linhas.map(([n,d,c,p])=>`<div class="r${G(p)}"><div>${P(p)}${n}<small>${d}</small></div>${typeof c==='boolean'?sw(c):`<span class="sel">${c}</span>`}</div>`).join('')}
+   ${o.avancado?`<div class="adv${G(o.avancado)}">Avançado ⌄ ${P(o.avancado)}</div>`:''}</div></div>`;
+}
+
+/* ---------- Windows 11 ---------- */
+const W_NAV = [['🏠','Página Inicial'],['🖥','Sistema'],['🔵','Bluetooth e dispositivos'],['🌐','Rede e Internet'],['🖌','Personalização'],['▦','Aplicativos'],['👤','Contas'],['🕒','Hora e idioma'],['🎮','Jogos'],['♿','Acessibilidade']];
+function telaW11(o){
+  return `<div class="w11"><div class="side"><div class="usr"><i></i><div>Usuário<br><small style="color:#aaa">Conta local</small></div></div>
+     <div class="srch">Localizar uma configuração</div>
+     ${W_NAV.map(([i,t])=>`<div class="n ${t===o.nav?'on':''}${t===o.nav?G(o.pinNav):''}"><span>${i}</span>${t}${t===o.nav?P(o.pinNav):''}</div>`).join('')}</div>
+   <div class="mainw"><div class="bc">${o.bc.map((b,i)=>i<o.bc.length-1?`<span>${b} ›</span>`:b).join(' ')}</div>
+   ${o.cards.map(([ic,n,d,c,p])=>`<div class="card${G(p)}"><span class="ic">${ic}</span><div class="tx">${P(p)}${n}<small>${d||''}</small></div>${
+       (c==='>'||c===' >')?'<span class="chev">›</span>':c==='↗'?'<span class="chev">↗</span>':c===' '?'<span style="display:inline-block;width:150px;height:4px;border-radius:4px;background:linear-gradient(90deg,#4cc2ff 50%,#555 50%)"></span>':typeof c==='boolean'?sw(c):`<span class="dd">${c}</span>`}</div>`).join('')}</div></div>`;
+}
+
+/* ---------- Intel ---------- */
+function telaIntel(o){
+  const side = ['Início','Gráficos','Tela','Vídeo','Sistema','Suporte'];
+  return `<div class="intl"><div class="side">${side.map(s=>`<div class="${s===o.nav?'on':''}${s===o.nav?G(o.pinNav):''}">${s}${s===o.nav?P(o.pinNav):''}</div>`).join('')}</div>
+   <div class="mainx"><h5>${o.titulo}</h5>${o.linhas.map(([n,d,c,p])=>`<div class="r${G(p)}"><div>${P(p)}${n}<small>${d}</small></div>${typeof c==='boolean'?sw(c):`<span class="sel">${c}</span>`}</div>`).join('')}</div></div>`;
+}
+
+/* =====================================================================
+   CONTEÚDO
+   onde: passos de clique (o número = pino amarelo na tela)
+   itens: [pino, opção, valor, explicação simples]
+   ===================================================================== */
+const GUIAS = [
+/* ------------------------------ NVIDIA ------------------------------ */
+{ id:'nvidia', nome:'NVIDIA – Painel de Controle', cor:'#76b900', passos:[
+ { id:'nv-abrir', tit:'Abrir o Painel de Controle NVIDIA', modo:'man',
+   sub:'É o programa onde ficam todas as configurações da placa de vídeo NVIDIA.',
+   onde:['Clique com o <b>botão direito</b> em um espaço vazio da área de trabalho e escolha <b>Mostrar mais opções</b> (no Windows 10 este passo não existe).',
+         'No menu que aparece, clique em <b>Painel de controle NVIDIA</b>.'],
+   tela: telaCtx({item:'Painel de controle NVIDIA'}),
+   dica:'Não aparece? Abra o menu Iniciar e digite "Painel de controle NVIDIA". Se mesmo assim não existir, instale-o pela Microsoft Store (ele vem separado do driver em alguns PCs).' },
+
+ { id:'nv-3d', tit:'Configurações 3D globais (as que mais dão FPS)', modo:'auto',
+   sub:'Valem para todos os jogos. A opção 1 (Otimizar automaticamente) do AVANTIPACK já grava tudo isso. Use esta tela só para conferir.',
+   onde:['Na coluna da esquerda, embaixo de <b>Configurações 3D</b>, clique em <b>Gerenciar as configurações 3D</b>.',
+         'Do lado direito, confira se a aba <b>Configurações globais</b> está selecionada.',
+         'Desça a lista. Para mudar uma opção, clique no valor ao lado dela e escolha na lista que abre (exemplo marcado: Modo de baixa latência).',
+         'Mudou alguma coisa? Clique em <b>Aplicar</b>, lá embaixo à direita.'],
+   tela: telaNvcp({ ativo:'Gerenciar as configurações 3D', pinNav:1,
+     desc:'Você pode alterar as configurações 3D globais e criar substituições para programas específicos.',
+     corpo: nvGrid([
+       ['CUDA - GPUs','Todos'],
+       ['DSR - Fatores','Desativado'],
+       ['Filtragem anisotrópica','Controlado pelo aplicativo'],
+       ['Filtragem de textura - otimização da amostra anisotrópica','Ativado',4],
+       ['Filtragem de textura - qualidade','Alto desempenho',5],
+       ['Modo de baixa latência','Ativado',3],
+       ['Modo de gerenciamento de energia','Preferir desempenho máximo',6],
+       ['Otimização encadeada','Automático'],
+       ['Sincronização vertical','Desativado',7],
+       ['Tamanho do cache do sombreador','Ilimitado',8],
+       ['Taxa de quadros máxima','Desativado',9],
+     ], 2, 3),
+     botoes:[['Restaurar'],['Aplicar',10]] }),
+   itens:[
+     [3,'Modo de baixa latência','Ativado','Faz a placa de vídeo preparar menos quadros de antemão. O clique do mouse aparece mais rápido na tela (menos input lag). Se o jogo tem a opção NVIDIA Reflex, ligue o Reflex dentro do jogo: ele faz o mesmo, só que melhor.'],
+     [4,'Otimização da amostra anisotrópica','Ativado','Simplifica um cálculo das texturas que ficam no chão e nas paredes em ângulo. Ganha um pouco de FPS e quase não muda a imagem.'],
+     [5,'Filtragem de textura – qualidade','Alto desempenho','Deixa o filtro das texturas no modo mais leve. Mais FPS, e a diferença visual é quase impossível de notar jogando.'],
+     [6,'Modo de gerenciamento de energia','Preferir desempenho máximo','Impede a placa de "economizar energia" e baixar o clock no meio da partida, o que causa quedas de FPS. Ela gasta alguns watts a mais parada na área de trabalho.'],
+     [7,'Sincronização vertical (V-Sync)','Desativado','O V-Sync trava o FPS no Hz do monitor e aumenta o input lag. Exceção: se o seu monitor tem G-SYNC, deixe "Ativado" aqui e desligado dentro do jogo (veja o passo 4).'],
+     [8,'Tamanho do cache do sombreador','Ilimitado','Guarda no SSD os "shaders" que o jogo compila. Assim ele não precisa compilar de novo, e somem aquelas travadinhas quando aparece um efeito novo.'],
+     [9,'Taxa de quadros máxima','Desativado','É um limitador de FPS. Sem G-SYNC, deixe desativado. Com G-SYNC, coloque 3 a menos que o Hz do monitor (ex.: 141 em 144 Hz). O pack calcula isso para você.'],
+     [10,'Aplicar','—','Salva as mudanças. Se você fechar sem clicar aqui, nada é gravado.'],
+   ] },
+
+ { id:'nv-hz', tit:'Taxa de atualização (Hz) e cores', modo:'man',
+   sub:'Erro muito comum: monitor de 144/165/240 Hz rodando a 60 Hz. O jogo parece "travado" mesmo com FPS alto.',
+   onde:['Na coluna da esquerda, embaixo de <b>Exibição</b>, clique em <b>Alterar resolução</b>.',
+         'Em <b>Taxa de atualização</b>, abra a lista e escolha o <b>maior número</b>.',
+         'Mais abaixo, marque <b>Usar configurações de cor NVIDIA</b>.',
+         'Em <b>Faixa dinâmica de saída</b>, escolha <b>Completo</b>.',
+         'Clique em <b>Aplicar</b> e, se perguntar, confirme com <b>Sim</b>.'],
+   tela: telaNvcp({ ativo:'Alterar resolução', pinNav:1, desc:'',
+     corpo:`<div class="sec">1. Selecione a tela que você deseja alterar.</div>
+       <div style="padding:4px 14px"><span class="btn" style="min-width:160px">🖥 Monitor 1 (principal)</span></div>
+       <div class="sec">2. Escolha a resolução.</div>
+       <div style="padding:4px 14px;display:flex;gap:18px;align-items:flex-start"><div class="list"><div style="color:#666">PC</div><div class="on">1920 x 1080 (nativa)</div><div>1680 x 1050</div><div>1600 x 900</div><div>1280 x 1024</div></div>
+       <div><div class="row glow" style="padding:4px 6px">${P(2)}<span>Taxa de atualização:</span><span class="dd" style="min-width:120px">165Hz</span></div></div></div>
+       <div class="sec">3. Aplique as seguintes configurações.</div>
+       <div style="padding:2px 14px">
+         <div class="row"><span class="rad"></span>Usar configurações de cor padrão</div>
+         <div class="row glow" style="padding:4px 6px">${P(3)}<span class="rad on"></span>Usar configurações de cor NVIDIA</div>
+         <div class="row" style="padding-left:24px"><span class="lbl">Profundidade de cor da área de trabalho:</span><span class="dd">Mais alta (32 bits)</span></div>
+         <div class="row" style="padding-left:24px"><span class="lbl">Formato de cor de saída:</span><span class="dd">RGB</span></div>
+         <div class="row glow" style="padding:4px 6px 4px 24px">${P(4)}<span class="lbl">Faixa dinâmica de saída:</span><span class="dd">Completo</span></div>
+       </div>`,
+     botoes:[['Aplicar',5]] }),
+   itens:[
+     [2,'Taxa de atualização','o MAIOR valor','Quantas vezes por segundo o monitor desenha a imagem. 144 Hz mostra até 144 quadros por segundo; preso em 60 Hz, o resto do seu FPS é desperdiçado. Não apareceu o valor alto? Troque o cabo: use DisplayPort, ou um HDMI 2.0/2.1.'],
+     [3,'Usar configurações de cor NVIDIA','marcado','Libera as opções de baixo para você mesmo escolher.'],
+     [4,'Faixa dinâmica de saída','Completo','Sem isso, muitos monitores mostram o preto meio cinza e a imagem "lavada". Em "Completo" as cores ficam com o contraste certo.'],
+   ],
+   dica:'A opção 2 (Verificar meu PC) do AVANTIPACK detecta o monitor abaixo do máximo e oferece corrigir sozinho.' },
+
+ { id:'nv-gsync', tit:'G-SYNC (só se o monitor tiver)', modo:'man',
+   sub:'G-SYNC/G-SYNC Compatible faz o monitor acompanhar o FPS do jogo: sem cortes na imagem (tearing) e sem o atraso do V-Sync comum.',
+   onde:['Em <b>Exibição</b>, clique em <b>Configurar G-SYNC</b>. Se este item não aparece, o seu monitor ou o seu cabo não tem suporte; pule este passo.',
+         'Marque <b>Ativar G-SYNC, G-SYNC Compatible</b>.',
+         'Escolha <b>Ativar para modo de janela e tela cheia</b>.',
+         'Clique em <b>Aplicar</b>.'],
+   tela: telaNvcp({ ativo:'Configurar G-SYNC', pinNav:1, desc:'O G-SYNC elimina o tearing e minimiza a oscilação da tela e o atraso de entrada.',
+     corpo:`<div style="padding:6px 14px">
+       <div class="row glow" style="padding:4px 6px">${P(2)}<span class="chk">✓</span>Ativar G-SYNC, G-SYNC Compatible</div>
+       <div class="row" style="padding-left:28px"><span class="rad"></span>Ativar para o modo de tela cheia</div>
+       <div class="row glow" style="padding:4px 6px 4px 28px">${P(3)}<span class="rad on"></span>Ativar para o modo de janela e tela cheia</div>
+       <div class="sec" style="padding-left:0;margin-top:8px">2. Selecione a tela para a qual você deseja alterar a configuração.</div>
+       <div class="row"><span class="chk">✓</span>Ativar configurações para o modelo de tela selecionado</div></div>`,
+     botoes:[['Aplicar',4]] }),
+   itens:[
+     [2,'Ativar G-SYNC','marcado','Liga a sincronização variável. O monitor passa a esperar o quadro ficar pronto, em vez de mostrar meio quadro.'],
+     [3,'Modo de janela e tela cheia','marcado','Faz funcionar também em jogos em "tela cheia sem borda", que é como a maioria roda hoje.'],
+   ],
+   dica:'Com G-SYNC, o jeito certo é: G-SYNC ligado + V-Sync "Ativado" no painel (passo 2) + V-Sync desligado dentro do jogo + FPS limitado 3 abaixo do Hz. O pack aplica tudo isso se você responder "S" quando ele perguntar sobre G-SYNC.' },
+
+ { id:'nv-physx', tit:'PhysX na placa de vídeo', modo:'man',
+   sub:'Alguns jogos usam PhysX para física e efeitos. Ele precisa rodar na placa, não no processador.',
+   onde:['Em <b>Configurações 3D</b>, clique em <b>Configurar Surround, PhysX</b>.',
+         'Em <b>Processador PhysX</b>, escolha o nome da sua placa (GeForce RTX/GTX...).',
+         'Clique em <b>Aplicar</b>.'],
+   tela: telaNvcp({ ativo:'Configurar Surround, PhysX', pinNav:1, desc:'',
+     corpo:`<div style="padding:6px 14px"><div class="sec" style="padding-left:0">Configurações do PhysX</div>
+       <div class="row glow" style="padding:4px 6px">${P(2)}<span class="lbl">Processador PhysX:</span><span class="dd">GeForce RTX (sua placa)</span></div>
+       <div style="margin-top:10px;border:1px solid #ccc;height:80px;display:grid;place-items:center;color:#777">[ desenho: placa → monitores ]</div></div>`,
+     botoes:[['Aplicar',3]] }),
+   itens:[[2,'Processador PhysX','sua placa de vídeo','Em "Seleção automática" ou "CPU", a física pode ir para o processador, que é bem mais lento nisso. Resultado: quedas de FPS em explosões e destruição.']] },
+
+ { id:'nv-escala', tit:'Resolução esticada (só para quem joga em 4:3)', modo:'man',
+   sub:'Para CS2, Valorant e outros jogados em resolução esticada (ex.: 1280x960). Quem joga na resolução normal pode pular.',
+   onde:['Em <b>Exibição</b>, clique em <b>Ajustar o tamanho e a posição da área de trabalho</b>.',
+         'Em <b>Selecione um modo de escala</b>, escolha <b>Tela cheia</b>.',
+         'Em <b>Executar escala em</b>, escolha <b>GPU</b>.',
+         'Clique em <b>Aplicar</b>.'],
+   tela: telaNvcp({ ativo:'Ajustar o tamanho e a posição da área de trabalho', pinNav:1, desc:'',
+     corpo:`<div class="tabsx"><span class="on">Escala</span><span>Tamanho</span></div><div class="box">
+       <div class="row" style="font-weight:600">Selecione um modo de escala:</div>
+       <div class="row" style="padding-left:12px"><span class="rad"></span>Proporção</div>
+       <div class="row glow" style="padding:4px 6px 4px 12px">${P(2)}<span class="rad on"></span>Tela cheia</div>
+       <div class="row" style="padding-left:12px"><span class="rad"></span>Sem escala</div>
+       <div class="row glow" style="padding:4px 6px;margin-top:6px">${P(3)}<span class="lbl">Executar escala em:</span><span class="dd" style="min-width:120px">GPU</span></div></div>`,
+     botoes:[['Aplicar',4]] }),
+   itens:[[2,'Modo de escala','Tela cheia','Estica a imagem 4:3 para ocupar a tela inteira, sem barras pretas.'],[3,'Executar escala em','GPU','A placa de vídeo faz o "esticamento", em vez do monitor. Fica igual em qualquer monitor e com menos atraso.']] },
+]},
+
+/* ------------------------------ NVIDIA App ------------------------------ */
+{ id:'nvapp', nome:'NVIDIA – App', cor:'#76b900', passos:[
+ { id:'nvapp-rec', tit:'Desligar gravação e sobreposição (se não usa)', modo:'man',
+   sub:'O NVIDIA App é opcional: serve para atualizar o driver, gravar a tela e usar filtros. Se você não grava a tela, desligue o que fica rodando em segundo plano.',
+   onde:['Abra o <b>NVIDIA App</b> (menu Iniciar) e clique em <b>Configurações</b>, na barra da esquerda.',
+         'Clique na aba <b>Recursos</b>.',
+         'Desligue a <b>Sobreposição do NVIDIA</b>.',
+         'Desligue o <b>Replay instantâneo</b> (se aparecer).',
+         'Desligue <b>Otimizar automaticamente jogos recém-adicionados</b> (aba Gráficos > Configurações globais, em algumas versões).'],
+   tela: telaNvapp({ ativo:'Configurações', pinNav:1, abas:[['Sobre'],['Recursos',2],['Privacidade'],['Notificações']],
+     linhas:[['Sobreposição do NVIDIA','Atalho Alt+Z, gravação, filtros e estatísticas',false,3],
+             ['Replay instantâneo','Grava sem parar os últimos minutos do jogo',false,4],
+             ['Otimizar automaticamente jogos recém-adicionados','Muda os gráficos dos seus jogos sozinho',false,5]] }),
+   itens:[[3,'Sobreposição do NVIDIA','Desligado','Tira o overlay (Alt+Z) e os processos que ficam por trás dele. Só ligue se você grava a tela ou usa filtros.'],
+          [4,'Replay instantâneo','Desligado','Ele grava o jogo sem parar para você "salvar o último lance". Isso gasta placa de vídeo e escreve no disco o tempo todo.'],
+          [5,'Otimizar jogos automaticamente','Desligado','Evita que o app mude a qualidade gráfica dos seus jogos sem você saber.']] },
+]},
+
+/* ------------------------------ AMD ------------------------------ */
+{ id:'amd', nome:'AMD – Adrenalin', cor:'#e8343b', passos:[
+ { id:'amd-abrir', tit:'Abrir o AMD Software (Adrenalin)', modo:'man',
+   sub:'É o programa da AMD onde ficam todas as configurações da placa Radeon.',
+   onde:['Clique com o <b>botão direito</b> em um espaço vazio da área de trabalho e escolha <b>Mostrar mais opções</b> (no Windows 10 este passo não existe).',
+         'Clique em <b>AMD Software: Adrenalin Edition</b>.'],
+   tela: telaCtx({item:'AMD Software: Adrenalin Edition'}),
+   dica:'Também abre pelo menu Iniciar ("AMD Software") ou com o atalho Alt+R.' },
+
+ { id:'amd-graf', tit:'Gráficos globais (a parte mais importante)', modo:'auto',
+   sub:'Valem para todos os jogos. O AVANTIPACK já liga o Anti-Lag e desliga o Chill. O resto você confere aqui; a AMD não deixa programa nenhum mudar tudo sozinho.',
+   onde:['Clique em <b>Jogos</b>, no menu de cima.',
+         'Clique na sub-aba <b>Gráficos</b>.',
+         'Em perfil gráfico, escolha <b>Personalizado</b> (NÃO o HYPR-RX).',
+         'Desça a lista e deixe cada opção como na tela (veja a explicação de cada uma embaixo).',
+         'No fim da página, clique em <b>Avançado</b> para abrir mais opções (próximo passo).'],
+   tela: telaAdr({ top:'Jogos', pinTop:1, sub:[['Jogos'],['Gráficos',2,true],['Tela'],['Vídeo']],
+     perfis:[['HYPR-RX'],['HYPR-RX Eco'],['Padrão'],['Personalizado',true,3]],
+     linhas:[
+       ['Radeon Anti-Lag','Reduz o atraso entre o clique e a tela',true,4],
+       ['Radeon Chill','Economiza energia baixando o FPS quando você fica parado',false,5],
+       ['Radeon Boost','Baixa a resolução quando você mexe a câmera',false,6],
+       ['Radeon Super Resolution','Upscaling do driver para qualquer jogo',false,7],
+       ['Radeon Image Sharpening','Deixa a imagem mais nítida',false],
+       ['Radeon Enhanced Sync','Alternativa ao V-Sync',false,8],
+       ['Aguardar atualização vertical','V-Sync do driver','Sempre desativado',9],
+     ], avancado:10 }),
+   itens:[
+     [3,'Perfil Personalizado','selecionado','O HYPR-RX liga o Radeon Boost e outros recursos de uma vez. Em jogo competitivo ele mais atrapalha do que ajuda. No Personalizado você controla cada opção.'],
+     [4,'Radeon Anti-Lag','Ativado','Diminui o input lag: o clique do mouse aparece mais rápido na tela. Em jogos compatíveis ele vira Anti-Lag 2, que é ainda melhor.'],
+     [5,'Radeon Chill','Desativado','Baixa o FPS quando você não está se mexendo, para economizar energia. Ruim para jogar e não funciona junto com o Anti-Lag.'],
+     [6,'Radeon Boost','Desativado','Reduz a resolução enquanto você mexe a câmera. A imagem fica borrada justo na hora da mira.'],
+     [7,'Radeon Super Resolution','Desativado','Upscaling genérico que deixa até o menu do jogo embaçado. Prefira o FSR dentro do próprio jogo.'],
+     [8,'Enhanced Sync','Desativado','É conhecido por causar travadinhas e telas pretas em alguns jogos.'],
+     [9,'Aguardar atualização vertical','Sempre desativado','É o V-Sync. Desligado = menos input lag. Exceção: com FreeSync, veja o arquivo guias\\LIMITE_DE_FPS.txt.'],
+   ] },
+
+ { id:'amd-adv', tit:'Gráficos – Avançado', modo:'man',
+   sub:'Fica no fim da mesma página de Gráficos, escondido em "Avançado".',
+   onde:['Em <b>Jogos › Gráficos</b>, role até o fim e clique em <b>Avançado</b>.',
+         'Em <b>Qualidade da filtragem de textura</b>, escolha <b>Desempenho</b>.',
+         'Ligue a <b>Otimização do formato de superfície</b>.',
+         'Deixe <b>Modo de tesselação</b> e <b>Cache do sombreador</b> em <b>Otimizado pela AMD</b>.'],
+   tela: telaAdr({ top:'Jogos', sub:[['Jogos'],['Gráficos',0,true],['Tela'],['Vídeo']],
+     linhas:[
+       ['Avançado ⌃','',' ',1],
+       ['Qualidade da filtragem de textura','Qualidade das texturas vistas em ângulo','Desempenho',2],
+       ['Otimização do formato de superfície','Usa formatos de imagem mais leves',true,3],
+       ['Modo de tesselação','Detalhe extra em superfícies','Otimizado pela AMD',4],
+       ['Cache do sombreador','Guarda os shaders compilados no disco','Otimizado pela AMD',4],
+     ] }),
+   itens:[[2,'Filtragem de textura','Desempenho','Deixa o filtro das texturas no modo mais leve. Mais FPS e quase nenhuma diferença visível.'],
+          [3,'Formato de superfície','Ativado','O driver troca alguns formatos de imagem por versões mais leves. Ganha FPS sem perder qualidade visível.'],
+          [4,'Tesselação e Cache','Otimizado pela AMD','Esse padrão já é o melhor. Só confira se ninguém mudou. O cache evita travadinhas na primeira vez que um efeito aparece.']] },
+
+ { id:'amd-tela', tit:'Tela: FreeSync', modo:'man',
+   sub:'FreeSync faz o monitor acompanhar o FPS: sem cortes na imagem e sem o atraso do V-Sync.',
+   onde:['Clique em <b>Jogos</b> e depois na sub-aba <b>Tela</b>.',
+         'Ligue <b>AMD FreeSync</b> (só aparece se o monitor suportar).',
+         'Deixe <b>Resolução virtual superior</b> desligada.'],
+   tela: telaAdr({ top:'Jogos', sub:[['Jogos'],['Gráficos'],['Tela',1,true],['Vídeo']],
+     linhas:[['AMD FreeSync','Sincroniza o monitor com o FPS do jogo',true,2],
+             ['Resolução virtual superior','Renderiza acima da resolução do monitor (pesa muito)',false,3],
+             ['Escalonamento de GPU','Para resolução esticada (4:3)',false],
+             ['Profundidade de cor','Bits por canal','8 bpc']] }),
+   itens:[[2,'AMD FreeSync','Ativado','Acaba com o "rasgo" na imagem quando o FPS muda. Para funcionar, o FreeSync também precisa estar ligado no menu do próprio monitor (botões atrás dele).'],
+          [3,'Resolução virtual superior (VSR)','Desativado','Faz o jogo rodar acima da resolução do monitor. Fica bonito, mas derruba o FPS.']] },
+
+ { id:'amd-rec', tit:'Gravação em segundo plano e sobreposição', modo:'man',
+   sub:'Recursos que ficam gravando/monitorando enquanto você joga.',
+   onde:['Clique em <b>Gravar e transmitir</b>, no menu de cima.',
+         'Desligue <b>Replay instantâneo</b> e <b>Replay de jogo</b>.',
+         'No ⚙ (engrenagem, canto superior direito) > Preferências: desligue as <b>notificações</b> e a <b>sobreposição</b> que você não usa.'],
+   tela: telaAdr({ top:'Gravar e transmitir', pinTop:1, pinGear:3, linhas:[
+       ['Replay instantâneo','Grava sem parar os últimos minutos',false,2],
+       ['Replay de jogo','Grava a partida inteira',false,2],
+       ['Replay em GIF','',false]] }),
+   itens:[[2,'Replays','Desligado','Gravação contínua gasta placa de vídeo e escreve no disco o tempo todo. Só ligue se você grava a tela.'],
+          [3,'Sobreposição / notificações','Desligado','Menos coisas aparecendo e rodando por cima do jogo.']] },
+
+ { id:'amd-sam', tit:'Conferir o Smart Access Memory', modo:'man',
+   sub:'É o nome que a AMD dá ao Resizable BAR. Dá FPS a mais em vários jogos.',
+   onde:['Clique em <b>Desempenho</b>, no menu de cima, e depois na sub-aba <b>Ajuste</b>.',
+         'Procure <b>Smart Access Memory</b>. Ele deve estar <b>Ativado</b>.'],
+   tela: telaAdr({ top:'Desempenho', pinTop:1, sub:[['Métricas'],['Ajuste',0,true],['Avançado']],
+     linhas:[['Smart Access Memory','Processador acessa toda a memória da placa de vídeo',true,2],
+             ['Controle de ajuste','Automático / Manual','Padrão']] }),
+   itens:[[2,'Smart Access Memory','Ativado','Se aparecer desativado ou cinza, ele precisa ser ligado na BIOS: abra o Guia de BIOS (opção 5 do pack, Guias), item 2 "Resizable BAR".']] },
+]},
+
+/* ------------------------------ Intel ------------------------------ */
+{ id:'intel', nome:'Intel – Graphics Software', cor:'#0ea5e9', passos:[
+ { id:'intel-graf', tit:'Configurações globais de gráficos', modo:'man',
+   sub:'Para placas Intel Arc e vídeo integrado Intel. O programa chama "Intel Graphics Software" (antes: Arc Control).',
+   onde:['Abra o <b>Intel Graphics Software</b> (menu Iniciar) e clique em <b>Gráficos</b>.',
+         'Ligue o <b>Low Latency</b>.',
+         'Em <b>Vertical Sync</b>, deixe "Application choice" ou "Off".',
+         'Desligue <b>captura/overlay</b> se não usa.'],
+   tela: telaIntel({ nav:'Gráficos', pinNav:1, titulo:'Gráficos › Global', linhas:[
+       ['Low Latency','Reduz o atraso entre o clique e a tela','On',2],
+       ['Vertical Sync','V-Sync do driver','Application choice',3],
+       ['Frame Rate Limiter','Limitador de FPS do driver',false],
+       ['Captura / Overlay','Gravação e informações sobre o jogo',false,4]] }),
+   itens:[[2,'Low Latency','On','Menos input lag (mesma ideia do modo de baixa latência da NVIDIA).'],
+          [3,'Vertical Sync','Application choice / Off','Deixa o jogo decidir. Desligado no jogo = menos atraso.'],
+          [4,'Captura / Overlay','Desligado','Menos processos rodando enquanto você joga.']] },
+ { id:'intel-rebar', tit:'Intel Arc: Resizable BAR é obrigatório', modo:'man',
+   sub:'Sem Resizable BAR uma Arc pode perder muito desempenho.',
+   onde:['Clique em <b>Sistema</b>.', 'Confira <b>Resizable BAR</b>: deve aparecer "Enabled". Se não aparecer, ligue na BIOS (Guia de BIOS, item 2).'],
+   tela: telaIntel({ nav:'Sistema', pinNav:1, titulo:'Sistema › Informações', linhas:[['Resizable BAR','Acesso total da CPU à memória de vídeo','Enabled',2],['Versão do driver','','32.0.x']] }),
+   itens:[[2,'Resizable BAR','Enabled','Obrigatório para Intel Arc. Se estiver "Disabled", ligue "Above 4G Decoding" e "Re-Size BAR" na BIOS.']] },
+]},
+
+/* ------------------------------ Windows ------------------------------ */
+{ id:'windows', nome:'Windows (todo mundo)', cor:'#4cc2ff', passos:[
+ { id:'win-hz', tit:'Taxa de atualização do monitor', modo:'auto',
+   sub:'A opção 2 (Verificar meu PC) já verifica e corrige. Use isto para conferir.',
+   onde:['Abra <b>Configurações</b> (tecla Windows + I) e clique em <b>Sistema</b>.',
+         'Clique em <b>Tela</b> e, mais abaixo, em <b>Tela avançada</b>.',
+         'Em <b>Escolher uma taxa de atualização</b>, escolha o <b>maior número</b>.'],
+   tela: telaW11({ nav:'Sistema', pinNav:1, bc:['Sistema','Tela','Tela avançada'], cards:[
+       ['🖥','Selecionar uma tela para exibir ou alterar as configurações','', 'Monitor 1'],
+       ['ℹ','Informações de exibição','Monitor 1: conectado a NVIDIA/AMD/Intel ...','>',2],
+       ['↻','Escolher uma taxa de atualização','Uma taxa mais alta dá movimentos mais suaves','165 Hz',3],
+       ['⟳','Taxa de atualização dinâmica','Só em alguns notebooks',false]] }),
+   itens:[[2,'Informações de exibição','conferir','Mostra em qual placa o monitor está ligado. Se aparecer o vídeo integrado (Intel UHD / AMD Radeon Graphics) num PC com placa dedicada, o cabo está na placa-mãe: troque para a placa de vídeo!'],
+          [3,'Taxa de atualização','o MAIOR valor','Use sempre o máximo do monitor. Se o valor alto não aparece, o cabo pode ser o problema (use DisplayPort ou HDMI 2.0+).']] },
+
+ { id:'win-graf', tit:'Gráficos: agendamento de GPU e jogos em janela', modo:'auto',
+   sub:'A opção 1 (Otimizar automaticamente) já liga isso.',
+   onde:['Em <b>Sistema › Tela</b>, clique em <b>Gráficos</b>.',
+         'Clique em <b>Alterar configurações gráficas padrão</b> (ou "Configurações gráficas padrão").',
+         'Ligue as três opções e reinicie o PC.'],
+   tela: telaW11({ nav:'Sistema', pinNav:1, bc:['Sistema','Tela','Gráficos','Configurações padrão'], cards:[
+       ['▦','Agendamento de GPU acelerado por hardware','Reduz a latência e melhora o desempenho',true,3],
+       ['⧉','Otimizações para jogos em janela','Melhora a latência em jogos no modo janela',true,3],
+       ['↻','Taxa de atualização variável','Habilita o VRR em jogos que não suportam nativamente',true,3]] }),
+   itens:[[3,'Agendamento de GPU acelerado por hardware (HAGS)','Ativado','A placa de vídeo organiza o próprio trabalho, tirando carga do processador. É obrigatório para o DLSS Frame Generation.'],
+          [3,'Otimizações para jogos em janela','Ativado','Jogos em "tela cheia sem borda" ficam com a mesma latência da tela cheia de verdade.'],
+          [3,'Taxa de atualização variável','Ativado','Deixa o G-SYNC/FreeSync funcionar em mais jogos.']] },
+
+ { id:'win-gpu-app', tit:'Notebook com 2 placas: jogo na placa dedicada', modo:'man',
+   sub:'Notebooks têm o vídeo integrado (fraco) e a placa dedicada (forte). Às vezes o jogo abre na fraca.',
+   onde:['Em <b>Sistema › Tela › Gráficos</b>, ache o jogo na lista (ou clique em "Procurar" e escolha o .exe dele).',
+         'Clique no jogo e em <b>Opções</b>.',
+         'Escolha <b>Alto desempenho</b> (vai aparecer o nome da placa NVIDIA/AMD) e salve.'],
+   tela: telaW11({ nav:'Sistema', pinNav:0, bc:['Sistema','Tela','Gráficos'], cards:[
+       ['🎮','Jogo.exe','Clique para ver as opções','Opções',1],
+       ['⚡','Preferência de gráficos','Deixe o Windows decidir / Economia de energia / Alto desempenho','Alto desempenho',2]] }),
+   itens:[[2,'Preferência de gráficos','Alto desempenho','Obriga o jogo a usar a placa dedicada. Pode dobrar o FPS em notebooks.']] },
+
+ { id:'win-jogos', tit:'Jogos: Modo de Jogo e gravação', modo:'auto',
+   sub:'A opção 1 (Otimizar automaticamente) já faz isso.',
+   onde:['Em <b>Configurações</b>, clique em <b>Jogos</b>.',
+         'Clique em <b>Modo de Jogo</b> e deixe <b>Ativado</b>.',
+         'Volte, clique em <b>Capturas</b> e desligue <b>Gravar o que aconteceu</b>.'],
+   tela: telaW11({ nav:'Jogos', pinNav:1, bc:['Jogos'], cards:[
+       ['🎮','Barra de Jogos','Atalhos e widgets (Win + G)','>'],
+       ['📷','Capturas','Gravar o que aconteceu: Desativado','>',3],
+       ['⚡','Modo de Jogo','Otimize seu PC para jogar desativando coisas em segundo plano',true,2]] }),
+   itens:[[2,'Modo de Jogo','Ativado','O Windows dá prioridade ao jogo e segura atualizações e notificações enquanto você joga.'],
+          [3,'Gravar o que aconteceu','Desativado','É a gravação em segundo plano do Xbox. Gasta placa de vídeo e disco o tempo todo.']],
+   dica:'Processador Ryzen X3D de 2 CCDs (7900X3D, 7950X3D, 9900X3D, 9950X3D)? NÃO desinstale a Barra de Jogos: o processador usa ela para saber que um jogo está aberto.' },
+
+ { id:'win-energia', tit:'Modo de energia (notebook)', modo:'auto',
+   sub:'Em notebook, o Windows segura o desempenho para economizar bateria.',
+   onde:['Em <b>Sistema</b>, clique em <b>Energia e bateria</b>.', 'Em <b>Modo de energia</b>, escolha <b>Melhor desempenho</b> (com o carregador ligado).'],
+   tela: telaW11({ nav:'Sistema', pinNav:1, bc:['Sistema','Energia e bateria'], cards:[
+       ['🔋','Economia de bateria','',' >'],
+       ['⚡','Modo de energia','Otimize o dispositivo com base no uso de energia e no desempenho','Melhor desempenho',2]] }),
+   itens:[[2,'Modo de energia','Melhor desempenho','Libera o processador e a placa de vídeo para usar toda a potência. Jogue sempre com o carregador conectado.']] },
+
+ { id:'win-mouse', tit:'Mouse sem aceleração', modo:'auto',
+   sub:'A opção 1 (Otimizar automaticamente) já desliga. Esta é a tela antiga do Windows onde fica a opção.',
+   onde:['Em <b>Configurações</b>, clique em <b>Bluetooth e dispositivos</b> › <b>Mouse</b>.',
+         'Clique em <b>Configurações adicionais do mouse</b>. Abre uma janela pequena: vá na aba <b>Opções do ponteiro</b>.',
+         'Desmarque <b>Aumentar precisão do ponteiro</b> e clique em <b>OK</b>.'],
+   tela: `<div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start">${telaW11({ nav:'Bluetooth e dispositivos', pinNav:1, bc:['Bluetooth e dispositivos','Mouse'], cards:[
+       ['🖱','Botão principal do mouse','','Esquerdo'],['➶','Velocidade do ponteiro do mouse','',' '],
+       ['⚙','Configurações adicionais do mouse','Ponteiros e visibilidade do ponteiro','↗',2]] }).replace('min-width:860px','')}
+     <div class="cls"><div class="tb">Propriedades de Mouse</div><div class="tbs"><span>Botões</span><span>Ponteiros</span><span class="on glow">Opções do ponteiro ${P(2)}</span><span>Roda</span></div>
+     <div class="pg"><fieldset><legend>Movimento</legend>Selecione a velocidade do ponteiro:<div style="margin:6px 0;height:4px;background:#bbb;position:relative"><span style="position:absolute;left:50%;top:-5px;width:8px;height:14px;background:#0067c0"></span></div>
+     <div class="glow" style="padding:3px">${P(3)}<span class="chk"></span>Aumentar precisão do ponteiro</div></fieldset>
+     <fieldset><legend>Ajustar a</legend><span class="chk"></span>Mover automaticamente o ponteiro para o botão padrão</fieldset></div>
+     <div class="ft"><span class="btn">OK</span><span class="btn">Cancelar</span><span class="btn">Aplicar</span></div></div></div>`,
+   itens:[[3,'Aumentar precisão do ponteiro','DESMARCADO','Apesar do nome, isso é aceleração: o ponteiro anda mais ou menos dependendo da velocidade do movimento. Desmarcado, a mão e a mira andam sempre igual (1:1), e a memória muscular funciona.']] },
+]},
+];
+
+/* ---------- montagem da página ---------- */
+function render(id){
+  const g = GUIAS.find(x=>x.id===id);
+  document.querySelectorAll('#tabs button').forEach(b=>b.setAttribute('aria-selected', b.dataset.id===id));
+  document.getElementById('toc').innerHTML = g.passos.map((p,i)=>`<a href="#${p.id}">${i+1}. ${p.tit}</a>`).join('');
+  document.getElementById('conteudo').innerHTML = g.passos.map((p,i)=>`
+   <section class="step" id="${p.id}">
+     <div class="step-h"><div class="num">${i+1}</div><div>
+       <h3>${p.tit} <span class="tag ${p.modo==='auto'?'auto':'man'}">${p.modo==='auto'?'AUTO':'MANUAL'}</span></h3>
+       <p class="sub">${p.sub||''}</p></div></div>
+     <div class="onde"><h4>Onde clicar</h4><ol>${p.onde.map((t,k)=>`<li><span class="p">${k+1}</span><span>${t}</span></li>`).join('')}</ol></div>
+     <div class="shot">${p.tela||''}</div>
+     <figure class="real" hidden><img alt="" src="img/${p.id}.png" onload="this.parentNode.hidden=false"><figcaption>Print real (guias\\img\\${p.id}.png)</figcaption></figure>
+     ${p.itens?`<div class="expl"><h4>O que cada opção faz</h4>${p.itens.map(([n,nome,val,tx])=>`
+        <div class="item"><span class="p">${n}</span><div><span class="nm">${nome}</span>${val&&val!=='—'?`<span class="vl">${val}</span>`:''}<div class="tx">${tx}</div></div></div>`).join('')}</div>`:''}
+     ${p.dica?`<div class="tip">💡 ${p.dica}</div>`:''}
+     <div style="margin-top:8px;color:#5f6c86;font-size:11.5px">Para usar print real: guias\\img\\${p.id}.png</div>
+   </section>`).join('');
+  try{ history.replaceState(null,'','#'+id) }catch(e){}
+  window.scrollTo({top:0});
+}
+document.getElementById('tabs').innerHTML = GUIAS.map(g=>`<button data-id="${g.id}" role="tab"><i style="background:${g.cor}"></i>${g.nome}</button>`).join('');
+document.getElementById('tabs').addEventListener('click', e=>{ const b=e.target.closest('button'); if(b) render(b.dataset.id); });
+document.getElementById('toc').addEventListener('click', e=>{ const a=e.target.closest('a'); if(!a) return; e.preventDefault(); document.getElementById(a.getAttribute('href').slice(1)).scrollIntoView({behavior:'smooth'}); });
+const h=(location.hash||'').slice(1); render(GUIAS.some(g=>g.id===h)?h:'nvidia');
+</script>
+</body>
+</html>

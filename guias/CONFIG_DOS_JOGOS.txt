@@ -1,0 +1,160 @@
+=====================================================================
+  AVANTIPACK - CONFIGURAÇÕES RECOMENDADAS DENTRO DOS JOGOS
+=====================================================================
+
+  Regras que valem para TODOS os jogos (as mais importantes):
+  ---------------------------------------------------------------
+  1. Modo de tela: "Tela cheia" (ou "Tela cheia exclusiva"). Se o jogo
+     só tiver "Janela sem borda", tudo bem no Windows 11: o pack já liga
+     a otimização de janela.
+  2. Resolução = a do monitor, e taxa de atualização = a MAIOR que
+     aparecer (144/165/240 Hz).
+  3. V-Sync DESLIGADO no jogo (com G-SYNC/FreeSync, o V-Sync fica ligado
+     no painel da placa; veja guias\LIMITE_DE_FPS.txt).
+  4. NVIDIA Reflex: "Ativado + Boost" | AMD: Anti-Lag 2 | Intel: XeLL.
+     Se o jogo tiver, SEMPRE ligue: é o ajuste que mais tira input lag.
+  5. Upscaling (DLSS / FSR / XeSS): no modo "Qualidade" dá bastante FPS
+     com pouca perda de imagem. Em competitivo, prefira DLSS a FSR
+     quando tiver os dois. Geração de quadros (Frame Generation)
+     AUMENTA o input lag: deixe desligada em jogo competitivo.
+  6. Os 4 que mais pesam em quase todo jogo: sombras, iluminação/
+     oclusão de ambiente, volumétricos (névoa/nuvens) e reflexos.
+     Baixe esses primeiro, antes de baixar texturas.
+  7. Texturas dependem da memória da PLACA (VRAM), não do processador:
+     4 GB = baixo, 6-8 GB = médio, 10 GB+ = alto. Passar disso causa
+     travadas fortes.
+  8. Desfoque de movimento, aberração cromática, granulação e
+     profundidade de campo: DESLIGADOS (pesam e atrapalham a visão).
+  9. Limite de FPS: use o do jogo, se for bom, ou o RTSS. FPS estável
+     é melhor que FPS alto oscilando.
+
+
+  COUNTER-STRIKE 2
+  ---------------------------------------------------------------
+  • Modo: Tela cheia | NVIDIA Reflex: Ativado + Boost
+  • Boost de contraste de jogador: Ativado
+  • Sombras: Baixo/Médio (sombra de jogador ajuda a ver inimigos)
+  • Detalhe de texturas: Médio | Filtragem de texturas: Anisotrópica 4x
+  • MSAA: 4x se tiver FPS sobrando, senão CMAA2
+  • Qualidade de sombreamento: Baixo | Partículas: Baixo
+  • Ambient occlusion: Desativado | HDR: Desempenho
+  • FidelityFX Super Resolution: Desativado (deixa a imagem borrada)
+  • Opções de inicialização: não precisa de nenhuma (comandos antigos
+    como -high e -threads não ajudam no CS2).
+
+  VALORANT
+  ---------------------------------------------------------------
+  • Modo de exibição: Tela cheia | Limite de FPS: desligado ou igual
+    ao que seu PC mantém estável
+  • Renderização multithread: ATIVADO (ganho grande em CPUs de 4+ núcleos)
+  • Qualidade de material/textura/detalhes: Baixa ou Média
+  • Melhorar clareza: Desativado | Distorção: Desativado
+  • Sombras em primeira pessoa: Desativado | Anisotrópica: 4x
+  • Anti-aliasing: MSAA 2x ou nenhum | V-Sync: Desativado
+  • NVIDIA Reflex: Ativado + Boost
+  • Obs: o anti-cheat Vanguard pode exigir TPM 2.0 e Secure Boot (Win11)
+    e, em alguns casos, a Integridade de memória ligada.
+
+  FORTNITE
+  ---------------------------------------------------------------
+  • Modo de renderização:
+      PC fraco / competitivo puro -> "Desempenho" (o mais leve)
+      PC médio/forte -> DirectX 12 (melhor com placas atuais)
+  • Limite de FPS: o Hz do monitor ou Ilimitado
+  • NVIDIA Reflex: Ativado + Boost
+  • Sombras, Oclusão de ambiente, Reflexos, Iluminação global: Desligado/Baixo
+  • Distância de visão: Média ou Épica (não pesa tanto e ajuda a ver longe)
+  • Texturas: de acordo com a VRAM (regra 7)
+  • Nanite e Lumen (no DX12): desligados para competitivo
+
+  LEAGUE OF LEGENDS
+  ---------------------------------------------------------------
+  • Janela: Tela cheia | Limite de FPS: 144/240 (o Hz do monitor)
+  • Aguardar sincronização vertical: desligado
+  • Sombras: desligado ou baixo | Efeitos: Médio
+  • PC muito fraco: ative "Modo de baixas especificações" no CLIENTE
+    (o launcher fica mais leve).
+
+  CALL OF DUTY (WARZONE / BLACK OPS)
+  ---------------------------------------------------------------
+  • Modo de exibição: Tela cheia exclusiva
+  • NVIDIA Reflex: Ativado + Boost
+  • Upscaling: DLSS (NVIDIA) ou FSR (AMD) em Qualidade/Equilibrado
+  • Streaming de texturas sob demanda: Desligado se sua internet for
+    instável ou o disco for HD (evita travadas)
+  • Sombras, oclusão, reflexos de espaço de tela: Baixo/Desligado
+  • Qualidade de textura: de acordo com a VRAM (regra 7)
+  • Instale o jogo no SSD/NVMe: no HD ele trava muito.
+
+  APEX LEGENDS
+  ---------------------------------------------------------------
+  • Modo: Tela cheia | V-Sync: Desativado
+  • Resolução adaptativa: 0 (desligado)
+  • NVIDIA Reflex: Ativado + Boost
+  • Sombras (sol e locais): Baixo/Desligado | Iluminação volumétrica: Desligado
+  • Para tirar o limite de 144 FPS: nas opções de inicialização do jogo
+    (Steam/EA), use  +fps_max unlimited
+
+  RAINBOW SIX SIEGE
+  ---------------------------------------------------------------
+  • Use a versão VULKAN (aparece ao abrir o jogo): costuma dar mais FPS
+  • NVIDIA Reflex: Ativado + Boost
+  • Sombras e reflexos: Baixo | Escala de renderização: 100%
+
+  OVERWATCH 2
+  ---------------------------------------------------------------
+  • Tela cheia | NVIDIA Reflex: Ativado + Boost
+  • Limite de FPS: Personalizado, no valor que o PC mantém estável
+  • Qualidade: Baixa/Média | Escala de renderização: 100%
+
+  PUBG
+  ---------------------------------------------------------------
+  • Tela cheia | Escala de tela: 100 | Anti-aliasing: Ultra (pesa pouco e
+    ajuda a ver longe) | Texturas: Média | Efeitos, Folhagem, Sombras: Muito baixo
+  • Distância de visão: Médio/Alto
+
+  ROCKET LEAGUE
+  ---------------------------------------------------------------
+  • Tela cheia | V-Sync: Desligado | FPS máximo: Ilimitado ou o Hz do monitor
+  • Qualidade: Alto desempenho | Desfoque de movimento: Desligado
+
+  GTA V / FIVEM (RP)
+  ---------------------------------------------------------------
+  • MSAA: Desligado (pesa muito) | FXAA: Ligado
+  • Qualidade de grama: Normal (no máximo derruba o FPS)
+  • Sombras: Normal | Reflexos: Normal | Densidade da população: média
+  • FiveM: o FPS cai muito em servidores com mods pesados; limpe o cache
+    do FiveM (pasta FiveM Application Data\data\cache) quando travar.
+
+  MINECRAFT (JAVA)
+  ---------------------------------------------------------------
+  • Maior ganho: instale o mod de desempenho Sodium (pelo Fabric/Modrinth).
+    Costuma multiplicar o FPS.
+  • Distância de renderização: 8-12 chunks | Gráficos: Rápidos
+  • Memória do launcher: 4 GB costuma bastar (mais não é melhor).
+
+  ROBLOX
+  ---------------------------------------------------------------
+  • Configurações > Taxa de quadros máxima: o Hz do monitor
+  • Qualidade gráfica: Manual, 3-5 em PC fraco
+
+  FREE FIRE (BLUESTACKS)
+  ---------------------------------------------------------------
+  • BlueStacks > Configurações > Desempenho: 4 núcleos e 4 GB de RAM
+    (ou "Alto"), Modo de desempenho: Alto
+  • Taxa de quadros: 60/90/120 (o máximo que seu PC mantém)
+  • Motor gráfico: Desempenho | Renderizador: DirectX ou Vulkan (teste os dois)
+  • A virtualização (SVM/VT-x) precisa estar LIGADA na BIOS para o
+    emulador ficar rápido. NÃO use "Desligar hypervisor" do pack se o
+    BlueStacks pedir Hyper-V.
+
+  MARVEL RIVALS / THE FINALS / DELTA FORCE / ARENA BREAKOUT
+  ---------------------------------------------------------------
+  • Jogos em Unreal Engine 5: use o upscaling (DLSS/FSR/XeSS) em
+    Qualidade, Reflex Ativado + Boost, e baixe Iluminação global,
+    Reflexos e Sombras primeiro.
+  • Frame Generation: desligado em partida competitiva.
+
+
+  ⚠  Os nomes das opções mudam um pouco com as atualizações dos jogos.
+     Use as regras do topo como base quando o nome não for igual.

@@ -1,0 +1,22 @@
+OCCT - TESTE DE ESTABILIDADE
+=====================================================================
+Use DEPOIS de mexer na BIOS (XMP/EXPO, PBO, Curve Optimizer,
+undervolt) para ter certeza de que o PC está estável.
+Coloque o .exe aqui: apps\OCCT
+
+TESTES RECOMENDADOS (versão grátis)
+  • CPU: modo "Variável" ou "Estável", 30 minutos.
+  • Memória: 30-60 minutos (pega erro de XMP/EXPO).
+  • 3D Adaptativo: 20 minutos (placa de vídeo).
+  • Potência (Power): só para testar a fonte, 10-15 min. Esquenta
+    muito, fique de olho.
+
+COMO LER
+  • QUALQUER erro = instável. Volte o último ajuste da BIOS.
+  • Fique de olho na temperatura durante o teste (aparece no OCCT).
+
+AMD x INTEL
+  • Ryzen com Curve Optimizer: os erros às vezes só aparecem em carga
+    leve. Rode também o teste de CPU com 1 thread / carga variável.
+  • Intel 13ª/14ª: se der erro mesmo no padrão, atualize a BIOS
+    (guias\CPU_INTEL.txt).

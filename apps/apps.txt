@@ -1,0 +1,29 @@
+# ===================================================================
+#  AVANTIPACK - lista de apps
+#  Nome | Para | Pasta | Executavel | Site oficial | Fonte | auto | Nomes do arquivo baixado
+#
+#  Para : TODOS, GPU-NVIDIA, GPU-AMD, GPU-INTEL, CPU-AMD, CPU-INTEL
+#  Exe  : nome do .exe (aceita * para versoes). O pack procura na pasta
+#         do app e em Arquivos de Programas.
+#  Fonte: incluso | winget:<Id> | zip:<url> | github:<dono>/<repo> | site
+#  auto : entra no "Baixar todos os recomendados" (opcao B do menu "Programas uteis" (opcao 4))
+#  Nomes: como o arquivo costuma vir do site (com *), separados por ; - usado para
+#         pegar o download automaticamente da pasta Downloads e trazer para apps\<Pasta>.
+#  Ids do winget conferidos no repositorio oficial microsoft/winget-pkgs.
+# ===================================================================
+NVIDIA Profile Inspector | GPU-NVIDIA | NVIDIAProfileInspector | nvidiaProfileInspector.exe | https://github.com/Orbmu2k/nvidiaProfileInspector/releases | incluso | auto | nvidiaProfileInspector*
+DDU (remover driver de video) | TODOS | DDU | Display Driver Uninstaller.exe | https://www.wagnardsoft.com/display-driver-uninstaller-ddu | winget:Wagnardsoft.DisplayDriverUninstaller | auto | DDU*;*Display Driver Uninstaller*
+NVCleanstall | GPU-NVIDIA | NVCleanstall | NVCleanstall*.exe | https://www.techpowerup.com/nvcleanstall/ | winget:TechPowerUp.NVCleanstall | auto | NVCleanstall*
+Driver NVIDIA (oficial) | GPU-NVIDIA | Driver_NVIDIA |  | https://www.nvidia.com/pt-br/drivers/ | site |  | *-desktop-win10-win11-64bit-*;*-notebook-win10-win11-64bit-*;*nvidia*
+Driver AMD Radeon (Adrenalin) | GPU-AMD | Driver_AMD |  | https://www.amd.com/pt/support/download/drivers.html | site |  | *amd-software-adrenalin*;*whql-amd*;*AMD-Software*;*radeon*
+Driver de chipset AMD | CPU-AMD | Chipset_AMD |  | https://www.amd.com/pt/support/download/drivers.html | site |  | *amd_chipset*;*chipset_software*;*amd-chipset*
+Intel Driver Support Assistant | CPU-INTEL | Intel_DSA |  | https://www.intel.com.br/content/www/br/pt/support/detect.html | winget:Intel.IntelDriverAndSupportAssistant |  | *Intel-Driver-and-Support*;*Intel*DSA*;*IntelDriver*
+Driver Intel Arc / graficos | GPU-INTEL | Driver_Intel_Graficos |  | https://www.intel.com.br/content/www/br/pt/support/detect.html | site |  | *gfx_win*;*Intel*Graphics*;*arc*driver*
+HWiNFO (temperaturas) | TODOS | HWiNFO | HWiNFO64.exe | https://www.hwinfo.com/download/ | winget:REALiX.HWiNFO | auto | hwi*;HWiNFO*
+CPU-Z (processador e RAM) | TODOS | CPU-Z | cpuz.exe | https://www.cpuid.com/softwares/cpu-z.html | winget:CPUID.CPU-Z | auto | cpu-z*;cpuz*
+GPU-Z (placa de video) | TODOS | GPU-Z | GPU-Z*.exe | https://www.techpowerup.com/gpuz/ | winget:TechPowerUp.GPU-Z | auto | GPU-Z*
+CrystalDiskInfo (saude do SSD) | TODOS | CrystalDiskInfo | DiskInfo64.exe | https://crystalmark.info/en/software/crystaldiskinfo/ | winget:CrystalDewWorld.CrystalDiskInfo | auto | CrystalDiskInfo*
+RTSS (limitador de FPS) | TODOS | RTSS | RTSS.exe | https://www.guru3d.com/download/rtss-rivatuner-statistics-server-download/ | winget:Guru3D.RTSS | auto | *RTSS*;*RivaTuner*
+Autoruns (programas no boot) | TODOS | Autoruns | Autoruns64.exe | https://learn.microsoft.com/sysinternals/downloads/autoruns | zip:https://download.sysinternals.com/files/Autoruns.zip | auto | Autoruns*
+OCCT (teste de estabilidade) | TODOS | OCCT | OCCT*.exe | https://www.ocbase.com/ | winget:OCBase.OCCT.Personal |  | OCCT*
+Process Lasso (opcional) | TODOS | ProcessLasso | ProcessLasso.exe | https://bitsum.com/ | winget:BitSum.ProcessLasso |  | processlasso*;*ProcessLasso*

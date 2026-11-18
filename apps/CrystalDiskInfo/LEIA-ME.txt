@@ -1,0 +1,15 @@
+CRYSTALDISKINFO - SAÚDE DO SSD/HD
+=====================================================================
+Baixe a versão ZIP (Standard) e extraia aqui: apps\CrystalDiskInfo
+
+O QUE CONFERIR
+  • "Condição de saúde": Boa = ok. "Cuidado" (amarelo) = faça backup
+    e planeje a troca. "Ruim" (vermelho) = troque já.
+  • Temperatura: NVMe até ~70°C ok. Acima disso ele reduz a
+    velocidade e causa travadas ao carregar o jogo. Use dissipador.
+  • "Modo de transferência":
+      NVMe: "PCIe 4.0 x4 | PCIe 4.0 x4" = ok. Se o 1º valor for
+      menor (ex: x2), o slot M.2 é mais lento.
+      SATA: "SATA/600 | SATA/600" = ok.
+  • Espaço livre: deixe pelo menos 15-20% livre no SSD. SSD cheio
+    fica mais lento.

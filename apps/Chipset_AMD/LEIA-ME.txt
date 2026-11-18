@@ -1,0 +1,21 @@
+DRIVER DE CHIPSET AMD (processador Ryzen)
+=====================================================================
+É o driver mais importante de um PC com Ryzen. O Windows Update NÃO
+instala a versão completa.
+
+COMO ACHAR NO SITE DA AMD
+  Chipsets > escolha o soquete (AM4 ou AM5) > o chipset da sua placa
+  (ex: B550, X570, B650, X870). Se não souber, veja no CPU-Z, aba
+  "Mainboard", campo "Chipset/Southbridge".
+
+O QUE ELE FAZ
+  • Instala o gerenciador de energia do Ryzen (boost e ocioso
+    corretos).
+  • Nos Ryzen X3D de 2 CCDs (7900X3D, 7950X3D, 9900X3D, 9950X3D):
+    instala o "AMD 3D V-Cache Performance Optimizer", que coloca o
+    jogo nos núcleos com cache. SEM ele esses processadores perdem
+    muito FPS.
+
+DEPOIS DE INSTALAR
+  Reinicie. Rode de novo a opção 2 (Verificar meu PC) ou Modo avançado > Energia do AVANTIPACK para ele
+  confirmar que o serviço está ativo (X3D de 2 CCDs).

@@ -1,0 +1,11 @@
+# =====================================================================
+#  AVANTIPACK - configuracao
+# =====================================================================
+# Repositorio do GitHub onde voce publica as versoes (Releases).
+# Formato: usuario/nome-do-repositorio   (ex: avantimarketing/AVANTIPACK)
+# Deixe vazio para desligar a atualizacao automatica.
+GITHUB_REPO=pedromargutti/AVANTIPACK
+
+# 1 = o menu avisa quando sair versao nova (checa no maximo a cada 12 h)
+# 0 = nunca checar
+CHECAR_ATUALIZACAO=1

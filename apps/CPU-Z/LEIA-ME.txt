@@ -1,0 +1,17 @@
+CPU-Z - PROCESSADOR, PLACA-MÃE E RAM
+=====================================================================
+Baixe a versão ZIP (sem instalador) e extraia aqui: apps\CPU-Z
+
+O QUE CONFERIR
+  Aba "Memory"
+    • "Channel #": Dual (ou 2 x 32-bit na DDR5) = ok. "Single" = só
+      1 canal, perde FPS. Coloque os pentes nos slots indicados no
+      manual (geralmente o 2º e o 4º slot, A2 e B2).
+    • "DRAM Frequency" x 2 = velocidade real. Ex: 1600 MHz = 3200 MT/s.
+      Se estiver bem abaixo do que diz a etiqueta do pente, o
+      XMP/EXPO está desligado (Guia de BIOS item 1).
+  Aba "SPD": mostra os perfis XMP/EXPO que o pente suporta.
+  Aba "Mainboard": modelo exato da placa e versão da BIOS. Use
+    isso para baixar a BIOS certa no site do fabricante.
+
+AMD x INTEL: as abas são iguais para os dois.
