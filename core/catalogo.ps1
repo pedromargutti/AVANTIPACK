@@ -67,6 +67,7 @@ $CATALOGO = @(
     @{ Id='G5'; Cat='G'; Padrao=$true;  Nome='Limpar arquivos temporarios';              Desc='Temporarios, dumps, cache de shader e downloads do Windows Update.' }
 
     @{ Id='H1'; Cat='H'; Padrao=$true;  Nome='Prioridade alta para os jogos instalados'; Desc='Procura seus jogos (Steam, Epic, Riot...) e da mais CPU a eles quando abrem.' }
+    @{ Id='H3'; Cat='H'; Padrao=$true;  Nome='Jogos na placa de video dedicada (notebook)'; Desc='Em PC com 2 placas (integrada + dedicada), obriga cada jogo a usar a dedicada.'; Cond={ param($h) $h.GPU_HIBRIDA -eq '1' } }
     @{ Id='H2'; Cat='H'; Padrao=$true;  Nome='Perfil NVIDIA turbo nos jogos competitivos'; Desc='So nos competitivos instalados (CS2, Valorant, Fortnite...): baixa latencia ULTRA e clock maximo.'; Cond={ param($h) $h.GPU_VENDOR -eq 'NVIDIA' } }
 
     @{ Id='I1'; Cat='I'; Padrao=$false; Risco='alto'; Nome='Desligar Integridade de memoria (VBS)'; Desc='Mais FPS em CPUs fracas. Menos seguranca; Vanguard/FACEIT podem exigir ligada.' }
@@ -168,7 +169,7 @@ function Invoke-Selecao($sel) {
         @{ N = 'Placa de video e monitor';      Ok = (WantAny @('E1','E2','E3','E4'));    F = { Mod-GPU } },
         @{ N = 'Internet';                      Ok = (WantAny @('F1','F2','F3','F4','F5')); F = { Mod-Rede } },
         @{ N = 'SSD/HD e memoria';              Ok = (WantAny @('G1','G2','G3','G4','G5')); F = { Mod-Armazenamento } },
-        @{ N = 'Jogos instalados';              Ok = ($sel['H1'] -or $sel['H2']);         F = { if ($sel['H1']) { Invoke-AutoGames }; if ($sel['H2']) { Optimize-NvidiaGameProfiles (Load-HW) } } },
+        @{ N = 'Jogos instalados';              Ok = ($sel['H1'] -or $sel['H2'] -or $sel['H3']); F = { if ($sel['H1']) { Invoke-AutoGames }; if ($sel['H3']) { Invoke-GpuDedicada }; if ($sel['H2']) { Optimize-NvidiaGameProfiles (Load-HW) } } },
         @{ N = 'Ajustes avancados';             Ok = (WantAny @('I1','I2','I3','I4','I5')); F = { Mod-Avancado } }
     )
     $ativas = @($etapas | Where-Object { $_.Ok })

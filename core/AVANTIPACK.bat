@@ -76,6 +76,8 @@ if defined HW_ATUALIZACAO echo   %FVD% NOVA VERSAO %HW_ATUALIZACAO% DO AVANTIPAC
 if defined HW_REAPLICAR echo   %FAM% O WINDOWS FOI ATUALIZADO - use a opcao 1 e depois 3 (Reaplicar) %RS%
 if defined HW_AVISO echo   %FAM% %HW_AVISO% %RS%
 echo   %CI%==================================================================%RS%
+call :menusetas principal
+if not defined SETAS_FALHOU goto menu_escolha
 echo.
 echo   %VD%[1]  OTIMIZAR MEU PC%RS%   %AM%^<-- comece por aqui%RS%
 echo        %CI%Automatico (o pack escolhe tudo) ou Personalizado (voce marca por%RS%
@@ -98,12 +100,15 @@ echo.
 echo   %VM%[6]  DESFAZER / RECOLOCAR FUNCOES E APPS%RS%
 echo        %CI%Desfaz tudo ou so o que voce escolher (impressora, gravar clipes...).%RS%
 echo.
+echo   %AZ%[F]  TESTE DE FPS%RS%   %AZ%[R]  RELATORIO PARA AJUDA%RS%
+echo.
 echo   %CI%[7]  Modo avancado (escolher cada ajuste)     [8] Reiniciar o PC     [0] Sair%RS%
 echo.
 echo   %CI%==================================================================%RS%
 echo.
 set /p "op=%RS%  %BR%Digite o numero e aperte ENTER:%RS% "
 
+:menu_escolha
 if "%op%"=="1" set "MOD=auto"
 if "%op%"=="2" set "MOD=checkup"
 if "%op%"=="3" set "MOD=fix"
@@ -114,6 +119,8 @@ if "%op%"=="7" goto avancado
 if "%op%"=="8" goto reiniciar
 if "%op%"=="0" goto sair
 if /i "%op%"=="U" goto atualizar
+if /i "%op%"=="F" set "MOD=fps"
+if /i "%op%"=="R" set "MOD=relatorio"
 if not defined MOD goto menu
 call :rodar
 goto menu
@@ -125,6 +132,8 @@ cls
 call :banner
 echo   %BR%MODO AVANCADO%RS%  %CI%- escolha cada ajuste separado. Cada um explica o que faz antes.%RS%
 echo.
+call :menusetas avancado
+if not defined SETAS_FALHOU goto avancado_escolha
 echo   %AZ%[1]%RS%  Ver hardware e alertas              %AZ%[2]%RS%  Checar placa de video e monitor
 echo   %AZ%[3]%RS%  Criar ponto de restauracao
 echo.
@@ -143,6 +152,7 @@ echo.
 echo   %CI%[0]  Voltar ao menu principal%RS%
 echo.
 set /p "op=%RS%  %BR%Digite o numero e aperte ENTER:%RS% "
+:avancado_escolha
 if "%op%"=="1" set "MOD=detect"
 if "%op%"=="2" set "MOD=verificar"
 if "%op%"=="3" set "MOD=restore"
@@ -168,6 +178,20 @@ if "%op%"=="0" goto menu
 if not defined MOD goto avancado
 call :rodar
 goto avancado
+
+:menusetas
+:: Menu com setas (core\menu.ps1). Se falhar, SETAS_FALHOU fica definido
+:: e o menu de digitar o numero aparece no lugar.
+set "SETAS_FALHOU="
+set "op="
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0menu.ps1" -Tela %1
+set "RC=%errorlevel%"
+if "%RC%"=="120" (set "op=F" & exit /b)
+if "%RC%"=="121" (set "op=R" & exit /b)
+if "%RC%"=="130" (set "op=U" & exit /b)
+if %RC% GEQ 100 if %RC% LEQ 129 (set /a "op=RC-100" & exit /b)
+set "SETAS_FALHOU=1"
+exit /b
 
 :rodar
 cls

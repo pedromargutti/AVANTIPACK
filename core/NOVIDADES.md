@@ -2,6 +2,13 @@
 
 Tudo o que mudou em cada versão. A mais nova fica sempre em cima.
 
+## v0.8.0 — 18/11/2026
+- ⌨️ **Menu com as setas do teclado**: ↑ ↓ para escolher e ENTER para confirmar (digitar o número continua funcionando)
+- 📊 **Teste de FPS antes e depois** (tecla **F**): mede o FPS médio, o 1% low e as travadinhas enquanto você joga, e compara com os testes anteriores
+- 🧠 **Checagem de dual channel**: avisa se a memória está com 1 pente só ou com pentes de tamanhos diferentes (perde muito FPS, principalmente com vídeo integrado)
+- 💻 **Notebook com 2 placas**: os jogos passam a usar sempre a placa de vídeo **dedicada**
+- 🆘 **Relatório para ajuda** (tecla **R**): cria um arquivo com tudo do PC na Área de Trabalho para mandar a quem te ajuda, sem dados pessoais
+
 ## v0.7.5 — 18/11/2026
 - 🧹 **Pasta organizada**: agora só tem o **AVANTIPACK.exe**, o LEIA-ME e as pastas `apps`, `core` e `guias`
 - 🔵 **AVANTIPACK.exe com a logo**: é só dar dois cliques para abrir o pack

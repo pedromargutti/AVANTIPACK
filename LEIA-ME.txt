@@ -27,6 +27,8 @@
 
   O QUE CADA OPÇÃO DO MENU FAZ
   ---------------------------------------------------------------
+  Use as SETAS do teclado (↑ ↓) e ENTER, ou digite o número/letra.
+
   [1] OTIMIZAR MEU PC   <- comece por aqui
       Automático: o pack escolhe. Personalizado: você vê as 9 categorias
       (Segurança, Limpeza, Sistema/input lag, Energia, Vídeo, Internet,
@@ -83,6 +85,18 @@
           Hello, pesquisa, Xbox, Loja, hibernação...).
       [5] Ponto de restauração do Windows.
 
+  [F] TESTE DE FPS (antes e depois)
+      Abra o jogo, entre numa partida/treino e use esta opção: o pack
+      mede 60 segundos e mostra o FPS médio, o "1% low" (o FPS nos
+      piores momentos, que é o que você sente como travada) e quantas
+      travadinhas teve. Faça ANTES de otimizar e DEPOIS, no mesmo lugar
+      do jogo, para comparar. Usa o PresentMon (Intel, gratuito).
+
+  [R] RELATÓRIO PARA AJUDA
+      Cria um ZIP na Área de Trabalho com as peças, os alertas, o que o
+      pack mudou e os testes de FPS. Mande para quem está te ajudando.
+      Não vai nome de usuário, nome do PC, IP nem números de série.
+
   [7] MODO AVANÇADO
       Cada ajuste separado, com explicação antes: debloat, sistema,
       energia, placa de vídeo, rede, armazenamento, prioridade de jogos,
@@ -111,6 +125,8 @@
   • Desfazer reformulado: tudo, ou só a função que você precisa de volta.
   • Barra de progresso por etapa e caixa de resultado no fim.
   • v0.7.2: atalho com a logo, janela centralizada e fonte Consolas.
+  • v0.8.0: menu com setas, teste de FPS, dual channel, placa dedicada
+    no notebook e relatório para ajuda.
 
 
   PASTAS

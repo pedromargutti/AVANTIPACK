@@ -28,6 +28,17 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 > **Versão mais nova:** [veja o que mudou](../../releases/latest) · [histórico completo](core/NOVIDADES.md)
 
 <details open>
+<summary><b>v0.8.0</b> — menu com setas, teste de FPS e relatório</summary>
+
+- ⌨️ **Menu com as setas** do teclado (↑ ↓ e ENTER)
+- 📊 **Teste de FPS antes e depois**: FPS médio, 1% low e travadinhas, com histórico
+- 🧠 **Checagem de dual channel** da memória
+- 💻 **Notebook com 2 placas**: jogos sempre na placa dedicada
+- 🆘 **Relatório para ajuda** pronto para mandar
+
+</details>
+
+<details>
 <summary><b>v0.7.5</b> — pasta organizada e AVANTIPACK.exe com a logo</summary>
 
 - 🧹 Na pasta só ficam o **AVANTIPACK.exe**, o LEIA-ME e as pastas `apps`, `core` e `guias`
@@ -45,13 +56,6 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 
 </details>
 
-<details>
-<summary><b>v0.7.3</b> — tela de Novidades</summary>
-
-- 🆕 Depois de cada atualização, o pack **mostra sozinho o que mudou**
-- 📋 Modo avançado **[21] Novidades** para ver o histórico quando quiser
-
-</details>
 
 
 <br>
@@ -126,11 +130,13 @@ Avisa quando sai versão nova e atualiza sozinho. Avisa também quando um update
 | | Opção | O que faz |
 |:-:|---|---|
 | 🟢 | **Otimizar meu PC** | **Automático**, **Personalizado** (você escolhe por categoria) ou **Reaplicar** depois de update do Windows |
+| 📊 | **Teste de FPS** (F) | Mede FPS médio, 1% low e travadinhas jogando, antes e depois de otimizar |
 | 🔵 | **Verificar meu PC** | Peças, problemas (RAM sem XMP, monitor em 60 Hz, driver velho), **teste de input lag com nota** e teste da internet |
 | 🔧 | **Consertar um problema** | 19 reparos: sem internet, sem som, microfone, Loja, Windows Update, Alt+Tab no 24H2... |
 | 📦 | **Programas úteis** | **[A] Instalar tudo automático**: programas e drivers certos para o seu PC, cada um na sua pasta, com o passo a passo |
 | 📖 | **Guias** | Painéis NVIDIA/AMD/Intel ilustrados, BIOS por fabricante, limite de FPS, config dentro dos jogos |
 | 🔴 | **Desfazer / recolocar** | Desfaz tudo ou só uma função, reinstala apps, religa funções do Windows |
+| 🆘 | **Relatório para ajuda** (R) | Arquivo com tudo do PC para mandar a quem te ajuda, sem dados pessoais |
 
 <br>
 
