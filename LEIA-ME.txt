@@ -5,8 +5,8 @@
   COMO USAR (3 PASSOS)
   ---------------------------------------------------------------
   1. Extraia a pasta INTEIRA (não rode de dentro do ZIP).
-  2. Dê dois cliques em AVANTIPACK.bat e clique em "Sim" quando o
-     Windows pedir permissão.
+  2. Dê dois cliques em AVANTIPACK.exe (o ícone com a logo) e clique
+     em "Sim" quando o Windows pedir permissão.
   3. Digite 1 e aperte ENTER ("OTIMIZAR MEU PC") e depois 1 de novo
      ("AUTOMATICO"). Pronto: ele faz tudo sozinho e no fim pede para
      reiniciar. Quer escolher? Use 2 ("PERSONALIZADO") e marque ou
@@ -17,7 +17,8 @@
 
   ATALHO COM A LOGO
   ---------------------------------------------------------------
-  Na primeira vez que você abrir o AVANTIPACK.bat, ele cria o atalho
+  Para abrir, dê dois cliques no AVANTIPACK.exe (o ícone com a logo).
+  Na primeira vez, o pack cria o atalho
   "AVANTIPACK" (com a logo) na pasta do pack e na Área de Trabalho.
   Use sempre o atalho: ele já abre como administrador, com letra
   maior e a janela no meio da tela. (Se mudar a pasta de lugar, abra

@@ -1,0 +1,15 @@
+AVANTIPACK.exe - o "botao" com a logo
+=====================================
+O que ele faz (e so isso, veja launcher.c):
+  1. Se existir "ABRIR AVANTIPACK.lnk" na mesma pasta, abre esse atalho.
+  2. Se nao, roda o AVANTIPACK.bat (que cria o atalho e reabre por ele).
+Nao instala nada, nao acessa a internet e nao precisa de administrador.
+
+Para compilar de novo (Linux com LLVM 18+):
+  llvm-dlltool -m i386:x86-64 -d k32.def -l k32.lib
+  llvm-dlltool -m i386:x86-64 -d sh32.def -l sh32.lib
+  llvm-dlltool -m i386:x86-64 -d u32.def -l u32.lib
+  copie core\avantipack.ico para esta pasta
+  clang --target=x86_64-pc-windows-msvc -O2 -ffreestanding -fno-builtin -fno-stack-protector -mno-stack-arg-probe -c launcher.c -o launcher.o
+  llvm-rc /fo res.res res.rc
+  lld-link /subsystem:windows /entry:Main /nodefaultlib /dynamicbase /nxcompat /out:AVANTIPACK.exe launcher.o res.res k32.lib sh32.lib u32.lib
