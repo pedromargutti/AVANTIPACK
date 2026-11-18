@@ -2,33 +2,16 @@
 
 Tudo o que mudou em cada versão. A mais nova fica sempre em cima.
 
-## v0.8.3 — 18/11/2026
-- 🛠️ **A tela não desce mais sozinha** quando você aperta as setas: o menu sempre cabe na janela
-- 🪟 **Tela cheia / restaurar sem bugar**: o menu se redesenha sozinho quando a janela muda de tamanho (nada de tela preta ou cortada)
-- 📏 Janela baixa? O menu usa um **cabeçalho menor** automaticamente para caber tudo
-- 🔎 Diagnóstico da fonte em `core\dados\logs\tela.log` (para corrigir PCs em que a letra não troca)
-
-## v0.8.2 — 18/11/2026
-- 🔠 **Fonte Consolas grande de verdade**: o pack agora arruma a janela depois que ela abre (antes a fonte de pixel antiga podia continuar)
-- 📐 Janela no **tamanho certo e no meio da tela**, de acordo com o seu monitor
-- 🗂️ **Menus organizados por seção** (Otimizar e testar, Problemas e programas, Desfazer e ajuda, Outros)
-- 💬 A **explicação da opção** aparece numa caixa embaixo, só da opção selecionada (menos texto embolado)
-- ↕️ **Mais espaço entre as opções** nas listas, quando cabe na tela
-
-## v0.8.1 — 18/11/2026
-- ⌨️ **Setas em TODAS as telas**: Otimizar, Personalizado, Programas, Consertar, Guias, Jogos, Desfazer... (↑ ↓ e ENTER, ESC volta)
-- ☑️ **Marcar e desmarcar com ESPAÇO** nas listas (ajustes, programas da inicialização, jogos, o que recolocar)
-- ✅ Perguntas de **Sim / Não** também com as setas
-- 🖥️ **Tela no meio** mesmo com a janela em tela cheia
-- 🔠 Fonte **Consolas** nítida (a anterior voltava para a fonte de pixel) e textos mais claros
-- 🎮 **Configurações dentro dos jogos atualizadas (nov/2026)** com todas as opções: CS2, Valorant, Fortnite, LoL, Black Ops 7/Warzone, **Battlefield 6**, Apex, R6 Siege X, Overwatch, Marvel Rivals, **ARC Raiders**, The Finals, PUBG, Rocket League, **GTA V Enhanced**, FiveM, Minecraft, Roblox e Free Fire
-
-## v0.8.0 — 18/11/2026
-- ⌨️ **Menu com as setas do teclado**: ↑ ↓ para escolher e ENTER para confirmar (digitar o número continua funcionando)
-- 📊 **Teste de FPS antes e depois** (tecla **F**): mede o FPS médio, o 1% low e as travadinhas enquanto você joga, e compara com os testes anteriores
-- 🧠 **Checagem de dual channel**: avisa se a memória está com 1 pente só ou com pentes de tamanhos diferentes (perde muito FPS, principalmente com vídeo integrado)
+## v0.7.6 — 18/11/2026
+- ⌨️ **Setas do teclado em TODAS as telas**: ↑ ↓ e ENTER para escolher, ESC para voltar (digitar o número continua funcionando)
+- ☑️ **Listas de marcar com ESPAÇO** (ajustes, programas da inicialização, jogos, o que recolocar) e **Sim / Não** com as setas
+- 🗂️ **Menus organizados por seção**, com a explicação da opção selecionada numa caixa embaixo
+- 🖥️ **Tela no meio**, letra **Consolas** maior e menu **estável**: não rola sozinho e se redesenha ao entrar e sair da tela cheia
+- 📊 **Teste de FPS antes e depois** (tecla **F**): FPS médio, 1% low e travadinhas, com histórico para comparar
+- 🧠 **Checagem de dual channel**: avisa se a memória tem 1 pente só ou pentes de tamanhos diferentes
 - 💻 **Notebook com 2 placas**: os jogos passam a usar sempre a placa de vídeo **dedicada**
-- 🆘 **Relatório para ajuda** (tecla **R**): cria um arquivo com tudo do PC na Área de Trabalho para mandar a quem te ajuda, sem dados pessoais
+- 🆘 **Relatório para ajuda** (tecla **R**): arquivo com tudo do PC para mandar a quem te ajuda, sem dados pessoais
+- 🎮 **Configurações dentro dos jogos atualizadas (nov/2026)** para 19 jogos, incluindo **Battlefield 6**, **ARC Raiders** e **GTA V Enhanced**
 
 ## v0.7.5 — 18/11/2026
 - 🧹 **Pasta organizada**: agora só tem o **AVANTIPACK.exe**, o LEIA-ME e as pastas `apps`, `core` e `guias`

@@ -28,36 +28,34 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 > **Versão mais nova:** [veja o que mudou](../../releases/latest) · [histórico completo](core/NOVIDADES.md)
 
 <details open>
-<summary><b>v0.8.3</b> — menu estável em qualquer tamanho de janela</summary>
+<summary><b>v0.7.6</b> — setas em todas as telas, teste de FPS e jogos atualizados</summary>
 
-- 🛠️ A tela **não desce mais sozinha** com as setas
-- 🪟 **Tela cheia / restaurar** sem bugar: redesenha sozinho
-- 📏 Cabeçalho menor automático em janela baixa
-
-</details>
-
-<details>
-<summary><b>v0.8.2</b> — tela mais legível e organizada</summary>
-
-- 🔠 Fonte **Consolas** grande e janela **no meio da tela**, ajustadas ao seu monitor
-- 🗂️ Menus **por seção**, com a explicação da opção numa caixa embaixo
-- ↕️ Mais espaço entre as opções
+- ⌨️ **Setas do teclado em todas as telas** e listas de marcar com ESPAÇO
+- 🖥️ Tela **no meio**, letra maior e menu **estável** (aguenta tela cheia)
+- 📊 **Teste de FPS antes e depois**: FPS médio, 1% low e travadinhas
+- 🧠 **Dual channel** e 💻 **placa dedicada no notebook**
+- 🆘 **Relatório para ajuda** pronto para mandar
+- 🎮 Configurações de **19 jogos atualizadas** (nov/2026)
 
 </details>
 
 <details>
-<summary><b>v0.8.1</b> — setas em todas as telas e jogos atualizados</summary>
+<summary><b>v0.7.5</b> — pasta organizada e AVANTIPACK.exe com a logo</summary>
 
-- ⌨️ **Setas em todas as telas** e listas de marcar com ESPAÇO
-- 🖥️ Tela **centralizada** em tela cheia, fonte **Consolas** nítida
-- 🎮 **Configurações de 19 jogos atualizadas** (nov/2026), incluindo Battlefield 6, ARC Raiders e GTA V Enhanced
+- 🧹 Na pasta só ficam o **AVANTIPACK.exe**, o LEIA-ME e as pastas `apps`, `core` e `guias`
+- 🔵 **AVANTIPACK.exe com a logo**: dois cliques e pronto
+- 📁 Dados do seu PC juntos em `core\dados` (migra sozinho, sem perder nada)
 
 </details>
 
+<details>
+<summary><b>v0.7.4</b> — programas instalados sozinhos</summary>
 
+- 📦 **[A] INSTALAR TUDO**: baixa e instala os programas certos para o seu PC, cada um na sua pasta
+- 🌐 **Drivers**: abre o site, você clica em BAIXAR e o pack faz o resto
+- 🔠 Letra maior e atalho com a logo
 
-
-
+</details>
 
 <br>
 
