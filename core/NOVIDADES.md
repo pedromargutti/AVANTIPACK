@@ -2,6 +2,14 @@
 
 Tudo o que mudou em cada versão. A mais nova fica sempre em cima.
 
+## v0.8.1 — 18/11/2026
+- ⌨️ **Setas em TODAS as telas**: Otimizar, Personalizado, Programas, Consertar, Guias, Jogos, Desfazer... (↑ ↓ e ENTER, ESC volta)
+- ☑️ **Marcar e desmarcar com ESPAÇO** nas listas (ajustes, programas da inicialização, jogos, o que recolocar)
+- ✅ Perguntas de **Sim / Não** também com as setas
+- 🖥️ **Tela no meio** mesmo com a janela em tela cheia
+- 🔠 Fonte **Consolas** nítida (a anterior voltava para a fonte de pixel) e textos mais claros
+- 🎮 **Configurações dentro dos jogos atualizadas (nov/2026)** com todas as opções: CS2, Valorant, Fortnite, LoL, Black Ops 7/Warzone, **Battlefield 6**, Apex, R6 Siege X, Overwatch, Marvel Rivals, **ARC Raiders**, The Finals, PUBG, Rocket League, **GTA V Enhanced**, FiveM, Minecraft, Roblox e Free Fire
+
 ## v0.8.0 — 18/11/2026
 - ⌨️ **Menu com as setas do teclado**: ↑ ↓ para escolher e ENTER para confirmar (digitar o número continua funcionando)
 - 📊 **Teste de FPS antes e depois** (tecla **F**): mede o FPS médio, o 1% low e as travadinhas enquanto você joga, e compara com os testes anteriores

@@ -64,9 +64,13 @@ function Get-Codigo([string]$k) {
     switch ($k.ToUpper()) { 'F' { 120 } 'R' { 121 } 'U' { 130 } default { 100 + [int]$k } }
 }
 
-$larg = [math]::Max(60, [Console]::WindowWidth - 2)
+# conteudo com 84 colunas, centralizado quando a janela e mais larga
+$larg = 82
+$pad = ''
+try { $n = [math]::Floor(([Console]::WindowWidth - 84) / 2); if ($n -gt 0) { $pad = ' ' * $n } } catch {}
 function Write-Linha([string]$txt, [string]$fg = 'Gray', [string]$bg = $null) {
     $t = $txt; if ($t.Length -lt $larg) { $t = $t.PadRight($larg) } else { $t = $t.Substring(0, $larg) }
+    if ($pad) { Write-Host $pad -NoNewline }
     if ($bg) { Write-Host $t -ForegroundColor $fg -BackgroundColor $bg } else { Write-Host $t -ForegroundColor $fg }
 }
 
@@ -87,7 +91,7 @@ function Show-Menu {
         } else {
             Write-Linha ("    $tag $($it.T)$($it.X)$novo") $c
         }
-        if ($it.D) { Write-Linha ("         $($it.D)") 'DarkGray' }
+        if ($it.D) { Write-Linha ("         $($it.D)") 'Gray' }
     }
     Write-Linha ''
     $dica = "  $CIMA $BAIXO escolher    ENTER confirmar    ou digite o numero"

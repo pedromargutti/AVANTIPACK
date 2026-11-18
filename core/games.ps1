@@ -155,15 +155,15 @@ function Mod-Jogos {
         Write-Note 'Ajuda em PCs com muita coisa aberta junto (Discord, navegador, OBS). Em PC limpo o ganho e pequeno.'
         Write-Note 'Se o audio do Discord comecar a falhar durante o jogo, remova pelo opcao 6 (Desfazer) > jogos.'
         Write-Host ''
-        Write-Host '  [1] Procurar jogos instalados e priorizar (recomendado)'
-        Write-Host '  [2] Escolher da lista de jogos conhecidos'
-        Write-Host '  [3] Adicionar um jogo pelo nome do .exe'
-        Write-Host '  [4] Ver jogos ja priorizados'
-        Write-Host '  [5] Perfil NVIDIA turbo nos jogos competitivos (so NVIDIA)'
-        Write-Host '  [6] Configuracoes recomendadas DENTRO dos jogos (guia)'
-        Write-Host '  [7] Notebook: jogos sempre na placa de video DEDICADA'
-        Write-Host ''
-        $op = Read-Host '  Escolha (ENTER volta ao menu)'
+        $op = Select-Opcao @(
+            @{ K = '1'; T = 'Procurar jogos instalados e priorizar (recomendado)'; C = 'Green' },
+            @{ K = '2'; T = 'Escolher da lista de jogos conhecidos' },
+            @{ K = '3'; T = 'Adicionar um jogo pelo nome do .exe' },
+            @{ K = '4'; T = 'Ver jogos ja priorizados' },
+            @{ K = '5'; T = 'Perfil NVIDIA turbo nos jogos competitivos (so NVIDIA)' },
+            @{ K = '6'; T = 'Configuracoes recomendadas DENTRO dos jogos (guia)' },
+            @{ K = '7'; T = 'Notebook: jogos sempre na placa de video DEDICADA' }
+        )
         switch ($op) {
             '1' {
                 Write-Info 'Procurando pastas de jogos (Steam, Epic, Riot, Xbox, EA, Ubisoft, Battle.net, GOG)...'
@@ -176,13 +176,9 @@ function Mod-Jogos {
                 if ($found.Count -eq 0) { Write-Warn 'Nenhum jogo da lista foi encontrado. Use a opcao 3 desta tela para adicionar pelo nome do .exe.'; break }
                 $lista = @($found.Keys | Sort-Object { $wanted[$_] })
                 Write-Host ''
-                for ($i = 0; $i -lt $lista.Count; $i++) {
-                    Write-Host ("  [{0,2}] {1,-38} {2}" -f ($i + 1), $wanted[$lista[$i]], $lista[$i])
-                }
-                Write-Host ''
-                $sel = Read-Host '  ENTER = priorizar TODOS  |  ou digite os numeros separados por virgula  |  0 = cancelar'
-                if ($sel -eq '0') { break }
-                $alvo = if (-not $sel) { $lista } else { @($sel.Split(',') | ForEach-Object { $n = $_.Trim(); if ($n -match '^\d+$' -and [int]$n -ge 1 -and [int]$n -le $lista.Count) { $lista[[int]$n - 1] } }) }
+                Write-Note 'Todos ja vem marcados. Desmarque o que nao quiser:'
+                $alvo = Select-Varios @($lista | ForEach-Object { @{ K = $_; T = ("{0,-38} {1}" -f $wanted[$_], $_); On = $true } }) -Concluir 'PRIORIZAR os marcados'
+                if ($null -eq $alvo) { break }
                 $ok = 0
                 foreach ($e in $alvo) {
                     $real = [System.IO.Path]::GetFileName($found[$e])
@@ -191,15 +187,11 @@ function Mod-Jogos {
                 Write-Ok "$ok jogo(s) priorizado(s). Vale na proxima vez que o jogo abrir."
             }
             '2' {
-                for ($i = 0; $i -lt $db.Count; $i++) { Write-Host ("  [{0,3}] {1}" -f ($i + 1), $db[$i].Nome) }
-                $sel = Read-Host '  Numeros separados por virgula (ENTER cancela)'
-                if (-not $sel) { break }
-                foreach ($n in $sel.Split(',')) {
-                    $n = $n.Trim()
-                    if ($n -match '^\d+$' -and [int]$n -ge 1 -and [int]$n -le $db.Count) {
-                        $g = $db[[int]$n - 1]
-                        foreach ($e in $g.Exes) { if (Set-GamePriority $e) { Write-Ok "$($g.Nome) ($e): prioridade ALTA" } }
-                    }
+                $sel = Select-Varios @(for ($i = 0; $i -lt $db.Count; $i++) { @{ K = "$i"; T = $db[$i].Nome } }) -Concluir 'PRIORIZAR os marcados' -SemTodos
+                if ($null -eq $sel) { break }
+                foreach ($n in @($sel)) {
+                    $g = $db[[int]$n]
+                    foreach ($e in $g.Exes) { if (Set-GamePriority $e) { Write-Ok "$($g.Nome) ($e): prioridade ALTA" } }
                 }
             }
             '3' {

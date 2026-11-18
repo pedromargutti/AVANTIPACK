@@ -162,14 +162,12 @@ function Mod-ReligarFuncoes {
     Write-Title 'RELIGAR FUNCOES DO WINDOWS'
     Write-Note 'Use se alguma coisa parou de funcionar (por este pack ou por OUTRO pack que voce usou antes).'
     Write-Host ''
-    for ($i = 0; $i -lt $f.Count; $i++) { Write-Host ("  [{0,2}] {1}" -f ($i + 1), $f[$i].Nome) }
+    Write-Note 'Marque o que voce quer religar:'
     Write-Host ''
-    $op = Read-Host '  Numeros separados por virgula (ENTER volta)'
-    if (-not $op) { return }
-    foreach ($n in $op.Split(',')) {
-        $n = $n.Trim()
-        if ($n -notmatch '^\d+$' -or [int]$n -lt 1 -or [int]$n -gt $f.Count) { continue }
-        $x = $f[[int]$n - 1]
+    $op = Select-Varios @(for ($i = 0; $i -lt $f.Count; $i++) { @{ K = "$i"; T = $f[$i].Nome } }) -Concluir 'RELIGAR os marcados' -SemTodos
+    if ($null -eq $op -or @($op).Count -eq 0) { return }
+    foreach ($n in @($op)) {
+        $x = $f[[int]$n]
         Write-Info $x.Nome
         & $x.Acao
         # se o backup guardava esse servico como "desligado" (por outro pack), esquece para o Desfazer nao desligar de novo
@@ -190,18 +188,14 @@ function Mod-Restaurar {
         if ($n -gt 0) { Write-Note "O pack tem $n ajuste(s) guardado(s) que podem ser desfeitos ($($apps.Count) app(s) removido(s))." }
         else { Write-Note 'Nenhum ajuste do pack ativo neste PC.' }
         Write-Host ''
-        Write-Host '  [1] DESFAZER TUDO' -ForegroundColor Red
-        Write-Note '    Volta cada ajuste ao valor exato que este PC tinha antes do AVANTIPACK.'
-        Write-Host '  [2] RECOLOCAR UMA FUNCAO QUE VOCE USA' -ForegroundColor Cyan
-        Write-Note '    Escolhe so o que voltar (ex: impressora, gravar clipes, transparencia, hibernacao).'
-        Write-Host '  [3] REINSTALAR APPS QUE O PACK REMOVEU' -ForegroundColor Cyan
-        Write-Host '  [4] RELIGAR FUNCOES DO WINDOWS' -ForegroundColor Cyan
-        Write-Note '    Impressora, Windows Hello, Store, Xbox, Bluetooth, WSL... mesmo se outro pack desligou.'
-        Write-Host '  [5] Voltar o Windows inteiro pelo ponto de restauracao'
-        Write-Host '  [6] Desfazer por parte do pack (avancado)'
-        Write-Host '  [0] Voltar'
-        Write-Host ''
-        $op = Read-Host '  Escolha'
+        $op = Select-Opcao @(
+            @{ K = '1'; T = 'DESFAZER TUDO'; C = 'Red'; D = 'Volta cada ajuste ao valor exato que este PC tinha antes do AVANTIPACK.' },
+            @{ K = '2'; T = 'RECOLOCAR UMA FUNCAO QUE VOCE USA'; D = 'So o que voltar (ex: impressora, gravar clipes, transparencia).' },
+            @{ K = '3'; T = 'REINSTALAR APPS QUE O PACK REMOVEU'; D = 'Pela Microsoft Store.' },
+            @{ K = '4'; T = 'RELIGAR FUNCOES DO WINDOWS'; D = 'Impressora, Windows Hello, Store, Xbox, Bluetooth... mesmo de outro pack.' },
+            @{ K = '5'; T = 'Voltar o Windows inteiro pelo ponto de restauracao'; C = 'Gray' },
+            @{ K = '6'; T = 'Desfazer por parte do pack (avancado)'; C = 'Gray' }
+        )
         switch ($op) {
             '1' {
                 if ($n -eq 0) { Write-Skip 'Nada para desfazer.'; break }
@@ -215,30 +209,23 @@ function Mod-Restaurar {
                 $itens = @($script:BackupCache | Where-Object { $_.Item -and $_.Kind -ne 'APPX' } | Group-Object Item | Sort-Object Name)
                 if ($itens.Count -eq 0) { Write-Skip 'Nada para recolocar (ou os ajustes foram feitos por uma versao antiga do pack: use a opcao 6).'; break }
                 Write-Host ''
-                for ($i = 0; $i -lt $itens.Count; $i++) {
-                    $id = $itens[$i].Name
-                    $txt = if ($VOLTA.ContainsKey($id)) { $VOLTA[$id] } else { Get-ItemNome $id }
-                    Write-Host ("  [{0,2}] {1}" -f ($i + 1), $txt) -ForegroundColor White
-                    Write-Host ("        ajuste {0}: {1}" -f $id, (Get-ItemNome $id)) -ForegroundColor DarkGray
-                }
-                Write-Host ''
-                $sel = Read-Host '  Numeros do que voce quer de volta (ex: 1,4)  |  ENTER volta'
-                if (-not $sel) { break }
-                $ids = @()
-                foreach ($x in $sel.Split(',')) { $x = $x.Trim(); if ($x -match '^\d+$' -and [int]$x -ge 1 -and [int]$x -le $itens.Count) { $ids += $itens[[int]$x - 1].Name } }
-                if ($ids.Count -eq 0) { break }
+                Write-Note 'Marque o que voce quer de volta:'
+                $ids = Select-Varios @($itens | ForEach-Object {
+                        $id = $_.Name
+                        @{ K = $id; T = $(if ($VOLTA.ContainsKey($id)) { $VOLTA[$id] } else { Get-ItemNome $id }); D = ("ajuste {0}: {1}" -f $id, (Get-ItemNome $id)) }
+                    }) -Concluir 'RECOLOCAR os marcados' -SemTodos
+                if ($null -eq $ids -or @($ids).Count -eq 0) { break }
+                $ids = @($ids)
                 $q = Invoke-RestoreRows { param($r) $ids -contains $r.Item -and $r.Kind -ne 'APPX' }.GetNewClosure()
                 foreach ($id in $ids) { Write-Ok $(if ($VOLTA.ContainsKey($id)) { $VOLTA[$id] } else { Get-ItemNome $id }) }
                 Write-Note "$q valor(es) restaurado(s). Algumas coisas so voltam depois de reiniciar."
             }
             '3' {
                 if ($apps.Count -eq 0) { Write-Skip 'O pack nao removeu nenhum app (ou foi uma versao antiga: reinstale pela Microsoft Store).'; break }
-                for ($i = 0; $i -lt $apps.Count; $i++) { Write-Host ("  [{0,2}] {1}" -f ($i + 1), (Get-AppxNome $apps[$i].Value)) }
-                Write-Host ''
-                $sel = Read-Host '  Numeros dos apps (ex: 1,3)  |  T = todos  |  ENTER volta'
-                if (-not $sel) { break }
-                $nomes = if ($sel -match '^[tT]$') { @($apps | ForEach-Object { $_.Value }) } else {
-                    @($sel.Split(',') | ForEach-Object { $x = $_.Trim(); if ($x -match '^\d+$' -and [int]$x -ge 1 -and [int]$x -le $apps.Count) { $apps[[int]$x - 1].Value } }) }
+                Write-Note 'Marque os apps que voce quer de volta:'
+                $nomes = Select-Varios @($apps | ForEach-Object { @{ K = $_.Value; T = (Get-AppxNome $_.Value) } }) -Concluir 'REINSTALAR os marcados'
+                if ($null -eq $nomes -or @($nomes).Count -eq 0) { break }
+                $nomes = @($nomes)
                 [void](Invoke-RestoreRows { param($r) $r.Kind -eq 'APPX' -and $nomes -contains $r.Value }.GetNewClosure())
             }
             '4' { Mod-ReligarFuncoes }

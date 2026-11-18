@@ -27,7 +27,9 @@
 
   O QUE CADA OPÇÃO DO MENU FAZ
   ---------------------------------------------------------------
-  Use as SETAS do teclado (↑ ↓) e ENTER, ou digite o número/letra.
+  Em TODAS as telas: use as SETAS do teclado (↑ ↓) e ENTER, ou digite
+  o número/letra. ESC volta. Nas listas de marcar, ESPAÇO marca ou
+  desmarca e "CONCLUIR" confirma.
 
   [1] OTIMIZAR MEU PC   <- comece por aqui
       Automático: o pack escolhe. Personalizado: você vê as 9 categorias
@@ -127,6 +129,8 @@
   • v0.7.2: atalho com a logo, janela centralizada e fonte Consolas.
   • v0.8.0: menu com setas, teste de FPS, dual channel, placa dedicada
     no notebook e relatório para ajuda.
+  • v0.8.1: setas em todas as telas, tela centralizada, fonte nítida e
+    configurações de 19 jogos atualizadas.
 
 
   PASTAS

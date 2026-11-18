@@ -330,11 +330,10 @@ function Mod-Fix {
     )
     while ($true) {
         Write-Title 'FIX DE ERROS DO WINDOWS'
-        for ($i = 0; $i -lt $itens.Count; $i++) { Write-Host ("  [{0,2}] {1}" -f ($i + 1), $itens[$i][0]) }
+        Write-Note 'Escolha o problema que voce tem:'
         Write-Host ''
-        $op = Read-Host '  Numero do problema (ENTER volta ao menu)'
-        if (-not $op) { return }
-        if ($op -notmatch '^\d+$' -or [int]$op -lt 1 -or [int]$op -gt $itens.Count) { Write-Warn 'Opcao invalida.'; continue }
+        $op = Select-Opcao @(for ($i = 0; $i -lt $itens.Count; $i++) { @{ K = "$($i + 1)"; T = $itens[$i][0] } }) -Inicio $(if ($op -match '^\d+$') { [int]$op - 1 } else { 0 })
+        if ($op -eq '0' -or $op -notmatch '^\d+$' -or [int]$op -gt $itens.Count) { return }
         Write-Log "FIX escolhido: $($itens[[int]$op - 1][0])"
         & $itens[[int]$op - 1][1]
         Write-Host ''

@@ -98,10 +98,10 @@ function Mod-Agendar {
     if ($t) {
         Write-Ok ("Manutencao semanal LIGADA (domingo 14h). Ultima vez: {0}" -f $(if (Test-Path $ult) { Get-Content $ult } else { 'ainda nao rodou' }))
         Write-Host ''
-        Write-Host '  [1] Desligar a manutencao semanal'
-        Write-Host '  [2] Corrigir o caminho (use se voce mudou a pasta do pack de lugar)'
-        Write-Host '  [0] Voltar'
-        $op = Read-Host '  Escolha'
+        $op = Select-Opcao @(
+            @{ K = '1'; T = 'Desligar a manutencao semanal' },
+            @{ K = '2'; T = 'Corrigir o caminho (use se voce mudou a pasta do pack de lugar)' }
+        )
         if ($op -eq '1') { Unregister-ScheduledTask -TaskName $TaskName -Confirm:$false; Write-Ok 'Manutencao semanal desligada.' }
         elseif ($op -eq '2') { Register-Manutencao }
         return

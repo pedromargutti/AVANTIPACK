@@ -115,9 +115,10 @@ function Mod-TesteFps {
         $ab = @(Find-JogoAberto)
         if ($ab.Count -eq 1) { $jogo = $ab[0]; break }
         if ($ab.Count -gt 1) {
-            for ($i = 0; $i -lt $ab.Count; $i++) { Write-Host ("  [{0}] {1}" -f ($i + 1), $ab[$i].Nome) }
-            $op = Read-Host '  Qual jogo testar'
-            if ($op -match '^\d+$' -and [int]$op -ge 1 -and [int]$op -le $ab.Count) { $jogo = $ab[[int]$op - 1] }
+            Write-Note 'Achei mais de um jogo aberto. Qual testar?'
+            $op = Select-Opcao @(for ($i = 0; $i -lt $ab.Count; $i++) { @{ K = "$($i + 1)"; T = $ab[$i].Nome } }) -Voltar 'Sair do teste'
+            if ($op -eq '0') { return }
+            $jogo = $ab[[int]$op - 1]
             continue
         }
         Write-Caixa @(
@@ -137,9 +138,8 @@ function Mod-TesteFps {
             $jan = @(Get-JanelasAbertas)
             if ($jan.Count) {
                 Write-Note 'Nao reconheci o jogo. Programas abertos agora:'
-                for ($i = 0; $i -lt $jan.Count; $i++) { Write-Host ("  [{0}] {1}  ({2})" -f ($i + 1), $jan[$i].MainWindowTitle, $jan[$i].ProcessName) }
-                $op = Read-Host '  Numero do jogo (ENTER tenta de novo)'
-                if ($op -match '^\d+$' -and [int]$op -ge 1 -and [int]$op -le $jan.Count) {
+                $op = Select-Opcao @(for ($i = 0; $i -lt $jan.Count; $i++) { @{ K = "$($i + 1)"; T = ("{0}  ({1})" -f $jan[$i].MainWindowTitle, $jan[$i].ProcessName) } }) -Voltar 'Nenhum destes, tentar de novo'
+                if ($op -ne '0') {
                     $p = $jan[[int]$op - 1]; $jogo = [pscustomobject]@{ Nome = $p.ProcessName; Exe = $p.ProcessName + '.exe' }
                 }
             }
