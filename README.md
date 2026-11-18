@@ -28,6 +28,15 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 > **Versão mais nova:** [veja o que mudou](../../releases/latest) · [histórico completo](NOVIDADES.md)
 
 <details open>
+<summary><b>v0.7.4</b> — programas instalados sozinhos</summary>
+
+- 📦 **[A] INSTALAR TUDO**: baixa e instala os programas certos para o seu PC, cada um na sua pasta
+- 🌐 **Drivers**: abre o site, você clica em BAIXAR e o pack faz o resto
+- 🔠 Letra maior e atalho **"ABRIR AVANTIPACK"** com a logo
+
+</details>
+
+<details>
 <summary><b>v0.7.3</b> — tela de Novidades</summary>
 
 - 🆕 Depois de cada atualização, o pack **mostra sozinho o que mudou**
@@ -118,7 +127,7 @@ Avisa quando sai versão nova e atualiza sozinho. Avisa também quando um update
 | 🟢 | **Otimizar meu PC** | **Automático**, **Personalizado** (você escolhe por categoria) ou **Reaplicar** depois de update do Windows |
 | 🔵 | **Verificar meu PC** | Peças, problemas (RAM sem XMP, monitor em 60 Hz, driver velho), **teste de input lag com nota** e teste da internet |
 | 🔧 | **Consertar um problema** | 19 reparos: sem internet, sem som, microfone, Loja, Windows Update, Alt+Tab no 24H2... |
-| 📦 | **Programas úteis** | 16 programas com tutorial AMD/Intel. Baixa do site oficial e **move para a pasta certa sozinho** |
+| 📦 | **Programas úteis** | **[A] Instalar tudo automático**: programas e drivers certos para o seu PC, cada um na sua pasta, com o passo a passo |
 | 📖 | **Guias** | Painéis NVIDIA/AMD/Intel ilustrados, BIOS por fabricante, limite de FPS, config dentro dos jogos |
 | 🔴 | **Desfazer / recolocar** | Desfaz tudo ou só uma função, reinstala apps, religa funções do Windows |
 

@@ -46,7 +46,7 @@ $stage = Join-Path $env:TEMP ('avanti_release_' + [IO.Path]::GetRandomFileName()
 $dest = Join-Path $stage 'AVANTIPACK'
 New-Item -ItemType Directory -Path $dest -Force | Out-Null
 foreach ($it in Get-ChildItem $Root -Force) {
-    if (@('backup', 'logs', 'data', '.git', 'AVANTIPACK.lnk') -contains $it.Name) { continue }
+    if (@('backup', 'logs', 'data', '.git', 'AVANTIPACK.lnk', 'ABRIR AVANTIPACK.lnk') -contains $it.Name) { continue }
     Copy-Item -Path $it.FullName -Destination $dest -Recurse -Force
 }
 $lixo = Join-Path $dest 'ferramentas\saida'

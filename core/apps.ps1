@@ -46,7 +46,8 @@ function Resolve-AppExe($app) {
         $f = Get-ChildItem -Path $dir -Recurse -Filter $e -ErrorAction SilentlyContinue | Select-Object -First 1
         if ($f) { return $f.FullName }
     }
-    $bases = @($env:ProgramFiles, ${env:ProgramFiles(x86)}, (Join-Path $env:LOCALAPPDATA 'Programs')) | Where-Object { $_ -and (Test-Path $_) }
+    $bases = @($env:ProgramFiles, ${env:ProgramFiles(x86)}, (Join-Path $env:LOCALAPPDATA 'Programs'),
+               (Join-Path $env:LOCALAPPDATA 'Microsoft\WinGet\Packages')) | Where-Object { $_ -and (Test-Path $_) }
     foreach ($b in $bases) {
         foreach ($pat in @("$b\*\$e", "$b\*\*\$e")) {
             $f = Get-Item -Path $pat -ErrorAction SilentlyContinue | Select-Object -First 1
@@ -64,57 +65,156 @@ function Test-Winget {
     return [bool](Get-Command winget.exe -ErrorAction SilentlyContinue)
 }
 
-# Baixa/instala UM app. Retorna $true se ficou pronto.
+# ---------------------------------------------------------------------
+#  Depois de pronto: atalho na pasta do app + configuracao automatica
+# ---------------------------------------------------------------------
+function New-AppAtalho($app, [string]$exe) {
+    $dir = Join-Path $Root ('apps\' + $app.Pasta)
+    if ($exe -like "$dir*") { return }          # ja esta dentro da pasta
+    try {
+        $lnk = Join-Path $dir ("ABRIR " + $app.Pasta + ".lnk")
+        $s = (New-Object -ComObject WScript.Shell).CreateShortcut($lnk)
+        $s.TargetPath = $exe; $s.WorkingDirectory = (Split-Path $exe); $s.Save()
+    } catch {}
+}
+function Set-AppConfig($app, [string]$exe) {
+    $pasta = Split-Path $exe
+    switch -Wildcard ($app.Pasta) {
+        'HWiNFO' {
+            # abre direto na tela de sensores (temperaturas), que e o que importa
+            $ini = Join-Path $pasta 'HWiNFO64.INI'
+            if (-not (Test-Path $ini)) {
+                try { Set-Content -Path $ini -Encoding ASCII -Value "[Settings]`r`nSensorsOnly=1`r`nSummaryOnly=0`r`nShowWelcomeAndProgress=0" ; Write-Ok 'HWiNFO configurado para abrir direto nos sensores.' } catch {}
+            }
+        }
+    }
+}
+
+function Get-WingetOk {
+    if (-not (Test-Winget)) {
+        Write-Warn 'O winget (instalador oficial da Microsoft) nao esta neste PC.'
+        Write-Note 'Abra a Microsoft Store, procure "Instalador de Aplicativo" e clique em Atualizar/Obter.'
+        return $false
+    }
+    return $true
+}
+
+# Abre o site oficial, espera o download, coloca na pasta e ja roda o instalador
+function Get-AppPeloSite($app) {
+    $dir = Join-Path $Root ('apps\' + $app.Pasta)
+    Write-Host ''
+    Write-Caixa @(
+        "$($app.Nome): este precisa ser baixado no site oficial.",
+        '',
+        '1. O site vai abrir agora no seu navegador.',
+        '2. Escolha o modelo da sua peca (se pedir) e clique em BAIXAR.',
+        '3. NAO precisa fazer mais nada: o pack pega o arquivo da pasta',
+        "   Downloads, coloca em apps\$($app.Pasta) e abre o instalador."
+    ) 'Cyan'
+    Start-Process $app.Url
+    $ok = Wait-AppDownload $app
+    if (-not $ok) { return $false }
+    $ins = Resolve-AppInstaller $app
+    if ($ins) {
+        Write-Info 'Abrindo o instalador... siga as telas dele (normalmente: Avancar > Instalar).'
+        Write-Note 'O pack espera o instalador fechar para continuar.'
+        Start-Process -FilePath $ins -WorkingDirectory $dir -Wait
+        Write-Ok "Instalacao de $($app.Nome) concluida."
+    }
+    return $true
+}
+
+# Deixa UM app pronto, de forma automatica:
+#  1) ja instalado -> so cria o atalho na pasta do app
+#  2) instalador ja na pasta -> roda
+#  3) winget -> instala DENTRO de apps\<Pasta> (quando o instalador aceita)
+#  4) zip/github -> extrai em apps\<Pasta>
+#  5) site (drivers) -> abre o site, pega o download e roda o instalador
 function Install-App($app) {
     $dir = Join-Path $Root ('apps\' + $app.Pasta)
     if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force | Out-Null }
     $fonte = $app.Fonte
-    try {
-        if ($fonte -like 'winget:*') {
-            if (-not (Test-Winget)) { Write-Warn 'winget nao encontrado (instale o "Instalador de Aplicativo" pela Microsoft Store).'; return $false }
-            $id = $fonte.Substring(7)
-            Write-Info "Instalando $($app.Nome) pelo winget ($id)..."
-            & winget.exe install --id $id -e --silent --accept-package-agreements --accept-source-agreements --disable-interactivity 2>&1 |
-                Where-Object { $_ -match 'Successfully|instalado|Found|Encontrado|already|ja' } | ForEach-Object { Write-Note $_ }
-        }
-        elseif ($fonte -like 'zip:*' -or $fonte -like 'github:*') {
-            Initialize-Web
-            if ($fonte -like 'github:*') {
-                $repo = $fonte.Substring(7)
-                $rel = Invoke-RestMethod -Uri "https://api.github.com/repos/$repo/releases/latest" -Headers @{ 'User-Agent' = 'AVANTIPACK' } -UseBasicParsing
-                $asset = $rel.assets | Where-Object { $_.name -like '*.zip' } | Select-Object -First 1
-                if (-not $asset) { Write-Warn "Nenhum ZIP na ultima versao de $repo."; return $false }
-                $url = $asset.browser_download_url
-            } else { $url = $fonte.Substring(4) }
-            $tmp = Join-Path $env:TEMP ('avanti_' + [IO.Path]::GetRandomFileName() + '.zip')
-            Write-Info "Baixando $($app.Nome)..."
-            Invoke-WebRequest -Uri $url -OutFile $tmp -UseBasicParsing -Headers @{ 'User-Agent' = 'AVANTIPACK' }
-            Expand-Archive -Path $tmp -DestinationPath $dir -Force
-            Remove-Item $tmp -Force -ErrorAction SilentlyContinue
-        }
-        elseif ($fonte -eq 'incluso') { }
-        else { return $false }
-    } catch {
-        Write-Warn "Falha ao obter $($app.Nome): $($_.Exception.Message)"
-        return $false
-    }
     $exe = Resolve-AppExe $app
-    if ($exe) { Write-Ok "$($app.Nome) pronto: $exe"; Write-Log "APP pronto $($app.Nome) $exe"; return $true }
-    Write-Warn "$($app.Nome): instalado, mas o executavel nao foi localizado automaticamente."
+    if (-not $exe) {
+        try {
+            $ins = Resolve-AppInstaller $app
+            if ($ins -and $fonte -ne 'site') {
+                Write-Info "Instalando $($app.Nome) com o instalador que ja esta na pasta..."
+                Start-Process -FilePath $ins -WorkingDirectory $dir -Wait
+            }
+            elseif ($fonte -like 'winget:*') {
+                if (-not (Get-WingetOk)) { return $false }
+                $id = $fonte.Substring(7)
+                Write-Info "Baixando e instalando $($app.Nome) (oficial, pelo winget)..."
+                $comum = @('-e', '--silent', '--accept-package-agreements', '--accept-source-agreements', '--disable-interactivity')
+                $out = & winget.exe install --id $id --location $dir @comum 2>&1 | Out-String
+                Write-Log $out
+                if (-not (Resolve-AppExe $app)) {
+                    # alguns instaladores nao aceitam escolher a pasta: instala no lugar padrao
+                    $out = & winget.exe install --id $id @comum 2>&1 | Out-String
+                    Write-Log $out
+                }
+            }
+            elseif ($fonte -like 'zip:*' -or $fonte -like 'github:*') {
+                Initialize-Web
+                if ($fonte -like 'github:*') {
+                    $repo = $fonte.Substring(7)
+                    $rel = Invoke-RestMethod -Uri "https://api.github.com/repos/$repo/releases/latest" -Headers @{ 'User-Agent' = 'AVANTIPACK' } -UseBasicParsing
+                    $asset = $rel.assets | Where-Object { $_.name -like '*.zip' } | Select-Object -First 1
+                    if (-not $asset) { Write-Warn "Nenhum ZIP na ultima versao de $repo."; return $false }
+                    $url = $asset.browser_download_url
+                } else { $url = $fonte.Substring(4) }
+                $tmp = Join-Path $env:TEMP ('avanti_' + [IO.Path]::GetRandomFileName() + '.zip')
+                Write-Info "Baixando $($app.Nome)..."
+                Invoke-WebRequest -Uri $url -OutFile $tmp -UseBasicParsing -Headers @{ 'User-Agent' = 'AVANTIPACK' }
+                Expand-Archive -Path $tmp -DestinationPath $dir -Force
+                Remove-Item $tmp -Force -ErrorAction SilentlyContinue
+            }
+            elseif ($fonte -eq 'site') {
+                return (Get-AppPeloSite $app)      # drivers: nao tem .exe para conferir
+            }
+        } catch {
+            Write-Warn "Falha ao obter $($app.Nome): $($_.Exception.Message)"
+            return $false
+        }
+        $exe = Resolve-AppExe $app
+    }
+    if ($exe) {
+        New-AppAtalho $app $exe
+        Set-AppConfig $app $exe
+        $onde = if ($exe -like "$dir*") { "apps\$($app.Pasta)" } else { "instalado no Windows (atalho em apps\$($app.Pasta))" }
+        Write-Ok "$($app.Nome) pronto - $onde"
+        Write-Log "APP pronto $($app.Nome) $exe"
+        return $true
+    }
+    Write-Warn "$($app.Nome): nao consegui deixar pronto automaticamente. Use o site oficial: $($app.Url)"
     return $false
 }
 
 function Install-RecommendedApps($hw) {
-    Write-Title 'BAIXAR / INSTALAR APPS RECOMENDADOS PARA ESTE PC'
-    $apps = Get-AppList | Where-Object { $_.Auto -and (Test-AppMatch $_.Para $hw) }
-    $faltam = @($apps | Where-Object { -not (Resolve-AppExe $_) })
-    if ($faltam.Count -eq 0) { Write-Ok 'Todos os apps recomendados ja estao prontos.'; return }
-    Write-Note 'Vai baixar SEMPRE das fontes oficiais (winget da Microsoft, GitHub e sites dos autores):'
-    foreach ($a in $faltam) { Write-Note "  - $($a.Nome)" }
-    if (-not (Confirm-Step 'Continuar?')) { return }
-    $ok = 0
-    foreach ($a in $faltam) { if (Install-App $a) { $ok++ } }
-    Write-Ok "$ok de $($faltam.Count) app(s) prontos."
+    Write-Title 'INSTALAR TUDO AUTOMATICO (recomendado para este PC)'
+    $lista = @(Get-AppList | Where-Object { (Test-AppMatch $_.Para $hw) -and ($_.Auto -or $_.Fonte -eq 'site') })
+    $apps = @($lista | Where-Object { $_.Fonte -ne 'site' })
+    $drv  = @($lista | Where-Object { $_.Fonte -eq 'site' })
+    Write-Note 'Programas (baixa e instala sozinho, das fontes oficiais):'
+    foreach ($a in $apps) { $st = if (Resolve-AppExe $a) { '(ja pronto)' } else { '' }; Write-Note "  - $($a.Nome) $st" }
+    if ($drv.Count) {
+        Write-Note 'Drivers (o pack abre o site, voce so clica em BAIXAR, ele faz o resto):'
+        foreach ($a in $drv) { Write-Note "  - $($a.Nome)" }
+    }
+    if (-not (Confirm-Step 'Comecar?' $true)) { return }
+    $ok = 0; $n = 0
+    foreach ($a in $apps) {
+        $n++; Write-Etapa $n ($apps.Count + $drv.Count) $a.Nome
+        if (Install-App $a) { $ok++ }
+    }
+    foreach ($a in $drv) {
+        $n++; Write-Etapa $n ($apps.Count + $drv.Count) $a.Nome
+        if (Confirm-Step "Baixar e instalar agora o $($a.Nome)?" $true) { if (Install-App $a) { $ok++ } }
+    }
+    Write-Host ''
+    Write-Caixa @("$ok de $($apps.Count + $drv.Count) item(ns) prontos.", 'Cada pasta em apps\ tem o app (ou o atalho ABRIR) e o LEIA-ME', 'com as melhores configuracoes.') 'Green'
+    Start-Process explorer.exe (Join-Path $Root 'apps')
 }
 
 # Instalador que ja esta DENTRO da pasta do app (baixado pela opcao T)
@@ -274,41 +374,23 @@ function Show-AppDicas($app) {
 }
 
 function Start-AppFlow($app) {
-    Show-AppDicas $app
     $dir = Join-Path $Root ('apps\' + $app.Pasta)
-    $exe = Resolve-AppExe $app
-    $ins = if (-not $exe) { Resolve-AppInstaller $app } else { $null }
-    if ($exe) {
-        if (Confirm-Step "O app ja esta pronto. Abrir $($app.Nome) agora?") { Start-Process -FilePath $exe -WorkingDirectory (Split-Path $exe) }
-        return
-    }
-    if ($ins) {
-        Write-Ok "O instalador ja esta na pasta: $([IO.Path]::GetFileName($ins))"
-        if (Confirm-Step 'Instalar agora?') { Start-Process -FilePath $ins -Wait; if (Resolve-AppExe $app) { Write-Ok 'Instalado.' } }
-        return
-    }
+    $tut = Join-Path $dir 'LEIA-ME.txt'
     Write-Host ''
-    Write-Host '  Como voce quer pegar este app?' -ForegroundColor White
-    $podeAuto = $app.Fonte -and $app.Fonte -notin @('site', 'incluso')
-    if ($podeAuto) { Write-Host '  [1] Baixar automatico pelo pack (fonte oficial)' }
-    Write-Host '  [2] Abrir o SITE OFICIAL e eu baixo (o pack pega o arquivo sozinho e coloca na pasta)'
-    Write-Host '  [0] Voltar'
-    $op = Read-Host '  Escolha'
-    if ($op -eq '1' -and $podeAuto) { if (Install-App $app) { Write-Ok "Pronto. Siga o LEIA-ME (aberto) para configurar." }; return }
-    if ($op -eq '2' -and $app.Url) {
-        if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir -Force | Out-Null }
-        Start-Process $app.Url
-        Start-Process explorer.exe $dir
-        $ok = Wait-AppDownload $app
-        if ($ok) {
-            Start-Process explorer.exe $ok
-            Write-Note 'Agora e so seguir o passo a passo do LEIA-ME (aberto no Bloco de Notas).'
-            $ins = Resolve-AppInstaller $app
-            $exe = Resolve-AppExe $app
-            if ($exe -and (Confirm-Step "Abrir $($app.Nome) agora?")) { Start-Process -FilePath $exe -WorkingDirectory (Split-Path $exe) }
-            elseif ($ins -and (Confirm-Step 'Rodar o instalador agora?')) { Start-Process -FilePath $ins -Wait }
-        }
+    Write-Host "  $($app.Nome)" -ForegroundColor White
+    $exe = Resolve-AppExe $app
+    if (-not $exe -and $app.Fonte -ne 'site') {
+        if (-not (Install-App $app)) { return }
+        $exe = Resolve-AppExe $app
+    } elseif ($app.Fonte -eq 'site') {
+        if (-not (Install-App $app)) { return }
     }
+    Start-Process explorer.exe $dir
+    if (Test-Path $tut) {
+        Write-Note 'As MELHORES CONFIGURACOES deste app estao no LEIA-ME.txt (abrindo no Bloco de Notas).'
+        Start-Process notepad.exe $tut
+    }
+    if ($exe -and (Confirm-Step "Abrir o $($app.Nome) agora?" $true)) { Start-Process -FilePath $exe -WorkingDirectory (Split-Path $exe) }
 }
 
 function Mod-Apps {
@@ -317,23 +399,27 @@ function Mod-Apps {
     $apps = Get-AppList
     if ($apps.Count -eq 0) { Write-Warn 'apps\apps.txt nao encontrado.'; return }
     while ($true) {
-        Write-Title 'APPS E TUTORIAIS'
-        Write-Note 'Branco = recomendado para o SEU hardware   Cinza = para outro hardware'
+        Write-Title 'PROGRAMAS UTEIS'
+        Write-Host '  [A]  INSTALAR TUDO AUTOMATICO (o que serve para este PC)' -ForegroundColor Green
+        Write-Note '      Baixa, instala, coloca na pasta apps\ e deixa o passo a passo de cada um.'
         Write-Host ''
         for ($i = 0; $i -lt $apps.Count; $i++) {
             $a   = $apps[$i]
-            $exe = Resolve-AppExe $a
-            $st  = if ($exe) { '[pronto]' } elseif (Resolve-AppInstaller $a) { '[instalador]' } elseif ($a.Fonte -eq 'site') { '[site]' } else { '[baixar]' }
-            $cor = if (Test-AppMatch $a.Para $hw) { 'White' } else { 'DarkGray' }
-            Write-Host ("  [{0,2}] {1,-34} {2,-11} {3}" -f ($i + 1), $a.Nome, $a.Para, $st) -ForegroundColor $cor
+            $meu = Test-AppMatch $a.Para $hw
+            if ($a.Fonte -eq 'site') { $st = 'site oficial'; $cs = 'Cyan' }
+            elseif (Resolve-AppExe $a) { $st = 'PRONTO'; $cs = 'Green' }
+            else { $st = 'instalar'; $cs = 'Yellow' }
+            if (-not $meu) { $cs = 'DarkGray' }
+            Write-Host ("  [{0,2}] {1,-36}" -f ($i + 1), $a.Nome) -ForegroundColor $(if ($meu) { 'White' } else { 'DarkGray' }) -NoNewline
+            Write-Host $st -ForegroundColor $cs
         }
         Write-Host ''
-        Write-Host '  [B]  Baixar/instalar TODOS os recomendados para este PC' -ForegroundColor Green
-        Write-Host '  [T]  Baixar TODOS os apps para DENTRO do pack (para mandar com tudo junto)' -ForegroundColor Cyan
+        Write-Note 'Cinza = feito para outra peca (nao e do seu PC).'
+        Write-Host '  [T]  Baixar todos para DENTRO do pack, sem instalar (para mandar junto)' -ForegroundColor DarkCyan
         Write-Host ''
-        $op = Read-Host '  Numero do app para ver o tutorial, B ou T (ENTER volta)'
+        $op = Read-Host '  Numero do app, A ou T (ENTER volta)'
         if (-not $op) { return }
-        if ($op -match '^[bB]$') { Install-RecommendedApps $hw; continue }
+        if ($op -match '^[aAbB]$') { Install-RecommendedApps $hw; Read-Host '  ENTER para voltar a lista' | Out-Null; continue }
         if ($op -match '^[tT]$') { Save-AllAppsToFolders; continue }
         if ($op -notmatch '^\d+$' -or [int]$op -lt 1 -or [int]$op -gt $apps.Count) { continue }
         Start-AppFlow $apps[[int]$op - 1]

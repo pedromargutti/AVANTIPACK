@@ -17,7 +17,7 @@ NVCleanstall | GPU-NVIDIA | NVCleanstall | NVCleanstall*.exe | https://www.techp
 Driver NVIDIA (oficial) | GPU-NVIDIA | Driver_NVIDIA |  | https://www.nvidia.com/pt-br/drivers/ | site |  | *-desktop-win10-win11-64bit-*;*-notebook-win10-win11-64bit-*;*nvidia*
 Driver AMD Radeon (Adrenalin) | GPU-AMD | Driver_AMD |  | https://www.amd.com/pt/support/download/drivers.html | site |  | *amd-software-adrenalin*;*whql-amd*;*AMD-Software*;*radeon*
 Driver de chipset AMD | CPU-AMD | Chipset_AMD |  | https://www.amd.com/pt/support/download/drivers.html | site |  | *amd_chipset*;*chipset_software*;*amd-chipset*
-Intel Driver Support Assistant | CPU-INTEL | Intel_DSA |  | https://www.intel.com.br/content/www/br/pt/support/detect.html | winget:Intel.IntelDriverAndSupportAssistant |  | *Intel-Driver-and-Support*;*Intel*DSA*;*IntelDriver*
+Intel Driver Support Assistant | CPU-INTEL | Intel_DSA |  | https://www.intel.com.br/content/www/br/pt/support/detect.html | winget:Intel.IntelDriverAndSupportAssistant | auto | *Intel-Driver-and-Support*;*Intel*DSA*;*IntelDriver*
 Driver Intel Arc / graficos | GPU-INTEL | Driver_Intel_Graficos |  | https://www.intel.com.br/content/www/br/pt/support/detect.html | site |  | *gfx_win*;*Intel*Graphics*;*arc*driver*
 HWiNFO (temperaturas) | TODOS | HWiNFO | HWiNFO64.exe | https://www.hwinfo.com/download/ | winget:REALiX.HWiNFO | auto | hwi*;HWiNFO*
 CPU-Z (processador e RAM) | TODOS | CPU-Z | cpuz.exe | https://www.cpuid.com/softwares/cpu-z.html | winget:CPUID.CPU-Z | auto | cpu-z*;cpuz*

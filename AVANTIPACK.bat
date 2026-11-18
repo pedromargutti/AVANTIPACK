@@ -8,7 +8,7 @@ title AVANTIPACK - Otimizacao para Jogos
 ::  Toda a logica fica em core\avanti.ps1 (PowerShell 5.1+)
 :: ============================================================
 
-:: Abre pelo atalho AVANTIPACK.lnk (logo, fonte Consolas, janela centralizada).
+:: Abre pelo atalho "ABRIR AVANTIPACK.lnk" (logo, fonte Consolas, janela centralizada).
 :: Quando ja veio pelo atalho, o primeiro parametro e "lnk".
 if /i "%~1"=="lnk" goto checaradmin
 if not exist "%~dp0core\janela.ps1" goto checaradmin
@@ -16,10 +16,10 @@ set "AVDESK="
 if not exist "%~dp0data\atalho.ok" set "AVDESK=-Desktop"
 powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0core\janela.ps1" %AVDESK% >nul 2>&1
 if errorlevel 1 goto checaradmin
-if not exist "%~dp0AVANTIPACK.lnk" goto checaradmin
+if not exist "%~dp0ABRIR AVANTIPACK.lnk" goto checaradmin
 if not exist "%~dp0data" mkdir "%~dp0data" >nul 2>&1
 if not exist "%~dp0data\atalho.ok" echo ok>"%~dp0data\atalho.ok"
-start "" "%~dp0AVANTIPACK.lnk"
+start "" "%~dp0ABRIR AVANTIPACK.lnk"
 exit /b
 
 :checaradmin
@@ -88,7 +88,8 @@ echo   %AZ%[3]  CONSERTAR UM PROBLEMA%RS%
 echo        %CI%Sem internet, sem som, microfone, camera, Loja, Windows Update...%RS%
 echo.
 echo   %AZ%[4]  PROGRAMAS UTEIS%RS%
-echo        %CI%Drivers e programas (DDU, HWiNFO, CPU-Z...) com tutorial de cada um.%RS%
+echo        %CI%Instala SOZINHO os programas e drivers certos para o seu PC, cada um%RS%
+echo        %CI%na sua pasta e com o passo a passo de configuracao.%RS%
 echo.
 echo   %AZ%[5]  GUIAS PASSO A PASSO%RS%
 echo        %CI%Painel NVIDIA/AMD com imagens, BIOS, limite de FPS.%RS%
