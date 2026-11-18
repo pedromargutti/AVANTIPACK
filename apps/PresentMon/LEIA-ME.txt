@@ -1,0 +1,12 @@
+PresentMon (Intel) - medidor de FPS
+===================================
+Usado pelo "Teste de FPS" do AVANTIPACK. O pack baixa sozinho o
+PresentMon.exe oficial (github.com/GameTechDev/PresentMon, licenca MIT)
+na primeira vez que voce faz o teste.
+
+Como fazer um bom teste:
+  1. Faca o teste ANTES de otimizar (opcao Teste de FPS).
+  2. Otimize, reinicie o PC e faca de novo, no MESMO lugar do jogo,
+     com as MESMAS configuracoes graficas.
+  3. Olhe principalmente o "1% low": quanto mais perto do FPS medio,
+     menos travadinhas.

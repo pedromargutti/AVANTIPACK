@@ -245,6 +245,11 @@ function Get-Hardware {
     elseif ($names -match 'Intel')                            { $gv = 'INTEL_IGPU' }
     else                                                      { $gv = 'OUTRO' }
     $hw.GPU_VENDOR = $gv
+    # 2 placas (integrada + dedicada), tipico de notebook gamer: o Windows pode
+    # rodar o jogo na integrada. O item H3 manda cada jogo para a dedicada.
+    $ded = @($names | Where-Object { $_ -match 'NVIDIA|Radeon.*RX|Radeon Pro|Arc.*[AB]\d{3}' })
+    $int = @($names | Where-Object { $_ -notmatch 'NVIDIA|Radeon.*RX|Radeon Pro|Arc.*[AB]\d{3}' -and $_ -match 'Intel|AMD|Radeon' })
+    $hw.GPU_HIBRIDA = if ($ded.Count -ge 1 -and $int.Count -ge 1) { '1' } else { '0' }
 
     # --- Notebook ou desktop (pelo tipo de gabinete informado pela placa)
     $laptopTypes = @(8, 9, 10, 11, 12, 14, 18, 21, 30, 31, 32)
@@ -265,6 +270,10 @@ function Get-Hardware {
     $mt = if ($mods.Count) { [int]$mods[0].SMBIOSMemoryType } else { 0 }
     $hw.RAM_TIPO = switch ($mt) { 26 { 'DDR4' } 34 { 'DDR5' } 24 { 'DDR3' } default { 'DDR?' } }
     $hw.RAM_PENTES = $mods.Count
+    # tamanho de cada pente (ex: 4+16) e quantos encaixes a placa tem
+    $hw.RAM_LAYOUT = (@($mods | ForEach-Object { [math]::Round($_.Capacity / 1GB) }) -join '+')
+    $arr = @(Get-CimInstance Win32_PhysicalMemoryArray -ErrorAction SilentlyContinue | Where-Object { $_.Use -eq 3 -or -not $_.Use })
+    $hw.RAM_SLOTS = [int](($arr | Measure-Object -Property MemoryDevices -Sum).Sum)
 
     # --- Disco do sistema
     $disk = 'DESCONHECIDO'
@@ -320,9 +329,16 @@ function Get-Alerts($hw) {
         if ($hw.RAM_TIPO -eq 'DDR5' -and [int]$hw.RAM_MTS -le 4800) {
             $a += "RAM DDR5 rodando a $($hw.RAM_MTS) MT/s: o XMP/EXPO provavelmente esta DESLIGADO na BIOS. Veja o Guia de BIOS."
         }
-        if ([int]$hw.RAM_PENTES -eq 1) {
-            $a += "So 1 pente de RAM: roda em single channel. Dois pentes iguais (dual channel) dao bem mais FPS e menos travadas."
-        }
+    }
+    # --- dual channel (vale para PC e notebook)
+    $integ = ($hw.GPU_VENDOR -like '*IGPU*')
+    $extra = if ($integ) { ' Com video integrado isso pesa MUITO: a memoria e a "memoria de video" tambem.' } else { '' }
+    $tams = @(([string]$hw.RAM_LAYOUT).Split('+') | Where-Object { $_ -match '^\d+$' } | ForEach-Object { [int]$_ })
+    if ([int]$hw.RAM_PENTES -eq 1) {
+        $livre = if ([int]$hw.RAM_SLOTS -ge 2) { ' Sua placa tem encaixe livre: coloque outro pente IGUAL a este.' } else { '' }
+        $a += "So 1 pente de RAM ($($hw.RAM_LAYOUT) GB): roda em SINGLE CHANNEL, com metade da velocidade de memoria.$livre$extra"
+    } elseif ($tams.Count -ge 2 -and (@($tams | Select-Object -Unique).Count -gt 1)) {
+        $a += "Pentes de RAM de tamanhos diferentes ($($hw.RAM_LAYOUT) GB): so parte da memoria roda em dual channel (modo flex), o resto fica mais lento. O ideal sao 2 pentes iguais.$extra"
     }
     if ([int]$hw.RAM_GB -lt 16) { $a += "Menos de 16 GB de RAM: jogos atuais vao travar por falta de memoria. Upgrade recomendado." }
     if ($hw.DISK -eq 'HDD')     { $a += "Windows instalado em HD mecanico: e a maior causa de travadas. Migrar para SSD/NVMe e prioridade." }
@@ -340,7 +356,7 @@ function Show-Hardware($hw) {
     Write-Title 'HARDWARE DETECTADO'
     Write-Host ("  Processador : {0}  ({1} nucleos / {2} threads)" -f $hw.CPU, $hw.CPU_CORES, $hw.CPU_THREADS)
     Write-Host ("  Video       : {0}  [perfil: {1}]" -f $hw.GPU, $hw.GPU_VENDOR)
-    Write-Host ("  Memoria     : {0} GB {1} @ {2} MT/s  ({3} pente(s))" -f $hw.RAM_GB, $hw.RAM_TIPO, $hw.RAM_MTS, $hw.RAM_PENTES)
+    Write-Host ("  Memoria     : {0} GB {1} @ {2} MT/s  ({3} pente(s): {4} GB)" -f $hw.RAM_GB, $hw.RAM_TIPO, $hw.RAM_MTS, $hw.RAM_PENTES, $hw.RAM_LAYOUT)
     Write-Host ("  Disco (C:)  : {0}" -f $hw.DISK)
     Write-Host ("  Sistema     : {0}  build {1}  -  {2}" -f $hw.WIN, $hw.WIN_BUILD, $hw.TIPO)
     $al = Get-Alerts $hw
@@ -502,6 +518,8 @@ function Mod-Guias {
 . (Join-Path $PSScriptRoot 'dns.ps1')
 . (Join-Path $PSScriptRoot 'restauracao.ps1')
 . (Join-Path $PSScriptRoot 'manutencao.ps1')
+. (Join-Path $PSScriptRoot 'fps.ps1')
+. (Join-Path $PSScriptRoot 'relatorio.ps1')
 
 # ---------------------------------------------------------------------
 #  Execucao
@@ -514,6 +532,8 @@ if (-not (New-Object Security.Principal.WindowsPrincipal($id)).IsInRole([Securit
 
 switch ($Module) {
     'novidades-auto' { Mod-Novidades -Auto }
+    'fps'           { Mod-TesteFps }
+    'relatorio'     { Mod-Relatorio }
     'novidades'     { Mod-Novidades }
     'detect-silent' { $h = Get-Hardware; try { Get-StatusExtra $h } catch {}; Save-Hardware $h }
     'checkup'       {
@@ -563,7 +583,7 @@ switch ($Module) {
 }
 
 try { Update-StatusFile } catch {}
-if ($Module -notin @('novidades-auto', 'novidades', 'detect-silent', 'detect', 'apps', 'guias', 'visual', 'fix', 'internet', 'manutencao', 'atualizar', 'configjogos')) {
+if ($Module -notin @('novidades-auto', 'novidades', 'fps', 'relatorio', 'detect-silent', 'detect', 'apps', 'guias', 'visual', 'fix', 'internet', 'manutencao', 'atualizar', 'configjogos')) {
     Write-Host ''
     if ($script:Applied -gt 0) { Write-Ok "$($script:Applied) ajuste(s) aplicado(s). Backup salvo em core\dados\backup" }
     if ($script:NeedReboot)    { Write-Warn 'Reinicie o PC para tudo entrar em vigor (opcao 8 do menu).' }

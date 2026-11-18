@@ -122,6 +122,29 @@ function Invoke-AutoGames {
     }
 }
 
+# Notebook com 2 placas: manda cada jogo para a placa DEDICADA (mesma opcao de
+# Configuracoes > Sistema > Tela > Elementos graficos > "Alto desempenho").
+function Invoke-GpuDedicada {
+    $script:CurMod = 'jogos'
+    $script:CurItem = 'H3'
+    $hw = Load-HW
+    if ($hw.GPU_HIBRIDA -ne '1') { Write-Skip 'Este PC tem uma placa de video so: nada a fazer.'; return }
+    Write-Title 'JOGOS NA PLACA DE VIDEO DEDICADA'
+    Write-Note "Placas encontradas: $($hw.GPU)"
+    $db = Get-GameDb
+    $wanted = @{}
+    foreach ($g in $db) { foreach ($e in $g.Exes) { $wanted[$e.ToLower()] = $g.Nome } }
+    Write-Info 'Procurando jogos instalados...'
+    $found = Find-GameExes (Get-GameRoots) $wanted
+    if ($found.Count -eq 0) { Write-Skip 'Nenhum jogo conhecido encontrado.'; return }
+    $k = 'HKCU:\Software\Microsoft\DirectX\UserGpuPreferences'
+    foreach ($e in ($found.Keys | Sort-Object { $wanted[$_] })) {
+        Set-Reg $k $found[$e] 'GpuPreference=2;' 'String'
+        Write-Ok "$($wanted[$e]): placa dedicada (alto desempenho)"
+    }
+    Write-Note 'Vale a partir da proxima vez que o jogo abrir.'
+}
+
 function Mod-Jogos {
     $script:CurMod = 'jogos'
     $script:CurItem = 'H1'
@@ -138,6 +161,7 @@ function Mod-Jogos {
         Write-Host '  [4] Ver jogos ja priorizados'
         Write-Host '  [5] Perfil NVIDIA turbo nos jogos competitivos (so NVIDIA)'
         Write-Host '  [6] Configuracoes recomendadas DENTRO dos jogos (guia)'
+        Write-Host '  [7] Notebook: jogos sempre na placa de video DEDICADA'
         Write-Host ''
         $op = Read-Host '  Escolha (ENTER volta ao menu)'
         switch ($op) {
@@ -196,6 +220,7 @@ function Mod-Jogos {
             }
             '5' { Optimize-NvidiaGameProfiles (Load-HW); $script:CurItem = 'H1' }
             '6' { Start-Process notepad.exe (Join-Path $Root 'guias\CONFIG_DOS_JOGOS.txt') }
+            '7' { Invoke-GpuDedicada }
             default { return }
         }
         Write-Host ''

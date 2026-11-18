@@ -46,6 +46,7 @@ $VOLTA = @{
     G4 = 'Arquivo de paginacao volta como estava'
     H1 = 'Prioridade alta dos jogos e removida'
     H2 = 'Perfis NVIDIA por jogo voltam ao padrao do driver'
+    H3 = 'Jogos voltam a deixar o Windows escolher a placa de video'
     I1 = 'INTEGRIDADE DE MEMORIA volta (alguns anti-cheats como Vanguard/FACEIT exigem)'
     I2 = 'Modo de interrupcao da placa de video volta ao padrao'
     I3 = 'Timer resolution global volta ao padrao'
