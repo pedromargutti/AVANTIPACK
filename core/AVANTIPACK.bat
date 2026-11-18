@@ -36,6 +36,8 @@ exit /b
 
 :inicio
 cd /d "%AVROOT%"
+:: fonte Consolas, tamanho e posicao da janela (funciona mesmo sem o atalho)
+if exist "%~dp0tela.ps1" powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0tela.ps1" >nul 2>&1
 for /F %%a in ('echo prompt $E ^| cmd') do set "ESC=%%a"
 set "AZ=%ESC%[94m"
 set "BR=%ESC%[97m"

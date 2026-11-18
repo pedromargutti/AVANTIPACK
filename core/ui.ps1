@@ -17,6 +17,26 @@ $script:UiSeta = [char]0x25BA
 $script:UiCima = [char]0x2191; $script:UiBaixo = [char]0x2193
 $script:UiEsq = [char]0x2190;  $script:UiDir = [char]0x2192
 
+$script:UiBH = [char]0x2500; $script:UiBV = [char]0x2502
+$script:UiBTL = [char]0x250C; $script:UiBTR = [char]0x2510; $script:UiBBL = [char]0x2514; $script:UiBBR = [char]0x2518
+
+function Split-UiTexto([string]$t, [int]$w) {
+    $out = @(); $l = ''
+    foreach ($p in ([string]$t).Split(' ')) {
+        if (($l + ' ' + $p).Trim().Length -gt $w) { $out += $l.Trim(); $l = $p } else { $l = ($l + ' ' + $p) }
+    }
+    if ($l.Trim()) { $out += $l.Trim() }
+    return $out
+}
+# caixa com a explicacao do item selecionado (sempre 4 linhas, para a tela nao "pular")
+function Write-UiCaixaDesc([string]$d) {
+    $ls = @(Split-UiTexto $d 72)
+    while ($ls.Count -lt 2) { $ls += '' }
+    Write-UiLinha ("  " + $script:UiBTL + ([string]$script:UiBH * 76) + $script:UiBTR) 'DarkGray'
+    foreach ($x in $ls[0..1]) { Write-UiLinha ("  " + $script:UiBV + ' ' + $x.PadRight(74) + ' ' + $script:UiBV) 'White' }
+    Write-UiLinha ("  " + $script:UiBBL + ([string]$script:UiBH * 76) + $script:UiBBR) 'DarkGray'
+}
+
 function Get-UiPad {
     try { $w = [Console]::WindowWidth } catch { return '' }
     $p = [math]::Floor(($w - $script:UiLarg) / 2)
@@ -60,6 +80,15 @@ function Write-UiLinha([string]$txt, [string]$fg = 'Gray', [string]$bg = $null) 
     $script:UiInicioLinha = $true
 }
 
+function Write-UiLinhaSel([string]$txt) {
+    $pad = Get-UiPad
+    if ($pad) { Microsoft.PowerShell.Utility\Write-Host $pad -NoNewline }
+    $t = $txt.PadRight(72); if ($t.Length -gt ($script:UiLarg - 2)) { $t = $t.Substring(0, $script:UiLarg - 2) }
+    Microsoft.PowerShell.Utility\Write-Host $t -ForegroundColor White -BackgroundColor DarkBlue -NoNewline
+    Microsoft.PowerShell.Utility\Write-Host (' ' * [math]::Max(0, $script:UiLarg - 2 - $t.Length))
+    $script:UiInicioLinha = $true
+}
+
 # ---------------------------------------------------------------------
 #  Lista com setas.  $Itens = @( @{K='1'; T='Texto'; D='descricao'; C='Cyan'} , ... )
 #  Devolve a chave (K) escolhida; '0' = voltar.
@@ -78,12 +107,13 @@ function Select-Opcao {
     $dig = ''
     $topo = [Console]::CursorTop
     $temDesc = @($lista | Where-Object { $_.D }).Count -gt 0
-    $porItem = if ($temDesc) { 2 } else { 1 }
+    $livre = [Console]::WindowHeight - 10 - $(if ($temDesc) { 4 } else { 0 })
+    $porItem = if ($lista.Count * 2 -le $livre) { 2 } else { 1 }      # espaco entre as opcoes quando cabe
     try { [Console]::CursorVisible = $false } catch {}
     try {
         while ($true) {
             # quantos itens cabem na janela
-            $cabe = [math]::Max(4, [math]::Floor(([Console]::WindowHeight - 6) / $porItem))
+            $cabe = [math]::Max(4, [math]::Floor($livre / $porItem))
             if ($cabe -ge $lista.Count) { $ini = 0; $cabe = $lista.Count }
             else { $ini = [math]::Max(0, [math]::Min($sel - [math]::Floor($cabe / 2), $lista.Count - $cabe)) }
             [Console]::SetCursorPosition(0, $topo)
@@ -92,13 +122,14 @@ function Select-Opcao {
                 $it = $lista[$i]
                 $c = if ($it.C) { $it.C } else { 'Cyan' }
                 $tag = ('[' + $it.K + ']').PadRight(5)
-                if ($i -eq $sel) { Write-UiLinha ("  $($script:UiSeta) $tag $($it.T)") 'White' 'DarkBlue' }
-                else { Write-UiLinha ("    $tag $($it.T)") $c }
-                if ($temDesc) { if ($it.D) { Write-UiLinha ("           $($it.D)") 'Gray' } else { Write-UiLinha '' } }
+                if ($i -eq $sel) { Write-UiLinhaSel ("   $($script:UiSeta) $tag $($it.T)") }
+                else { Write-UiLinha ("     $tag $($it.T)") $c }
+                if ($porItem -eq 2) { Write-UiLinha '' }
             }
             if ($cabe -lt $lista.Count) { Write-UiLinha $(if ($ini + $cabe -lt $lista.Count) { "     $($script:UiBaixo) mais opcoes abaixo" } else { '' }) 'DarkGray' }
             Write-UiLinha ''
-            $h = "  $($script:UiCima) $($script:UiBaixo) escolher   ENTER confirmar   ESC voltar   (ou digite o numero)"
+            if ($temDesc) { Write-UiCaixaDesc ([string]$lista[$sel].D) }
+            $h = "  $($script:UiCima) $($script:UiBaixo) escolher     ENTER confirmar     ESC voltar     (ou digite o numero)"
             if ($Dica) { $h = "  $Dica" }
             Write-UiLinha $h 'DarkCyan'
             Write-UiLinha $(if ($dig) { "  Opcao: $dig" + '_' } else { '' }) 'White'
@@ -151,11 +182,12 @@ function Select-Varios {
     $sel = 0
     $topo = [Console]::CursorTop
     $temDesc = @($lista | Where-Object { $_.D }).Count -gt 0
-    $porItem = if ($temDesc) { 2 } else { 1 }
+    $livre = [Console]::WindowHeight - 12 - $(if ($temDesc) { 4 } else { 0 })
+    $porItem = if ($n * 2 -le $livre) { 2 } else { 1 }
     try { [Console]::CursorVisible = $false } catch {}
     try {
         while ($true) {
-            $cabe = [math]::Max(4, [math]::Floor(([Console]::WindowHeight - 8) / $porItem))
+            $cabe = [math]::Max(4, [math]::Floor($livre / $porItem))
             if ($cabe -ge $n) { $ini = 0; $cabe = $n }
             else { $ini = [math]::Max(0, [math]::Min([math]::Min($sel, $n - 1) - [math]::Floor($cabe / 2), $n - $cabe)) }
             [Console]::SetCursorPosition(0, $topo)
@@ -164,16 +196,20 @@ function Select-Varios {
                 $it = $lista[$i]
                 $box = if ($it.Bloq) { '[n/a]' } elseif ($it.On) { '[ X ]' } else { '[   ]' }
                 $c = if ($it.Bloq) { 'DarkGray' } elseif ($it.C) { $it.C } elseif ($it.On) { 'Green' } else { 'White' }
-                if ($i -eq $sel) { Write-UiLinha ("  $($script:UiSeta) $box $($it.T)") 'White' 'DarkBlue' }
-                else { Write-UiLinha ("    $box $($it.T)") $c }
-                if ($temDesc) { if ($it.D) { Write-UiLinha ("           $($it.D)") 'Gray' } else { Write-UiLinha '' } }
+                if ($i -eq $sel) { Write-UiLinhaSel ("   $($script:UiSeta) $box $($it.T)") }
+                else { Write-UiLinha ("     $box $($it.T)") $c }
+                if ($porItem -eq 2) { Write-UiLinha '' }
             }
             if ($cabe -lt $n) { Write-UiLinha $(if ($ini + $cabe -lt $n) { "     $($script:UiBaixo) mais itens abaixo" } else { '' }) 'DarkGray' }
             Write-UiLinha ''
             $marc = @($lista | Where-Object { $_.On }).Count
-            $txtC = "  >> $Concluir  ($marc marcado(s))"
-            if ($sel -eq $n) { Write-UiLinha ("  $($script:UiSeta)" + $txtC.Substring(1)) 'Black' 'Green' } else { Write-UiLinha $txtC 'Green' }
+            $txtC = "     >> $Concluir   ($marc marcado(s))"
+            if ($sel -eq $n) { Write-UiLinha ("   $($script:UiSeta) >> $Concluir   ($marc marcado(s))").PadRight(72) 'Black' 'Green' } else { Write-UiLinha $txtC 'Green' }
             Write-UiLinha ''
+            if ($temDesc) {
+                $dd = if ($sel -lt $n) { [string]$lista[$sel].D } else { 'Confirma as escolhas e continua.' }
+                Write-UiCaixaDesc $dd
+            }
             $dica = "  $($script:UiCima) $($script:UiBaixo) mover   ESPACO/ENTER marcar   ESC cancelar"
             if (-not $SemTodos) { $dica += '   T todos   N nenhum' }
             Write-UiLinha $dica 'DarkCyan'
