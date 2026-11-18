@@ -127,14 +127,9 @@
   • Desfazer reformulado: tudo, ou só a função que você precisa de volta.
   • Barra de progresso por etapa e caixa de resultado no fim.
   • v0.7.2: atalho com a logo, janela centralizada e fonte Consolas.
-  • v0.8.0: menu com setas, teste de FPS, dual channel, placa dedicada
-    no notebook e relatório para ajuda.
-  • v0.8.1: setas em todas as telas, tela centralizada, fonte nítida e
-    configurações de 19 jogos atualizadas.
-  • v0.8.2: fonte grande e janela no meio da tela (ajustadas ao seu
-    monitor), menus por seção e explicação numa caixa embaixo.
-  • v0.8.3: menu estável (não rola sozinho, aguenta tela cheia e
-    restaurar a janela).
+  • v0.7.6: setas em todas as telas, tela no meio e estável, teste de
+    FPS, dual channel, placa dedicada no notebook, relatório para ajuda
+    e configurações de 19 jogos atualizadas.
 
 
   PASTAS
