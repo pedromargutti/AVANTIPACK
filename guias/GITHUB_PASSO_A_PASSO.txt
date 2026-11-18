@@ -35,7 +35,7 @@
   ---------------------------------------------------------------
   1. Dê dois cliques em  ferramentas\GERAR_RELEASE.bat
      Ele pergunta o número da versão (ex.: 0.7.1), atualiza o
-     VERSION.txt e cria  ferramentas\saida\AVANTIPACK_v0.7.1.zip
+     core\VERSION.txt e cria  ferramentas\saida\AVANTIPACK_v0.7.1.zip
      (sem os seus backups e logs).
   2. No GitHub, abra o repositório > Releases (coluna da direita) >
      "Draft a new release" (ou "Create a new release").
@@ -50,7 +50,7 @@
 
   REGRAS IMPORTANTES
   ---------------------------------------------------------------
-  • O número da tag tem que ser MAIOR que o do VERSION.txt de quem
+  • O número da tag tem que ser MAIOR que o do core\VERSION.txt de quem
     vai atualizar (0.7.1 > 0.7.0). Nunca reutilize um número.
   • Sempre anexe o ZIP gerado pelo GERAR_RELEASE: ele já vem com a
     pasta certa. Se não houver ZIP anexado, o pack usa o código do

@@ -25,9 +25,18 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 
 ## 🆕 Novidades
 
-> **Versão mais nova:** [veja o que mudou](../../releases/latest) · [histórico completo](NOVIDADES.md)
+> **Versão mais nova:** [veja o que mudou](../../releases/latest) · [histórico completo](core/NOVIDADES.md)
 
 <details open>
+<summary><b>v0.7.5</b> — pasta organizada e AVANTIPACK.exe com a logo</summary>
+
+- 🧹 Na pasta só ficam o **AVANTIPACK.exe**, o LEIA-ME e as pastas `apps`, `core` e `guias`
+- 🔵 **AVANTIPACK.exe com a logo**: dois cliques e pronto
+- 📁 Dados do seu PC juntos em `core\dados` (migra sozinho, sem perder nada)
+
+</details>
+
+<details>
 <summary><b>v0.7.4</b> — programas instalados sozinhos</summary>
 
 - 📦 **[A] INSTALAR TUDO**: baixa e instala os programas certos para o seu PC, cada um na sua pasta
@@ -44,14 +53,6 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 
 </details>
 
-<details>
-<summary><b>v0.7.2</b> — logo, atalho e janela nova</summary>
-
-- 🎨 **Logo nova** e **atalho "AVANTIPACK"** na Área de Trabalho
-- 📐 Janela **no meio da tela**, tamanho certo e fonte **Consolas**
-- 🖱️ Clicar na janela **não pausa mais** o pack
-
-</details>
 
 <br>
 
@@ -224,13 +225,14 @@ Também tem: **BIOS** (XMP/EXPO, Resizable BAR... com o nome em cada fabricante)
 <summary><b>📁 Estrutura das pastas</b></summary>
 
 ```text
-AVANTIPACK.bat     menu principal
-core\              motor do pack (PowerShell)
+AVANTIPACK.exe     abre o pack (ícone com a logo)
+LEIA-ME.txt        instruções
+core\              motor do pack (menu .bat, PowerShell, versão e novidades)
 guias\             BIOS, painéis ilustrados, jogos, limite de FPS
 apps\              uma pasta por programa, cada uma com LEIA-ME.txt
-ferramentas\       GERAR_RELEASE.bat (para publicar versões)
-docs\              imagens deste README
-backup\ logs\ data\   criadas no uso, com dados do seu PC (não vão pro Git)
+ferramentas\       só no GitHub: launcher do .exe e GERAR_RELEASE
+docs\              só no GitHub: imagens deste README
+core\dados\        criada no uso: backups e dados do seu PC (não vai pro Git)
 ```
 
 </details>
@@ -240,7 +242,7 @@ backup\ logs\ data\   criadas no uso, com dados do seu PC (não vão pro Git)
 
 <br>
 
-O pack consulta a última **Release** deste repositório (no máximo a cada 12 h). Se houver versão maior que a do `VERSION.txt`, aparece a faixa verde no menu. Ao apertar **U**, ele baixa, troca os arquivos e reabre. **Backups, logs e configuração são mantidos.**
+O pack consulta a última **Release** deste repositório (no máximo a cada 12 h). Se houver versão maior que a do `core/VERSION.txt`, aparece a faixa verde no menu. Ao apertar **U**, ele baixa, troca os arquivos e reabre. **Backups, logs e configuração são mantidos.**
 
 Para quem publica: [`guias/GITHUB_PASSO_A_PASSO.txt`](guias/GITHUB_PASSO_A_PASSO.txt).
 

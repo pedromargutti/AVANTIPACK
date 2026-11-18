@@ -1,6 +1,7 @@
 /* AVANTIPACK.exe - so abre o AVANTIPACK (mostra a logo na pasta).
-   1) se existir "ABRIR AVANTIPACK.lnk" ao lado, abre ele (janela bonita, como administrador)
-   2) senao, roda o AVANTIPACK.bat (que cria o atalho e reabre por ele)              */
+   1) se existir core\AVANTIPACK.lnk, abre ele (janela bonita, como administrador)
+   2) senao, roda o core\AVANTIPACK.bat (que cria o atalho e reabre por ele)
+   3) versoes antigas: AVANTIPACK.bat ao lado do exe                                  */
 typedef unsigned short wchar;
 typedef void *HANDLE;
 #define WINAPI __stdcall
@@ -25,15 +26,16 @@ void Main(void) {
     int i = (int)n;
     while (i > 0 && dir[i - 1] != L'\\') i--;
     dir[i] = 0;                                   /* "C:\...\AVANTIPACK\" */
-    int p = cat(lnk, 0, 700, dir); cat(lnk, p, 700, L"ABRIR AVANTIPACK.lnk");
-    p = cat(bat, 0, 700, dir); cat(bat, p, 700, L"AVANTIPACK.bat");
+    int p = cat(lnk, 0, 700, dir); cat(lnk, p, 700, L"core\\AVANTIPACK.lnk");
+    p = cat(bat, 0, 700, dir); cat(bat, p, 700, L"core\\AVANTIPACK.bat");
+    if (GetFileAttributesW(bat) == INVALID) { p = cat(bat, 0, 700, dir); cat(bat, p, 700, L"AVANTIPACK.bat"); }
     if (GetFileAttributesW(lnk) != INVALID) {
         ShellExecuteW(0, L"open", lnk, 0, dir, 1);
     } else if (GetFileAttributesW(bat) != INVALID) {
         p = cat(args, 0, 760, L"/c \"\""); p = cat(args, p, 760, bat); cat(args, p, 760, L"\"\"");
         ShellExecuteW(0, L"open", L"cmd.exe", args, dir, 1);
     } else {
-        MessageBoxW(0, L"Nao achei o AVANTIPACK.bat nesta pasta.\nExtraia o pack inteiro (todas as pastas) antes de abrir.", L"AVANTIPACK", 0x30);
+        MessageBoxW(0, L"Nao achei a pasta core do AVANTIPACK.\nExtraia o pack inteiro (todas as pastas) antes de abrir.", L"AVANTIPACK", 0x30);
     }
     ExitProcess(0);
 }

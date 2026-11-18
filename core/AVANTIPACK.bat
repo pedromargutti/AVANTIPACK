@@ -1,5 +1,6 @@
 @echo off
 setlocal EnableExtensions
+for %%I in ("%~dp0..") do set "AVROOT=%%~fI\"
 chcp 65001 >nul
 title AVANTIPACK - Otimizacao para Jogos
 
@@ -8,18 +9,18 @@ title AVANTIPACK - Otimizacao para Jogos
 ::  Toda a logica fica em core\avanti.ps1 (PowerShell 5.1+)
 :: ============================================================
 
-:: Abre pelo atalho "ABRIR AVANTIPACK.lnk" (logo, fonte Consolas, janela centralizada).
+:: Abre pelo atalho core\AVANTIPACK.lnk (logo, fonte Consolas, janela centralizada).
 :: Quando ja veio pelo atalho, o primeiro parametro e "lnk".
 if /i "%~1"=="lnk" goto checaradmin
-if not exist "%~dp0core\janela.ps1" goto checaradmin
+if not exist "%~dp0janela.ps1" goto checaradmin
 set "AVDESK="
-if not exist "%~dp0data\atalho.ok" set "AVDESK=-Desktop"
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0core\janela.ps1" %AVDESK% >nul 2>&1
+if not exist "%~dp0dados\data\atalho.ok" set "AVDESK=-Desktop"
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0janela.ps1" %AVDESK% >nul 2>&1
 if errorlevel 1 goto checaradmin
-if not exist "%~dp0ABRIR AVANTIPACK.lnk" goto checaradmin
-if not exist "%~dp0data" mkdir "%~dp0data" >nul 2>&1
-if not exist "%~dp0data\atalho.ok" echo ok>"%~dp0data\atalho.ok"
-start "" "%~dp0ABRIR AVANTIPACK.lnk"
+if not exist "%~dp0AVANTIPACK.lnk" goto checaradmin
+if not exist "%~dp0dados\data" mkdir "%~dp0dados\data" >nul 2>&1
+if not exist "%~dp0dados\data\atalho.ok" echo ok>"%~dp0dados\data\atalho.ok"
+start "" "%~dp0AVANTIPACK.lnk"
 exit /b
 
 :checaradmin
@@ -34,7 +35,7 @@ powershell -NoProfile -Command "Start-Process -FilePath '%~f0' -Verb RunAs"
 exit /b
 
 :inicio
-cd /d "%~dp0"
+cd /d "%AVROOT%"
 for /F %%a in ('echo prompt $E ^| cmd') do set "ESC=%%a"
 set "AZ=%ESC%[94m"
 set "BR=%ESC%[97m"
@@ -46,9 +47,9 @@ set "RS=%ESC%[0m"
 set "FAM=%ESC%[30;103m"
 set "FVD=%ESC%[30;102m"
 set "FAZ=%ESC%[97;44m"
-set "AVPS=powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0core\avanti.ps1" -Module"
+set "AVPS=powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0avanti.ps1" -Module"
 
-if not exist "%~dp0core\avanti.ps1" (
+if not exist "%~dp0avanti.ps1" (
   echo   ERRO: arquivo core\avanti.ps1 nao encontrado. Extraia o pack inteiro antes de rodar.
   pause
   exit /b
@@ -155,7 +156,7 @@ if "%op%"=="10" set "MOD=jogos"
 if "%op%"=="11" set "MOD=dns"
 if "%op%"=="12" set "MOD=avancado"
 if "%op%"=="13" set "MOD=recomendado"
-if "%op%"=="14" start "" notepad "%~dp0guias\GUIA_BIOS.txt"
+if "%op%"=="14" start "" notepad "%AVROOT%guias\GUIA_BIOS.txt"
 if "%op%"=="15" set "MOD=inicializacao"
 if "%op%"=="16" set "MOD=inputlag"
 if "%op%"=="17" set "MOD=internet"
@@ -180,11 +181,11 @@ exit /b
 :atualizar
 echo.
 echo   %AZ%Abrindo o atualizador... este menu vai fechar e abrir de novo sozinho.%RS%
-start "AVANTIPACK - Atualizacao" powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0core\avanti.ps1" -Module atualizar
+start "AVANTIPACK - Atualizacao" powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0avanti.ps1" -Module atualizar
 exit
 
 :bios
-start "" notepad "%~dp0guias\GUIA_BIOS.txt"
+start "" notepad "%AVROOT%guias\GUIA_BIOS.txt"
 goto menu
 
 :reiniciar
@@ -202,8 +203,8 @@ exit /b
 
 :carregarhw
 set "HW_AJUSTES=" & set "HW_REAPLICAR=" & set "HW_AVISO=" & set "HW_ATUALIZACAO="
-if not exist "%~dp0data\hardware.txt" exit /b
-for /f "usebackq tokens=1,* delims==" %%a in ("%~dp0data\hardware.txt") do set "HW_%%a=%%b"
+if not exist "%~dp0dados\data\hardware.txt" exit /b
+for /f "usebackq tokens=1,* delims==" %%a in ("%~dp0dados\data\hardware.txt") do set "HW_%%a=%%b"
 exit /b
 
 :banner

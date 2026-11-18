@@ -10,7 +10,7 @@
 param([switch]$Desktop)
 $ErrorActionPreference = 'Stop'
 $Root = Split-Path -Parent $PSScriptRoot
-$Bat  = Join-Path $Root 'AVANTIPACK.bat'
+$Bat  = Join-Path $PSScriptRoot 'AVANTIPACK.bat'
 $Ico  = Join-Path $PSScriptRoot 'avantipack.ico'
 
 # --- tamanho da tela em pixels reais (sem a escala do Windows) ---------
@@ -110,9 +110,8 @@ function New-AvantiShortcut([string]$lnk) {
 }
 
 try {
-    $velho = Join-Path $Root 'AVANTIPACK.lnk'
-    if (Test-Path $velho) { Remove-Item $velho -Force -ErrorAction SilentlyContinue }
-    $alvo = Join-Path $Root 'ABRIR AVANTIPACK.lnk'
+    foreach ($v in 'AVANTIPACK.lnk', 'ABRIR AVANTIPACK.lnk') { $velho = Join-Path $Root $v; if (Test-Path -LiteralPath $velho) { Remove-Item -LiteralPath $velho -Force -ErrorAction SilentlyContinue } }
+    $alvo = Join-Path $PSScriptRoot 'AVANTIPACK.lnk'      # o AVANTIPACK.exe abre este atalho
     New-AvantiShortcut $alvo
     # area de trabalho: cria na primeira vez; depois so atualiza se existir
     # (se a pessoa apagou, nao volta; se mudou a pasta do pack, corrige)
@@ -121,7 +120,7 @@ try {
     exit 0
 } catch {
     try {
-        $ld = Join-Path $Root 'logs'; New-Item -ItemType Directory -Path $ld -Force | Out-Null
+        $ld = Join-Path $PSScriptRoot 'dados\logs'; New-Item -ItemType Directory -Path $ld -Force | Out-Null
         Add-Content -Path (Join-Path $ld 'janela.log') -Value ((Get-Date -Format s) + ' ERRO ao criar o atalho: ' + $_.Exception.Message + ' | ' + $_.InvocationInfo.PositionMessage)
     } catch {}
     exit 1
