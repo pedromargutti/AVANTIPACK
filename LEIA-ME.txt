@@ -15,6 +15,15 @@
   Requisitos: Windows 10 (21H2 ou mais novo) ou Windows 11.
 
 
+  ATALHO COM A LOGO
+  ---------------------------------------------------------------
+  Na primeira vez que você abrir o AVANTIPACK.bat, ele cria o atalho
+  "AVANTIPACK" (com a logo) na pasta do pack e na Área de Trabalho.
+  Use sempre o atalho: ele já abre como administrador, com letra
+  maior e a janela no meio da tela. (Se mudar a pasta de lugar, abra
+  o AVANTIPACK.bat uma vez que o atalho se corrige sozinho.)
+
+
   O QUE CADA OPÇÃO DO MENU FAZ
   ---------------------------------------------------------------
   [1] OTIMIZAR MEU PC   <- comece por aqui
@@ -98,6 +107,7 @@
   • Atualização automática pelo GitHub (veja guias\GITHUB_PASSO_A_PASSO.txt).
   • Desfazer reformulado: tudo, ou só a função que você precisa de volta.
   • Barra de progresso por etapa e caixa de resultado no fim.
+  • v0.7.2: atalho com a logo, janela centralizada e fonte Consolas.
 
 
   PASTAS
