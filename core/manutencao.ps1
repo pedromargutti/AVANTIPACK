@@ -10,7 +10,7 @@ $UpdFile    = Join-Path $DataDir 'checagem_atualizacao.txt'
 $TaskName   = 'AVANTIPACK Manutencao'
 
 function Get-PackVersion {
-    $f = Join-Path $Root 'VERSION.txt'
+    $f = Join-Path $PSScriptRoot 'VERSION.txt'
     if (Test-Path $f) { return ((Get-Content $f -TotalCount 1) -replace '[^\d\.]', '') }
     return '0.0.0'
 }
@@ -149,6 +149,12 @@ function Test-VersaoMaior([string]$a, [string]$b) {
     try { return ([version]($a + '.0.0' -replace '^(\d+\.\d+\.\d+).*', '$1')) -gt ([version]($b + '.0.0' -replace '^(\d+\.\d+\.\d+).*', '$1')) } catch { return $false }
 }
 
+function Start-AvantiPack {
+    foreach ($c in @((Join-Path $Root 'AVANTIPACK.exe'), (Join-Path $PSScriptRoot 'AVANTIPACK.bat'), (Join-Path $Root 'AVANTIPACK.bat'))) {
+        if (Test-Path $c) { Start-Process $c; return }
+    }
+}
+
 function Mod-Atualizar {
     $script:CurMod = 'atualizar'
     Start-Sleep -Seconds 2   # espera o menu (AVANTIPACK.bat) fechar
@@ -158,19 +164,19 @@ function Mod-Atualizar {
         Write-Warn 'A atualizacao automatica ainda nao foi configurada neste pack.'
         Write-Note 'Quem distribui o pack precisa colocar o repositorio em core\config.txt (veja guias\GITHUB_PASSO_A_PASSO.txt).'
         Read-Host '  ENTER para voltar ao menu' | Out-Null
-        Start-Process (Join-Path $Root 'AVANTIPACK.bat'); return
+        Start-AvantiPack; return
     }
     $atual = Get-PackVersion
     $nova = Get-UltimaVersaoGitHub
-    if (-not $nova) { Write-Warn 'Nao consegui falar com o GitHub (sem internet?).'; Read-Host '  ENTER' | Out-Null; Start-Process (Join-Path $Root 'AVANTIPACK.bat'); return }
+    if (-not $nova) { Write-Warn 'Nao consegui falar com o GitHub (sem internet?).'; Read-Host '  ENTER' | Out-Null; Start-AvantiPack; return }
     if (-not (Test-VersaoMaior $nova $atual)) {
         Write-Ok "Voce ja tem a versao mais nova ($atual)."
         Read-Host '  ENTER para voltar ao menu' | Out-Null
-        Start-Process (Join-Path $Root 'AVANTIPACK.bat'); return
+        Start-AvantiPack; return
     }
     Write-Info "Versao instalada: $atual   ->   nova: $nova"
     Write-Note 'Seus backups, logs e configuracoes NAO sao apagados.'
-    if (-not (Confirm-Step 'Atualizar agora?')) { Start-Process (Join-Path $Root 'AVANTIPACK.bat'); return }
+    if (-not (Confirm-Step 'Atualizar agora?')) { Start-AvantiPack; return }
     try {
         $rel = Invoke-RestMethod -Uri ("https://api.github.com/repos/{0}/releases/latest" -f $cfg.GITHUB_REPO) -Headers @{ 'User-Agent' = 'AVANTIPACK' } -UseBasicParsing
         $asset = $rel.assets | Where-Object { $_.name -like '*.zip' } | Select-Object -First 1
@@ -181,13 +187,13 @@ function Mod-Atualizar {
         Write-Info 'Baixando a nova versao...'
         Invoke-WebRequest -Uri $url -OutFile $zip -UseBasicParsing -Headers @{ 'User-Agent' = 'AVANTIPACK' }
         Expand-Archive -Path $zip -DestinationPath (Join-Path $tmp 'x') -Force
-        $bat = Get-ChildItem (Join-Path $tmp 'x') -Recurse -Filter 'AVANTIPACK.bat' | Select-Object -First 1
+        $bat = Get-ChildItem (Join-Path $tmp 'x') -Recurse -Filter 'avanti.ps1' | Where-Object { $_.Directory.Name -eq 'core' } | Select-Object -First 1
         if (-not $bat) { throw 'o arquivo baixado nao parece ser o AVANTIPACK' }
-        $src = $bat.DirectoryName
+        $src = $bat.Directory.Parent.FullName
         $cfgPath = Join-Path $PSScriptRoot 'config.txt'
         $cfgLocal = if (Test-Path $cfgPath) { Get-Content $cfgPath -Raw } else { $null }
         foreach ($it in Get-ChildItem $src -Force) {
-            if (@('backup', 'logs', 'data', '.git', 'AVANTIPACK.lnk', 'ABRIR AVANTIPACK.lnk') -contains $it.Name) { continue }
+            if (@('backup', 'logs', 'data', 'dados', '.git', 'docs', 'ferramentas', 'README.md', 'CLAUDE.md', '.gitignore', '.gitattributes', 'AVANTIPACK.lnk', 'ABRIR AVANTIPACK.lnk') -contains $it.Name) { continue }
             Copy-Item -Path $it.FullName -Destination $Root -Recurse -Force
         }
         # mantem a configuracao local (repositorio etc.)
@@ -201,7 +207,7 @@ function Mod-Atualizar {
         Write-Note 'Nada foi perdido. Baixe a versao nova manualmente no GitHub do pack.'
     }
     Start-Sleep -Seconds 2
-    Start-Process (Join-Path $Root 'AVANTIPACK.bat')
+    Start-AvantiPack
 }
 
 # Informacoes rapidas para o topo do menu
@@ -220,9 +226,9 @@ function Get-StatusExtra($hw) {
 # ---------------------------------------------------------------------
 #  Novidades (NOVIDADES.md): mostra a parte da versao atual
 # ---------------------------------------------------------------------
-$NovFile = Join-Path $Root 'data\novidades_vistas.txt'
+$NovFile = Join-Path $DataDir 'novidades_vistas.txt'
 function Show-Novidades([int]$Versoes = 1) {
-    $arq = Join-Path $Root 'NOVIDADES.md'
+    $arq = Join-Path $PSScriptRoot 'NOVIDADES.md'
     if (-not (Test-Path $arq)) { Write-Skip 'Arquivo NOVIDADES.md nao encontrado.'; return }
     $n = 0
     foreach ($l in (Get-Content $arq -Encoding UTF8)) {
@@ -243,7 +249,7 @@ function Mod-Novidades([switch]$Auto) {
         $visto = if (Test-Path $NovFile) { (Get-Content $NovFile -TotalCount 1) } else { $null }
         if ($visto -eq $v) { return }
         # primeira vez num pack novo (nunca usado): so marca, sem mostrar
-        $usado = (Test-Path (Join-Path $Root 'backup\backup.csv')) -or (Test-Path (Join-Path $Root 'logs'))
+        $usado = (Test-Path $BackupFile) -or @(Get-ChildItem $LogDir -ErrorAction SilentlyContinue).Count -gt 1
         New-Item -ItemType Directory -Path (Split-Path $NovFile) -Force | Out-Null
         Set-Content -Path $NovFile -Value $v -Encoding ASCII
         if (-not $visto -and -not $usado) { return }
@@ -255,7 +261,7 @@ function Mod-Novidades([switch]$Auto) {
         Show-Novidades 3
     }
     Write-Host ''
-    Write-Note 'Lista completa: arquivo NOVIDADES.md na pasta do pack.'
+    Write-Note 'Lista completa: core\NOVIDADES.md'
     Write-Host ''
     Read-Host '  ENTER para continuar' | Out-Null
 }

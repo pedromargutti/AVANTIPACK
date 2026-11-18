@@ -4,7 +4,7 @@
 # =====================================================================
 $ErrorActionPreference = 'Stop'
 $Root = Split-Path -Parent $PSScriptRoot
-$verFile = Join-Path $Root 'VERSION.txt'
+$verFile = Join-Path $Root 'core\VERSION.txt'
 $atual = (Get-Content $verFile -TotalCount 1).Trim()
 $p = $atual.Split('.')
 $sugestao = "{0}.{1}.{2}" -f $p[0], $p[1], ([int]$p[2] + 1)
@@ -25,7 +25,7 @@ if ($cfg -notmatch '(?m)^GITHUB_REPO=\S+') {
 Set-Content -Path $verFile -Value $nova -Encoding ASCII
 
 # NOVIDADES.md: coloca o titulo da versao nova e abre o Bloco de Notas
-$novArq = Join-Path $Root 'NOVIDADES.md'
+$novArq = Join-Path $Root 'core\NOVIDADES.md'
 if (Test-Path $novArq) {
     $txt = Get-Content $novArq -Raw -Encoding UTF8
     if ($txt -notmatch ('(?m)^## v' + [regex]::Escape($nova) + '\b')) {
@@ -46,9 +46,10 @@ $stage = Join-Path $env:TEMP ('avanti_release_' + [IO.Path]::GetRandomFileName()
 $dest = Join-Path $stage 'AVANTIPACK'
 New-Item -ItemType Directory -Path $dest -Force | Out-Null
 foreach ($it in Get-ChildItem $Root -Force) {
-    if (@('backup', 'logs', 'data', '.git', 'AVANTIPACK.lnk', 'ABRIR AVANTIPACK.lnk') -contains $it.Name) { continue }
+    if (@('backup', 'logs', 'data', '.git', 'docs', 'ferramentas', 'README.md', 'CLAUDE.md', '.gitignore', '.gitattributes', 'AVANTIPACK.lnk', 'ABRIR AVANTIPACK.lnk') -contains $it.Name) { continue }
     Copy-Item -Path $it.FullName -Destination $dest -Recurse -Force
 }
+foreach ($lx in @('core\dados', 'core\AVANTIPACK.lnk')) { $p2 = Join-Path $dest $lx; if (Test-Path $p2) { Remove-Item $p2 -Recurse -Force } }
 $lixo = Join-Path $dest 'ferramentas\saida'
 if (Test-Path $lixo) { Remove-Item $lixo -Recurse -Force }
 New-Item -ItemType Directory -Path $saida -Force | Out-Null
@@ -63,7 +64,7 @@ Write-Host ''
 Write-Host '  Agora no GitHub:' -ForegroundColor White
 Write-Host '   1. Abra o seu repositorio > Releases > "Draft a new release"'
 Write-Host "   2. Em 'Choose a tag' digite  v$nova  e clique em 'Create new tag'"
-Write-Host "   3. Titulo: AVANTIPACK v$nova  | na descricao, cole as novidades (NOVIDADES.md)"
+Write-Host "   3. Titulo: AVANTIPACK v$nova  | na descricao, cole as novidades (core\NOVIDADES.md)"
 Write-Host "   4. Arraste o arquivo AVANTIPACK_v$nova.zip para a area de anexos"
 Write-Host '   5. Clique em "Publish release"'
 Write-Host ''

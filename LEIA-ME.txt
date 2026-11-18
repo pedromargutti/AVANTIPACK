@@ -22,7 +22,7 @@
   "AVANTIPACK" (com a logo) na pasta do pack e na Área de Trabalho.
   Use sempre o atalho: ele já abre como administrador, com letra
   maior e a janela no meio da tela. (Se mudar a pasta de lugar, abra
-  o AVANTIPACK.bat uma vez que o atalho se corrige sozinho.)
+  o AVANTIPACK.exe uma vez que o atalho se corrige sozinho.)
 
 
   O QUE CADA OPÇÃO DO MENU FAZ
@@ -115,13 +115,13 @@
 
   PASTAS
   ---------------------------------------------------------------
-  core\    motor do pack (não mexa)
-  guias\   guias e o guia com imagens (PAINEIS_VISUAL.html)
-  apps\    uma pasta por programa, cada uma com LEIA-ME.txt
-  backup\  backup das alterações (usado pelo Desfazer)
-  logs\    registro de tudo que foi feito, por dia
-  data\    hardware detectado e últimas escolhas (para o Reaplicar)
-  ferramentas\  GERAR_RELEASE.bat (só para quem publica versões)
+  AVANTIPACK.exe   abre o pack (o ícone com a logo)
+  LEIA-ME.txt      este arquivo
+  apps\            uma pasta por programa, cada uma com LEIA-ME.txt
+  guias\           guias e o guia com imagens (PAINEIS_VISUAL.html)
+  core\            motor do pack (não mexa)
+  core\dados\      backups, registros e dados DESTE PC (usados pelo
+                   Desfazer; não apague)
 
 
   AVISO

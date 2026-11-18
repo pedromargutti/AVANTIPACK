@@ -15,9 +15,37 @@ $ErrorActionPreference = 'Continue'
 $ProgressPreference    = 'SilentlyContinue'
 
 $Root       = Split-Path -Parent $PSScriptRoot
-$BackupDir  = Join-Path $Root 'backup'
-$DataDir    = Join-Path $Root 'data'
-$LogDir     = Join-Path $Root 'logs'
+$Dados      = Join-Path $PSScriptRoot 'dados'      # tudo o que e deste PC fica aqui
+$BackupDir  = Join-Path $Dados 'backup'
+$DataDir    = Join-Path $Dados 'data'
+$LogDir     = Join-Path $Dados 'logs'
+
+# Organizacao da v0.7.5: a pasta principal fica so com o AVANTIPACK.exe, o
+# LEIA-ME e as pastas. Move os dados antigos e apaga os arquivos que mudaram
+# para dentro de core\ (so se a copia nova ja existir).
+try {
+    foreach ($n in @('backup', 'data', 'logs')) {
+        $velho = Join-Path $Root $n; $novo = Join-Path $Dados $n
+        if ((Test-Path $velho) -and -not (Test-Path $novo)) {
+            New-Item -ItemType Directory -Path $Dados -Force | Out-Null
+            Move-Item -LiteralPath $velho -Destination $novo -Force
+        } elseif ((Test-Path $velho) -and (Test-Path $novo)) {
+            Get-ChildItem -LiteralPath $velho -Force | ForEach-Object {
+                $d = Join-Path $novo $_.Name
+                if (-not (Test-Path $d)) { Move-Item -LiteralPath $_.FullName -Destination $d -Force }
+            }
+            if (-not (Get-ChildItem -LiteralPath $velho -Force)) { Remove-Item -LiteralPath $velho -Force }
+        }
+    }
+    foreach ($n in @('VERSION.txt', 'NOVIDADES.md', 'AVANTIPACK.bat')) {
+        $velho = Join-Path $Root $n
+        if ((Test-Path $velho) -and (Test-Path (Join-Path $PSScriptRoot $n))) { Remove-Item -LiteralPath $velho -Force -ErrorAction SilentlyContinue }
+    }
+    foreach ($n in @('AVANTIPACK.lnk', 'ABRIR AVANTIPACK.lnk', '.gitignore', '.gitattributes')) {
+        $velho = Join-Path $Root $n
+        if (Test-Path -LiteralPath $velho) { Remove-Item -LiteralPath $velho -Force -ErrorAction SilentlyContinue }
+    }
+} catch {}
 foreach ($d in @($BackupDir, $DataDir, $LogDir)) {
     if (-not (Test-Path $d)) { New-Item -ItemType Directory -Path $d -Force | Out-Null }
 }
@@ -351,7 +379,7 @@ function Mod-Restore {
         'tcpip.reg'   = 'HKLM\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters'
     }
     foreach ($f in $keys.Keys) { & reg.exe export $keys[$f] (Join-Path $regDir $f) /y 2>&1 | Out-Null }
-    Write-Ok "Copia do registro salva em backup\reg_$stamp"
+    Write-Ok "Copia do registro salva em core\dados\backup\reg_$stamp"
 }
 
 # ---------------------------------------------------------------------
@@ -480,7 +508,7 @@ function Mod-Guias {
 # ---------------------------------------------------------------------
 $id = [Security.Principal.WindowsIdentity]::GetCurrent()
 if (-not (New-Object Security.Principal.WindowsPrincipal($id)).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    Write-Warn 'Execute o AVANTIPACK.bat como administrador.'
+    Write-Warn 'Abra o AVANTIPACK pelo AVANTIPACK.exe (ele pede permissao de administrador).'
     exit 1
 }
 
@@ -537,6 +565,6 @@ switch ($Module) {
 try { Update-StatusFile } catch {}
 if ($Module -notin @('novidades-auto', 'novidades', 'detect-silent', 'detect', 'apps', 'guias', 'visual', 'fix', 'internet', 'manutencao', 'atualizar', 'configjogos')) {
     Write-Host ''
-    if ($script:Applied -gt 0) { Write-Ok "$($script:Applied) ajuste(s) aplicado(s). Backup salvo em backup\backup.csv" }
+    if ($script:Applied -gt 0) { Write-Ok "$($script:Applied) ajuste(s) aplicado(s). Backup salvo em core\dados\backup" }
     if ($script:NeedReboot)    { Write-Warn 'Reinicie o PC para tudo entrar em vigor (opcao 8 do menu).' }
 }

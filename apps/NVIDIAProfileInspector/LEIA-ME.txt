@@ -32,8 +32,8 @@ PARA VOLTAR AO PADRÃO
 USO AUTOMÁTICO PELO AVANTIPACK
   Este app JÁ VEM no pack (licença MIT permite). A opção 1 (Otimizar
   automaticamente) usa ele para configurar o painel NVIDIA sozinho:
-    1. Salva o perfil global atual em backup\nvidia_base_backup.nip
-    2. Grava o perfil AVANTIPACK (data\avantipack_nvidia.nip) no driver
+    1. Salva o perfil global atual em core\dados\backup\nvidia_base_backup.nip
+    2. Grava o perfil AVANTIPACK (core\dados\data\avantipack_nvidia.nip) no driver
     3. A opção 6 (Desfazer) reimporta o backup e volta tudo como era.
   Requer .NET Framework 4.8 (já vem no Windows 10 1903+ e Windows 11).
 

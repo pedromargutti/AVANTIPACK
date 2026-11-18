@@ -1,2 +1,6 @@
 CLAUDE.md export-ignore
 docs/ export-ignore
+ferramentas/ export-ignore
+README.md export-ignore
+.gitignore export-ignore
+.gitattributes export-ignore

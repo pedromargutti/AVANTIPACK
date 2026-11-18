@@ -305,7 +305,7 @@ function Optimize-NvidiaPanel($hw, $mons) {
         Set-Content -Path $nvBak -Value $baseXml -Encoding Unicode
         $undo = "Start-Process -FilePath '$npi' -ArgumentList @('-silentImport','-replaceImport','`"$nvBak`"') -Wait"
         Add-Backup 'NVIDIA' 'Base Profile' 'nip' '1' '' $undo
-        Write-Ok 'Backup salvo em backup\nvidia_base_backup.nip'
+        Write-Ok 'Backup salvo em core\dados\backup\nvidia_base_backup.nip'
     }
 
     # 2) Importa o perfil AVANTIPACK (merge: so muda o que esta na lista)

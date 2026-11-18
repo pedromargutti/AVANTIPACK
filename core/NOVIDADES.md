@@ -2,6 +2,11 @@
 
 Tudo o que mudou em cada versão. A mais nova fica sempre em cima.
 
+## v0.7.5 — 18/11/2026
+- 🧹 **Pasta organizada**: agora só tem o **AVANTIPACK.exe**, o LEIA-ME e as pastas `apps`, `core` e `guias`
+- 🔵 **AVANTIPACK.exe com a logo**: é só dar dois cliques para abrir o pack
+- 📁 Backups, registros e dados do seu PC ficam juntos em `core\dados` (o pack muda as pastas antigas sozinho, sem perder nada)
+
 ## v0.7.4 — 18/11/2026
 - 📦 **Programas úteis 100% automático**: a opção **[A] INSTALAR TUDO** baixa e instala sozinho os programas certos para o seu PC
 - 📁 Cada programa fica **dentro da sua pasta** em `apps\` (ou com um atalho "ABRIR ..." lá dentro, quando o instalador não deixa escolher a pasta)
