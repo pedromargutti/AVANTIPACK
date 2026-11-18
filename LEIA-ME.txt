@@ -57,14 +57,16 @@
       e sites que não abrem.
 
   [4] PROGRAMAS ÚTEIS
-      DDU, NVCleanstall, HWiNFO, CPU-Z, GPU-Z, CrystalDiskInfo, RTSS,
-      OCCT, Autoruns... cada um com tutorial. Branco = serve para o seu
-      PC. Ao escolher um app: mostra onde estão as melhores
-      configurações (LEIA-ME da pasta), baixa sozinho ou abre o SITE
-      OFICIAL e, quando o download termina, pega o arquivo da pasta
-      Downloads e coloca em apps\<app> automaticamente.
-      Opção B instala os recomendados; opção T baixa todos para dentro
-      do pack (para mandar a alguém com tudo junto).
+      [A] INSTALAR TUDO AUTOMÁTICO: baixa e instala sozinho os programas
+      certos para o seu PC (HWiNFO, CPU-Z, GPU-Z, CrystalDiskInfo, RTSS,
+      DDU...), das fontes oficiais. Cada um fica na sua pasta em apps\
+      (ou, se o instalador não deixar escolher a pasta, fica um atalho
+      "ABRIR ..." lá dentro). O LEIA-ME de cada pasta tem as melhores
+      configurações; o HWiNFO já vem configurado para abrir nos sensores.
+      Drivers (NVIDIA, AMD, Intel): o pack abre o site oficial, você só
+      clica em BAIXAR; ele pega o arquivo da pasta Downloads, coloca na
+      pasta do driver e já abre o instalador.
+      Ou escolha um app pelo número para fazer só ele.
 
   [5] GUIAS PASSO A PASSO
       Guia com imagens dos painéis NVIDIA / AMD / Intel / Windows,

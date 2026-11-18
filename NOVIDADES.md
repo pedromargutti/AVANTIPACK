@@ -2,6 +2,14 @@
 
 Tudo o que mudou em cada versão. A mais nova fica sempre em cima.
 
+## v0.7.4 — 18/11/2026
+- 📦 **Programas úteis 100% automático**: a opção **[A] INSTALAR TUDO** baixa e instala sozinho os programas certos para o seu PC
+- 📁 Cada programa fica **dentro da sua pasta** em `apps\` (ou com um atalho "ABRIR ..." lá dentro, quando o instalador não deixa escolher a pasta)
+- 🌐 **Drivers**: o pack abre o site oficial, você só clica em BAIXAR; ele pega o arquivo, coloca na pasta e **já abre o instalador**
+- ⚙️ **HWiNFO já vem configurado** para abrir direto nas temperaturas
+- 🔵 Atalho **"ABRIR AVANTIPACK"** com a logo, fácil de achar na pasta do pack
+- 🔠 **Letra maior** e fonte mais espaçada (Cascadia Mono no Windows 11)
+
 ## v0.7.3 — 18/11/2026
 - 🆕 Tela de **Novidades**: depois de cada atualização, o pack mostra sozinho o que mudou
 - 📋 Modo avançado **[21] Novidades** para ver o histórico quando quiser

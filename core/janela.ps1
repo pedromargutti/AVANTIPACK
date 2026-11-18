@@ -30,7 +30,9 @@ function Get-TelaReal {
 # --- bloco de propriedades do console (MS-SHLLINK ConsoleDataBlock) ----
 function New-ConsoleBlock {
     $t = Get-TelaReal
-    $fh = if ($t.H -ge 1400) { 24 } elseif ($t.H -ge 1000) { 18 } else { 16 }
+    # letra maior e fonte mais espacada (Cascadia Mono no Windows 11, Consolas no 10)
+    $fh = if ($t.H -ge 1400) { 26 } elseif ($t.H -ge 1000) { 20 } else { 18 }
+    $fonte = if (Test-Path (Join-Path $env:WINDIR 'Fonts\CascadiaMono.ttf')) { 'Cascadia Mono' } else { 'Consolas' }
     $fw = [math]::Round($fh * 0.55)
     $cols = 96
     $rows = [math]::Min(44, [math]::Floor(($t.H * 0.86) / $fh))
@@ -49,7 +51,7 @@ function New-ConsoleBlock {
     $bw.Write([uint32]0); $bw.Write([uint32]0)
     $bw.Write([uint32]($fh -shl 16))                           # fonte: altura
     $bw.Write([uint32]0x36); $bw.Write([uint32]400)            # TrueType moderna, normal
-    $nome = [Text.Encoding]::Unicode.GetBytes('Consolas'); $face = New-Object byte[] 64
+    $nome = [Text.Encoding]::Unicode.GetBytes($fonte); $face = New-Object byte[] 64
     [Array]::Copy($nome, $face, $nome.Length); $bw.Write($face)
     $bw.Write([uint32]25)   # cursor
     $bw.Write([uint32]0)    # tela cheia
@@ -108,7 +110,9 @@ function New-AvantiShortcut([string]$lnk) {
 }
 
 try {
-    $alvo = Join-Path $Root 'AVANTIPACK.lnk'
+    $velho = Join-Path $Root 'AVANTIPACK.lnk'
+    if (Test-Path $velho) { Remove-Item $velho -Force -ErrorAction SilentlyContinue }
+    $alvo = Join-Path $Root 'ABRIR AVANTIPACK.lnk'
     New-AvantiShortcut $alvo
     # area de trabalho: cria na primeira vez; depois so atualiza se existir
     # (se a pessoa apagou, nao volta; se mudou a pasta do pack, corrige)
@@ -116,5 +120,9 @@ try {
     if ($Desktop -or (Test-Path $dk)) { try { New-AvantiShortcut $dk } catch {} }
     exit 0
 } catch {
+    try {
+        $ld = Join-Path $Root 'logs'; New-Item -ItemType Directory -Path $ld -Force | Out-Null
+        Add-Content -Path (Join-Path $ld 'janela.log') -Value ((Get-Date -Format s) + ' ERRO ao criar o atalho: ' + $_.Exception.Message + ' | ' + $_.InvocationInfo.PositionMessage)
+    } catch {}
     exit 1
 }
