@@ -197,7 +197,7 @@ Também tem: **BIOS** (XMP/EXPO, Resizable BAR... com o nome em cada fabricante)
 
 ```text
 1. Baixe o .zip em Releases e EXTRAIA a pasta (não rode de dentro do zip)
-2. Botão direito em  AVANTIPACK.bat  >  Executar como administrador
+2. Dê dois cliques em  AVANTIPACK.exe  (o ícone com a logo)
 3. Escolha  [1] OTIMIZAR MEU PC  >  [1] Automático
 4. Reinicie o PC no final
 ```
