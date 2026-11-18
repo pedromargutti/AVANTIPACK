@@ -28,6 +28,15 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 > **Versão mais nova:** [veja o que mudou](../../releases/latest) · [histórico completo](core/NOVIDADES.md)
 
 <details open>
+<summary><b>v0.8.2</b> — tela mais legível e organizada</summary>
+
+- 🔠 Fonte **Consolas** grande e janela **no meio da tela**, ajustadas ao seu monitor
+- 🗂️ Menus **por seção**, com a explicação da opção numa caixa embaixo
+- ↕️ Mais espaço entre as opções
+
+</details>
+
+<details>
 <summary><b>v0.8.1</b> — setas em todas as telas e jogos atualizados</summary>
 
 - ⌨️ **Setas em todas as telas** e listas de marcar com ESPAÇO
@@ -47,14 +56,6 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 
 </details>
 
-<details>
-<summary><b>v0.7.5</b> — pasta organizada e AVANTIPACK.exe com a logo</summary>
-
-- 🧹 Na pasta só ficam o **AVANTIPACK.exe**, o LEIA-ME e as pastas `apps`, `core` e `guias`
-- 🔵 **AVANTIPACK.exe com a logo**: dois cliques e pronto
-- 📁 Dados do seu PC juntos em `core\dados` (migra sozinho, sem perder nada)
-
-</details>
 
 
 

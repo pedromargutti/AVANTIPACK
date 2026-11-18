@@ -131,6 +131,8 @@
     no notebook e relatório para ajuda.
   • v0.8.1: setas em todas as telas, tela centralizada, fonte nítida e
     configurações de 19 jogos atualizadas.
+  • v0.8.2: fonte grande e janela no meio da tela (ajustadas ao seu
+    monitor), menus por seção e explicação numa caixa embaixo.
 
 
   PASTAS

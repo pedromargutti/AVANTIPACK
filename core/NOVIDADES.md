@@ -2,6 +2,13 @@
 
 Tudo o que mudou em cada versão. A mais nova fica sempre em cima.
 
+## v0.8.2 — 18/11/2026
+- 🔠 **Fonte Consolas grande de verdade**: o pack agora arruma a janela depois que ela abre (antes a fonte de pixel antiga podia continuar)
+- 📐 Janela no **tamanho certo e no meio da tela**, de acordo com o seu monitor
+- 🗂️ **Menus organizados por seção** (Otimizar e testar, Problemas e programas, Desfazer e ajuda, Outros)
+- 💬 A **explicação da opção** aparece numa caixa embaixo, só da opção selecionada (menos texto embolado)
+- ↕️ **Mais espaço entre as opções** nas listas, quando cabe na tela
+
 ## v0.8.1 — 18/11/2026
 - ⌨️ **Setas em TODAS as telas**: Otimizar, Personalizado, Programas, Consertar, Guias, Jogos, Desfazer... (↑ ↓ e ENTER, ESC volta)
 - ☑️ **Marcar e desmarcar com ESPAÇO** nas listas (ajustes, programas da inicialização, jogos, o que recolocar)
