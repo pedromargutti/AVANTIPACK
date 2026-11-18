@@ -187,7 +187,7 @@ function Mod-Atualizar {
         $cfgPath = Join-Path $PSScriptRoot 'config.txt'
         $cfgLocal = if (Test-Path $cfgPath) { Get-Content $cfgPath -Raw } else { $null }
         foreach ($it in Get-ChildItem $src -Force) {
-            if (@('backup', 'logs', 'data', '.git') -contains $it.Name) { continue }
+            if (@('backup', 'logs', 'data', '.git', 'AVANTIPACK.lnk') -contains $it.Name) { continue }
             Copy-Item -Path $it.FullName -Destination $Root -Recurse -Force
         }
         # mantem a configuracao local (repositorio etc.)

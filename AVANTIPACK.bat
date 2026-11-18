@@ -8,6 +8,21 @@ title AVANTIPACK - Otimizacao para Jogos
 ::  Toda a logica fica em core\avanti.ps1 (PowerShell 5.1+)
 :: ============================================================
 
+:: Abre pelo atalho AVANTIPACK.lnk (logo, fonte Consolas, janela centralizada).
+:: Quando ja veio pelo atalho, o primeiro parametro e "lnk".
+if /i "%~1"=="lnk" goto checaradmin
+if not exist "%~dp0core\janela.ps1" goto checaradmin
+set "AVDESK="
+if not exist "%~dp0data\atalho.ok" set "AVDESK=-Desktop"
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0core\janela.ps1" %AVDESK% >nul 2>&1
+if errorlevel 1 goto checaradmin
+if not exist "%~dp0AVANTIPACK.lnk" goto checaradmin
+if not exist "%~dp0data" mkdir "%~dp0data" >nul 2>&1
+if not exist "%~dp0data\atalho.ok" echo ok>"%~dp0data\atalho.ok"
+start "" "%~dp0AVANTIPACK.lnk"
+exit /b
+
+:checaradmin
 net session >nul 2>&1
 if errorlevel 1 goto elevar
 goto inicio
@@ -84,7 +99,7 @@ echo   %CI%[7]  Modo avancado (escolher cada ajuste)     [8] Reiniciar o PC     
 echo.
 echo   %CI%==================================================================%RS%
 echo.
-set /p "op=  Digite o numero e aperte ENTER: "
+set /p "op=%RS%  %BR%Digite o numero e aperte ENTER:%RS% "
 
 if "%op%"=="1" set "MOD=auto"
 if "%op%"=="2" set "MOD=checkup"
@@ -123,7 +138,7 @@ echo   %AZ%[19]%RS% Perfil NVIDIA nos jogos competitivos %AZ%[20]%RS% Atualizar 
 echo.
 echo   %CI%[0]  Voltar ao menu principal%RS%
 echo.
-set /p "op=  Digite o numero e aperte ENTER: "
+set /p "op=%RS%  %BR%Digite o numero e aperte ENTER:%RS% "
 if "%op%"=="1" set "MOD=detect"
 if "%op%"=="2" set "MOD=verificar"
 if "%op%"=="3" set "MOD=restore"
