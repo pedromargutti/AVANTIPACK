@@ -24,6 +24,22 @@ if ($cfg -notmatch '(?m)^GITHUB_REPO=\S+') {
 
 Set-Content -Path $verFile -Value $nova -Encoding ASCII
 
+# NOVIDADES.md: coloca o titulo da versao nova e abre o Bloco de Notas
+$novArq = Join-Path $Root 'NOVIDADES.md'
+if (Test-Path $novArq) {
+    $txt = Get-Content $novArq -Raw -Encoding UTF8
+    if ($txt -notmatch ('(?m)^## v' + [regex]::Escape($nova) + '\b')) {
+        $cab = "## v$nova - " + (Get-Date -Format 'dd/MM/yyyy') + "`r`n- (escreva aqui o que mudou)`r`n`r`n"
+        $i = $txt.IndexOf('## ')
+        $txt = if ($i -ge 0) { $txt.Insert($i, $cab) } else { $txt + "`r`n" + $cab }
+        [IO.File]::WriteAllText($novArq, $txt, (New-Object Text.UTF8Encoding($false)))
+    }
+    Write-Host ''
+    Write-Host '  Escreva as novidades no Bloco de Notas que vai abrir, SALVE e FECHE.' -ForegroundColor Yellow
+    Write-Host '  (Elas aparecem para todo mundo depois de atualizar.)'
+    Start-Process notepad.exe $novArq -Wait
+}
+
 # Copia limpa (sem backups, logs e dados do SEU PC)
 $saida = Join-Path $PSScriptRoot 'saida'
 $stage = Join-Path $env:TEMP ('avanti_release_' + [IO.Path]::GetRandomFileName())
@@ -47,7 +63,7 @@ Write-Host ''
 Write-Host '  Agora no GitHub:' -ForegroundColor White
 Write-Host '   1. Abra o seu repositorio > Releases > "Draft a new release"'
 Write-Host "   2. Em 'Choose a tag' digite  v$nova  e clique em 'Create new tag'"
-Write-Host "   3. Titulo: AVANTIPACK v$nova  | escreva o que mudou"
+Write-Host "   3. Titulo: AVANTIPACK v$nova  | na descricao, cole as novidades (NOVIDADES.md)"
 Write-Host "   4. Arraste o arquivo AVANTIPACK_v$nova.zip para a area de anexos"
 Write-Host '   5. Clique em "Publish release"'
 Write-Host ''

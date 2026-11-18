@@ -4,8 +4,8 @@
 
 <br>
 
-<a href="../../releases/latest"><img src="https://img.shields.io/github/v/release/pedromargutti/AVANTIPACK?style=for-the-badge&color=1d43ff&label=vers%C3%A3o" alt="versão"></a>
-<a href="../../releases"><img src="https://img.shields.io/github/downloads/pedromargutti/AVANTIPACK/total?style=for-the-badge&color=008cff&label=downloads" alt="downloads"></a>
+<a href="../../releases/latest"><img src="https://img.shields.io/github/v/release/pedromargutti/AVANTIPACK?style=for-the-badge&color=1d43ff&label=vers%C3%A3o&cacheSeconds=600" alt="versão"></a>
+<a href="../../releases"><img src="https://img.shields.io/github/downloads/pedromargutti/AVANTIPACK/total?style=for-the-badge&color=008cff&label=downloads&cacheSeconds=600" alt="downloads"></a>
 <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-00b4ff?style=for-the-badge&logo=windows&logoColor=white" alt="Windows 10 e 11">
 <img src="https://img.shields.io/badge/PowerShell-5.1-00e1ff?style=for-the-badge&logo=powershell&logoColor=white" alt="PowerShell">
 <img src="https://img.shields.io/badge/100%25-revers%C3%ADvel-16c60c?style=for-the-badge" alt="100% reversível">
@@ -20,6 +20,29 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 <a href="../../releases/latest"><img src="https://img.shields.io/badge/⬇%20BAIXAR%20A%20ÚLTIMA%20VERSÃO-1d43ff?style=for-the-badge" alt="Baixar" height="42"></a>
 
 </div>
+
+<br>
+
+## 🆕 Novidades
+
+> **Versão mais nova:** [veja o que mudou](../../releases/latest) · [histórico completo](NOVIDADES.md)
+
+<details open>
+<summary><b>v0.7.3</b> — tela de Novidades</summary>
+
+- 🆕 Depois de cada atualização, o pack **mostra sozinho o que mudou**
+- 📋 Modo avançado **[21] Novidades** para ver o histórico quando quiser
+
+</details>
+
+<details>
+<summary><b>v0.7.2</b> — logo, atalho e janela nova</summary>
+
+- 🎨 **Logo nova** e **atalho "AVANTIPACK"** na Área de Trabalho
+- 📐 Janela **no meio da tela**, tamanho certo e fonte **Consolas**
+- 🖱️ Clicar na janela **não pausa mais** o pack
+
+</details>
 
 <br>
 

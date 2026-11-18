@@ -485,6 +485,8 @@ if (-not (New-Object Security.Principal.WindowsPrincipal($id)).IsInRole([Securit
 }
 
 switch ($Module) {
+    'novidades-auto' { Mod-Novidades -Auto }
+    'novidades'     { Mod-Novidades }
     'detect-silent' { $h = Get-Hardware; try { Get-StatusExtra $h } catch {}; Save-Hardware $h }
     'checkup'       {
         $h = Get-Hardware; Save-Hardware $h; Show-Hardware $h; [void](Test-GPU $h)
@@ -533,7 +535,7 @@ switch ($Module) {
 }
 
 try { Update-StatusFile } catch {}
-if ($Module -notin @('detect-silent', 'detect', 'apps', 'guias', 'visual', 'fix', 'internet', 'manutencao', 'atualizar', 'configjogos')) {
+if ($Module -notin @('novidades-auto', 'novidades', 'detect-silent', 'detect', 'apps', 'guias', 'visual', 'fix', 'internet', 'manutencao', 'atualizar', 'configjogos')) {
     Write-Host ''
     if ($script:Applied -gt 0) { Write-Ok "$($script:Applied) ajuste(s) aplicado(s). Backup salvo em backup\backup.csv" }
     if ($script:NeedReboot)    { Write-Warn 'Reinicie o PC para tudo entrar em vigor (opcao 8 do menu).' }

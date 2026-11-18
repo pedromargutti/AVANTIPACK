@@ -59,6 +59,7 @@ cls
 call :banner
 echo   %CI%Detectando hardware e procurando avisos...%RS%
 %AVPS% detect-silent
+%AVPS% novidades-auto
 
 :menu
 set "MOD="
@@ -135,6 +136,7 @@ echo   %AZ%[13]%RS% Tudo do 3 ao 9 com perguntas        %AZ%[14]%RS% Guia de BIO
 echo   %AZ%[15]%RS% Programas que iniciam com o Windows %AZ%[16]%RS% Teste de input lag
 echo   %AZ%[17]%RS% Diagnostico da internet             %AZ%[18]%RS% Manutencao semanal automatica
 echo   %AZ%[19]%RS% Perfil NVIDIA nos jogos competitivos %AZ%[20]%RS% Atualizar o pack (GitHub)
+echo   %AZ%[21]%RS% Novidades (o que mudou nas versoes)
 echo.
 echo   %CI%[0]  Voltar ao menu principal%RS%
 echo.
@@ -159,6 +161,7 @@ if "%op%"=="17" set "MOD=internet"
 if "%op%"=="18" set "MOD=agendar"
 if "%op%"=="19" set "MOD=perfisjogos"
 if "%op%"=="20" goto atualizar
+if "%op%"=="21" set "MOD=novidades"
 if "%op%"=="0" goto menu
 if not defined MOD goto avancado
 call :rodar

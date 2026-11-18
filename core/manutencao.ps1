@@ -216,3 +216,46 @@ function Get-StatusExtra($hw) {
     if ($nova -and (Test-VersaoMaior $nova (Get-PackVersion))) { $hw.ATUALIZACAO = $nova }
     $hw.VERSAO = Get-PackVersion
 }
+
+# ---------------------------------------------------------------------
+#  Novidades (NOVIDADES.md): mostra a parte da versao atual
+# ---------------------------------------------------------------------
+$NovFile = Join-Path $Root 'data\novidades_vistas.txt'
+function Show-Novidades([int]$Versoes = 1) {
+    $arq = Join-Path $Root 'NOVIDADES.md'
+    if (-not (Test-Path $arq)) { Write-Skip 'Arquivo NOVIDADES.md nao encontrado.'; return }
+    $n = 0
+    foreach ($l in (Get-Content $arq -Encoding UTF8)) {
+        if ($l -match '^##\s+(.+)$') {
+            $n++; if ($n -gt $Versoes) { break }
+            Write-Host ''
+            Write-Host ('  ' + $Matches[1] + '  ') -ForegroundColor Black -BackgroundColor Cyan
+        } elseif ($n -ge 1 -and $l -match '^\s*-\s+(.+)$') {
+            $t = $Matches[1] -replace '\*\*', ''
+            $t = ($t -replace '^[^\p{L}\p{N}"(]+', '')    # tira o emoji do comeco (o CMD nao mostra bem)
+            Write-Host '   > ' -ForegroundColor Cyan -NoNewline; Write-Host $t
+        }
+    }
+}
+function Mod-Novidades([switch]$Auto) {
+    $v = Get-PackVersion
+    if ($Auto) {
+        $visto = if (Test-Path $NovFile) { (Get-Content $NovFile -TotalCount 1) } else { $null }
+        if ($visto -eq $v) { return }
+        # primeira vez num pack novo (nunca usado): so marca, sem mostrar
+        $usado = (Test-Path (Join-Path $Root 'backup\backup.csv')) -or (Test-Path (Join-Path $Root 'logs'))
+        New-Item -ItemType Directory -Path (Split-Path $NovFile) -Force | Out-Null
+        Set-Content -Path $NovFile -Value $v -Encoding ASCII
+        if (-not $visto -and -not $usado) { return }
+        Clear-Host
+        Write-Title "NOVIDADES: O AVANTIPACK FOI ATUALIZADO PARA A v$v"
+        Show-Novidades 1
+    } else {
+        Write-Title 'NOVIDADES DO AVANTIPACK'
+        Show-Novidades 3
+    }
+    Write-Host ''
+    Write-Note 'Lista completa: arquivo NOVIDADES.md na pasta do pack.'
+    Write-Host ''
+    Read-Host '  ENTER para continuar' | Out-Null
+}
