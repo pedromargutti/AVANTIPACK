@@ -9,15 +9,21 @@
 <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-00b4ff?style=for-the-badge&logo=windows&logoColor=white" alt="Windows 10 e 11">
 <img src="https://img.shields.io/badge/PowerShell-5.1-00e1ff?style=for-the-badge&logo=powershell&logoColor=white" alt="PowerShell">
 <img src="https://img.shields.io/badge/100%25-revers%C3%ADvel-16c60c?style=for-the-badge" alt="100% reversível">
+<img src="https://img.shields.io/badge/vers%C3%A3o-GR%C3%81TIS-16c60c?style=for-the-badge" alt="versão grátis">
 
 <br><br>
 
+### 🆓 AVANTIPACK GRÁTIS
+
 **Otimização do Windows para jogos que se adapta às peças do seu PC.**<br>
-Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeito com um clique**.
+Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeito com um clique**.<br>
+<sub>Quer ir além? Conheça o <a href="#-avantipack-pro">⭐ AVANTIPACK PRO</a>, com app próprio e as funções mais avançadas.</sub>
 
 <br>
 
-<a href="../../releases/latest"><img src="https://img.shields.io/badge/⬇%20BAIXAR%20A%20ÚLTIMA%20VERSÃO-1d43ff?style=for-the-badge" alt="Baixar" height="42"></a>
+<a href="../../releases/latest"><img src="https://img.shields.io/badge/⬇%20BAIXAR%20GRÁTIS-1d43ff?style=for-the-badge" alt="Baixar grátis" height="42"></a>
+&nbsp;
+<a href="#-avantipack-pro"><img src="https://img.shields.io/badge/⭐%20CONHECER%20O%20PRO-ffc43d?style=for-the-badge&logoColor=black" alt="Conhecer o Pro" height="42"></a>
 
 </div>
 
@@ -28,32 +34,13 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 > **Versão mais nova:** [veja o que mudou](../../releases/latest) · [histórico completo](core/NOVIDADES.md)
 
 <details open>
-<summary><b>v0.7.6</b> — setas em todas as telas, teste de FPS e jogos atualizados</summary>
+<summary><b>v0.8.0</b> — grátis renovado e chegada do AVANTIPACK PRO</summary>
 
-- ⌨️ **Setas do teclado em todas as telas** e listas de marcar com ESPAÇO
-- 🖥️ Tela **no meio**, letra maior e menu **estável** (aguenta tela cheia)
-- 📊 **Teste de FPS antes e depois**: FPS médio, 1% low e travadinhas
-- 🧠 **Dual channel** e 💻 **placa dedicada no notebook**
-- 🆘 **Relatório para ajuda** pronto para mandar
-- 🎮 Configurações de **19 jogos atualizadas** (nov/2026)
-
-</details>
-
-<details>
-<summary><b>v0.7.5</b> — pasta organizada e AVANTIPACK.exe com a logo</summary>
-
-- 🧹 Na pasta só ficam o **AVANTIPACK.exe**, o LEIA-ME e as pastas `apps`, `core` e `guias`
-- 🔵 **AVANTIPACK.exe com a logo**: dois cliques e pronto
-- 📁 Dados do seu PC juntos em `core\dados` (migra sozinho, sem perder nada)
-
-</details>
-
-<details>
-<summary><b>v0.7.4</b> — programas instalados sozinhos</summary>
-
-- 📦 **[A] INSTALAR TUDO**: baixa e instala os programas certos para o seu PC, cada um na sua pasta
-- 🌐 **Drivers**: abre o site, você clica em BAIXAR e o pack faz o resto
-- 🔠 Letra maior e atalho com a logo
+- 💯 **Nota do PC**: de 0 a 100, com o que está segurando o seu PC e como resolver
+- 🧹 **Limpeza rápida**: tira o lixo do Windows e mostra quantos MB voltaram
+- 🎮 **Preparar para jogar**: fecha o que está pesando antes da partida
+- 🔠 **Letra maior** já ao abrir e correções no monitor, na limpeza e no Consertar
+- ⭐ Chegou o **AVANTIPACK PRO**, um app próprio com as funções avançadas ([ver abaixo](#-avantipack-pro))
 
 </details>
 
@@ -89,7 +76,7 @@ Cria ponto de restauração e guarda **o valor original de cada ajuste**. Desfa�
 <td valign="top">
 
 ### 🎯 Feito para competitivo
-Foco em input lag: Reflex/Anti-Lag no driver, monitor no Hz máximo, mouse 1:1, dispositivos sem economia de energia, teste com pontuação.
+Foco em input lag: Reflex/Anti-Lag no driver, monitor no Hz máximo, mouse 1:1, dispositivos sem economia de energia e nota do PC.
 
 </td>
 <td valign="top">
@@ -117,38 +104,23 @@ Avisa quando sai versão nova e atualiza sozinho. Avisa também quando um update
 
 <br>
 
-## 🖥️ O menu
-
-<div align="center">
-<img src="docs/img/menu.png" alt="Menu principal do AVANTIPACK" width="760">
-<br><sub>As faixas coloridas só aparecem quando há algo a avisar.</sub>
-</div>
-
-<br>
+## 🖥️ O que tem no grátis
 
 | | Opção | O que faz |
 |:-:|---|---|
-| 🟢 | **Otimizar meu PC** | **Automático**, **Personalizado** (você escolhe por categoria) ou **Reaplicar** depois de update do Windows |
-| 📊 | **Teste de FPS** (F) | Mede FPS médio, 1% low e travadinhas jogando, antes e depois de otimizar |
-| 🔵 | **Verificar meu PC** | Peças, problemas (RAM sem XMP, monitor em 60 Hz, driver velho), **teste de input lag com nota** e teste da internet |
+| 🟢 | **Otimizar meu PC** | **Automático**: aplica só o que é seguro para o seu PC, com backup. **Reaplicar** depois de update do Windows |
+| 💯 | **Verificar meu PC + Nota** | Peças, problemas (RAM sem XMP, monitor em 60 Hz, driver velho) e **nota de 0 a 100** |
+| 🧹 | **Limpeza rápida** (L) | Temporários, caches e downloads velhos do Windows. Seus arquivos não são tocados |
+| 🎮 | **Preparar para jogar** (J) | Mostra o que está gastando memória e fecha o que você marcar antes da partida |
 | 🔧 | **Consertar um problema** | 19 reparos: sem internet, sem som, microfone, Loja, Windows Update, Alt+Tab no 24H2... |
-| 📦 | **Programas úteis** | **[A] Instalar tudo automático**: programas e drivers certos para o seu PC, cada um na sua pasta, com o passo a passo |
+| 📦 | **Programas úteis** | **[A] Instalar tudo automático**: programas e drivers certos para o seu PC, cada um na sua pasta |
 | 📖 | **Guias** | Painéis NVIDIA/AMD/Intel ilustrados, BIOS por fabricante, limite de FPS, config dentro dos jogos |
 | 🔴 | **Desfazer / recolocar** | Desfaz tudo ou só uma função, reinstala apps, religa funções do Windows |
-| 🆘 | **Relatório para ajuda** (R) | Arquivo com tudo do PC para mandar a quem te ajuda, sem dados pessoais |
 
 <br>
 
-## 🎛️ Você no controle
-
-Prefere escolher? No modo **Personalizado** cada ajuste tem explicação, e você marca ou desmarca o que quiser.
-
-<div align="center">
-<img src="docs/img/personalizado.gif" alt="Modo personalizado" width="760">
-</div>
-
 <details>
-<summary><b>📋 Ver as 9 categorias e os 45 ajustes</b></summary>
+<summary><b>📋 O que o Automático ajusta (7 categorias)</b></summary>
 
 <br>
 
@@ -159,12 +131,8 @@ Prefere escolher? No modo **Personalizado** cada ajuste tem explicação, e voc�
 | ⚡ **Sistema e input lag** | Mouse 1:1, Modo de Jogo, MMCSS, prioridade do jogo, visual leve, HPET, USB sem economia |
 | 🔋 **Energia e processador** | Plano de alto desempenho conforme a CPU (AMD/Intel, desktop/notebook) |
 | 🎮 **Placa de vídeo e monitor** | Painel NVIDIA automático, AMD Anti-Lag/Chill/ULPS, monitor no Hz máximo, agendamento da GPU |
-| 🌐 **Internet** | Ajustes conservadores de TCP, DNS mais rápido (testado), diagnóstico de ping/jitter/perda |
+| 🌐 **Internet** | Ajustes conservadores de TCP e placa de rede sem economia de energia |
 | 💾 **SSD/HD e memória** | TRIM, limpeza, ajustes por tipo de disco |
-| 🕹️ **Jogos** | Detecta 110+ jogos (Steam, Epic, Riot...), prioridade alta e perfil NVIDIA por jogo competitivo |
-| ⚠️ **Avançado (com risco)** | Integridade de memória, modo MSI, FSO, hypervisor. **Nunca entra no automático** |
-
-A lista completa, com o que cada um faz, está em [`guias/LISTA_DE_AJUSTES.txt`](guias/LISTA_DE_AJUSTES.txt).
 
 </details>
 
@@ -196,6 +164,35 @@ Telas ilustradas no estilo de cada painel, com números indicando o caminho e a 
 </table>
 
 Também tem: **BIOS** (XMP/EXPO, Resizable BAR... com o nome em cada fabricante), **limite de FPS**, **processador AMD/Intel** e **configurações dentro dos jogos** (CS2, Valorant, Fortnite, Warzone, LoL, Free Fire e mais).
+
+<br>
+
+## ⭐ AVANTIPACK PRO
+
+<div align="center">
+
+**Tudo do grátis, num app próprio com visual novo, e as funções mais avançadas.**
+
+</div>
+
+| | Grátis | ⭐ Pro |
+|---|:-:|:-:|
+| Otimizar automático (seguro para o seu PC) | ✅ | ✅ |
+| Verificar + Nota do PC, Limpeza, Preparar para jogar | ✅ | ✅ |
+| Consertar, Programas úteis, Guias, Desfazer | ✅ | ✅ |
+| **Personalizado**: escolher cada ajuste, por categoria | — | ✅ |
+| **Teste de FPS** antes e depois (média, 1% low, travadinhas) | — | ✅ |
+| **Configurar os jogos sozinho** (CS2, Apex, Fortnite, Rocket League, Minecraft) | — | ✅ |
+| **Modo Jogo automático**: energia no máximo só enquanto o jogo está aberto | — | ✅ |
+| **Teste de temperatura**: descobre se o PC perde velocidade esquentando | — | ✅ |
+| **Prioridade dos jogos** + **perfil NVIDIA competitivo** por jogo | — | ✅ |
+| **DNS mais rápido**, **teste de input lag** com nota e **diagnóstico da internet** | — | ✅ |
+| **Ajustes avançados** (VBS, MSI, hypervisor, FSO) com explicação dos riscos | — | ✅ |
+| Programas da inicialização, manutenção semanal e relatório para ajuda | — | ✅ |
+| App com visual próprio, sem tela de comando | — | ✅ |
+
+> [!TIP]
+> O Pro é **pagamento único**, com chave para **1 PC**. Trocou de PC? É só ativar no novo. **Em breve à venda.**
 
 <br>
 
@@ -235,7 +232,7 @@ LEIA-ME.txt        instruções
 core\              motor do pack (menu .bat, PowerShell, versão e novidades)
 guias\             BIOS, painéis ilustrados, jogos, limite de FPS
 apps\              uma pasta por programa, cada uma com LEIA-ME.txt
-ferramentas\       só no GitHub: launcher do .exe e GERAR_RELEASE
+ferramentas\       só no GitHub: launcher do .exe
 docs\              só no GitHub: imagens deste README
 core\dados\        criada no uso: backups e dados do seu PC (não vai pro Git)
 ```
@@ -266,5 +263,5 @@ Otimizações de sistema e de BIOS são **por conta e risco de quem usa**: cada 
 
 <div align="center">
 <br>
-<sub>Feito por <b>Avanti</b> 🎮 · projeto sem fins comerciais · se ajudou, deixe uma ⭐</sub>
+<sub>Feito por <b>Avanti</b> 🎮 · versão grátis para sempre · se ajudou, deixe uma ⭐</sub>
 </div>

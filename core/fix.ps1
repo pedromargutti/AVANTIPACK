@@ -61,6 +61,7 @@ function Fix-Internet {
     Restart-Svcs @('Dhcp', 'Dnscache', 'NlaSvc', 'netprofm', 'WlanSvc') 'Automatic'
     Clear-DnsClientCache -ErrorAction SilentlyContinue; Write-Ok 'Cache de DNS limpo.'
     $out = Invoke-Logged 'Resetando Winsock...' { netsh winsock reset }
+    Write-Note 'Atencao: se voce usa IP FIXO (configurado na mao), anote antes: o reset volta para automatico.'
     $out = Invoke-Logged 'Resetando a pilha TCP/IP...' { netsh int ip reset }
     Write-Ok 'Winsock e TCP/IP resetados.'
     if (Confirm-Step 'Renovar o IP agora? (a internet cai por alguns segundos)') {
@@ -298,7 +299,7 @@ function Fix-DNSRapido {
         try { $r = Resolve-DnsName $d -DnsOnly -ErrorAction Stop | Where-Object { $_.IPAddress } | Select-Object -First 1; Write-Ok "$d -> $($r.IPAddress)" }
         catch { Write-Warn "$d nao resolveu: $($_.Exception.Message)" }
     }
-    Write-Note 'Se nao resolveu: use Modo avancado (opcao 7) > DNS mais rapido para trocar de DNS.'
+    Write-Note 'Se nao resolveu: reinicie o roteador. No AVANTIPACK Pro, o DNS mais rapido troca sozinho.'
 }
 
 # ---------------------------------------------------------------------

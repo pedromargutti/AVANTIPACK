@@ -5,7 +5,7 @@
 #    menor; se mudar o tamanho (tela cheia / restaurar), redesenha.
 #  Devolve a escolha como codigo de saida para o AVANTIPACK.bat:
 #    100 + numero da opcao (100 = 0 / sair / voltar)
-#    120 = F (teste de FPS)   121 = R (relatorio)   130 = U (atualizar)
+#    122 = L (limpeza)   123 = J (preparar p/ jogar)   124 = P (Pro)   130 = U (atualizar)
 #  Leve de proposito: nao carrega o motor (abre na hora).
 # =====================================================================
 param([string]$Tela = 'principal')
@@ -19,47 +19,38 @@ if ($Tela -eq 'avancado') {
     $itens = @(
         @{ K = '1';  T = 'Ver hardware e alertas'; G = 'VERIFICAR' },
         @{ K = '2';  T = 'Checar placa de video e monitor' },
-        @{ K = '16'; T = 'Teste de input lag' },
-        @{ K = '17'; T = 'Diagnostico da internet' },
-        @{ K = '3';  T = 'Criar ponto de restauracao'; G = 'AJUSTES POR PARTE' },
-        @{ K = '4';  T = 'Debloat e privacidade' },
-        @{ K = '5';  T = 'Sistema e input lag' },
-        @{ K = '6';  T = 'Energia e processador' },
-        @{ K = '7';  T = 'Placa de video' },
-        @{ K = '8';  T = 'Rede e ping' },
-        @{ K = '9';  T = 'Armazenamento e memoria' },
-        @{ K = '10'; T = 'Prioridade dos jogos (e placa dedicada no notebook)' },
-        @{ K = '11'; T = 'DNS mais rapido' },
-        @{ K = '12'; T = 'Ajustes avancados (tem riscos)'; C = 'Yellow' },
-        @{ K = '13'; T = 'Tudo do 3 ao 9 com perguntas' },
-        @{ K = '15'; T = 'Programas que iniciam com o Windows'; G = 'FERRAMENTAS' },
-        @{ K = '19'; T = 'Perfil NVIDIA nos jogos competitivos' },
+        @{ K = '25'; T = 'Nota do PC para jogos' },
+        @{ K = '3';  T = 'Criar ponto de restauracao'; G = 'FERRAMENTAS' },
+        @{ K = '26'; T = 'Limpeza rapida' },
+        @{ K = '27'; T = 'Preparar para jogar (fechar o que pesa)' },
         @{ K = '14'; T = 'Guia de BIOS' },
-        @{ K = '18'; T = 'Manutencao semanal automatica' },
         @{ K = '20'; T = 'Atualizar o pack (GitHub)' },
         @{ K = '21'; T = 'Novidades (o que mudou nas versoes)' },
+        @{ K = '28'; T = 'Conheca o AVANTIPACK Pro'; C = 'Yellow' },
         @{ K = '0';  T = 'Voltar ao menu principal'; C = 'Gray'; G = ' ' }
     )
 } else {
     $itens = @(
         @{ K = '1'; T = 'OTIMIZAR MEU PC'; X = '   <-- comece por aqui'; C = 'Green'; G = 'OTIMIZAR E TESTAR'
-           D = 'Automatico (o pack escolhe tudo que e seguro para o seu PC) ou Personalizado (voce escolhe cada ajuste).' },
-        @{ K = '2'; T = 'VERIFICAR MEU PC'; C = 'Cyan'
-           D = 'Mostra suas pecas e problemas (memoria, monitor em 60 Hz, driver velho), testa input lag e internet.' },
-        @{ K = 'F'; T = 'TESTE DE FPS  (antes e depois)'; C = 'Cyan'; N = 1
-           D = 'Mede o FPS e as travadinhas enquanto voce joga, para comparar antes e depois de otimizar.' },
+           D = 'O pack escolhe sozinho tudo que e seguro e serve para o SEU PC e aplica, com backup.' },
+        @{ K = '2'; T = 'VERIFICAR MEU PC  +  NOTA'; C = 'Cyan'; N = 1
+           D = 'Mostra suas pecas, os problemas (memoria, monitor em 60 Hz, driver velho) e da uma nota de 0 a 100.' },
+        @{ K = 'L'; T = 'LIMPEZA RAPIDA'; C = 'Cyan'; N = 1
+           D = 'Apaga temporarios, caches e downloads velhos do Windows. Seus arquivos nao sao tocados.' },
+        @{ K = 'J'; T = 'PREPARAR PARA JOGAR'; C = 'Cyan'; N = 1
+           D = 'Mostra o que esta gastando memoria agora e fecha o que voce marcar antes da partida.' },
         @{ K = '3'; T = 'CONSERTAR UM PROBLEMA'; C = 'Cyan'; G = 'PROBLEMAS E PROGRAMAS'
            D = 'Sem internet, sem som, microfone, camera, Loja, Windows Update, impressora...' },
         @{ K = '4'; T = 'PROGRAMAS UTEIS'; C = 'Cyan'
            D = 'Instala sozinho os programas e drivers certos para o seu PC, cada um na sua pasta.' },
         @{ K = '5'; T = 'GUIAS PASSO A PASSO'; C = 'Cyan'
            D = 'Painel NVIDIA/AMD com imagens, BIOS, limite de FPS e as configuracoes dentro dos jogos.' },
-        @{ K = '6'; T = 'DESFAZER / RECOLOCAR FUNCOES E APPS'; C = 'Red'; G = 'DESFAZER E AJUDA'
+        @{ K = '6'; T = 'DESFAZER / RECOLOCAR FUNCOES E APPS'; C = 'Red'; G = 'DESFAZER E MAIS'
            D = 'Desfaz tudo ou so o que voce escolher (impressora, gravar clipes, apps removidos...).' },
-        @{ K = 'R'; T = 'RELATORIO PARA AJUDA'; C = 'Cyan'; N = 1
-           D = 'Cria um arquivo com tudo do seu PC para mandar a quem esta te ajudando.' },
+        @{ K = 'P'; T = 'CONHECA O AVANTIPACK PRO'; C = 'Yellow'
+           D = 'Teste de FPS, configurar os jogos sozinho, Modo Jogo, Personalizado e muito mais, num app proprio.' },
         @{ K = '7'; T = 'Modo avancado'; C = 'Gray'; G = 'OUTROS'
-           D = 'Cada ajuste separado, com explicacao antes. Para quem ja entende.' },
+           D = 'Ferramentas extras: hardware, ponto de restauracao, guia de BIOS, atualizar.' },
         @{ K = '8'; T = 'Reiniciar o PC'; C = 'Gray'; D = 'Reinicia o computador para os ajustes comecarem a valer.' },
         @{ K = '0'; T = 'Sair'; C = 'Gray'; D = 'Fecha o AVANTIPACK.' }
     )
@@ -82,7 +73,7 @@ $BANNER = @(
 )
 
 function Get-Codigo([string]$k) {
-    switch ($k.ToUpper()) { 'F' { 120 } 'R' { 121 } 'U' { 130 } default { 100 + [int]$k } }
+    switch ($k.ToUpper()) { 'L' { 122 } 'J' { 123 } 'P' { 124 } 'U' { 130 } default { 100 + [int]$k } }
 }
 function Split-Texto([string]$t, [int]$w) {
     $out = @(); $l = ''
@@ -112,6 +103,7 @@ function Write-L([string]$txt, [string]$fg = 'Gray', [string]$bg = $null, [int]$
     $resto = $script:W - 1 - $script:pad.Length - $t.Length
     if ($resto -gt 0) { Write-Host (' ' * $resto) -NoNewline }
     Write-Host ''
+    $script:linhaN++
 }
 function Write-Banner {
     $cores = @('Blue', 'Blue', 'DarkCyan', 'Cyan')
@@ -137,6 +129,7 @@ function Write-Banner {
         $resto = $script:W - 1 - $script:pad.Length - $n
         if ($resto -gt 0) { Write-Host (' ' * $resto) -NoNewline }
         Write-Host ''
+        $script:linhaN++
     }
 }
 
@@ -174,6 +167,7 @@ function Show-Tela([switch]$Limpar) {
     if ($Limpar) { [Console]::Clear() }
     $m = Get-Modo
     [Console]::SetCursorPosition(0, 0)
+    $script:linhaN = 0
     # ----- cabecalho
     if ($m.Banner) {
         Write-L ''
@@ -192,19 +186,38 @@ function Show-Tela([switch]$Limpar) {
         foreach ($a in @(Get-Avisos)) { Write-L ('  ' + $a.T) $a.F $a.B ($a.T.Length + 2) }
     }
     Write-L ('  ' + ([string]$BH * [math]::Min(76, $script:util - 4))) 'DarkGray'
-    # ----- opcoes
+    # ----- opcoes (se nao couber na janela, mostra so um pedaco que acompanha a seta)
+    $ls = New-Object System.Collections.Generic.List[object]
     for ($i = 0; $i -lt $itens.Count; $i++) {
         $it = $itens[$i]
         if ($it.G) {
-            if ($i -gt 0 -and $m.Espaco) { Write-L '' }
-            if ($it.G.Trim()) { Write-L ('   ' + $it.G) 'DarkCyan' }
+            if ($i -gt 0 -and $m.Espaco) { $ls.Add(@{ I = -1; T = '' }) }
+            if ($it.G.Trim()) { $ls.Add(@{ I = -1; T = ('   ' + $it.G); C = 'DarkCyan' }) }
         }
+        $ls.Add(@{ I = $i })
+    }
+    $rod = 3 + $(if ($m.Caixa -and @($itens | Where-Object { $_.D }).Count) { 4 } else { 0 })
+    $cabeca = $script:linhaN
+    $cabe = $script:H - 1 - $cabeca - $rod
+    $ini = 0; $fim = $ls.Count - 1
+    if ($cabe -ge 5 -and $ls.Count -gt $cabe) {
+        $cabe -= 2                                   # linhas do "mais acima / mais abaixo"
+        $pos = 0; for ($j = 0; $j -lt $ls.Count; $j++) { if ($ls[$j].I -eq $script:sel) { $pos = $j } }
+        $ini = [math]::Max(0, [math]::Min($pos - [math]::Floor($cabe / 2), $ls.Count - $cabe))
+        $fim = $ini + $cabe - 1
+    }
+    if ($ini -gt 0 -or $fim -lt $ls.Count - 1) { Write-L $(if ($ini -gt 0) { "     $CIMA  mais opcoes acima" } else { '' }) 'DarkGray' }
+    for ($j = $ini; $j -le $fim; $j++) {
+        $l = $ls[$j]
+        if ($l.I -lt 0) { Write-L $l.T $(if ($l.C) { $l.C } else { 'Gray' }); continue }
+        $i = $l.I; $it = $itens[$i]
         $c = if ($it.C) { $it.C } else { 'Cyan' }
         $tag = ('[' + $it.K + ']').PadRight(5)
         $novo = if ($it.N) { '   NOVO' } else { '' }
         if ($i -eq $script:sel) { Write-L ("   $SETA $tag $($it.T)$($it.X)$novo") 'White' 'DarkBlue' 72 }
         else { Write-L ("     $tag $($it.T)$($it.X)$novo") $c }
     }
+    if ($ini -gt 0 -or $fim -lt $ls.Count - 1) { Write-L $(if ($fim -lt $ls.Count - 1) { "     $BAIXO  mais opcoes abaixo" } else { '' }) 'DarkGray' }
     Write-L ''
     # ----- rodape
     if ($m.Caixa -and @($itens | Where-Object { $_.D }).Count) {
@@ -216,7 +229,7 @@ function Show-Tela([switch]$Limpar) {
         Write-L ("  $BBL" + ([string]$BH * ($lw + 2)) + $BBR) 'DarkGray'
     }
     $dica = "  $CIMA $BAIXO escolher     ENTER confirmar     ou digite o numero"
-    if ($Tela -ne 'avancado') { $dica += ' (F, R)' } else { $dica += '     ESC volta' }
+    if ($Tela -ne 'avancado') { $dica += ' (L, J, P)' } else { $dica += '     ESC volta' }
     Write-L $dica 'DarkCyan'
     Write-L $(if ($script:digitado) { "  Opcao: $($script:digitado)_" } else { '' }) 'White'
     $script:ultW = $script:W; $script:ultH = $script:H
@@ -246,7 +259,7 @@ try {
             'Backspace' { if ($digitado.Length) { $digitado = $digitado.Substring(0, $digitado.Length - 1) } }
             'Enter'     {
                 $k2 = if ($digitado) { $digitado } else { $itens[$sel].K }
-                if ($k2 -match '^[UuFfRr]$' -and $Tela -eq 'avancado') { $digitado = ''; break }
+                if ($k2 -match '^[UuLlJjPp]$' -and $Tela -eq 'avancado') { $digitado = ''; break }
                 if ($k2 -match '^\d+$' -and -not ($itens | Where-Object { $_.K -eq $k2 })) { $digitado = ''; break }
                 exit (Get-Codigo $k2)
             }
@@ -255,7 +268,7 @@ try {
                 if ($ch -match '^\d$') {
                     $digitado = ($digitado + $ch); if ($digitado.Length -gt 2) { $digitado = $ch }
                     for ($i = 0; $i -lt $itens.Count; $i++) { if ($itens[$i].K -eq $digitado) { $sel = $i } }
-                } elseif ($ch -match '^[UuFfRr]$' -and $Tela -ne 'avancado') {
+                } elseif ($ch -match '^[UuLlJjPp]$' -and $Tela -ne 'avancado') {
                     exit (Get-Codigo $ch)
                 }
             }

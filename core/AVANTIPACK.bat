@@ -105,7 +105,7 @@ echo.
 echo %PAD%  %VM%[6]  DESFAZER / RECOLOCAR FUNCOES E APPS%RS%
 echo %PAD%       %CI%Desfaz tudo ou so o que voce escolher (impressora, gravar clipes...).%RS%
 echo.
-echo %PAD%  %AZ%[F]  TESTE DE FPS%RS%   %AZ%[R]  RELATORIO PARA AJUDA%RS%
+echo %PAD%  %AZ%[L]  LIMPEZA RAPIDA%RS%   %AZ%[J]  PREPARAR PARA JOGAR%RS%   %AM%[P]  AVANTIPACK PRO%RS%
 echo.
 echo %PAD%  %CI%[7]  Modo avancado (escolher cada ajuste)     [8] Reiniciar o PC     [0] Sair%RS%
 echo.
@@ -124,8 +124,9 @@ if "%op%"=="7" goto avancado
 if "%op%"=="8" goto reiniciar
 if "%op%"=="0" goto sair
 if /i "%op%"=="U" goto atualizar
-if /i "%op%"=="F" set "MOD=fps"
-if /i "%op%"=="R" set "MOD=relatorio"
+if /i "%op%"=="L" set "MOD=limpeza"
+if /i "%op%"=="J" set "MOD=prejogo"
+if /i "%op%"=="P" set "MOD=pro"
 if not defined MOD goto menu
 call :rodar
 goto menu
@@ -141,19 +142,10 @@ call :banner
 echo %PAD%  %BR%MODO AVANCADO%RS%  %CI%- escolha cada ajuste separado. Cada um explica o que faz antes.%RS%
 echo.
 echo %PAD%  %AZ%[1]%RS%  Ver hardware e alertas              %AZ%[2]%RS%  Checar placa de video e monitor
-echo %PAD%  %AZ%[3]%RS%  Criar ponto de restauracao
-echo.
-echo %PAD%  %AZ%[4]%RS%  Debloat e privacidade               %AZ%[5]%RS%  Sistema e input lag
-echo %PAD%  %AZ%[6]%RS%  Energia e processador               %AZ%[7]%RS%  Placa de video
-echo %PAD%  %AZ%[8]%RS%  Rede e ping                         %AZ%[9]%RS%  Armazenamento e memoria
-echo %PAD%  %AZ%[10]%RS% Prioridade dos jogos                %AZ%[11]%RS% DNS mais rapido
-echo %PAD%  %AM%[12]%RS% Ajustes avancados %AM%(tem riscos)%RS%
-echo.
-echo %PAD%  %AZ%[13]%RS% Tudo do 3 ao 9 com perguntas        %AZ%[14]%RS% Guia de BIOS
-echo %PAD%  %AZ%[15]%RS% Programas que iniciam com o Windows %AZ%[16]%RS% Teste de input lag
-echo %PAD%  %AZ%[17]%RS% Diagnostico da internet             %AZ%[18]%RS% Manutencao semanal automatica
-echo %PAD%  %AZ%[19]%RS% Perfil NVIDIA nos jogos competitivos %AZ%[20]%RS% Atualizar o pack (GitHub)
-echo %PAD%  %AZ%[21]%RS% Novidades (o que mudou nas versoes)
+echo %PAD%  %AZ%[25]%RS% Nota do PC                          %AZ%[3]%RS%  Criar ponto de restauracao
+echo %PAD%  %AZ%[26]%RS% Limpeza rapida                      %AZ%[27]%RS% Preparar para jogar
+echo %PAD%  %AZ%[14]%RS% Guia de BIOS                        %AZ%[20]%RS% Atualizar o pack (GitHub)
+echo %PAD%  %AZ%[21]%RS% Novidades                           %AM%[28]%RS% Conheca o AVANTIPACK Pro
 echo.
 echo %PAD%  %CI%[0]  Voltar ao menu principal%RS%
 echo.
@@ -162,24 +154,13 @@ set /p "op=%RS%%PAD%  %BR%Digite o numero e aperte ENTER:%RS% "
 if "%op%"=="1" set "MOD=detect"
 if "%op%"=="2" set "MOD=verificar"
 if "%op%"=="3" set "MOD=restore"
-if "%op%"=="4" set "MOD=debloat"
-if "%op%"=="5" set "MOD=sistema"
-if "%op%"=="6" set "MOD=energia"
-if "%op%"=="7" set "MOD=gpu"
-if "%op%"=="8" set "MOD=rede"
-if "%op%"=="9" set "MOD=armazenamento"
-if "%op%"=="10" set "MOD=jogos"
-if "%op%"=="11" set "MOD=dns"
-if "%op%"=="12" set "MOD=avancado"
-if "%op%"=="13" set "MOD=recomendado"
 if "%op%"=="14" start "" notepad "%AVROOT%guias\GUIA_BIOS.txt"
-if "%op%"=="15" set "MOD=inicializacao"
-if "%op%"=="16" set "MOD=inputlag"
-if "%op%"=="17" set "MOD=internet"
-if "%op%"=="18" set "MOD=agendar"
-if "%op%"=="19" set "MOD=perfisjogos"
 if "%op%"=="20" goto atualizar
 if "%op%"=="21" set "MOD=novidades"
+if "%op%"=="25" set "MOD=nota"
+if "%op%"=="26" set "MOD=limpeza"
+if "%op%"=="27" set "MOD=prejogo"
+if "%op%"=="28" set "MOD=pro"
 if "%op%"=="0" goto menu
 if not defined MOD goto avancado
 call :rodar
@@ -192,8 +173,9 @@ set "SETAS_FALHOU="
 set "op="
 powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0menu.ps1" -Tela %1
 set "RC=%errorlevel%"
-if "%RC%"=="120" (set "op=F" & exit /b)
-if "%RC%"=="121" (set "op=R" & exit /b)
+if "%RC%"=="122" (set "op=L" & exit /b)
+if "%RC%"=="123" (set "op=J" & exit /b)
+if "%RC%"=="124" (set "op=P" & exit /b)
 if "%RC%"=="130" (set "op=U" & exit /b)
 if %RC% GEQ 100 if %RC% LEQ 129 (set /a "op=RC-100" & exit /b)
 set "SETAS_FALHOU=1"

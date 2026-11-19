@@ -50,73 +50,6 @@ function Disable-DevicePowerSaving($hw) {
     $script:Applied += $n
 }
 
-function Get-StartupItems {
-    $exp = 'Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved'
-    $fontes = @(
-        @{ Reg = 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Run'; Apr = "HKCU:\$exp\Run" },
-        @{ Reg = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run'; Apr = "HKLM:\$exp\Run" },
-        @{ Reg = 'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Run'; Apr = "HKLM:\$exp\Run32" }
-    )
-    $itens = @()
-    foreach ($f in $fontes) {
-        $k = Get-Item -Path $f.Reg -ErrorAction SilentlyContinue
-        if (-not $k) { continue }
-        foreach ($n in $k.GetValueNames()) {
-            if (-not $n) { continue }
-            $itens += [pscustomobject]@{ Nome = $n; Cmd = [string]$k.GetValue($n); Apr = $f.Apr }
-        }
-    }
-    foreach ($p in @(@("$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup", "HKCU:\$exp\StartupFolder"),
-                     @("$env:ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp", "HKLM:\$exp\StartupFolder"))) {
-        foreach ($fi in Get-ChildItem $p[0] -File -ErrorAction SilentlyContinue | Where-Object { $_.Name -ne 'desktop.ini' }) {
-            $itens += [pscustomobject]@{ Nome = $fi.Name; Cmd = $fi.FullName; Apr = $p[1] }
-        }
-    }
-    foreach ($i in $itens) {
-        $v = $null
-        $ak = Get-Item -Path $i.Apr -ErrorAction SilentlyContinue
-        if ($ak -and ($ak.GetValueNames() -contains $i.Nome)) { $v = $ak.GetValue($i.Nome) }
-        $ligado = $true
-        if ($v -is [byte[]] -and $v.Length -gt 0) { $ligado = (($v[0] -band 1) -eq 0) }
-        $i | Add-Member -NotePropertyName Ligado -NotePropertyValue $ligado
-        $essencial = ($i.Nome + ' ' + $i.Cmd) -match 'SecurityHealth|Windows Defender|RtkAud|Realtek|Nahimic|NVIDIA|NvBackend|AMD|Radeon|igfx|IntelGraphics|Synaptics|ELAN|Logitech|Razer|Corsair|SteelSeries|HyperX|Wooting|ASUS|MSI|Armoury|iCUE|G HUB|Bluetooth'
-        $i | Add-Member -NotePropertyName Essencial -NotePropertyValue $essencial
-    }
-    return $itens
-}
-
-function Mod-Inicializacao {
-    $script:CurMod = 'inicializacao'
-    $script:CurItem = 'B12'
-    while ($true) {
-        Write-Title 'PROGRAMAS QUE INICIAM COM O WINDOWS'
-        Write-Note 'Cada programa aqui abre junto com o Windows e fica rodando enquanto voce joga.'
-        Write-Note 'Desligar NAO desinstala: o programa so para de abrir sozinho. Da para religar aqui ou no Desfazer.'
-        Write-Note 'MARCADO = abre com o Windows. Desmarque o que nao precisa abrir sozinho.'
-        Write-Note 'Os marcados como (manter) sao drivers, seguranca ou perifericos: deixe ligados.'
-        Write-Host ''
-        $its = @(Get-StartupItems)
-        if ($its.Count -eq 0) { Write-Ok 'Nenhum programa na inicializacao.'; return }
-        $r = Select-Varios @(for ($i = 0; $i -lt $its.Count; $i++) {
-                $x = $its[$i]
-                @{ K = "$i"; T = ($x.Nome + $(if ($x.Essencial) { '  (manter)' } else { '' })); On = [bool]$x.Ligado; C = $(if ($x.Essencial) { 'Yellow' } else { $null }) }
-             }) -Concluir 'SALVAR' -SemTodos
-        if ($null -eq $r) { return }
-        $mud = @(for ($i = 0; $i -lt $its.Count; $i++) { if ([bool]$its[$i].Ligado -ne (@($r) -contains "$i")) { $i } })
-        if ($mud.Count -eq 0) { Write-Skip 'Nada mudou.'; return }
-        foreach ($n in $mud) {
-            $x = $its[[int]$n]
-            $byte0 = if ($x.Ligado) { 3 } else { 2 }
-            $val = [byte[]](@($byte0) + @(0) * 11)
-            if (Set-Reg $x.Apr $x.Nome $val 'Binary') {
-                if ($x.Ligado) { Write-Ok "$($x.Nome): nao abre mais com o Windows." } else { Write-Ok "$($x.Nome): volta a abrir com o Windows." }
-            }
-        }
-        Write-Host ''
-        Read-Host '  ENTER para ver a lista atualizada' | Out-Null
-    }
-}
-
 function Set-BrowserBackground {
     Set-Reg 'HKLM:\SOFTWARE\Policies\Microsoft\Edge' 'BackgroundModeEnabled' 0 | Out-Null
     Set-Reg 'HKLM:\SOFTWARE\Policies\Microsoft\Edge' 'StartupBoostEnabled' 0 | Out-Null
@@ -216,8 +149,8 @@ function Mod-Debloat {
     if ($script:Selecao -eq $null) {
         Write-Host ''
         Write-Note 'Remover apps pre-instalados inuteis (Noticias, Clima, Solitaire, Dicas, Feedback, Mapas, Clipchamp...).'
-        Write-Note 'NAO remove: Loja, Xbox/Game Bar, Fotos, Calculadora, Bloco de Notas, Terminal.'
-        Write-Note 'Isso NAO entra no Desfazer: para voltar, reinstale pela Microsoft Store.'
+        Write-Note 'NAO remove: Loja, Xbox/Game Bar, Fotos, Calculadora, Bloco de Notas, Terminal, Teams e Outlook.'
+        Write-Note 'Para voltar: Desfazer > Reinstalar apps (pela Microsoft Store).'
     }
     if (Want 'B6' 'Remover esses apps?' $true) {
         Write-Info 'Removendo apps pre-instalados inuteis...'
@@ -226,8 +159,8 @@ function Mod-Debloat {
                    'Microsoft.WindowsFeedbackHub', 'Microsoft.WindowsMaps', 'Microsoft.MicrosoftOfficeHub',
                    'Microsoft.549981C3F5F10', 'Microsoft.PowerAutomateDesktop', 'Microsoft.Todos',
                    'Microsoft.ZuneVideo', 'Microsoft.MixedReality.Portal', 'Microsoft.SkypeApp',
-                   'Microsoft.Wallet', 'Microsoft.Messaging', 'Microsoft.OutlookForWindows',
-                   'Clipchamp.Clipchamp', 'MicrosoftTeams', 'MSTeams', 'MicrosoftCorporationII.MicrosoftFamily',
+                   'Microsoft.Wallet', 'Microsoft.Messaging',
+                   'Clipchamp.Clipchamp', 'MicrosoftTeams', 'MicrosoftCorporationII.MicrosoftFamily',
                    '*CandyCrush*', '*BubbleWitch*', '*Disney*', '*TikTok*', '*Facebook*', '*Instagram*',
                    '*Hulu*', '*king.com*', '*LinkedIn*', '*AmazonVideo*', '*PrimeVideo*')
         foreach ($b in $bloat) {
@@ -406,72 +339,6 @@ function Mod-Energia {
 # ---------------------------------------------------------------------
 #  F - INTERNET (com cuidado: nada que possa piorar a conexao)
 # ---------------------------------------------------------------------
-function Measure-Ping([string]$Alvo, [int]$N = 15) {
-    $p = New-Object System.Net.NetworkInformation.Ping
-    $t = New-Object System.Collections.Generic.List[double]; $perda = 0
-    for ($i = 0; $i -lt $N; $i++) {
-        try { $r = $p.Send($Alvo, 1000); if ($r.Status -eq 'Success') { $t.Add([double]$r.RoundtripTime) } else { $perda++ } }
-        catch { $perda++ }
-        Start-Sleep -Milliseconds 150
-    }
-    $med = if ($t.Count) { ($t | Measure-Object -Average).Average } else { 0 }
-    $jit = 0
-    if ($t.Count -gt 1) { $d = 0; for ($i = 1; $i -lt $t.Count; $i++) { $d += [math]::Abs($t[$i] - $t[$i - 1]) }; $jit = $d / ($t.Count - 1) }
-    return [pscustomobject]@{ Alvo = $Alvo; Media = [math]::Round($med, 1); Jitter = [math]::Round($jit, 1); Perda = [math]::Round(100 * $perda / $N) }
-}
-
-function Test-Rede {
-    Write-Title 'DIAGNOSTICO DA INTERNET'
-    $ads = @(Get-NetAdapter -Physical -ErrorAction SilentlyContinue | Where-Object { $_.Status -eq 'Up' })
-    if ($ads.Count -eq 0) { Write-Warn 'Nenhuma conexao ativa.'; return }
-    foreach ($a in $ads) {
-        $wifi = ($a.MediaType -match '802\.11') -or ($a.InterfaceDescription -match 'Wi-?Fi|Wireless|802\.11|WLAN')
-        Write-Host ("  {0}  [{1}]  velocidade do link: {2}" -f $a.Name, $(if ($wifi) { 'Wi-Fi' } else { 'Cabo' }), $a.LinkSpeed) -ForegroundColor White
-        if ($wifi) {
-            $w = (& netsh.exe wlan show interfaces 2>$null) -join "`n"
-            $sinal = [regex]::Match($w, '(\d{1,3})\s*%').Groups[1].Value
-            $canal = [regex]::Match($w, '(?im)^\s*(Canal|Channel)\s*:\s*(\d+)').Groups[2].Value
-            if ($sinal) {
-                if ([int]$sinal -lt 70) { Write-Warn "Sinal do Wi-Fi fraco ($sinal%). Chegue mais perto do roteador ou use cabo." } else { Write-Ok "Sinal do Wi-Fi bom ($sinal%)." }
-            }
-            if ($canal) {
-                if ([int]$canal -le 14) { Write-Warn "Wi-Fi em 2.4 GHz (canal $canal): mais lento e com mais interferencia. Se o roteador tiver, use a rede 5 GHz." }
-                else { Write-Ok "Wi-Fi em 5/6 GHz (canal $canal)." }
-            }
-            Write-Note 'Para jogo competitivo, o cabo sempre ganha do Wi-Fi em ping estavel.'
-        } else {
-            if ($a.LinkSpeed -match '^100 Mbps|^10 Mbps') {
-                Write-Warn 'Cabo conectado a 100 Mbps ou menos: cabo ruim/velho ou porta limitada. Se seu plano passa de 100 mega, troque por cabo CAT5e/CAT6.'
-            } else { Write-Ok "Cabo a $($a.LinkSpeed)." }
-        }
-    }
-    $gw = (Get-NetRoute -DestinationPrefix '0.0.0.0/0' -ErrorAction SilentlyContinue | Sort-Object RouteMetric | Select-Object -First 1).NextHop
-    Write-Host ''
-    Write-Info 'Medindo ping, variacao (jitter) e perda de pacotes (cerca de 10 segundos)...'
-    $res = @()
-    if ($gw -and $gw -ne '0.0.0.0') { $res += Measure-Ping $gw }
-    $res += Measure-Ping '1.1.1.1'
-    $res += Measure-Ping '8.8.8.8'
-    foreach ($r in $res) {
-        $nome = if ($r.Alvo -eq $gw) { "Roteador ($gw)" } else { "Internet ($($r.Alvo))" }
-        $cor = if ($r.Perda -gt 0 -or $r.Jitter -gt 10) { 'Yellow' } else { 'Green' }
-        Write-Host ("  {0,-28} ping {1,6} ms   variacao {2,5} ms   perda {3,3}%" -f $nome, $r.Media, $r.Jitter, $r.Perda) -ForegroundColor $cor
-    }
-    $lan = $res | Where-Object { $_.Alvo -eq $gw } | Select-Object -First 1
-    $net = $res | Where-Object { $_.Alvo -ne $gw }
-    Write-Host ''
-    if ($lan -and ($lan.Perda -gt 0 -or $lan.Jitter -gt 5 -or $lan.Media -gt 10)) {
-        Write-Warn 'O problema esta DENTRO da sua casa (PC -> roteador): Wi-Fi fraco, cabo ruim ou roteador sobrecarregado.'
-        Write-Note 'Teste: use cabo, reinicie o roteador e veja se alguem esta baixando/assistindo em 4K.'
-    } elseif (($net | Where-Object { $_.Perda -gt 0 -or $_.Jitter -gt 15 }).Count -gt 0) {
-        Write-Warn 'Sua rede local esta boa, mas a conexao com a internet esta instavel: geralmente e o provedor.'
-        Write-Note 'Teste em outro horario. Se continuar, ligue para o provedor com esses numeros.'
-    } else {
-        Write-Ok 'Conexao estavel: sem perda de pacotes e com pouca variacao.'
-    }
-    Write-Note 'O ping dentro do jogo depende da distancia ate o servidor: escolha sempre o servidor do Brasil.'
-}
-
 # Desfaz "estragos" que outros packs fazem na rede, sem inventar valores
 function Repair-TcpDefaults {
     $t = Get-NetTCPSetting -SettingName Internet -ErrorAction SilentlyContinue
@@ -498,9 +365,8 @@ function Repair-TcpDefaults {
 }
 
 function Mod-Rede {
-    if (-not (WantAny @('F1','F2','F3','F4','F5'))) { return }
+    if (-not (WantAny @('F1','F2','F3','F4'))) { return }
     $script:CurMod = 'rede'
-    Test-Rede
     Write-Title 'AJUSTES DE INTERNET'
     if (Want 'F4') { Repair-TcpDefaults }
     if (Want 'F1') {
@@ -532,7 +398,6 @@ function Mod-Rede {
             else { Write-Skip "$($a.InterfaceDescription): ja estava sem economia." }
         }
     }
-    if (Want 'F5' 'Testar qual DNS e mais rapido no seu PC agora?' $true) { Mod-DNS }
     $script:NeedReboot = $true
 }
 
@@ -604,7 +469,7 @@ function Mod-Armazenamento {
         foreach ($d in $alvos) {
             if (Test-Path $d) {
                 $antes += (Get-ChildItem $d -Recurse -Force -ErrorAction SilentlyContinue | Measure-Object -Property Length -Sum).Sum
-                Get-ChildItem $d -Force -ErrorAction SilentlyContinue | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
+                Get-ChildItem $d -Force -ErrorAction SilentlyContinue | Where-Object { $_.Name -notlike 'avp_*' } | Remove-Item -Recurse -Force -ErrorAction SilentlyContinue
             }
         }
         Stop-Service -Name wuauserv, bits -Force -ErrorAction SilentlyContinue
@@ -621,85 +486,4 @@ function Mod-Armazenamento {
         Write-Note 'O cache de shader e recriado: o primeiro minuto de cada jogo pode engasgar 1 vez.'
     }
     $script:NeedReboot = $true
-}
-
-# ---------------------------------------------------------------------
-#  I - AVANCADO (riscos). Nunca entram no modo Automatico.
-# ---------------------------------------------------------------------
-function Mod-Avancado {
-    if (-not (WantAny @('I1','I2','I3','I4','I5'))) { return }
-    $script:CurMod = 'avancado'
-    $hw = Load-HW
-    Write-Title 'AJUSTES AVANCADOS - LEIA CADA AVISO'
-
-    $dg = Get-CimInstance -Namespace root\Microsoft\Windows\DeviceGuard -ClassName Win32_DeviceGuard -ErrorAction SilentlyContinue
-    $hvci = $false
-    if ($dg) { $hvci = (@($dg.SecurityServicesRunning) -contains 2) }
-    Write-Host '  [I1] Integridade de memoria (HVCI/VBS)' -ForegroundColor White
-    Write-Note ("     Status atual: {0}" -f $(if ($hvci) { 'LIGADA' } else { 'desligada' }))
-    Write-Note '     Desligar costuma dar FPS a mais em processadores mais fracos.'
-    Write-Note '     RISCO: menos protecao contra drivers maliciosos. Alguns anti-cheats (Vanguard/Valorant,'
-    Write-Note '     FACEIT) podem EXIGIR que ela fique ligada - se o jogo reclamar, use o Desfazer.'
-    if ($hvci -and (Want 'I1' 'Desligar a Integridade de memoria?')) {
-        Set-Reg 'HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity' 'Enabled' 0 | Out-Null
-        Set-Reg 'HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard' 'EnableVirtualizationBasedSecurity' 0 | Out-Null
-        Write-Ok 'Integridade de memoria desligada (vale apos reiniciar).'
-        $script:NeedReboot = $true
-    }
-    Write-Host ''
-
-    Write-Host '  [I2] Modo MSI (interrupcoes por mensagem) na placa de video' -ForegroundColor White
-    Write-Note '     Reduz a latencia de interrupcao. Placas atuais ja vem assim quase sempre.'
-    $gpusPnp = @(Get-PnpDevice -Class Display -PresentOnly -ErrorAction SilentlyContinue | Where-Object { $_.InstanceId -like 'PCI\*' })
-    $pend = @()
-    foreach ($g in $gpusPnp) {
-        $k = "HKLM:\SYSTEM\CurrentControlSet\Enum\$($g.InstanceId)\Device Parameters\Interrupt Management\MessageSignaledInterruptProperties"
-        $v = (Get-ItemProperty -LiteralPath $k -Name MSISupported -ErrorAction SilentlyContinue).MSISupported
-        if ($v -eq 1) { Write-Ok "$($g.FriendlyName): MSI ja ativo." } else { $pend += @{ Dev = $g; Key = $k } }
-    }
-    if ($pend.Count -gt 0 -and (Want 'I2' 'Ativar modo MSI na placa de video?')) {
-        foreach ($p in $pend) { if (Set-Reg $p.Key 'MSISupported' 1) { Write-Ok "$($p.Dev.FriendlyName): MSI ativado." } }
-        $script:NeedReboot = $true
-    }
-    Write-Host ''
-
-    if ($hw.WIN11 -eq '1') {
-        Write-Host '  [I3] Timer resolution global (Windows 11)' -ForegroundColor White
-        Write-Note '     So faz diferenca se voce usar um app de timer resolution. Sem app, nao muda nada.'
-        if (Want 'I3' 'Permitir timer resolution global?') {
-            Set-Reg 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\kernel' 'GlobalTimerResolutionRequests' 1 | Out-Null
-            Write-Ok 'Timer resolution global permitido.'
-            $script:NeedReboot = $true
-        }
-        Write-Host ''
-    }
-
-    Write-Host '  [I4] Desligar "Otimizacoes de tela cheia" (FSO) em todos os jogos' -ForegroundColor White
-    Write-Note '     Pode reduzir input lag em jogos DX9/DX11 antigos. Em jogos atuais e no Windows 11'
-    Write-Note '     costuma nao mudar nada e pode atrapalhar alt+tab e HDR.'
-    if (Want 'I4' 'Desligar FSO global?') {
-        Set-Reg 'HKCU:\System\GameConfigStore' 'GameDVR_FSEBehaviorMode' 2 | Out-Null
-        Set-Reg 'HKCU:\System\GameConfigStore' 'GameDVR_HonorUserFSEBehaviorMode' 1 | Out-Null
-        Set-Reg 'HKCU:\System\GameConfigStore' 'GameDVR_DXGIHonorFSEWindowsCompatible' 1 | Out-Null
-        Write-Ok 'FSO desligado globalmente.'
-    }
-    Write-Host ''
-
-    $bcdAll = (& bcdedit.exe /enum '{current}' 2>$null) -join "`n"
-    $hvAtual = [regex]::Match($bcdAll, 'hypervisorlaunchtype\s+(\w+)').Groups[1].Value
-    Write-Host '  [I5] Desligar o hypervisor do Windows (Hyper-V)' -ForegroundColor White
-    Write-Note '     Desliga toda a virtualizacao do Windows (inclusive VBS). Pode dar FPS extra.'
-    $usa = @()
-    foreach ($f in @(@('Microsoft-Windows-Subsystem-Linux', 'WSL'), @('VirtualMachinePlatform', 'WSL2 / emuladores Android'),
-                     @('Microsoft-Hyper-V-All', 'Hyper-V'), @('Containers-DisposableClientVM', 'Area Restrita'))) {
-        $st = Get-WindowsOptionalFeature -Online -FeatureName $f[0] -ErrorAction SilentlyContinue
-        if ($st -and $st.State -eq 'Enabled') { $usa += $f[1] }
-    }
-    if ($usa.Count -gt 0) { Write-Warn ("     Este PC usa: {0}. Isso PARA de funcionar com o hypervisor desligado." -f ($usa -join ', ')) }
-    if ($hvAtual -notmatch '^(Off|Desativado)$' -and (Want 'I5' 'Desligar o hypervisor?')) {
-        & bcdedit.exe /set hypervisorlaunchtype off | Out-Null
-        Add-Undo 'bcd_hypervisor' 'bcdedit /set hypervisorlaunchtype Auto'
-        Write-Ok 'Hypervisor desligado (vale apos reiniciar).'
-        $script:NeedReboot = $true
-    }
 }

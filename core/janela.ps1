@@ -32,11 +32,11 @@ function New-ConsoleBlock {
     $t = Get-TelaReal
     # Consolas: e a fonte nitida que o console classico SEMPRE aceita (com a Cascadia
     # ele voltava para a fonte de pixel antiga). Tamanho pela altura da tela.
-    $fh = if ($t.H -ge 1400) { 28 } elseif ($t.H -ge 1000) { 20 } else { 18 }
+    $fh = [int][math]::Max(16, [math]::Min(32, [math]::Round($t.H / 46)))   # 1080p -> 22
     $fonte = 'Consolas'
     $fw = [math]::Round($fh * 0.55)
-    $cols = 96
-    $rows = [math]::Min(44, [math]::Floor(($t.H * 0.86) / $fh))
+    $cols = 100
+    $rows = [math]::Min(46, [math]::Floor(($t.H * 0.88) / $fh))
     $wpx = $cols * $fw + 36
     $hpx = $rows * $fh + 56
     $x = $t.X + [math]::Max(0, [math]::Floor(($t.W - $wpx) / 2))

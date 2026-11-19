@@ -4,6 +4,16 @@
   (fontes no final do arquivo)
 =====================================================================
 
+  ATALHO: O PACK FAZ SOZINHO
+  ---------------------------------------------------------------
+  • CS2, Apex, Fortnite, Rocket League e Minecraft (Java): use
+    Jogos > "CONFIGURAR OS JOGOS SOZINHO" (ou Modo avançado > 22).
+    Com o jogo FECHADO, ele grava as opções deste guia no arquivo do
+    jogo (com cópia para desfazer). Resolução, sensibilidade e
+    texturas continuam do seu jeito.
+  • Valorant, LoL, CoD e outros guardam as configs na conta (nuvem):
+    para esses, siga este guia dentro do jogo.
+
   COMO LER
   ---------------------------------------------------------------
   • Os nomes estão como aparecem no jogo em INGLÊS. Se o seu jogo
