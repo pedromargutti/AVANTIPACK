@@ -2,6 +2,17 @@
 
 Tudo o que mudou em cada versão. A mais nova fica sempre em cima.
 
+## v0.8.0 — 19/11/2026
+- 🆓 **Esta é a versão GRÁTIS** do AVANTIPACK, e continua grátis para sempre
+- 💯 **Nota do PC**: de 0 a 100, com 12 pontos analisados, o que está segurando o PC e a nota anterior para comparar
+- 🧹 **Limpeza rápida** (tecla **L**): temporários, caches e downloads velhos do Windows, mostrando quantos MB voltaram
+- 🎮 **Preparar para jogar** (tecla **J**): mostra o que está gastando memória e fecha o que você marcar antes da partida
+- 🔠 **Letra maior de verdade**: o AVANTIPACK.exe já abre como administrador com a fonte certa
+- 🎯 **Limite de FPS do G-SYNC certo**: se o pack sobe o monitor de 60 para 144 Hz, o limite já usa os 144 Hz
+- 📦 **Teams e Outlook não são mais removidos** na limpeza (muita gente usa para trabalho e escola)
+- 🌐 **Consertar internet** avisa antes de apagar um IP fixo
+- ⭐ **Chegou o AVANTIPACK PRO**: app próprio com Personalizado, teste de FPS, configurar os jogos sozinho, Modo Jogo, temperatura, DNS e ajustes avançados (tecla **P** para conhecer). Essas funções saíram do pack grátis
+
 ## v0.7.6 — 18/11/2026
 - ⌨️ **Setas do teclado em TODAS as telas**: ↑ ↓ e ENTER para escolher, ESC para voltar (digitar o número continua funcionando)
 - ☑️ **Listas de marcar com ESPAÇO** (ajustes, programas da inicialização, jogos, o que recolocar) e **Sim / Não** com as setas

@@ -3,3 +3,5 @@ EXPORTS
 GetModuleFileNameW
 GetFileAttributesW
 ExitProcess
+CreateProcessW
+CloseHandle

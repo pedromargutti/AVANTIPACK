@@ -9,3 +9,6 @@ GITHUB_REPO=pedromargutti/AVANTIPACK
 # 1 = o menu avisa quando sair versao nova (checa no maximo a cada 12 h)
 # 0 = nunca checar
 CHECAR_ATUALIZACAO=1
+
+# Link para comprar o AVANTIPACK Pro (aparece nas opcoes do Pro)
+LOJA_PRO=

@@ -73,56 +73,6 @@ function Mod-Reaplicar {
 # ---------------------------------------------------------------------
 #  Manutencao semanal (roda escondida pela tarefa agendada)
 # ---------------------------------------------------------------------
-function Mod-Manutencao {
-    $script:CurMod = 'manutencao'
-    Write-Log 'Manutencao semanal iniciada'
-    $hw = Load-HW
-    $sel = @{ C9 = $true; G5 = $true }
-    $script:Selecao = $sel; $script:AutoMode = $true
-    try { Mod-Sistema; Mod-Armazenamento } finally { $script:Selecao = $null; $script:AutoMode = $false }
-    Set-Content -Path (Join-Path $DataDir 'ultima_manutencao.txt') -Value (Get-Date -Format 'dd/MM/yyyy HH:mm') -Encoding ASCII
-    Write-Log 'Manutencao semanal concluida'
-}
-
-function Mod-Agendar {
-    $script:CurMod = 'agendar'
-    Write-Title 'MANUTENCAO SEMANAL AUTOMATICA'
-    Write-Note 'Uma vez por semana, escondido, o pack:'
-    Write-Note '  - limpa arquivos temporarios e caches (a lixeira NAO e esvaziada)'
-    Write-Note '  - desliga de novo a economia de energia de USB/mouse (volta quando troca de porta)'
-    Write-Note 'E toda vez que voce abrir o pack ele avisa se o driver de video estiver velho ou se o'
-    Write-Note 'Windows foi atualizado e precisa reaplicar.'
-    Write-Host ''
-    $t = Get-ScheduledTask -TaskName $TaskName -ErrorAction SilentlyContinue
-    $ult = Join-Path $DataDir 'ultima_manutencao.txt'
-    if ($t) {
-        Write-Ok ("Manutencao semanal LIGADA (domingo 14h). Ultima vez: {0}" -f $(if (Test-Path $ult) { Get-Content $ult } else { 'ainda nao rodou' }))
-        Write-Host ''
-        $op = Select-Opcao @(
-            @{ K = '1'; T = 'Desligar a manutencao semanal' },
-            @{ K = '2'; T = 'Corrigir o caminho (use se voce mudou a pasta do pack de lugar)' }
-        )
-        if ($op -eq '1') { Unregister-ScheduledTask -TaskName $TaskName -Confirm:$false; Write-Ok 'Manutencao semanal desligada.' }
-        elseif ($op -eq '2') { Register-Manutencao }
-        return
-    }
-    if (Confirm-Step 'Ligar a manutencao semanal?') { Register-Manutencao }
-}
-
-function Register-Manutencao {
-    $ps1 = Join-Path $PSScriptRoot 'avanti.ps1'
-    $acao = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument ("-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File `"{0}`" -Module manutencao" -f $ps1)
-    $gat = New-ScheduledTaskTrigger -Weekly -DaysOfWeek Sunday -At '14:00'
-    $usr = [Security.Principal.WindowsIdentity]::GetCurrent().Name
-    $pri = New-ScheduledTaskPrincipal -UserId $usr -LogonType Interactive -RunLevel Highest
-    $cfg = New-ScheduledTaskSettingsSet -StartWhenAvailable -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -ExecutionTimeLimit (New-TimeSpan -Minutes 30)
-    try {
-        Register-ScheduledTask -TaskName $TaskName -Action $acao -Trigger $gat -Principal $pri -Settings $cfg -Description 'Manutencao semanal do AVANTIPACK' -Force -ErrorAction Stop | Out-Null
-        Write-Ok 'Manutencao semanal ligada: domingo 14h (se o PC estiver desligado, roda quando ligar).'
-        Write-Note 'Se mudar a pasta do pack de lugar, volte aqui e use "Corrigir o caminho".'
-    } catch { Write-Warn "Nao foi possivel criar a tarefa: $($_.Exception.Message)" }
-}
-
 # ---------------------------------------------------------------------
 #  Atualizacao automatica pelo GitHub (Releases)
 # ---------------------------------------------------------------------

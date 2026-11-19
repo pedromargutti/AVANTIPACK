@@ -434,6 +434,7 @@ function Restore-Row($r) {
         'PS'  { Invoke-Expression $r.Value | Out-Null }
         'NVIDIA' { Invoke-Expression $r.Value | Out-Null }          # reimporta o perfil global salvo
         'APPX'   { [void](Install-AppxDeVolta $r.Value) }           # reinstala app removido
+        'FILE'   { if (Test-Path -LiteralPath $r.Value) { Copy-Item -LiteralPath $r.Value -Destination $r.Path -Force } }   # devolve o arquivo de config original
         'DISPLAY' { [void](Set-MonitorHz $r.Path ([int]$r.Value)) }  # volta a taxa de atualizacao
     }
 }
@@ -463,7 +464,7 @@ function Mod-Undo {
     if ($rest.Count -gt 0) { $rest | Export-Csv -Path $BackupFile -NoTypeInformation -Encoding UTF8 }
     else { Remove-Item $BackupFile -Force -ErrorAction SilentlyContinue }
     Write-Ok "$ok alteracao(oes) restaurada(s) para o valor original: $($alvo -join ', ')"
-    Write-Note 'Apps removidos no Debloat devem ser reinstalados pela Microsoft Store.'
+    Write-Note 'Apps removidos no Debloat: use Desfazer > Reinstalar apps (pela Microsoft Store).'
     $script:NeedReboot = $true
 }
 
@@ -512,12 +513,10 @@ function Mod-Guias {
 . (Join-Path $PSScriptRoot 'catalogo.ps1')
 . (Join-Path $PSScriptRoot 'apps.ps1')
 . (Join-Path $PSScriptRoot 'fix.ps1')
-. (Join-Path $PSScriptRoot 'games.ps1')
-. (Join-Path $PSScriptRoot 'dns.ps1')
 . (Join-Path $PSScriptRoot 'restauracao.ps1')
 . (Join-Path $PSScriptRoot 'manutencao.ps1')
-. (Join-Path $PSScriptRoot 'fps.ps1')
-. (Join-Path $PSScriptRoot 'relatorio.ps1')
+. (Join-Path $PSScriptRoot 'pro.ps1')
+. (Join-Path $PSScriptRoot 'extras.ps1')
 
 # ---------------------------------------------------------------------
 #  Execucao
@@ -528,60 +527,39 @@ if (-not (New-Object Security.Principal.WindowsPrincipal($id)).IsInRole([Securit
     exit 1
 }
 
+if (Test-SoPro $Module) { Show-SoPro; $Module = '__pro' }
 switch ($Module) {
+    '__pro'         { }
     'novidades-auto' { Mod-Novidades -Auto }
-    'fps'           { Mod-TesteFps }
-    'relatorio'     { Mod-Relatorio }
     'novidades'     { Mod-Novidades }
+    'detect'        { $h = Get-Hardware; try { Get-StatusExtra $h } catch {}; Save-Hardware $h; Show-Hardware $h }
     'detect-silent' { $h = Get-Hardware; try { Get-StatusExtra $h } catch {}; Save-Hardware $h }
     'checkup'       {
         $h = Get-Hardware; Save-Hardware $h; Show-Hardware $h; [void](Test-GPU $h)
-        Test-InputLag
         Write-Host ''
-        if (Confirm-Step 'Testar a internet tambem (ping, variacao e perda, ~10 s)?') { Test-Rede }
+        Mod-Nota -SemTitulo
     }
     'auto'          { Mod-Otimizar }
-    'inputlag'      { Test-InputLag }
-    'internet'      { Test-Rede }
-    'inicializacao' { Mod-Inicializacao }
     'reaplicar'     { Mod-Reaplicar }
-    'manutencao'    { Mod-Manutencao }
-    'agendar'       { Mod-Agendar }
     'atualizar'     { Mod-Atualizar }
-    'perfisjogos'   { Optimize-NvidiaGameProfiles (Load-HW) }
     'configjogos'   { Start-Process notepad.exe (Join-Path $Root 'guias\CONFIG_DOS_JOGOS.txt') }
     'restore'       { Mod-Restore }
-    'debloat'       { Mod-Debloat }
-    'sistema'       { Mod-Sistema }
-    'energia'       { Mod-Energia }
-    'gpu'           { Mod-GPU }
-    'rede'          { Mod-Rede }
-    'armazenamento' { Mod-Armazenamento }
-    'avancado'      { Mod-Avancado }
     'undo'          { Mod-Restaurar }
     'undoparte'     { Mod-Undo }
     'apps'          { Mod-Apps }
     'guias'         { Mod-Guias }
     'verificar'     { [void](Test-GPU (Load-HW)) }
     'fix'           { Mod-Fix }
-    'jogos'         { Mod-Jogos }
-    'dns'           { Mod-DNS }
     'visual'        { Start-Process (Join-Path $Root 'guias\PAINEIS_VISUAL.html') }
-    'recomendado'   {
-        Write-Title 'PACOTE RECOMENDADO'
-        Write-Note 'Vai rodar em ordem: ponto de restauracao, debloat, sistema, energia, video, rede, armazenamento.'
-        Write-Note 'Algumas etapas fazem perguntas. O modulo Avancado NAO esta incluido.'
-        if (Confirm-Step 'Comecar?') {
-            Mod-Restore; Mod-Debloat; Mod-Sistema; Mod-Energia; Mod-GPU; Mod-Rede; Mod-Armazenamento
-            Write-Title 'CONCLUIDO'
-            Show-Hardware (Load-HW)
-        }
-    }
+    'nota'          { Mod-Nota }
+    'limpeza'       { Mod-Limpeza }
+    'prejogo'       { Mod-PreJogo }
+    'manutencao'    { }
     default { Write-Warn "Modulo desconhecido: $Module" }
 }
 
 try { Update-StatusFile } catch {}
-if ($Module -notin @('novidades-auto', 'novidades', 'fps', 'relatorio', 'detect-silent', 'detect', 'apps', 'guias', 'visual', 'fix', 'internet', 'manutencao', 'atualizar', 'configjogos')) {
+if ($Module -notin @('__pro', 'novidades-auto', 'novidades', 'detect-silent', 'detect', 'apps', 'guias', 'visual', 'fix', 'manutencao', 'atualizar', 'configjogos', 'nota', 'prejogo')) {
     Write-Host ''
     if ($script:Applied -gt 0) { Write-Ok "$($script:Applied) ajuste(s) aplicado(s). Backup salvo em core\dados\backup" }
     if ($script:NeedReboot)    { Write-Warn 'Reinicie o PC para tudo entrar em vigor (opcao 8 do menu).' }

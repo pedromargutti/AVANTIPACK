@@ -1,5 +1,5 @@
 =====================================================================
-  AVANTIPACK v0.7 - Otimização do Windows para jogos
+  AVANTIPACK GRÁTIS v0.8 - Otimização do Windows para jogos
 =====================================================================
 
   COMO USAR (3 PASSOS)
@@ -9,8 +9,7 @@
      em "Sim" quando o Windows pedir permissão.
   3. Digite 1 e aperte ENTER ("OTIMIZAR MEU PC") e depois 1 de novo
      ("AUTOMATICO"). Pronto: ele faz tudo sozinho e no fim pede para
-     reiniciar. Quer escolher? Use 2 ("PERSONALIZADO") e marque ou
-     desmarque cada ajuste por categoria.
+     reiniciar. (Escolher cada ajuste é do AVANTIPACK PRO.)
 
   Requisitos: Windows 10 (21H2 ou mais novo) ou Windows 11.
 
@@ -32,16 +31,12 @@
   desmarca e "CONCLUIR" confirma.
 
   [1] OTIMIZAR MEU PC   <- comece por aqui
-      Automático: o pack escolhe. Personalizado: você vê as 9 categorias
-      (Segurança, Limpeza, Sistema/input lag, Energia, Vídeo, Internet,
-      SSD/memória, Jogos, Avançado) e marca ou desmarca cada ajuste.
-      Lista completa: guias\LISTA_DE_AJUSTES.txt
+      Automático: o pack escolhe só o que é seguro para o SEU PC.
       Cria ponto de restauração e backup, e então: tira telemetria,
       anúncios e apps inúteis; ajusta mouse, teclado e prioridade de
       jogos; plano de energia certo para o SEU processador; verifica
       e configura a placa de vídeo (painel NVIDIA automático); ajusta
-      a placa de rede e testa o DNS mais rápido; ajusta SSD/HD e
-      limpa arquivos temporários; dá prioridade aos jogos instalados.
+      a placa de rede; ajusta SSD/HD e limpa arquivos temporários.
       Só pergunta uma coisa (se o monitor tem G-SYNC/FreeSync, em PCs
       com NVIDIA). Opções com risco NÃO entram aqui.
 
@@ -49,10 +44,18 @@
       Mostra as peças e avisa problemas: memória sem XMP, pente único,
       Windows em HD, driver de vídeo velho, placa no slot errado,
       Resizable BAR desligado, monitor abaixo do máximo de Hz (corrige
-      na hora) e monitor ligado na placa-mãe. Faz o TESTE DE INPUT LAG
-      (18 itens, com pontuação e correção automática) e, se quiser, o
-      teste da internet (ping, variação e perda, separando o problema da
-      sua casa do problema do provedor).
+      na hora) e monitor ligado na placa-mãe. No fim dá a NOTA DO PC
+      (0 a 100), com o que está segurando o PC e a nota anterior.
+
+  [L] LIMPEZA RÁPIDA
+      Apaga temporários, relatórios de erro, cache de shader e downloads
+      velhos do Windows Update, e mostra quanto espaço voltou. Seus
+      arquivos (documentos, fotos, jogos, saves) não são tocados.
+
+  [J] PREPARAR PARA JOGAR
+      Lista os programas que estão gastando memória agora (navegador,
+      OneDrive, Teams...) e fecha os que você marcar antes da partida.
+      Salve o que estiver aberto antes.
 
   [3] CONSERTAR UM PROBLEMA
       18 reparos: internet/Wi-Fi, áudio, microfone, câmera, Bluetooth,
@@ -87,26 +90,18 @@
           Hello, pesquisa, Xbox, Loja, hibernação...).
       [5] Ponto de restauração do Windows.
 
-  [F] TESTE DE FPS (antes e depois)
-      Abra o jogo, entre numa partida/treino e use esta opção: o pack
-      mede 60 segundos e mostra o FPS médio, o "1% low" (o FPS nos
-      piores momentos, que é o que você sente como travada) e quantas
-      travadinhas teve. Faça ANTES de otimizar e DEPOIS, no mesmo lugar
-      do jogo, para comparar. Usa o PresentMon (Intel, gratuito).
-
-  [R] RELATÓRIO PARA AJUDA
-      Cria um ZIP na Área de Trabalho com as peças, os alertas, o que o
-      pack mudou e os testes de FPS. Mande para quem está te ajudando.
-      Não vai nome de usuário, nome do PC, IP nem números de série.
+  [P] CONHEÇA O AVANTIPACK PRO
+      O Pro é um app próprio, com visual novo, e tem as funções
+      avançadas: Personalizado (escolher cada ajuste), teste de FPS,
+      configurar os jogos sozinho, Modo Jogo automático, teste de
+      temperatura, prioridade dos jogos, perfil NVIDIA por jogo, DNS
+      mais rápido, teste de input lag, diagnóstico da internet, ajustes
+      avançados, manutenção semanal e relatório para ajuda.
 
   [7] MODO AVANÇADO
-      Cada ajuste separado, com explicação antes: debloat, sistema,
-      energia, placa de vídeo, rede, armazenamento, prioridade de jogos,
-      DNS, programas que iniciam com o Windows, teste de input lag,
-      diagnóstico da internet e ajustes com risco (Integridade de
-      memória, modo MSI, FSO, hypervisor).
-      Também: manutenção semanal automática, perfil NVIDIA por jogo
-      competitivo e atualização do pack.
+      Ferramentas extras: ver hardware e alertas, checar placa de vídeo
+      e monitor, Nota do PC, ponto de restauração, Limpeza rápida,
+      Preparar para jogar, guia de BIOS, atualizar e novidades.
 
   [U] ATUALIZAR (aparece quando sai versão nova)
       O menu mostra uma faixa verde. Digite U: o pack baixa a nova
@@ -115,21 +110,14 @@
   [8] Reiniciar o PC      [0] Sair
 
 
-  NOVO NA v0.7
+  NOVO NA v0.8
   ---------------------------------------------------------------
-  • Depois de uma atualização grande do Windows, o menu avisa (faixa
-    amarela) para usar "Otimizar > Reaplicar": refaz as mesmas escolhas.
-  • Manutenção semanal opcional (limpeza leve + TRIM), domingo 14h.
-  • Perfil NVIDIA por jogo competitivo (Reflex do driver em Ultra,
-    pré-renderização 1, clock máximo), com desfazer.
-  • Guia de configurações dentro dos jogos: guias\CONFIG_DOS_JOGOS.txt
-  • Atualização automática pelo GitHub (veja guias\GITHUB_PASSO_A_PASSO.txt).
-  • Desfazer reformulado: tudo, ou só a função que você precisa de volta.
-  • Barra de progresso por etapa e caixa de resultado no fim.
-  • v0.7.2: atalho com a logo, janela centralizada e fonte Consolas.
-  • v0.7.6: setas em todas as telas, tela no meio e estável, teste de
-    FPS, dual channel, placa dedicada no notebook, relatório para ajuda
-    e configurações de 19 jogos atualizadas.
+  • Esta é a versão GRÁTIS, e continua grátis para sempre.
+  • Nota do PC, Limpeza rápida (L) e Preparar para jogar (J).
+  • Letra maior ao abrir e correções no monitor, na limpeza e no
+    Consertar.
+  • As funções avançadas agora ficam no AVANTIPACK PRO (tecla P).
+  • Histórico completo: core\NOVIDADES.md
 
 
   PASTAS

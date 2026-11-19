@@ -173,7 +173,7 @@ function Test-GPU($hw) {
     foreach ($m in $mons) {
         $tag = if ($m.Primario) { ' (principal)' } else { '' }
         Write-Host ("  Monitor {0}{1}: {2}x{3} @ {4} Hz  -  ligado em: {5}" -f $m.Device.Replace('\\.\', ''), $tag, $m.Largura, $m.Altura, $m.HzAtual, $m.Placa)
-        if ($temDedicada -and $hw.LAPTOP -ne '1' -and $m.Placa -notmatch 'NVIDIA|Radeon RX|Radeon Pro|Arc.*[AB]\d{3}') {
+        if ($temDedicada -and $hw.LAPTOP -ne '1' -and $m.Placa -notmatch 'NVIDIA|Radeon.*(RX|Pro)|Arc.*[AB]\d{3}') {
             Write-Warn 'Este monitor esta ligado no video da PLACA-MAE, nao na placa de video! Mude o cabo para a placa de video.'
             $problemas++
         }
@@ -182,7 +182,7 @@ function Test-GPU($hw) {
             $problemas++
             if (Want 'E1' "Mudar para $($m.HzMax) Hz agora?" $true) {
                 Add-Backup 'DISPLAY' $m.Device 'Hz' '1' '' ([string]$m.HzAtual)
-                if (Set-MonitorHz $m.Device $m.HzMax) { Write-Ok "Monitor agora em $($m.HzMax) Hz." }
+                if (Set-MonitorHz $m.Device $m.HzMax) { Write-Ok "Monitor agora em $($m.HzMax) Hz."; $m.HzAtual = $m.HzMax }   # o limite de FPS do G-SYNC usa o Hz novo
                 else { Write-Warn 'O Windows nao aceitou a mudanca. Ajuste em Configuracoes > Tela > Tela avancada.' }
             }
         } else { Write-Ok "Taxa de atualizacao no maximo ($($m.HzAtual) Hz)." }
@@ -322,177 +322,6 @@ function Optimize-NvidiaPanel($hw, $mons) {
     } else {
         Write-Warn 'O Profile Inspector nao terminou a tempo. Abra o Painel NVIDIA e siga o guia visual (menu principal > opcao 5, Guias).'
     }
-}
-
-# ---------------------------------------------------------------------
-#  NVIDIA: perfil por jogo (competitivos)
-#  O driver ja tem perfis prontos para quase todo jogo. Para mexer no
-#  perfil CERTO, perguntamos ao proprio driver (NVAPI) qual perfil e
-#  dono do .exe. IDs e estruturas iguais aos do NVIDIA Profile
-#  Inspector (MIT): FindApplicationByName 0xEEE566B2, GetProfileInfo
-#  0x61CD6FD6, CreateSession 0x0694D52E, LoadSettings 0x375DBD6B.
-# ---------------------------------------------------------------------
-$NV_ULL_ENABLED = 277041152   # 0x10835000 Ultra Low Latency - Enabled (1 = On)
-$NV_ULL_CPL     = 390467      # 0x0005F543 Ultra Low Latency - CPL State (2 = Ultra)
-
-function Initialize-Nvapi {
-    if ('AvNvapi' -as [type]) { return }
-    Add-Type -TypeDefinition @'
-using System;
-using System.Runtime.InteropServices;
-using System.Text;
-public class AvNvapi {
-    [DllImport("nvapi64.dll", EntryPoint = "nvapi_QueryInterface", CallingConvention = CallingConvention.Cdecl)]
-    static extern IntPtr QI(uint id);
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)] delegate int InitD();
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)] delegate int CreateD(ref IntPtr h);
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)] delegate int SessD(IntPtr h);
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Unicode)]
-    delegate int FindD(IntPtr h, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder app, ref IntPtr prof, ref APP4 a);
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)] delegate int InfoD(IntPtr h, IntPtr p, ref PROF pi);
-
-    [StructLayout(LayoutKind.Sequential, Pack = 8, CharSet = CharSet.Unicode)]
-    public struct APP4 {
-        public uint version; public uint isPredefined;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 2048)] public string appName;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 2048)] public string userFriendlyName;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 2048)] public string launcher;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 2048)] public string fileInFolder;
-        public uint bits;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 2048)] public string commandLine;
-    }
-    [StructLayout(LayoutKind.Sequential, Pack = 8, CharSet = CharSet.Unicode)]
-    public struct PROF {
-        public uint version;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 2048)] public string profileName;
-        public uint gpuSupport; public uint isPredefined; public uint numOfApps; public uint numOfSettings;
-    }
-    static T F<T>(uint id) where T : class {
-        IntPtr p = QI(id);
-        if (p == IntPtr.Zero) return null;
-        return Marshal.GetDelegateForFunctionPointer(p, typeof(T)) as T;
-    }
-    // Retorna o nome do perfil do driver que contem o .exe, ou null
-    public static string ProfileForExe(string exe) {
-        InitD init = F<InitD>(0x0150E828);
-        if (init == null || init() != 0) return null;
-        CreateD create = F<CreateD>(0x0694D52E); SessD load = F<SessD>(0x375DBD6B); SessD destroy = F<SessD>(0xDAD9CFF8);
-        FindD find = F<FindD>(0xEEE566B2); InfoD info = F<InfoD>(0x61CD6FD6);
-        if (create == null || load == null || destroy == null || find == null || info == null) return null;
-        IntPtr h = IntPtr.Zero;
-        if (create(ref h) != 0) return null;
-        try {
-            if (load(h) != 0) return null;
-            IntPtr prof = IntPtr.Zero;
-            APP4 a = new APP4(); a.version = (uint)(Marshal.SizeOf(typeof(APP4)) | (4 << 16));
-            if (find(h, new StringBuilder(exe), ref prof, ref a) != 0 || prof == IntPtr.Zero) return null;
-            PROF pi = new PROF(); pi.version = (uint)(Marshal.SizeOf(typeof(PROF)) | (1 << 16));
-            if (info(h, prof, ref pi) != 0) return null;
-            return pi.profileName;
-        } finally { destroy(h); }
-    }
-}
-'@
-}
-
-function New-NipXmlMulti([array]$Perfis) {
-    $sb = New-Object System.Text.StringBuilder
-    [void]$sb.AppendLine('<?xml version="1.0" encoding="utf-16"?>')
-    [void]$sb.AppendLine('<ArrayOfProfile>')
-    foreach ($p in $Perfis) {
-        $nome = [System.Security.SecurityElement]::Escape($p.Nome)
-        [void]$sb.AppendLine('  <Profile>')
-        [void]$sb.AppendLine("    <ProfileName>$nome</ProfileName>")
-        if ($p.Exes -and $p.Exes.Count) {
-            [void]$sb.AppendLine('    <Executeables>')
-            foreach ($e in $p.Exes) { [void]$sb.AppendLine("      <string>$([System.Security.SecurityElement]::Escape($e))</string>") }
-            [void]$sb.AppendLine('    </Executeables>')
-        } else { [void]$sb.AppendLine('    <Executeables />') }
-        if (-not $p.Settings -or $p.Settings.Count -eq 0) { [void]$sb.AppendLine('    <Settings />') }
-        else {
-            [void]$sb.AppendLine('    <Settings>')
-            foreach ($s in $p.Settings) {
-                [void]$sb.AppendLine('      <ProfileSetting>')
-                [void]$sb.AppendLine("        <SettingNameInfo>$($s.Nome)</SettingNameInfo>")
-                [void]$sb.AppendLine("        <SettingID>$($s.Id)</SettingID>")
-                [void]$sb.AppendLine("        <SettingValue>$($s.Valor)</SettingValue>")
-                [void]$sb.AppendLine('        <ValueType>Dword</ValueType>')
-                [void]$sb.AppendLine('      </ProfileSetting>')
-            }
-            [void]$sb.AppendLine('    </Settings>')
-        }
-        [void]$sb.AppendLine('  </Profile>')
-    }
-    [void]$sb.AppendLine('</ArrayOfProfile>')
-    return $sb.ToString()
-}
-
-function Optimize-NvidiaGameProfiles($hw) {
-    $script:CurMod = 'gpu'; $script:CurItem = 'H2'
-    Write-Title 'PERFIL NVIDIA POR JOGO (COMPETITIVOS)'
-    if ($hw.GPU_VENDOR -ne 'NVIDIA') { Write-Skip 'So para placas NVIDIA.'; return }
-    $npi = Get-NpiExe
-    if (-not $npi) { Write-Warn 'NVIDIA Profile Inspector nao encontrado em apps\NVIDIAProfileInspector.'; return }
-
-    # jogos competitivos instalados
-    $db = @(Get-GameDb | Where-Object { $COMPETITIVOS -contains $_.Nome })
-    $wanted = @{}; foreach ($g in $db) { foreach ($e in $g.Exes) { $wanted[$e.ToLower()] = $g.Nome } }
-    Write-Info 'Procurando jogos competitivos instalados...'
-    $found = Find-GameExes (Get-GameRoots) $wanted
-    if ($found.Count -eq 0) { Write-Skip 'Nenhum jogo competitivo da lista encontrado.'; return }
-
-    Initialize-Nvapi
-    $set = @(
-        @{ Nome = 'Ultra Low Latency - Enabled';    Id = $NV_ULL_ENABLED; Valor = 1 },
-        @{ Nome = 'Ultra Low Latency - CPL State';  Id = $NV_ULL_CPL;     Valor = 2 },
-        @{ Nome = 'Maximum pre-rendered frames';    Id = $NV.PRERENDER;   Valor = 1 },
-        @{ Nome = 'Power management mode';          Id = $NV.PSTATE;      Valor = $NV.PSTATE_PREFERMAX }
-    )
-    $perfis = @{}
-    foreach ($e in $found.Keys) {
-        $real = [System.IO.Path]::GetFileName($found[$e])
-        $jogo = $wanted[$e]
-        $pn = $null
-        try { $pn = [AvNvapi]::ProfileForExe($real) } catch {}
-        if ($pn) {
-            if (-not $perfis.ContainsKey($pn)) { $perfis[$pn] = @{ Nome = $pn; Exes = @(); Settings = $set; Jogo = $jogo; Novo = $false } }
-        } else {
-            $pn = "AVANTIPACK - $jogo"
-            if (-not $perfis.ContainsKey($pn)) { $perfis[$pn] = @{ Nome = $pn; Exes = @(); Settings = $set; Jogo = $jogo; Novo = $true } }
-            $perfis[$pn].Exes += $real
-        }
-    }
-
-    # backup dos perfis que vamos mexer (para o Desfazer)
-    $dir = Split-Path $npi
-    $antes = @(Get-ChildItem $dir -Filter 'CustomProfiles_*.nip' -ErrorAction SilentlyContinue | ForEach-Object { $_.FullName })
-    [void](Invoke-Npi $npi @('-exportCustomized') 60)
-    $exp = Get-ChildItem $dir -Filter 'CustomProfiles_*.nip' -ErrorAction SilentlyContinue | Where-Object { $antes -notcontains $_.FullName } | Sort-Object LastWriteTime -Descending | Select-Object -First 1
-    $xmlExp = $null
-    if ($exp) { try { [xml]$xmlExp = Get-Content $exp.FullName -Raw } catch {}; Remove-Item $exp.FullName -Force -ErrorAction SilentlyContinue }
-    foreach ($p in $perfis.Values) {
-        $id = 'perfil:' + $p.Nome
-        if (Test-Backed 'NVIDIA' $id 'nip') { continue }
-        $bak = Join-Path $BackupDir ('nvidia_perfil_' + (($p.Nome -replace '[^\w\-]', '_')) + '.nip')
-        $orig = $null
-        if ($xmlExp) { $orig = $xmlExp.ArrayOfProfile.Profile | Where-Object { $_.ProfileName -eq $p.Nome } | Select-Object -First 1 }
-        if ($orig) { $txt = '<?xml version="1.0" encoding="utf-16"?>' + "`r`n<ArrayOfProfile>`r`n" + $orig.OuterXml + "`r`n</ArrayOfProfile>" }
-        else { $txt = New-NipXmlMulti @(@{ Nome = $p.Nome; Exes = @(); Settings = @() }) }   # sem ajustes = padrao do driver
-        Set-Content -Path $bak -Value $txt -Encoding Unicode
-        Add-Backup 'NVIDIA' $id 'nip' '1' '' ("Start-Process -FilePath '$npi' -ArgumentList @('-silentImport','-replaceImport','`"$bak`"') -Wait")
-    }
-
-    $nip = Join-Path $DataDir 'avantipack_nvidia_jogos.nip'
-    Set-Content -Path $nip -Value (New-NipXmlMulti @($perfis.Values)) -Encoding Unicode
-    Write-Info 'Aplicando os perfis no driver NVIDIA...'
-    if (Invoke-Npi $npi @('-silentImport', '-mergeImport', "`"$nip`"") 90) {
-        foreach ($p in $perfis.Values) {
-            $tipo = if ($p.Novo) { 'perfil novo' } else { "perfil do driver '$($p.Nome)'" }
-            Write-Ok ("{0}: baixa latencia ULTRA + clock maximo ({1})" -f $p.Jogo, $tipo)
-        }
-        Write-Note 'Nos jogos com NVIDIA Reflex, ligue o Reflex no jogo: ele tem prioridade e e ainda melhor.'
-        $script:Applied += $perfis.Count
-    } else { Write-Warn 'O Profile Inspector nao terminou a tempo. Nada foi alterado nos perfis por jogo.' }
 }
 
 # ---------------------------------------------------------------------
