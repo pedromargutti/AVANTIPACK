@@ -256,6 +256,17 @@ Para quem publica: [`guias/GITHUB_PASSO_A_PASSO.txt`](guias/GITHUB_PASSO_A_PASSO
 
 Otimizações de sistema e de BIOS são **por conta e risco de quem usa**: cada PC responde de um jeito. O AVANTIPACK cria ponto de restauração e permite desfazer cada ajuste, mas recomendamos ler as explicações antes de aplicar o que está marcado como risco.
 
+## 👤 Autor
+
+Criado e mantido por **Pedro Henrique Margutti**, estudante de Análise e Desenvolvimento de Sistemas e Suporte de TI.
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/pedro-henrique-margutti-158696382/)
+[![GitHub](https://img.shields.io/badge/GitHub-pedromargutti-181717?style=flat&logo=github&logoColor=white)](https://github.com/pedromargutti)
+
+## 📄 Licença
+
+O código da versão grátis está sob a [licença MIT](LICENSE). Os programas de terceiros mantêm as licenças deles (veja os Créditos).
+
 ## 📜 Créditos
 
 - [NVIDIA Profile Inspector](https://github.com/Orbmu2k/nvidiaProfileInspector) (MIT), incluído no pack
@@ -263,5 +274,5 @@ Otimizações de sistema e de BIOS são **por conta e risco de quem usa**: cada 
 
 <div align="center">
 <br>
-<sub>Feito por <b>Avanti</b> 🎮 · versão grátis para sempre · se ajudou, deixe uma ⭐</sub>
+<sub>Feito por <b><a href="https://github.com/pedromargutti">Pedro Henrique Margutti</a></b> (Avanti) 🎮 · versão grátis para sempre · se ajudou, deixe uma ⭐</sub>
 </div>
