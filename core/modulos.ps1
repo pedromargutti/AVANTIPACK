@@ -11,6 +11,12 @@ $script:Selecao = $null
 
 # Decide se um bloco roda
 function Want([string]$Id, [string]$Pergunta = '', $Padrao = $null) {
+    # fora da otimizacao completa: se o ajuste ja esta aplicado e funcionando, pergunta antes de refazer
+    if ($script:Selecao -eq $null -and (Test-ItemAplicado $Id)) {
+        $nome = ($CATALOGO | Where-Object { $_.Id -eq $Id } | Select-Object -First 1).Nome
+        Write-Ok ("Ja aplicado e funcionando: {0}" -f $(if ($nome) { $nome } else { $Id }))
+        if (-not (Select-SimNao 'Aplicar de novo mesmo assim?' $false)) { return $false }
+    }
     if ($script:Selecao -ne $null) { $ok = [bool]$script:Selecao[$Id] }
     elseif ($Pergunta) { $ok = (Confirm-Step $Pergunta $Padrao) }
     else { $ok = $true }
@@ -168,6 +174,7 @@ function Mod-Debloat {
                 try {
                     Remove-AppxPackage -Package $p.PackageFullName -AllUsers -ErrorAction Stop
                     Add-Backup 'APPX' $p.Name '' '1' '' $p.Name
+                    Add-Estado 'APPX' '' $p.Name ''
                     Write-Ok "Removido: $($p.Name)"; Write-Log "APPX removido $($p.Name)"
                 }
                 catch { Write-Skip "Nao removido: $($p.Name)" }
@@ -280,6 +287,7 @@ function Mod-Energia {
             Write-Note 'Ele PRECISA do plano Balanceado + driver de chipset AMD + Game Bar. Plano maximo ATRAPALHA.'
             if ($old -and $old -ne $BALANCED_GUID) { Add-Undo 'power_restore' "powercfg /setactive $old" }
             & powercfg.exe /setactive $BALANCED_GUID | Out-Null
+            Add-Estado 'PLANO' '' '' $BALANCED_GUID
             $svc = Get-Service -Name '*3dvcache*' -ErrorAction SilentlyContinue
             if ($svc) { Write-Ok "Servico do 3D V-Cache encontrado ($($svc.Name))." }
             else { Write-Warn 'Servico AMD 3D V-Cache NAO encontrado: instale o driver de chipset AMD (Programas uteis).' }
@@ -321,6 +329,7 @@ function Mod-Energia {
                     if ($hw.CPU_HIBRIDO -eq '1') { $cfg += , @('SUB_PROCESSOR', 'PERFEPP1', 0) }
                     foreach ($c in $cfg) { & powercfg.exe /setacvalueindex $AV_GUID $c[0] $c[1] $c[2] 2>$null | Out-Null }
                     & powercfg.exe /setactive $AV_GUID | Out-Null
+                    Add-Estado 'PLANO' '' '' $AV_GUID
                     Write-Ok 'Plano "AVANTIPACK Desempenho": sem core parking, boost agressivo, sem economia em USB/PCIe/disco.'
                 }
             }

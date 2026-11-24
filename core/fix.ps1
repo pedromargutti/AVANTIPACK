@@ -127,8 +127,8 @@ function Fix-Store {
         Write-Ok 'Cache da Loja limpo.'
     } else {
         Write-Warn 'A Microsoft Store NAO esta instalada (algum pack/debloat removeu).'
-        if ((Get-Command winget.exe -ErrorAction SilentlyContinue) -and (Confirm-Step 'Tentar reinstalar a Loja pelo winget?')) {
-            & winget.exe install --id 9WZDNCRFJBMP --source msstore --accept-package-agreements --accept-source-agreements 2>&1 | Out-String | Write-Log
+        if ((Test-Winget) -and (Confirm-Step 'Tentar reinstalar a Loja pelo winget?')) {
+            & (Get-Winget) install --id 9WZDNCRFJBMP --source msstore --accept-package-agreements --accept-source-agreements 2>&1 | Out-String | Write-Log
             Write-Note 'Se nao funcionar: rode "wsreset -i" no Prompt como administrador e aguarde alguns minutos.'
         } else {
             Write-Note 'Para reinstalar: abra o Prompt como administrador e rode: wsreset -i  (aguarde alguns minutos).'
@@ -176,11 +176,17 @@ function Fix-Disco {
     Write-Note 'Veja tambem a saude do SSD/HD no CrystalDiskInfo (menu "Programas uteis" (opcao 4)).'
 }
 
+# O Windows reabre o Explorer sozinho (como usuario normal). So abre na mao se
+# ele nao voltar: aberto daqui, ele viria como administrador.
+function Start-ExplorerNormal {
+    for ($i = 0; $i -lt 16; $i++) { if (Get-Process explorer -ErrorAction SilentlyContinue) { return }; Start-Sleep -Milliseconds 500 }
+    Start-Process explorer.exe
+}
+
 function Fix-Explorer {
     Write-Title 'FIX: MENU INICIAR / BARRA DE TAREFAS / EXPLORER'
     Stop-Process -Name explorer -Force -ErrorAction SilentlyContinue
-    Start-Sleep -Seconds 2
-    if (-not (Get-Process explorer -ErrorAction SilentlyContinue)) { Start-Process explorer.exe }
+    Start-ExplorerNormal
     Write-Ok 'Explorer reiniciado.'
     Restart-Svcs @('WSearch') ''
 }
@@ -193,7 +199,7 @@ function Fix-Icones {
     Remove-Item "$env:LOCALAPPDATA\IconCache.db" -Force -ErrorAction SilentlyContinue
     Get-ChildItem "$env:LOCALAPPDATA\Microsoft\Windows\Explorer" -Filter 'iconcache_*.db' -Force -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
     Get-ChildItem "$env:LOCALAPPDATA\Microsoft\Windows\Explorer" -Filter 'thumbcache_*.db' -Force -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
-    Start-Process explorer.exe
+    Start-ExplorerNormal
     Write-Ok 'Cache de icones e miniaturas recriado.'
 }
 

@@ -61,8 +61,27 @@ function Initialize-Web {
     try { [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12 } catch {}
 }
 
-function Test-Winget {
-    return [bool](Get-Command winget.exe -ErrorAction SilentlyContinue)
+# winget: no PowerShell de administrador ele as vezes nao esta no PATH
+function Get-Winget {
+    if ($script:WgExe) { return $script:WgExe }
+    $c = Get-Command winget.exe -ErrorAction SilentlyContinue | Select-Object -First 1
+    if ($c) { $script:WgExe = $c.Source; return $script:WgExe }
+    $cands = @("$env:LOCALAPPDATA\Microsoft\WindowsApps\winget.exe") +
+             @(Get-ChildItem "$env:ProgramFiles\WindowsApps\Microsoft.DesktopAppInstaller_*__8wekyb3d8bbwe\winget.exe" -ErrorAction SilentlyContinue | Sort-Object FullName -Descending | ForEach-Object { $_.FullName })
+    foreach ($x in $cands) { if ($x -and (Test-Path -LiteralPath $x)) { $script:WgExe = $x; break } }
+    return $script:WgExe
+}
+function Test-Winget { return [bool](Get-Winget) }
+# --disable-interactivity so existe a partir do winget 1.4 (Windows 10 antigo tem o 1.2)
+function Get-WingetExtra {
+    if ($null -ne $script:WgExtra) { return $script:WgExtra }
+    $script:WgExtra = @()
+    try {
+        $v = [string](& (Get-Winget) --version 2>$null)
+        $m = [regex]::Match($v, '(\d+)\.(\d+)')
+        if ($m.Success -and ([int]$m.Groups[1].Value -gt 1 -or [int]$m.Groups[2].Value -ge 4)) { $script:WgExtra = @('--disable-interactivity') }
+    } catch {}
+    return $script:WgExtra
 }
 
 # ---------------------------------------------------------------------
@@ -146,12 +165,12 @@ function Install-App($app) {
                 if (-not (Get-WingetOk)) { return $false }
                 $id = $fonte.Substring(7)
                 Write-Info "Baixando e instalando $($app.Nome) (oficial, pelo winget)..."
-                $comum = @('-e', '--silent', '--accept-package-agreements', '--accept-source-agreements', '--disable-interactivity')
-                $out = & winget.exe install --id $id --location $dir @comum 2>&1 | Out-String
+                $comum = @('-e', '--silent', '--accept-package-agreements', '--accept-source-agreements') + @(Get-WingetExtra)
+                $out = & (Get-Winget) install --id $id --location $dir @comum 2>&1 | Out-String
                 Write-Log $out
                 if (-not (Resolve-AppExe $app)) {
                     # alguns instaladores nao aceitam escolher a pasta: instala no lugar padrao
-                    $out = & winget.exe install --id $id @comum 2>&1 | Out-String
+                    $out = & (Get-Winget) install --id $id @comum 2>&1 | Out-String
                     Write-Log $out
                 }
             }
@@ -238,7 +257,7 @@ function Save-AllAppsToFolders {
     if (-not (Confirm-Step 'Comecar o download de todos?')) { return }
     $temWg = Test-Winget
     if ($temWg) {
-        $v = [string](& winget.exe --version 2>$null)
+        $v = [string](& (Get-Winget) --version 2>$null)
         $m = [regex]::Match($v, '(\d+)\.(\d+)')
         if ($m.Success -and [int]$m.Groups[1].Value -le 1 -and [int]$m.Groups[2].Value -lt 8) {
             $temWg = $false
@@ -259,7 +278,7 @@ function Save-AllAppsToFolders {
                 if (-not $temWg) { $falha += $a.Nome; continue }
                 $id = $a.Fonte.Substring(7)
                 Write-Info "Baixando $($a.Nome) ($id)..."
-                $out = & winget.exe download --id $id -e -d $dir --accept-package-agreements --accept-source-agreements --disable-interactivity --skip-dependencies 2>&1 | Out-String
+                $out = & (Get-Winget) download --id $id -e -d $dir --accept-package-agreements --accept-source-agreements @(Get-WingetExtra) --skip-dependencies 2>&1 | Out-String
                 Write-Log $out
                 Get-ChildItem $dir -Filter '*.yaml' -ErrorAction SilentlyContinue | Remove-Item -Force -ErrorAction SilentlyContinue
                 if (Resolve-AppInstaller $a) { Write-Ok "$($a.Nome): salvo em apps\$($a.Pasta)"; $ok++ } else { $falha += $a.Nome }
