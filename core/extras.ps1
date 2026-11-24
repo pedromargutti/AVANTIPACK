@@ -26,6 +26,27 @@ function Get-TempTamanhoMB {
     return [math]::Round($t / 1MB)
 }
 
+# Dias desde a ultima atualizacao instalada. Usa o historico do Windows Update
+# (o Get-HotFix le a data errado em Windows que nao sao em ingles).
+function Get-DiasSemAtualizar {
+    try {
+        $s = (New-Object -ComObject Microsoft.Update.Session).CreateUpdateSearcher()
+        $n = $s.GetTotalHistoryCount()
+        if ($n -gt 0) {
+            $ok = @($s.QueryHistory(0, [math]::Min($n, 50)) | Where-Object { $_.ResultCode -eq 2 -and $_.Date })
+            if ($ok.Count) { $ult = @($ok | ForEach-Object { [datetime]$_.Date } | Sort-Object -Descending)[0]; return [int]((Get-Date).ToUniversalTime() - $ult).TotalDays }
+        }
+    } catch {}
+    try {
+        $d = @(Get-CimInstance Win32_QuickFixEngineering -ErrorAction Stop | ForEach-Object {
+                $x = [datetime]::MinValue
+                if ([datetime]::TryParse([string]$_.InstalledOn, [Globalization.CultureInfo]::InvariantCulture, [Globalization.DateTimeStyles]::None, [ref]$x)) { $x } })
+        $d = @($d | Where-Object { $_ -le (Get-Date) })
+        if ($d.Count) { return [int]((Get-Date) - @($d | Sort-Object -Descending)[0]).TotalDays }
+    } catch {}
+    return $null
+}
+
 function Mod-Nota([switch]$SemTitulo) {
     $script:CurMod = 'nota'
     if (-not $SemTitulo) { Write-Title 'NOTA DO PC PARA JOGOS' }
@@ -37,7 +58,7 @@ function Mod-Nota([switch]$SemTitulo) {
     # Pecas
     $ram = [int]$hw.RAM_GB
     Add-N 'Memoria RAM' $(if ($ram -ge 16) { 12 } elseif ($ram -ge 12) { 7 } else { 3 }) 12 $(if ($ram -lt 16) { "So $ram GB: 16 GB ou mais evita travadas em jogos atuais." })
-    Add-N 'Disco do Windows' $(switch ($hw.DISK) { 'NVME' { 12 } 'SSD' { 10 } default { 2 } }) 12 $(if ($hw.DISK -eq 'HDD') { 'Windows em HD mecanico: trocar por SSD e o maior ganho possivel.' })
+    Add-N 'Disco do Windows' $(switch ($hw.DISK) { 'NVME' { 12 } 'SSD' { 10 } 'HDD' { 2 } default { 8 } }) 12 $(if ($hw.DISK -eq 'HDD') { 'Windows em HD mecanico: trocar por SSD e o maior ganho possivel.' })
     $al = @(Get-Alerts $hw)
     $mem = @($al | Where-Object { $_ -match 'XMP|EXPO|pente|SINGLE' })
     Add-N 'Memoria na velocidade certa (XMP / dual channel)' $(if ($mem.Count -eq 0) { 10 } else { 3 }) 10 $(if ($mem.Count) { 'Veja os alertas de memoria em Verificar e o Guia de BIOS.' })
@@ -67,8 +88,7 @@ function Mod-Nota([switch]$SemTitulo) {
     $plano = ((& powercfg.exe /getactivescheme) -join ' ')
     $economia = $plano -match 'a1841308-3541-4fab-bc81-f71556f20b4a'
     Add-N 'Plano de energia' $(if ($economia) { 0 } else { 8 }) 8 $(if ($economia) { 'Plano "Economia de energia" ativo: o PC fica bem mais lento. O Otimizar arruma.' })
-    $hf = Get-HotFix -ErrorAction SilentlyContinue | Where-Object { $_.InstalledOn } | Sort-Object InstalledOn -Descending | Select-Object -First 1
-    $upd = if ($hf) { [int]((Get-Date) - $hf.InstalledOn).TotalDays } else { $null }
+    $upd = Get-DiasSemAtualizar
     Add-N 'Windows atualizado' $(if ($upd -eq $null -or $upd -le 60) { 8 } else { 3 }) 8 $(if ($upd -gt 60) { "Ultima atualizacao ha $upd dias: rode o Windows Update (corrige bugs e seguranca)." })
 
     $total = [int](($itens | Measure-Object Pts -Sum).Sum)

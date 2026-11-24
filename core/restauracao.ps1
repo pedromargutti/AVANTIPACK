@@ -84,9 +84,9 @@ function Get-AppxNome([string]$pkg) {
 function Install-AppxDeVolta([string]$pkg) {
     $nome = Get-AppxNome $pkg
     $id = if ($APPX_INFO.ContainsKey($pkg)) { $APPX_INFO[$pkg][1] } else { '' }
-    if ($id -and (Get-Command winget.exe -ErrorAction SilentlyContinue)) {
+    if ($id -and (Test-Winget)) {
         Write-Info "Reinstalando $nome pela Microsoft Store..."
-        & winget.exe install --id $id --source msstore --accept-package-agreements --accept-source-agreements --disable-interactivity 2>&1 | Out-String | Write-Log
+        & (Get-Winget) install --id $id --source msstore --accept-package-agreements --accept-source-agreements @(Get-WingetExtra) 2>&1 | Out-String | Write-Log
         if (Get-AppxPackage -Name $pkg -ErrorAction SilentlyContinue) { Write-Ok "$nome reinstalado."; return $true }
     }
     if ($id) { Start-Process "ms-windows-store://pdp/?ProductId=$id" }

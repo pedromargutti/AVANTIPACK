@@ -145,6 +145,77 @@ function Add-Backup($kind, $path, $name, $existed, $valueKind, $value) {
     $o | Export-Csv -Path $BackupFile -Append -NoTypeInformation -Encoding UTF8
 }
 
+# ---------------------------------------------------------------------
+#  Estado: o que cada ajuste DEIXOU no PC (valor alvo). Serve para
+#  conferir depois se o ajuste continua aplicado (Windows Update e outros
+#  programas as vezes desfazem) e nao refazer o que ja esta certo.
+# ---------------------------------------------------------------------
+$EstadoFile = Join-Path $DataDir 'estado.csv'
+$script:Estado = @{}
+$script:JaEstava = 0
+if (Test-Path $EstadoFile) { foreach ($r in @(Import-Csv $EstadoFile -ErrorAction SilentlyContinue)) { $script:Estado["$($r.Item)|$($r.Kind)|$($r.Path)|$($r.Name)"] = $r } }
+function Add-Estado([string]$Kind, [string]$Path, [string]$Name, [string]$Valor, [string]$Tipo = '') {
+    if (-not $script:CurItem) { return }
+    $script:Estado["$($script:CurItem)|$Kind|$Path|$Name"] = [pscustomobject]@{ Item = $script:CurItem; Kind = $Kind; Path = $Path; Name = $Name; Valor = $Valor; Tipo = $Tipo; Data = (Get-Date -Format s) }
+    $script:EstadoMudou = $true
+}
+function Save-Estado {
+    if (-not $script:EstadoMudou) { return }
+    try { @($script:Estado.Values) | Export-Csv -Path $EstadoFile -NoTypeInformation -Encoding UTF8 } catch {}
+}
+function ConvertTo-ValorTexto($v) {
+    if ($v -is [byte[]]) { return 'HEX:' + (($v | ForEach-Object { $_.ToString('X2') }) -join '') }
+    if ($v -is [string[]]) { return ($v -join "`n") }
+    if ($v -is [int] -or $v -is [long] -or $v -is [uint32]) { return ([long]$v).ToString() }
+    return [string]$v
+}
+function Test-MesmoValor($atual, [string]$alvo, [string]$tipo) {
+    if ($null -eq $atual) { return $false }
+    $a = ConvertTo-ValorTexto $atual
+    if ($tipo -eq 'DWord' -or $tipo -eq 'QWord') {
+        $x = 0L; $y = 0L
+        if ([long]::TryParse($a, [ref]$x) -and [long]::TryParse($alvo, [ref]$y)) {
+            if ($tipo -eq 'DWord') { return ($x -band 0xFFFFFFFFL) -eq ($y -band 0xFFFFFFFFL) }
+            return $x -eq $y
+        }
+    }
+    return $a -eq $alvo
+}
+# Um ajuste do catalogo (B1, C4...) continua aplicado? Confere item por item no PC.
+function Test-ItemAplicado([string]$Id) {
+    switch ($Id) {
+        'S1'  { try { return [bool](@(Get-ComputerRestorePoint -ErrorAction Stop | Where-Object { $_.Description -like 'AVANTIPACK*' -and ([Management.ManagementDateTimeConverter]::ToDateTime($_.CreationTime)) -gt (Get-Date).AddHours(-24) }).Count) } catch { return $false } }
+        'B12' { return $false }
+        'H4'  { try { return (Test-ModoJogo) } catch { return $false } }
+    }
+    $rows = @($script:Estado.Values | Where-Object { $_.Item -eq $Id })
+    if ($rows.Count -eq 0) { return $false }
+    foreach ($r in $rows) {
+        switch ($r.Kind) {
+            'REG' {
+                $k = Get-Item -LiteralPath $r.Path -ErrorAction SilentlyContinue
+                if (-not $k -or -not ($k.GetValueNames() -contains $r.Name)) { return $false }
+                if (-not (Test-MesmoValor ($k.GetValue($r.Name, $null, 'DoNotExpandEnvironmentNames')) $r.Valor $r.Tipo)) { return $false }
+            }
+            'SVC' {
+                $s = Get-CimInstance Win32_Service -Filter "Name='$($r.Path)'" -ErrorAction SilentlyContinue
+                if ($s -and $s.StartMode -ne $r.Valor) { return $false }
+            }
+            'TASK' {
+                $tk = Get-ScheduledTask -TaskPath $r.Path -TaskName $r.Name -ErrorAction SilentlyContinue
+                if ($tk -and [string]$tk.State -ne 'Disabled') { return $false }
+            }
+            'PLANO' { if ((Get-ActiveScheme) -ne $r.Valor) { return $false } }
+            'APPX'  { if (@(Get-AppxPackage -AllUsers -Name $r.Name -ErrorAction SilentlyContinue).Count) { return $false } }
+            'NETADV' {
+                $pp = Get-NetAdapterAdvancedProperty -Name $r.Path -RegistryKeyword $r.Name -ErrorAction SilentlyContinue
+                if ($pp -and ([string]($pp.RegistryValue -join ',')) -ne $r.Valor) { return $false }
+            }
+        }
+    }
+    return $true
+}
+
 function Set-Reg([string]$Path, [string]$Name, $Value, [string]$Type = 'DWord') {
     try {
         $existed = '0'; $vk = ''; $old = ''
@@ -161,6 +232,13 @@ function Set-Reg([string]$Path, [string]$Name, $Value, [string]$Type = 'DWord') 
         } else {
             New-Item -Path $Path -Force | Out-Null
         }
+        $alvo = ConvertTo-ValorTexto $Value
+        Add-Estado 'REG' $Path $Name $alvo $Type
+        if ($existed -eq '1' -and (Test-MesmoValor $raw $alvo $Type)) {
+            $script:JaEstava++
+            Write-Log "JA ESTAVA $Path\$Name = $Value"
+            return $true
+        }
         Add-Backup 'REG' $Path $Name $existed $vk $old
         New-ItemProperty -LiteralPath $Path -Name $Name -Value $Value -PropertyType $Type -Force | Out-Null
         $script:Applied++
@@ -175,6 +253,9 @@ function Set-Reg([string]$Path, [string]$Name, $Value, [string]$Type = 'DWord') 
 function Set-Svc([string]$Name, [string]$StartType) {
     $svc = Get-CimInstance Win32_Service -Filter "Name='$Name'" -ErrorAction SilentlyContinue
     if (-not $svc) { Write-Skip "Servico $Name nao existe neste Windows"; return }
+    $modo = switch ($StartType) { 'Automatic' { 'Auto' } default { $StartType } }
+    Add-Estado 'SVC' $Name 'StartMode' $modo
+    if ($svc.StartMode -eq $modo) { $script:JaEstava++; Write-Log "JA ESTAVA servico $Name = $modo"; return }
     try {
         Add-Backup 'SVC' $Name 'StartMode' '1' '' $svc.StartMode
         if ($StartType -eq 'Disabled') { Stop-Service -Name $Name -Force -ErrorAction SilentlyContinue }
@@ -187,6 +268,8 @@ function Set-Svc([string]$Name, [string]$StartType) {
 function Disable-Task([string]$TaskPath, [string]$TaskName) {
     $t = Get-ScheduledTask -TaskPath $TaskPath -TaskName $TaskName -ErrorAction SilentlyContinue
     if (-not $t) { return }
+    Add-Estado 'TASK' $TaskPath $TaskName 'Disabled'
+    if ([string]$t.State -eq 'Disabled') { $script:JaEstava++; return }
     try {
         Add-Backup 'TASK' $TaskPath $TaskName '1' '' ([string]$t.State)
         Disable-ScheduledTask -TaskPath $TaskPath -TaskName $TaskName -ErrorAction Stop | Out-Null
@@ -198,6 +281,8 @@ function Disable-Task([string]$TaskPath, [string]$TaskName) {
 function Set-NetAdv([string]$Adapter, [string]$Keyword, [string]$Value) {
     $p = Get-NetAdapterAdvancedProperty -Name $Adapter -RegistryKeyword $Keyword -ErrorAction SilentlyContinue
     if (-not $p) { return $false }
+    Add-Estado 'NETADV' $Adapter $Keyword $Value
+    if (([string]($p.RegistryValue -join ',')) -eq $Value) { $script:JaEstava++; return $true }
     try {
         Add-Backup 'NETADV' $Adapter $Keyword '1' '' ([string]($p.RegistryValue -join ','))
         Set-NetAdapterAdvancedProperty -Name $Adapter -RegistryKeyword $Keyword -RegistryValue $Value -NoRestart -ErrorAction Stop
@@ -211,6 +296,7 @@ function Set-NetAdv([string]$Adapter, [string]$Keyword, [string]$Value) {
 # Kind CMD = roda no cmd.exe ; Kind PS = roda no PowerShell
 function Add-Undo([string]$Id, [string]$Command, [string]$Kind = 'CMD') {
     Add-Backup $Kind $Id '' '1' '' $Command
+    Add-Estado 'FEITO' $Id '' ''
 }
 
 # ---------------------------------------------------------------------
@@ -239,7 +325,7 @@ function Get-Hardware {
     $names = @($gpus | ForEach-Object { (($_.Name -replace '\(R\)|\(TM\)', '') -replace '\s+', ' ').Trim() })
     $hw.GPU = if ($names.Count -gt 0) { $names -join ' + ' } else { 'Nao detectada' }
     if     ($names -match 'NVIDIA')                          { $gv = 'NVIDIA' }
-    elseif ($names -match 'Radeon.*RX|Radeon Pro|Radeon VII') { $gv = 'AMD' }
+    elseif (@($names | Where-Object { $_ -match 'Radeon.*RX|Radeon Pro|Radeon VII' -and $_ -notmatch 'Vega \d{1,2}( Graphics|$)' }).Count) { $gv = 'AMD' }
     elseif ($names -match 'Arc.*[AB]\d{3}')                   { $gv = 'INTEL_ARC' }
     elseif ($names -match 'AMD|Radeon')                       { $gv = 'AMD_IGPU' }
     elseif ($names -match 'Intel')                            { $gv = 'INTEL_IGPU' }
@@ -247,8 +333,9 @@ function Get-Hardware {
     $hw.GPU_VENDOR = $gv
     # 2 placas (integrada + dedicada), tipico de notebook gamer: o Windows pode
     # rodar o jogo na integrada. O item H3 manda cada jogo para a dedicada.
-    $ded = @($names | Where-Object { $_ -match 'NVIDIA|Radeon.*RX|Radeon Pro|Arc.*[AB]\d{3}' })
-    $int = @($names | Where-Object { $_ -notmatch 'NVIDIA|Radeon.*RX|Radeon Pro|Arc.*[AB]\d{3}' -and $_ -match 'Intel|AMD|Radeon' })
+    $rxDed = 'NVIDIA|Radeon.*RX|Radeon Pro|Radeon VII|Arc.*[AB]\d{3}'
+    $ded = @($names | Where-Object { $_ -match $rxDed -and $_ -notmatch 'Vega \d{1,2}( Graphics|$)' })
+    $int = @($names | Where-Object { ($_ -notmatch $rxDed -or $_ -match 'Vega \d{1,2}( Graphics|$)') -and $_ -match 'Intel|AMD|Radeon' })
     $hw.GPU_HIBRIDA = if ($ded.Count -ge 1 -and $int.Count -ge 1) { '1' } else { '0' }
 
     # --- Notebook ou desktop (pelo tipo de gabinete informado pela placa)
@@ -266,9 +353,14 @@ function Get-Hardware {
     $cs = Get-CimInstance Win32_ComputerSystem
     $hw.RAM_GB = [math]::Round($cs.TotalPhysicalMemory / 1GB)
     $mods = @(Get-CimInstance Win32_PhysicalMemory -ErrorAction SilentlyContinue)
-    $hw.RAM_MTS = if ($mods.Count) { ($mods | Measure-Object -Property ConfiguredClockSpeed -Minimum).Minimum } else { 0 }
+    $vel = @($mods | ForEach-Object { [int]$_.ConfiguredClockSpeed } | Where-Object { $_ -gt 0 })
+    if ($vel.Count -eq 0) { $vel = @($mods | ForEach-Object { [int]$_.Speed } | Where-Object { $_ -gt 0 }) }
+    $hw.RAM_MTS = if ($vel.Count) { ($vel | Measure-Object -Minimum).Minimum } else { 0 }
     $mt = if ($mods.Count) { [int]$mods[0].SMBIOSMemoryType } else { 0 }
-    $hw.RAM_TIPO = switch ($mt) { 26 { 'DDR4' } 34 { 'DDR5' } 24 { 'DDR3' } default { 'DDR?' } }
+    if ($mt -eq 0 -and $mods.Count) { $mt = [int]$mods[0].MemoryType }
+    $hw.RAM_TIPO = switch ($mt) { 26 { 'DDR4' } 34 { 'DDR5' } 24 { 'DDR3' } 30 { 'LPDDR4' } 35 { 'LPDDR5' } 29 { 'LPDDR3' } default { 'DDR?' } }
+    # sem o tipo informado: deduz pela velocidade
+    if ($hw.RAM_TIPO -eq 'DDR?' -and [int]$hw.RAM_MTS -gt 0) { $hw.RAM_TIPO = if ([int]$hw.RAM_MTS -ge 4800) { 'DDR5' } elseif ([int]$hw.RAM_MTS -ge 2133) { 'DDR4' } else { 'DDR3' } }
     $hw.RAM_PENTES = $mods.Count
     # tamanho de cada pente (ex: 4+16) e quantos encaixes a placa tem
     $hw.RAM_LAYOUT = (@($mods | ForEach-Object { [math]::Round($_.Capacity / 1GB) }) -join '+')
@@ -284,6 +376,12 @@ function Get-Hardware {
         if     ($bt -eq 'NVMe' -or $bt -eq '17') { $disk = 'NVME' }
         elseif ($mt2 -eq 'SSD' -or $mt2 -eq '4') { $disk = 'SSD' }
         elseif ($mt2 -eq 'HDD' -or $mt2 -eq '3') { $disk = 'HDD' }
+        if ($disk -eq 'DESCONHECIDO') {
+            $dk = Get-Disk -Number $dn -ErrorAction SilentlyContinue
+            $mod = [string]$dk.FriendlyName + ' ' + [string]$dk.Model
+            if ([string]$dk.BusType -eq 'NVMe' -or $mod -match 'NVMe') { $disk = 'NVME' }
+            elseif ($mod -match 'SSD|Solid') { $disk = 'SSD' }
+        }
     } catch {}
     $hw.DISK = $disk
 
@@ -323,10 +421,10 @@ function Load-HW {
 function Get-Alerts($hw) {
     $a = @()
     if ($hw.LAPTOP -ne '1') {
-        if ($hw.RAM_TIPO -eq 'DDR4' -and [int]$hw.RAM_MTS -le 2400) {
+        if ($hw.RAM_TIPO -eq 'DDR4' -and [int]$hw.RAM_MTS -gt 0 -and [int]$hw.RAM_MTS -le 2400) {
             $a += "RAM DDR4 rodando a $($hw.RAM_MTS) MT/s: o XMP provavelmente esta DESLIGADO na BIOS. Veja o Guia de BIOS."
         }
-        if ($hw.RAM_TIPO -eq 'DDR5' -and [int]$hw.RAM_MTS -le 4800) {
+        if ($hw.RAM_TIPO -eq 'DDR5' -and [int]$hw.RAM_MTS -gt 0 -and [int]$hw.RAM_MTS -le 4800) {
             $a += "RAM DDR5 rodando a $($hw.RAM_MTS) MT/s: o XMP/EXPO provavelmente esta DESLIGADO na BIOS. Veja o Guia de BIOS."
         }
     }
@@ -334,7 +432,7 @@ function Get-Alerts($hw) {
     $integ = ($hw.GPU_VENDOR -like '*IGPU*')
     $extra = if ($integ) { ' Com video integrado isso pesa MUITO: a memoria e a "memoria de video" tambem.' } else { '' }
     $tams = @(([string]$hw.RAM_LAYOUT).Split('+') | Where-Object { $_ -match '^\d+$' } | ForEach-Object { [int]$_ })
-    if ([int]$hw.RAM_PENTES -eq 1) {
+    if ([int]$hw.RAM_PENTES -eq 1 -and $hw.RAM_TIPO -notlike 'LPDDR*') {
         $livre = if ([int]$hw.RAM_SLOTS -ge 2) { ' Sua placa tem encaixe livre: coloque outro pente IGUAL a este.' } else { '' }
         $a += "So 1 pente de RAM ($($hw.RAM_LAYOUT) GB): roda em SINGLE CHANNEL, com metade da velocidade de memoria.$livre$extra"
     } elseif ($tams.Count -ge 2 -and (@($tams | Select-Object -Unique).Count -gt 1)) {
@@ -559,6 +657,7 @@ switch ($Module) {
 }
 
 try { Update-StatusFile } catch {}
+try { Save-Estado } catch {}
 if ($Module -notin @('__pro', 'novidades-auto', 'novidades', 'detect-silent', 'detect', 'apps', 'guias', 'visual', 'fix', 'manutencao', 'atualizar', 'configjogos', 'nota', 'prejogo')) {
     Write-Host ''
     if ($script:Applied -gt 0) { Write-Ok "$($script:Applied) ajuste(s) aplicado(s). Backup salvo em core\dados\backup" }

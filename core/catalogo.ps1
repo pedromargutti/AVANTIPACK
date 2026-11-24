@@ -90,7 +90,31 @@ function Show-Resumo($sel) {
 }
 
 # Roda a selecao na ordem certa
+# Antes de aplicar: confere no PC o que ja esta aplicado e funcionando.
+# Ja aplicado -> pergunta se quer refazer (padrao: nao). Desfeito pelo Windows -> aplica de novo.
+function Select-SoPendentes($sel) {
+    $ids = @($sel.Keys | Where-Object { $sel[$_] -and $_ -ne 'B12' })
+    if ($ids.Count -eq 0) { return $sel }
+    Write-Title 'CONFERINDO O QUE JA ESTA APLICADO'
+    Write-Info 'Verificando cada ajuste no seu PC...'
+    $ja = @($ids | Where-Object { Test-ItemAplicado $_ })
+    if ($ja.Count -eq 0) { Write-Ok 'Nenhum ajuste aplicado ainda: tudo sera aplicado agora.'; return $sel }
+    foreach ($i in $ja) {
+        $n = ($CATALOGO | Where-Object { $_.Id -eq $i } | Select-Object -First 1).Nome
+        Write-Host ("  [OK] {0}" -f $n) -ForegroundColor Green
+    }
+    $pend = $ids.Count - $ja.Count
+    Write-Host ''
+    if ($pend -gt 0) { Write-Note ("{0} ajuste(s) ainda nao aplicado(s), ou desfeito(s) pelo Windows, serao aplicados agora." -f $pend) }
+    $script:AutoMode = $false
+    $refazer = Select-SimNao ("{0} ajuste(s) ja estao aplicados e funcionando. Aplicar de novo mesmo assim?" -f $ja.Count) $false
+    $novo = @{}; foreach ($k in $sel.Keys) { $novo[$k] = $sel[$k] }
+    if (-not $refazer) { foreach ($i in $ja) { $novo[$i] = $false }; $script:JaAplicados = $ja.Count }
+    return $novo
+}
+
 function Invoke-Selecao($sel) {
+    $sel = Select-SoPendentes $sel
     $script:Selecao = $sel
     $script:AutoMode = $true
     $etapas = @(
@@ -154,13 +178,14 @@ function Mod-Otimizar {
         'OTIMIZACAO CONCLUIDA!',
         '',
         ("Ajustes aplicados ......... {0}" -f $script:Applied),
+        ("Ja estavam certos ......... {0}" -f ($script:JaEstava + [int]$script:JaAplicados)),
         ("Avisos para voce ver ...... {0}" -f $avisosRun),
         '',
         'Tudo pode ser desfeito pela opcao 6 do menu.',
         'Alertas de BIOS (XMP etc.): veja a opcao 5, Guias.'
     ) 'Green'
     Write-Host ''
-    Write-Host '  REINICIE O PC para tudo comecar a valer.' -ForegroundColor Black -BackgroundColor Yellow
-    if (Confirm-Step 'Reiniciar agora?') { & shutdown.exe /r /t 10 /c 'AVANTIPACK: reiniciando para aplicar as otimizacoes'; Write-Ok 'O PC vai reiniciar em 10 segundos.' }
+    if ($script:Applied -gt 0) { Write-Host '  REINICIE O PC para tudo comecar a valer.' -ForegroundColor Black -BackgroundColor Yellow }
+    if ($script:Applied -gt 0 -and (Confirm-Step 'Reiniciar agora?')) { & shutdown.exe /r /t 10 /c 'AVANTIPACK: reiniciando para aplicar as otimizacoes'; Write-Ok 'O PC vai reiniciar em 10 segundos.' }
     $script:NeedReboot = $false
 }

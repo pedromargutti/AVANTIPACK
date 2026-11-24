@@ -24,6 +24,9 @@ start "" "%~dp0AVANTIPACK.lnk"
 exit /b
 
 :checaradmin
+:: fltmc so funciona como administrador (o "net session" falha se o servico Servidor estiver desligado)
+fltmc >nul 2>&1
+if not errorlevel 1 goto inicio
 net session >nul 2>&1
 if errorlevel 1 goto elevar
 goto inicio
@@ -31,7 +34,8 @@ goto inicio
 :elevar
 echo.
 echo   Solicitando permissao de administrador...
-powershell -NoProfile -Command "Start-Process -FilePath '%~f0' -Verb RunAs"
+set "AVSELF=%~f0"
+powershell -NoProfile -Command "Start-Process -FilePath $env:AVSELF -Verb RunAs"
 exit /b
 
 :inicio
