@@ -186,7 +186,7 @@ function Test-ItemAplicado([string]$Id) {
     switch ($Id) {
         'S1'  { try { return [bool](@(Get-ComputerRestorePoint -ErrorAction Stop | Where-Object { $_.Description -like 'AVANTIPACK*' -and ([Management.ManagementDateTimeConverter]::ToDateTime($_.CreationTime)) -gt (Get-Date).AddHours(-24) }).Count) } catch { return $false } }
         'B12' { return $false }
-        'H4'  { try { return (Test-ModoJogo) } catch { return $false } }
+        'H4'  { return [bool](Get-ScheduledTask -TaskName 'AVANTIPACK Modo Jogo' -ErrorAction SilentlyContinue) }
     }
     $rows = @($script:Estado.Values | Where-Object { $_.Item -eq $Id })
     if ($rows.Count -eq 0) { return $false }
@@ -649,6 +649,7 @@ switch ($Module) {
     'visual'        { Open-Manual (Get-CapGpu) }
     'nota'          { Mod-Nota }
     'limpeza'       { Mod-Limpeza }
+    'shaders'       { Mod-Shaders }
     'prejogo'       { Mod-PreJogo }
     'manutencao'    { }
     default { Write-Warn "Modulo desconhecido: $Module" }
@@ -656,7 +657,7 @@ switch ($Module) {
 
 try { Update-StatusFile } catch {}
 try { Save-Estado } catch {}
-if ($Module -notin @('__pro', 'novidades-auto', 'novidades', 'detect-silent', 'detect', 'apps', 'guias', 'bios', 'visual', 'fix', 'manutencao', 'atualizar', 'configjogos', 'nota', 'prejogo')) {
+if ($Module -notin @('__pro', 'novidades-auto', 'novidades', 'detect-silent', 'detect', 'apps', 'guias', 'bios', 'visual', 'fix', 'manutencao', 'atualizar', 'configjogos', 'nota', 'prejogo', 'shaders')) {
     Write-Host ''
     if ($script:Applied -gt 0) { Write-Ok "$($script:Applied) ajuste(s) aplicado(s). Backup salvo em core\dados\backup" }
     if ($script:NeedReboot)    { Write-Warn 'Reinicie o PC para tudo entrar em vigor (opcao 8 do menu).' }

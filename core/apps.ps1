@@ -379,19 +379,6 @@ function Wait-AppDownload($app, [int]$Minutos = 15) {
     return $null
 }
 
-function Show-AppDicas($app) {
-    $dir = Join-Path $Root ('apps\' + $app.Pasta)
-    $tut = Join-Path $dir 'LEIA-ME.txt'
-    Write-Host ''
-    Write-Host "  $($app.Nome)" -ForegroundColor White
-    Write-Note "Pasta do app: apps\$($app.Pasta)"
-    if (Test-Path $tut) {
-        Write-Note 'As MELHORES CONFIGURACOES e o passo a passo deste app estao no LEIA-ME.txt dessa pasta.'
-        Write-Note '(abrindo agora no Bloco de Notas)'
-        Start-Process notepad.exe $tut
-    }
-}
-
 function Start-AppFlow($app) {
     $dir = Join-Path $Root ('apps\' + $app.Pasta)
     $tut = Join-Path $dir 'LEIA-ME.txt'

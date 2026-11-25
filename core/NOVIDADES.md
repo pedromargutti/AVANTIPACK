@@ -2,7 +2,7 @@
 
 Tudo o que mudou em cada versão. A mais nova fica sempre em cima.
 
-## v0.9.0 — 24/11/2026
+## v0.9.0 — 25/11/2026
 - 📘 **Manual com imagens**: todos os guias viraram um manual só, com as telas desenhadas e bolinhas numeradas mostrando onde clicar (opção **5**)
 - 🖥️ **Capítulos novos com imagens**: BIOS (ASUS, MSI, Gigabyte e ASRock), processador AMD e Intel, limite de FPS e configurações de 19 jogos
 - 🎯 **Marca o que é do seu PC**: aberto pelo pack, o manual mostra as suas peças e destaca os capítulos que servem para elas
@@ -10,6 +10,8 @@ Tudo o que mudou em cada versão. A mais nova fica sempre em cima.
 - ✅ **Não refaz o que já está certo**: antes de otimizar, o pack confere o que já está aplicado e pergunta antes de aplicar de novo
 - 🏷️ **Nomes das categorias mais claros** na otimização (Privacidade e segundo plano, Latência e resposta do sistema, Rede...)
 - 🧩 **Mais compatível**: detecção de memória, disco e vídeo integrado corrigida, e o winget antigo não trava mais
+- 🧊 **Limpar cache de shaders** (modo avançado, opção **29**): tira travadinhas de cache corrompido ou de driver antigo, de NVIDIA, AMD e Intel, e avisa que o primeiro jogo depois recompila
+- 🍃 **Modo eficiência no Preparar para jogar**: o que continua aberto (navegador, launchers, RGB, Spotify) passa a rodar nos núcleos econômicos e sobra processador para o jogo. O Discord fica de fora para a voz não cortar
 
 ## v0.8.0 — 19/11/2026
 - 🆓 **Esta é a versão GRÁTIS** do AVANTIPACK, e continua grátis para sempre

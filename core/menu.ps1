@@ -23,6 +23,7 @@ if ($Tela -eq 'avancado') {
         @{ K = '3';  T = 'Criar ponto de restauracao'; G = 'FERRAMENTAS' },
         @{ K = '26'; T = 'Limpeza rapida' },
         @{ K = '27'; T = 'Preparar para jogar (fechar o que pesa)' },
+        @{ K = '29'; T = 'Limpar cache de shaders (travadinhas)' },
         @{ K = '14'; T = 'Guia de BIOS' },
         @{ K = '20'; T = 'Atualizar o pack (GitHub)' },
         @{ K = '21'; T = 'Novidades (o que mudou nas versoes)' },
@@ -38,7 +39,7 @@ if ($Tela -eq 'avancado') {
         @{ K = 'L'; T = 'LIMPEZA RAPIDA'; C = 'Cyan'; N = 1
            D = 'Apaga temporarios, caches e downloads velhos do Windows. Seus arquivos nao sao tocados.' },
         @{ K = 'J'; T = 'PREPARAR PARA JOGAR'; C = 'Cyan'; N = 1
-           D = 'Mostra o que esta gastando memoria agora e fecha o que voce marcar antes da partida.' },
+           D = 'Fecha o que gasta memoria e coloca o que fica aberto em modo eficiencia antes da partida.' },
         @{ K = '3'; T = 'CONSERTAR UM PROBLEMA'; C = 'Cyan'; G = 'PROBLEMAS E PROGRAMAS'
            D = 'Sem internet, sem som, microfone, camera, Loja, Windows Update, impressora...' },
         @{ K = '4'; T = 'PROGRAMAS UTEIS'; C = 'Cyan'
