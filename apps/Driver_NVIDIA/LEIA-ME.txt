@@ -4,4 +4,4 @@ DRIVER NVIDIA (oficial)
 • Ou use o NVCleanstall (recomendado), que baixa o mesmo driver e
   instala sem telemetria.
 • Driver com problema? Use o DDU antes (veja apps\DDU).
-• Configuração depois de instalar: guias\GPU_NVIDIA.txt
+• Configuração depois de instalar: guias\MANUAL.html (capítulo NVIDIA)

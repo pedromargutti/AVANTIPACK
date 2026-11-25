@@ -6,4 +6,4 @@ DRIVER AMD RADEON (ADRENALIN)
     - "Completa" = com todos os recursos do Adrenalin.
     - "Mínima" / "Somente driver" = o mínimo rodando no fundo.
 • Vindo de placa NVIDIA? Rode o DDU antes (apps\DDU).
-• Configuração depois de instalar: guias\GPU_AMD.txt
+• Configuração depois de instalar: guias\MANUAL.html (capítulo AMD)

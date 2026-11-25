@@ -34,6 +34,16 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 > **Versão mais nova:** [veja o que mudou](../../releases/latest) · [histórico completo](core/NOVIDADES.md)
 
 <details open>
+<summary><b>v0.9.0</b> — manual com imagens e o pack não refaz o que já está certo</summary>
+
+- 📘 **Manual com imagens** (opção 5): painel da placa de vídeo, Windows, BIOS, processador, limite de FPS e 19 jogos, tela por tela
+- 🎯 O manual **marca os capítulos do seu PC** e tem **busca**
+- ✅ Antes de otimizar, o pack **confere o que já está aplicado** e pergunta antes de refazer
+- 🏷️ Categorias com **nomes mais claros** e correções de compatibilidade
+
+</details>
+
+<details>
 <summary><b>v0.8.0</b> — grátis renovado e chegada do AVANTIPACK PRO</summary>
 
 - 💯 **Nota do PC**: de 0 a 100, com o que está segurando o seu PC e como resolver
@@ -82,7 +92,7 @@ Foco em input lag: Reflex/Anti-Lag no driver, monitor no Hz máximo, mouse 1:1, 
 <td valign="top">
 
 ### 🚫 Sem placebo
-Nada de "+200 FPS com um regedit". Só ajustes com efeito comprovado. O que não funciona (ou faz mal) fica de fora e é [explicado por quê](guias/O_QUE_NAO_FAZEMOS.txt).
+Nada de "+200 FPS com um regedit". Só ajustes com efeito comprovado. O que não funciona (ou faz mal) fica de fora e é explicado por quê no manual com imagens (`guias/MANUAL.html`, capítulo "O que evitamos").
 
 </td>
 </tr>
@@ -230,7 +240,7 @@ Também tem: **BIOS** (XMP/EXPO, Resizable BAR... com o nome em cada fabricante)
 AVANTIPACK.exe     abre o pack (ícone com a logo)
 LEIA-ME.txt        instruções
 core\              motor do pack (menu .bat, PowerShell, versão e novidades)
-guias\             BIOS, painéis ilustrados, jogos, limite de FPS
+guias\             MANUAL.html: manual com imagens (painéis, BIOS, jogos, limite de FPS)
 apps\              uma pasta por programa, cada uma com LEIA-ME.txt
 ferramentas\       só no GitHub: launcher do .exe
 docs\              só no GitHub: imagens deste README

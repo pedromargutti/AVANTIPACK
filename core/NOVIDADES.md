@@ -2,6 +2,15 @@
 
 Tudo o que mudou em cada versão. A mais nova fica sempre em cima.
 
+## v0.9.0 — 24/11/2026
+- 📘 **Manual com imagens**: todos os guias viraram um manual só, com as telas desenhadas e bolinhas numeradas mostrando onde clicar (opção **5**)
+- 🖥️ **Capítulos novos com imagens**: BIOS (ASUS, MSI, Gigabyte e ASRock), processador AMD e Intel, limite de FPS e configurações de 19 jogos
+- 🎯 **Marca o que é do seu PC**: aberto pelo pack, o manual mostra as suas peças e destaca os capítulos que servem para elas
+- 🔎 **Busca no manual**: digite XMP, G-SYNC ou o nome do jogo e vá direto ao passo
+- ✅ **Não refaz o que já está certo**: antes de otimizar, o pack confere o que já está aplicado e pergunta antes de aplicar de novo
+- 🏷️ **Nomes das categorias mais claros** na otimização (Privacidade e segundo plano, Latência e resposta do sistema, Rede...)
+- 🧩 **Mais compatível**: detecção de memória, disco e vídeo integrado corrigida, e o winget antigo não trava mais
+
 ## v0.8.0 — 19/11/2026
 - 🆓 **Esta é a versão GRÁTIS** do AVANTIPACK, e continua grátis para sempre
 - 💯 **Nota do PC**: de 0 a 100, com 12 pontos analisados, o que está segurando o PC e a nota anterior para comparar

@@ -395,6 +395,6 @@ function Mod-GPU {
         'INTEL*' { Write-Note 'Intel: as poucas opcoes do Intel Graphics Software estao no guia com imagens (opcao 5).' }
     }
     if ($script:Selecao -eq $null -and (Confirm-Step 'Abrir o guia com imagens do painel da sua placa?' $false)) {
-        Start-Process (Join-Path $Root 'guias\PAINEIS_VISUAL.html')
+        Open-Manual (Get-CapGpu)
     }
 }

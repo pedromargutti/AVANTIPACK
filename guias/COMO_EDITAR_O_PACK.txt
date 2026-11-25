@@ -90,4 +90,4 @@
     Windows lê errado e o pack quebra). Acentos só nos .txt.
   • Teste no seu PC antes de mandar. Erro de digitação aparece em
     vermelho quando o módulo roda.
-  • Atualize guias\LISTA_DE_AJUSTES.txt se mudou nome ou padrão.
+  • A lista de ajustes do manual (guias\MANUAL.html) é gerada a partir do catalogo.ps1.
