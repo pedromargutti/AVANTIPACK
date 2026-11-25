@@ -1380,7 +1380,7 @@ const CAPS = [
  { id:'amd',      g:'Placa de vídeo', nome:'AMD · Adrenalin',      tit:'AMD Software: Adrenalin', res:'As configurações da placa Radeon que valem para todos os jogos.', tempo:'10 min', seu:()=>temGpu('AMD') },
  { id:'intel',    g:'Placa de vídeo', nome:'Intel · Arc e integrado', tit:'Intel Graphics Software', res:'Placas Intel Arc e vídeo integrado.', tempo:'5 min', seu:()=>temGpu('INTEL') },
  { id:'windows',  g:'Windows',        nome:'Configurações do Windows', tit:'Configurações do Windows', res:'Quase tudo aqui o Otimizar meu PC (opção 1) já faz. Use para conferir e para o que é manual.', tempo:'5 min', seu:()=>true },
- { id:'bios',     g:'Placa-mãe',      nome:'BIOS',                 tit:'BIOS da placa-mãe', res:'Memória na velocidade certa e Resizable BAR: os dois ajustes que mais dão FPS fora do Windows. Mude uma coisa por vez.', tempo:'15 min', seu:()=>true },
+ { id:'bios',     g:'Placa-mãe',      nome:'BIOS',                 tit:'BIOS da placa-mãe', res:'Memória na velocidade certa e Resizable BAR: os dois ajustes que mais dão FPS fora do Windows. Mude uma coisa por vez.'+(GRATIS?'':' Não sabe o que está desligado? Rode Diagnóstico › Raio-X da BIOS no app: ele mostra e abre o passo certo aqui.'), tempo:'15 min', seu:()=>true },
  { id:'ryzen',    g:'Processador',    nome:'AMD Ryzen',            tit:'Processador AMD Ryzen', res:'Driver de chipset e o que muda em cada modelo.', tempo:'5 min', seu:()=>temCpu('AMD') },
  { id:'intelcpu', g:'Processador',    nome:'Intel Core',           tit:'Processador Intel', res:'Drivers, o que muda em cada geração e temperatura.', tempo:'5 min', seu:()=>temCpu('INTEL') },
  { id:'jogos',    g:'Dentro dos jogos', nome:'Configurações por jogo', tit:'Configurações dentro dos jogos', res:'Os valores competitivos de cada jogo. Escolha o seu.', tempo:'3 min por jogo', seu:()=>true },
@@ -1446,7 +1446,7 @@ function capInicio(c){
   const passos = [
     ['ot',GRATIS?'Rode o Otimizar meu PC (opção 1)':'Rode o Otimizar meu PC (opção 1) no app','Ela faz sozinha quase tudo do Windows e boa parte do painel da placa.','windows','Conferir o Windows'],
     ['gpu',`Painel da placa de vídeo (${PC?gc.nome:'NVIDIA, AMD ou Intel'})`,'Baixa latência, cache de shader, Hz do monitor.',gc.id,'Abrir'],
-    ['bios','BIOS: perfil de memória e Resizable BAR','Os dois ajustes que mais dão FPS fora do Windows.','bios','Abrir'],
+    ['bios','BIOS: perfil de memória e Resizable BAR',GRATIS?'Os dois ajustes que mais dão FPS fora do Windows.':'Rode antes o Raio-X da BIOS (Diagnóstico): ele diz o que está desligado.','bios','Abrir'],
     ['cpu',`Processador${PC?' ('+capDe(cpu).nome+')':''}`,'Driver de chipset e o que muda no seu modelo.',cpu,'Abrir'],
     ['jogos','Dentro dos jogos','Valores competitivos do seu jogo.','jogos','Abrir'],
     ['fps','Limite de FPS','Termine travando o FPS do jeito certo.','fps','Abrir']];
