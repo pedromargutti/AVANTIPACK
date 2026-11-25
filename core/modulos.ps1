@@ -71,7 +71,7 @@ function Mod-Debloat {
     if (-not (WantAny @('B1','B2','B3','B4','B5','B6','B7','B8','B9','B10','B11'))) { return }
     $script:CurMod = 'debloat'
     $hw = Load-HW
-    Write-Title 'LIMPEZA E PRIVACIDADE'
+    Write-Title 'PRIVACIDADE E SEGUNDO PLANO'
 
     if (Want 'B1') {
         Write-Info 'Telemetria e coleta de dados...'
@@ -193,7 +193,7 @@ function Mod-Sistema {
     if (-not (WantAny @('C1','C2','C3','C4','C5','C6','C7','C8','C9'))) { return }
     $script:CurMod = 'sistema'
     $hw = Load-HW
-    Write-Title 'SISTEMA E INPUT LAG'
+    Write-Title 'LATENCIA E RESPOSTA DO SISTEMA'
 
     if (Want 'C1') {
         Set-Reg 'HKCU:\Control Panel\Mouse' 'MouseSpeed'      '0' 'String' | Out-Null
@@ -376,7 +376,7 @@ function Repair-TcpDefaults {
 function Mod-Rede {
     if (-not (WantAny @('F1','F2','F3','F4'))) { return }
     $script:CurMod = 'rede'
-    Write-Title 'AJUSTES DE INTERNET'
+    Write-Title 'REDE'
     if (Want 'F4') { Repair-TcpDefaults }
     if (Want 'F1') {
         $base = 'HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters\Interfaces'
