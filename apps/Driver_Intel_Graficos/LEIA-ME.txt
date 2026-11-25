@@ -5,4 +5,4 @@ DRIVER INTEL ARC / GRÁFICOS INTEL
 • Intel Arc: SEMPRE o driver mais recente. A Intel ganha muito
   desempenho a cada versão.
 • Intel Arc precisa do Resizable BAR ligado na BIOS (Guia de BIOS).
-• Configuração: guias\GPU_INTEL.txt
+• Configuração: guias\MANUAL.html (capítulo Intel)

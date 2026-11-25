@@ -125,7 +125,7 @@
   AVANTIPACK.exe   abre o pack (o ícone com a logo)
   LEIA-ME.txt      este arquivo
   apps\            uma pasta por programa, cada uma com LEIA-ME.txt
-  guias\           guias e o guia com imagens (PAINEIS_VISUAL.html)
+  guias\           manual com imagens (MANUAL.html)
   core\            motor do pack (não mexa)
   core\dados\      backups, registros e dados DESTE PC (usados pelo
                    Desfazer; não apague)

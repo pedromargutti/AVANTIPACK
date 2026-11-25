@@ -8,7 +8,7 @@ pack acha ele sozinho em Arquivos de Programas.
 CONFIGURAÇÃO
   1. Abra o RTSS (ícone na bandeja, ao lado do relógio).
   2. Em "Global":
-       • Framerate limit: o valor desejado (veja guias\LIMITE_DE_FPS.txt)
+       • Framerate limit: o valor desejado (veja guias\MANUAL.html, Limite de FPS)
          - Com G-SYNC/FreeSync: Hz do monitor menos 3 (ex: 141 em 144 Hz)
        • Framerate limiting: "async" (padrão)
        • Application detection level: Low

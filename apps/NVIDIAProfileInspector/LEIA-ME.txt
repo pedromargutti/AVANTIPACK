@@ -12,7 +12,7 @@ ANTES DE TUDO
 AJUSTES RECOMENDADOS
   Sync and Refresh
     • Vertical Sync ........................ Force off
-      (com G-SYNC: veja guias\LIMITE_DE_FPS.txt)
+      (com G-SYNC: veja guias\MANUAL.html, capítulo Limite de FPS)
   Common
     • Power management mode ................ Prefer maximum performance
     • Shader Cache - Cachesize ............. 10GB ou Unlimited

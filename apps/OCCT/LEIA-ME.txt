@@ -19,4 +19,4 @@ AMD x INTEL
   • Ryzen com Curve Optimizer: os erros às vezes só aparecem em carga
     leve. Rode também o teste de CPU com 1 thread / carga variável.
   • Intel 13ª/14ª: se der erro mesmo no padrão, atualize a BIOS
-    (guias\CPU_INTEL.txt).
+    (guias\MANUAL.html, capítulo Processador Intel).

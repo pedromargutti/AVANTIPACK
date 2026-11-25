@@ -44,7 +44,7 @@ if ($Tela -eq 'avancado') {
         @{ K = '4'; T = 'PROGRAMAS UTEIS'; C = 'Cyan'
            D = 'Instala sozinho os programas e drivers certos para o seu PC, cada um na sua pasta.' },
         @{ K = '5'; T = 'GUIAS PASSO A PASSO'; C = 'Cyan'
-           D = 'Painel NVIDIA/AMD com imagens, BIOS, limite de FPS e as configuracoes dentro dos jogos.' },
+           D = 'Manual com imagens: painel NVIDIA/AMD/Intel, Windows, BIOS, processador, limite de FPS e 19 jogos.' },
         @{ K = '6'; T = 'DESFAZER / RECOLOCAR FUNCOES E APPS'; C = 'Red'; G = 'DESFAZER E MAIS'
            D = 'Desfaz tudo ou so o que voce escolher (impressora, gravar clipes, apps removidos...).' },
         @{ K = 'P'; T = 'CONHECA O AVANTIPACK PRO'; C = 'Yellow'

@@ -566,41 +566,38 @@ function Mod-Undo {
     $script:NeedReboot = $true
 }
 
-function Mod-Guias {
-    $hw = Load-HW
-    $g = @(
-        @('PAINEIS_VISUAL.html',    'GUIA COM IMAGENS: painel NVIDIA / AMD / Intel / Windows'),
-        @('CONFIG_DOS_JOGOS.txt',   'Configuracoes recomendadas DENTRO dos jogos (CS2, Valorant, Fortnite...)'),
-        @('LISTA_DE_AJUSTES.txt',   'Lista de TODOS os ajustes do pack, por categoria'),
-        @('GUIA_BIOS.txt',          'Guia de BIOS (todas as placas)'),
-        @('CPU_AMD.txt',            'Processador AMD Ryzen'),
-        @('CPU_INTEL.txt',          'Processador Intel'),
-        @('GPU_NVIDIA.txt',         'Placa de video NVIDIA'),
-        @('GPU_AMD.txt',            'Placa de video AMD Radeon'),
-        @('GPU_INTEL.txt',          'Video Intel (Arc e integrado)'),
-        @('LIMITE_DE_FPS.txt',      'Limite de FPS, V-Sync, G-Sync/FreeSync'),
-        @('O_QUE_NAO_FAZEMOS.txt',  'Mitos e tweaks perigosos que evitamos'),
-        @('COMO_EDITAR_O_PACK.txt', 'Para quem mexe no codigo: tirar/colocar ajustes'),
-        @('GITHUB_PASSO_A_PASSO.txt', 'Para quem distribui: GitHub e atualizacao automatica')
-    )
-    Write-Title 'GUIAS'
-    $itens = @(for ($i = 0; $i -lt $g.Count; $i++) {
-        $rec = ''
-        if ($g[$i][0] -eq 'CPU_AMD.txt'    -and $hw.CPU_VENDOR -eq 'AMD')    { $rec = '  <- seu processador' }
-        if ($g[$i][0] -eq 'CPU_INTEL.txt'  -and $hw.CPU_VENDOR -eq 'INTEL')  { $rec = '  <- seu processador' }
-        if ($g[$i][0] -eq 'GPU_NVIDIA.txt' -and $hw.GPU_VENDOR -eq 'NVIDIA') { $rec = '  <- sua placa de video' }
-        if ($g[$i][0] -eq 'GPU_AMD.txt'    -and $hw.GPU_VENDOR -like 'AMD*') { $rec = '  <- sua placa de video' }
-        if ($g[$i][0] -eq 'GPU_INTEL.txt'  -and $hw.GPU_VENDOR -like 'INTEL*'){ $rec = '  <- sua placa de video' }
-        @{ K = "$($i + 1)"; T = ($g[$i][1] + $rec); C = $(if ($rec) { 'Green' } else { $null }) }
-    })
-    while ($true) {
-        $op = Select-Opcao $itens
-        if ($op -eq '0' -or $op -notmatch '^\d+$') { return }
-        $arq = Join-Path $Root ('guias\' + $g[[int]$op - 1][0])
-        if ($arq -like '*.html') { Start-Process $arq } else { Start-Process notepad.exe $arq }
-        Write-Ok 'Guia aberto. Escolha outro ou ESC para voltar.'
-    }
+# Manual ilustrado (guias\MANUAL.html). Abre uma copia com as pecas deste PC marcadas.
+function Open-Manual([string]$Cap = '') {
+    $src = Join-Path $Root 'guias\MANUAL.html'
+    if (-not (Test-Path $src)) { Write-Warn 'Manual nao encontrado em guias\MANUAL.html. Baixe o pack de novo.'; return }
+    $pc = ''
+    try {
+        $hw = Load-HW
+        $ram = ("{0} GB {1} {2}" -f $hw.RAM_GB, $hw.RAM_TIPO, $(if ([int]("0" + $hw.RAM_MTS) -gt 0) { $hw.RAM_MTS } else { '' })).Trim()
+        $o = [ordered]@{ cpu = [string]$hw.CPU_VENDOR; cpuNome = [string]$hw.CPU; gpu = [string]$hw.GPU_VENDOR; gpuNome = [string]$hw.GPU; ram = $ram; win = [string]$hw.WIN }
+        $pc = 'window.PC=' + (($o | ConvertTo-Json -Compress) -replace '<', '\u003c') + ';'
+    } catch {}
+    $Cap = $Cap -replace '[^a-z0-9/\-]', ''
+    $html = [IO.File]::ReadAllText($src)
+    $html = $html.Replace('/*AVANTI_PC*/', ($pc + "window.INICIO='$Cap';"))
+    $dst = $src
+    try {
+        $dir = Join-Path $env:LOCALAPPDATA 'AVANTIPACK'
+        New-Item -ItemType Directory -Path $dir -Force | Out-Null
+        $dst = Join-Path $dir 'Manual AVANTIPACK.html'
+        [IO.File]::WriteAllText($dst, $html, (New-Object Text.UTF8Encoding($true)))
+    } catch { $dst = $src }
+    # pelo Explorer o navegador abre como usuario normal (nao como administrador)
+    Start-Process -FilePath (Join-Path $env:WINDIR 'explorer.exe') -ArgumentList ('"' + $dst + '"')
+    Write-Ok 'Manual aberto no navegador.'
+    Write-Note ('Tambem fica em: ' + $src)
 }
+function Get-CapGpu {
+    $v = [string](Load-HW).GPU_VENDOR
+    if ($v -like 'AMD*') { return 'amd' } elseif ($v -like 'INTEL*') { return 'intel' } else { return 'nvidia' }
+}
+
+function Mod-Guias { Open-Manual }
 
 # ---------------------------------------------------------------------
 #  Modulos em arquivos separados
@@ -640,7 +637,8 @@ switch ($Module) {
     'auto'          { Mod-Otimizar }
     'reaplicar'     { Mod-Reaplicar }
     'atualizar'     { Mod-Atualizar }
-    'configjogos'   { Start-Process notepad.exe (Join-Path $Root 'guias\CONFIG_DOS_JOGOS.txt') }
+    'configjogos'   { Open-Manual 'jogos' }
+    'bios'          { Open-Manual 'bios' }
     'restore'       { Mod-Restore }
     'undo'          { Mod-Restaurar }
     'undoparte'     { Mod-Undo }
@@ -648,7 +646,7 @@ switch ($Module) {
     'guias'         { Mod-Guias }
     'verificar'     { [void](Test-GPU (Load-HW)) }
     'fix'           { Mod-Fix }
-    'visual'        { Start-Process (Join-Path $Root 'guias\PAINEIS_VISUAL.html') }
+    'visual'        { Open-Manual (Get-CapGpu) }
     'nota'          { Mod-Nota }
     'limpeza'       { Mod-Limpeza }
     'prejogo'       { Mod-PreJogo }
@@ -658,7 +656,7 @@ switch ($Module) {
 
 try { Update-StatusFile } catch {}
 try { Save-Estado } catch {}
-if ($Module -notin @('__pro', 'novidades-auto', 'novidades', 'detect-silent', 'detect', 'apps', 'guias', 'visual', 'fix', 'manutencao', 'atualizar', 'configjogos', 'nota', 'prejogo')) {
+if ($Module -notin @('__pro', 'novidades-auto', 'novidades', 'detect-silent', 'detect', 'apps', 'guias', 'bios', 'visual', 'fix', 'manutencao', 'atualizar', 'configjogos', 'nota', 'prejogo')) {
     Write-Host ''
     if ($script:Applied -gt 0) { Write-Ok "$($script:Applied) ajuste(s) aplicado(s). Backup salvo em core\dados\backup" }
     if ($script:NeedReboot)    { Write-Warn 'Reinicie o PC para tudo entrar em vigor (opcao 8 do menu).' }

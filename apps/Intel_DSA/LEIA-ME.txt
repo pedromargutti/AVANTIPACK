@@ -9,4 +9,4 @@ integrado, Wi-Fi e Bluetooth Intel.
   vídeo integrado.
 • Notebook: dê preferência aos drivers do site do fabricante do
   notebook (Dell, Lenovo, Acer...). Alguns drivers são customizados.
-• Lembre: 13ª/14ª geração precisa de BIOS atualizada (guias\CPU_INTEL.txt).
+• Lembre: 13ª/14ª geração precisa de BIOS atualizada (guias\MANUAL.html, capítulo Processador Intel).

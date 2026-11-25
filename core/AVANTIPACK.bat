@@ -158,7 +158,7 @@ set /p "op=%RS%%PAD%  %BR%Digite o numero e aperte ENTER:%RS% "
 if "%op%"=="1" set "MOD=detect"
 if "%op%"=="2" set "MOD=verificar"
 if "%op%"=="3" set "MOD=restore"
-if "%op%"=="14" start "" notepad "%AVROOT%guias\GUIA_BIOS.txt"
+if "%op%"=="14" set "MOD=bios"
 if "%op%"=="20" goto atualizar
 if "%op%"=="21" set "MOD=novidades"
 if "%op%"=="25" set "MOD=nota"
@@ -217,8 +217,8 @@ start "AVANTIPACK - Atualizacao" powershell -NoProfile -ExecutionPolicy Bypass -
 exit
 
 :bios
-start "" notepad "%AVROOT%guias\GUIA_BIOS.txt"
-goto menu
+set "MOD=bios"
+goto rodar
 
 :reiniciar
 echo.
