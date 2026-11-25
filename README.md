@@ -40,6 +40,8 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 - 🎯 O manual **marca os capítulos do seu PC** e tem **busca**
 - ✅ Antes de otimizar, o pack **confere o que já está aplicado** e pergunta antes de refazer
 - 🏷️ Categorias com **nomes mais claros** e correções de compatibilidade
+- 🧊 **Limpar cache de shaders** (opção 29) contra travadinhas depois de trocar o driver
+- 🍃 **Preparar para jogar** coloca navegador, launchers e RGB em **modo eficiência**
 
 </details>
 

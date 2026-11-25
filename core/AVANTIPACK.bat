@@ -149,7 +149,8 @@ echo %PAD%  %AZ%[1]%RS%  Ver hardware e alertas              %AZ%[2]%RS%  Checar
 echo %PAD%  %AZ%[25]%RS% Nota do PC                          %AZ%[3]%RS%  Criar ponto de restauracao
 echo %PAD%  %AZ%[26]%RS% Limpeza rapida                      %AZ%[27]%RS% Preparar para jogar
 echo %PAD%  %AZ%[14]%RS% Guia de BIOS                        %AZ%[20]%RS% Atualizar o pack (GitHub)
-echo %PAD%  %AZ%[21]%RS% Novidades                           %AM%[28]%RS% Conheca o AVANTIPACK Pro
+echo %PAD%  %AZ%[21]%RS% Novidades                           %AZ%[29]%RS% Limpar cache de shaders
+echo %PAD%  %AM%[28]%RS% Conheca o AVANTIPACK Pro
 echo.
 echo %PAD%  %CI%[0]  Voltar ao menu principal%RS%
 echo.
@@ -165,6 +166,7 @@ if "%op%"=="25" set "MOD=nota"
 if "%op%"=="26" set "MOD=limpeza"
 if "%op%"=="27" set "MOD=prejogo"
 if "%op%"=="28" set "MOD=pro"
+if "%op%"=="29" set "MOD=shaders"
 if "%op%"=="0" goto menu
 if not defined MOD goto avancado
 call :rodar
