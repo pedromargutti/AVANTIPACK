@@ -136,8 +136,19 @@ O que o grátis faz está aqui, linha por linha, em PowerShell. Dá para ler tud
 
 </div>
 
-> [!TIP]
-> Depois da compra, abra o app, vá em **Licença** e cole a chave. Não chegou o e-mail? Use **"Não recebi a chave"** com o e-mail e o código do pedido da Kiwify.
+<br>
+
+## 🔑 Comprou o Pro? Ative assim
+
+```text
+1. Abra o AVANTIPACK  (ainda não tem? botão "Baixar o app grátis" lá em cima)
+2. Clique em  Licença  >  Com o e-mail da compra
+3. Digite o e-mail que você usou na compra e o código do pedido
+   (o código está no e-mail de confirmação da Kiwify)
+4. Ativar. Pronto: todas as funções Pro liberadas neste PC
+```
+
+Não precisa esperar e-mail com chave: o pedido já libera o Pro. Se a chave chegar, ela também funciona em **Licença > Com a chave**.
 
 <br>
 
