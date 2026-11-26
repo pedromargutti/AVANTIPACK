@@ -13,19 +13,48 @@
 
 <br><br>
 
-### 🆓 AVANTIPACK GRÁTIS
+### 🆓 AVANTIPACK GRÁTIS, agora também em app
 
 **Otimização do Windows para jogos que se adapta às peças do seu PC.**<br>
 Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeito com um clique**.<br>
-<sub>Quer ir além? Conheça o <a href="#-avantipack-pro">⭐ AVANTIPACK PRO</a>, com app próprio e as funções mais avançadas.</sub>
+<sub>Um app só: as funções grátis já vêm liberadas e o <a href="#-avantipack-pro">⭐ AVANTIPACK PRO</a> é ativado ali dentro.</sub>
 
 <br>
 
-<a href="../../releases/latest"><img src="https://img.shields.io/badge/⬇%20BAIXAR%20GRÁTIS-1d43ff?style=for-the-badge" alt="Baixar grátis" height="42"></a>
+<a href="../../releases/latest/download/AVANTIPACK-App.exe"><img src="https://img.shields.io/badge/⬇%20BAIXAR%20O%20APP-1d43ff?style=for-the-badge" alt="Baixar o app" height="42"></a>
+&nbsp;
+<a href="../../releases/latest"><img src="https://img.shields.io/badge/📦%20PACK%20CLÁSSICO%20(.zip)-0b2a66?style=for-the-badge" alt="Pack clássico" height="42"></a>
 &nbsp;
 <a href="#-avantipack-pro"><img src="https://img.shields.io/badge/⭐%20CONHECER%20O%20PRO-ffc43d?style=for-the-badge&logoColor=black" alt="Conhecer o Pro" height="42"></a>
 
 </div>
+
+<br>
+
+## 🖥️ Novo: o app AVANTIPACK
+
+<div align="center">
+<img src="docs/img/app_painel.png" alt="Painel do app AVANTIPACK: o PC ao vivo, a pontuação e por onde começar" width="860">
+</div>
+
+<br>
+
+<table>
+<tr>
+<td width="50%"><img src="docs/img/app_execucao.png" alt="Otimização rodando dentro do app, com perguntas em botões e listas"></td>
+<td width="50%"><img src="docs/img/app_concluido.png" alt="Otimização concluída, com cada etapa e o backup"></td>
+</tr>
+<tr>
+<td align="center"><sub>As perguntas viram botões e listas, sem tela de comando</sub></td>
+<td align="center"><sub>Cada etapa mostra o que foi feito, com backup de tudo</sub></td>
+</tr>
+</table>
+
+- 🆓 **As funções grátis já vêm dentro do app**: Otimização recomendada, Pontuação, Limpeza, Cache de shaders, Reparos, Programas, Desfazer e o Manual. Não precisa de chave nem de internet.
+- ⭐ **As funções Pro aparecem com cadeado**: clique para ver o que cada uma faz, comprar ou ativar a chave, sem sair do app.
+- 📦 **Prefere o jeito antigo?** O pack clássico em CMD continua no `.zip` das Releases, igual a antes.
+
+<sub>Telas ilustrativas: as peças e os números mudam conforme o seu PC.</sub>
 
 <br>
 
@@ -34,6 +63,16 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 > **Versão mais nova:** [veja o que mudou](../../releases/latest) · [histórico completo](core/NOVIDADES.md)
 
 <details open>
+<summary><b>v0.10.0</b> — chegou o app AVANTIPACK</summary>
+
+- 🖥️ **App AVANTIPACK**: o pack grátis agora também roda num app com visual próprio ([baixar](../../releases/latest/download/AVANTIPACK-App.exe))
+- 💬 Dentro do app, **as perguntas viram botões, listas e caixas de marcar**, sem tela de comando
+- ⭐ As funções Pro ficam no mesmo app, com cadeado: **comprar e ativar sem sair dele**
+- 📦 O **pack clássico** em CMD continua no `.zip`, igual
+
+</details>
+
+<details>
 <summary><b>v0.9.0</b> — manual com imagens e o pack não refaz o que já está certo</summary>
 
 - 📘 **Manual com imagens** (opção 5): painel da placa de vídeo, Windows, BIOS, processador, limite de FPS e 19 jogos, tela por tela
@@ -42,17 +81,6 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 - 🏷️ Categorias com **nomes mais claros** e correções de compatibilidade
 - 🧊 **Limpar cache de shaders** (opção 29) contra travadinhas depois de trocar o driver
 - 🍃 **Preparar para jogar** coloca navegador, launchers e RGB em **modo eficiência**
-
-</details>
-
-<details>
-<summary><b>v0.8.0</b> — grátis renovado e chegada do AVANTIPACK PRO</summary>
-
-- 💯 **Nota do PC**: de 0 a 100, com o que está segurando o seu PC e como resolver
-- 🧹 **Limpeza rápida**: tira o lixo do Windows e mostra quantos MB voltaram
-- 🎮 **Preparar para jogar**: fecha o que está pesando antes da partida
-- 🔠 **Letra maior** já ao abrir e correções no monitor, na limpeza e no Consertar
-- ⭐ Chegou o **AVANTIPACK PRO**, um app próprio com as funções avançadas ([ver abaixo](#-avantipack-pro))
 
 </details>
 
@@ -183,7 +211,11 @@ Também tem: **BIOS** (XMP/EXPO, Resizable BAR... com o nome em cada fabricante)
 
 <div align="center">
 
-**Tudo do grátis, num app próprio com visual novo, e as funções mais avançadas.**
+**Tudo do grátis e as funções mais avançadas, no mesmo app. Pagamento único de R$ 29,90.**
+
+<br>
+
+<a href="https://pay.kiwify.com.br/GJzVRdc"><img src="https://img.shields.io/badge/🛒%20COMPRAR%20O%20PRO%20·%20R$%2029,90-ffc43d?style=for-the-badge" alt="Comprar o AVANTIPACK Pro" height="42"></a>
 
 </div>
 
@@ -201,14 +233,25 @@ Também tem: **BIOS** (XMP/EXPO, Resizable BAR... com o nome em cada fabricante)
 | **DNS mais rápido**, **teste de input lag** com nota e **diagnóstico da internet** | — | ✅ |
 | **Ajustes avançados** (VBS, MSI, hypervisor, FSO) com explicação dos riscos | — | ✅ |
 | Programas da inicialização, manutenção semanal e relatório para ajuda | — | ✅ |
-| App com visual próprio, sem tela de comando | — | ✅ |
+| App com visual próprio, sem tela de comando | ✅ | ✅ |
 
 > [!TIP]
-> O Pro é **pagamento único**, com chave para **1 PC**. Trocou de PC? É só ativar no novo. **Em breve à venda.**
+> O Pro é **pagamento único**, com chave para **1 PC**. Trocou de PC? É só desativar no antigo e ativar no novo. Depois da compra, ative no próprio app, na tela **Licença**.
 
 <br>
 
 ## 🚀 Como usar
+
+**App (recomendado)**
+
+```text
+1. Baixe o AVANTIPACK-App.exe em Releases
+2. Abra (ele pede administrador: é para poder mudar as configurações do Windows)
+3. Otimização  >  Otimização recomendada  >  Executar
+4. Reinicie o PC no final
+```
+
+**Pack clássico (CMD)**
 
 ```text
 1. Baixe o .zip em Releases e EXTRAIA a pasta (não rode de dentro do zip)
