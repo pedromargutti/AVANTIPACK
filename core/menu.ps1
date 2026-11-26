@@ -32,6 +32,8 @@ if ($Tela -eq 'avancado') {
     )
 } else {
     $itens = @(
+        @{ K = 'A'; T = 'INSTALAR O APP AVANTIPACK'; X = '   <-- NOVO'; C = 'Green'; G = 'NOVO'
+           D = 'O AVANTIPACK agora e um app com visual proprio, sem tela preta. Instala e abre em 1 minuto.' },
         @{ K = '1'; T = 'OTIMIZAR MEU PC'; X = '   <-- comece por aqui'; C = 'Green'; G = 'OTIMIZAR E TESTAR'
            D = 'O pack escolhe sozinho tudo que e seguro e serve para o SEU PC e aplica, com backup.' },
         @{ K = '2'; T = 'VERIFICAR MEU PC  +  NOTA'; C = 'Cyan'; N = 1
@@ -74,7 +76,7 @@ $BANNER = @(
 )
 
 function Get-Codigo([string]$k) {
-    switch ($k.ToUpper()) { 'L' { 122 } 'J' { 123 } 'P' { 124 } 'U' { 130 } default { 100 + [int]$k } }
+    switch ($k.ToUpper()) { 'L' { 122 } 'J' { 123 } 'P' { 124 } 'A' { 125 } 'U' { 130 } default { 100 + [int]$k } }
 }
 function Split-Texto([string]$t, [int]$w) {
     $out = @(); $l = ''
@@ -136,6 +138,7 @@ function Write-Banner {
 
 function Get-Avisos {
     $a = @()
+    if (-not (Test-Path (Join-Path $env:LOCALAPPDATA 'Programs\AVANTIPACK\AVANTIPACK.exe'))) { $a += @{ T = ' NOVO: O AVANTIPACK AGORA E UM APP - aperte A para instalar '; F = 'Black'; B = 'Green' } }
     if ($hw['ATUALIZACAO']) { $a += @{ T = " NOVA VERSAO $($hw['ATUALIZACAO']) DO AVANTIPACK DISPONIVEL - aperte U para atualizar "; F = 'Black'; B = 'Green' } }
     if ($hw['REAPLICAR'])   { $a += @{ T = ' O WINDOWS FOI ATUALIZADO - use a opcao 1 e depois Reaplicar '; F = 'Black'; B = 'Yellow' } }
     if ($hw['AVISO'])       { $a += @{ T = " $($hw['AVISO']) "; F = 'Black'; B = 'Yellow' } }
@@ -260,7 +263,7 @@ try {
             'Backspace' { if ($digitado.Length) { $digitado = $digitado.Substring(0, $digitado.Length - 1) } }
             'Enter'     {
                 $k2 = if ($digitado) { $digitado } else { $itens[$sel].K }
-                if ($k2 -match '^[UuLlJjPp]$' -and $Tela -eq 'avancado') { $digitado = ''; break }
+                if ($k2 -match '^[UuLlJjPpAa]$' -and $Tela -eq 'avancado') { $digitado = ''; break }
                 if ($k2 -match '^\d+$' -and -not ($itens | Where-Object { $_.K -eq $k2 })) { $digitado = ''; break }
                 exit (Get-Codigo $k2)
             }
@@ -269,7 +272,7 @@ try {
                 if ($ch -match '^\d$') {
                     $digitado = ($digitado + $ch); if ($digitado.Length -gt 2) { $digitado = $ch }
                     for ($i = 0; $i -lt $itens.Count; $i++) { if ($itens[$i].K -eq $digitado) { $sel = $i } }
-                } elseif ($ch -match '^[UuLlJjPp]$' -and $Tela -ne 'avancado') {
+                } elseif ($ch -match '^[UuLlJjPpAa]$' -and $Tela -ne 'avancado') {
                     exit (Get-Codigo $ch)
                 }
             }

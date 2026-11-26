@@ -92,6 +92,8 @@ echo %PAD%  %VD%[1]  OTIMIZAR MEU PC%RS%   %AM%^<-- comece por aqui%RS%
 echo %PAD%       %CI%Automatico (o pack escolhe tudo) ou Personalizado (voce marca por%RS%
 echo %PAD%       %CI%categoria o que quer). Limpa, ajusta energia, video, internet e jogos.%RS%
 echo.
+echo %PAD%  %VD%[A]  INSTALAR O APP AVANTIPACK  (NOVO: visual proprio, sem tela preta)%RS%
+echo.
 echo %PAD%  %AZ%[2]  VERIFICAR MEU PC%RS%
 echo %PAD%       %CI%Pecas, problemas (memoria lenta, monitor em 60 Hz, driver velho...),%RS%
 echo %PAD%       %CI%teste de INPUT LAG com pontuacao e teste da internet.%RS%
@@ -131,6 +133,7 @@ if /i "%op%"=="U" goto atualizar
 if /i "%op%"=="L" set "MOD=limpeza"
 if /i "%op%"=="J" set "MOD=prejogo"
 if /i "%op%"=="P" set "MOD=pro"
+if /i "%op%"=="A" set "MOD=instalarapp"
 if not defined MOD goto menu
 call :rodar
 goto menu
@@ -182,6 +185,7 @@ set "RC=%errorlevel%"
 if "%RC%"=="122" (set "op=L" & exit /b)
 if "%RC%"=="123" (set "op=J" & exit /b)
 if "%RC%"=="124" (set "op=P" & exit /b)
+if "%RC%"=="125" (set "op=A" & exit /b)
 if "%RC%"=="130" (set "op=U" & exit /b)
 if %RC% GEQ 100 if %RC% LEQ 129 (set /a "op=RC-100" & exit /b)
 set "SETAS_FALHOU=1"

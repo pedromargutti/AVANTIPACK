@@ -7,7 +7,8 @@ Tudo o que mudou em cada versão. A mais nova fica sempre em cima.
 - 💬 **Sem tela de comando no app**: as perguntas viram botões, listas e caixas de marcar
 - 🆓 **Funções grátis já liberadas no app**: Otimização recomendada, Pontuação, Limpeza, Cache de shaders, Reparos, Programas, Desfazer e o Manual
 - ⭐ **Pro no mesmo app**: as funções Pro aparecem com cadeado, e dá para comprar e ativar a chave sem sair dele
-- 📦 **Pack clássico continua**: o .zip em CMD segue igual para quem prefere
+- 🔄 **Atualização automática no app**: quando sai versão nova, o app avisa e troca com um clique, conferindo a assinatura
+- 📦 **Quem usa o pack em CMD**: aperte **A** no menu e ele baixa, instala e abre o app (com atalho na Área de Trabalho)
 
 ## v0.9.0 — 25/11/2026
 - 📘 **Manual com imagens**: todos os guias viraram um manual só, com as telas desenhadas e bolinhas numeradas mostrando onde clicar (opção **5**)
