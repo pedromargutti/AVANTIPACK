@@ -7,33 +7,88 @@
 <a href="../../releases/latest"><img src="https://img.shields.io/github/v/release/pedromargutti/AVANTIPACK?style=for-the-badge&color=1d43ff&label=vers%C3%A3o&cacheSeconds=600" alt="versão"></a>
 <a href="../../releases"><img src="https://img.shields.io/github/downloads/pedromargutti/AVANTIPACK/total?style=for-the-badge&color=008cff&label=downloads&cacheSeconds=600" alt="downloads"></a>
 <img src="https://img.shields.io/badge/Windows-10%20%7C%2011-00b4ff?style=for-the-badge&logo=windows&logoColor=white" alt="Windows 10 e 11">
-<img src="https://img.shields.io/badge/PowerShell-5.1-00e1ff?style=for-the-badge&logo=powershell&logoColor=white" alt="PowerShell">
 <img src="https://img.shields.io/badge/100%25-revers%C3%ADvel-16c60c?style=for-the-badge" alt="100% reversível">
-<img src="https://img.shields.io/badge/vers%C3%A3o-GR%C3%81TIS-16c60c?style=for-the-badge" alt="versão grátis">
+<img src="https://img.shields.io/badge/c%C3%B3digo-aberto-16c60c?style=for-the-badge" alt="código aberto">
 
 <br><br>
 
-### 🆓 AVANTIPACK GRÁTIS, agora também em app
+## O app que deixa o Windows pronto para jogar
 
-**Otimização do Windows para jogos que se adapta às peças do seu PC.**<br>
-Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeito com um clique**.<br>
-<sub>Um app só: as funções grátis já vêm liberadas e o <a href="#-avantipack-pro">⭐ AVANTIPACK PRO</a> é ativado ali dentro.</sub>
+**Menos input lag, FPS mais estável e um Windows mais leve,**<br>
+**com ajustes escolhidos para as peças do <i>seu</i> PC e tudo reversível com um clique.**
 
 <br>
 
-<a href="../../releases/latest/download/AVANTIPACK-App.exe"><img src="https://img.shields.io/badge/⬇%20BAIXAR%20O%20APP%20GRÁTIS-1d43ff?style=for-the-badge" alt="Baixar o app grátis" height="42"></a>
+<a href="../../releases/latest/download/AVANTIPACK-App.exe"><img src="https://img.shields.io/badge/⬇%20BAIXAR%20O%20APP%20GRÁTIS-1d43ff?style=for-the-badge" alt="Baixar o app grátis" height="46"></a>
 &nbsp;
-<a href="#-avantipack-pro"><img src="https://img.shields.io/badge/⭐%20CONHECER%20O%20PRO-ffc43d?style=for-the-badge&logoColor=black" alt="Conhecer o Pro" height="42"></a>
+<a href="https://pay.kiwify.com.br/GJzVRdc"><img src="https://img.shields.io/badge/⭐%20AVANTIPACK%20PRO%20·%20R$%2029,90-ffc43d?style=for-the-badge" alt="Comprar o AVANTIPACK Pro" height="46"></a>
+
+<sub>Windows 10 e 11 · um arquivo só, sem instalação · as funções grátis não pedem cadastro nem chave</sub>
+
+<br><br>
+
+<img src="docs/img/app_painel.png" alt="Painel do app AVANTIPACK: o PC ao vivo, a pontuação e por onde começar" width="900">
 
 </div>
 
 <br>
 
-## 🖥️ Novo: o app AVANTIPACK
+## ⚡ Em 3 cliques
 
-<div align="center">
-<img src="docs/img/app_painel.png" alt="Painel do app AVANTIPACK: o PC ao vivo, a pontuação e por onde começar" width="860">
-</div>
+```text
+1. Baixe e abra o AVANTIPACK-App.exe   (ele pede administrador para mudar o Windows)
+2. Otimização  >  Otimização recomendada  >  Executar
+3. Reinicie o PC
+```
+
+O app lê o seu processador, placa de vídeo, memória e disco, mostra o que vai fazer e pergunta antes. O que já está certo no seu PC **não é refeito**.
+
+<br>
+
+## ✨ Por que o AVANTIPACK
+
+<table>
+<tr>
+<td width="33%" valign="top">
+
+### 🔍 Feito para o seu PC
+Ajuste de NVIDIA não roda em placa AMD, ajuste de SSD não roda em HD, notebook não ganha plano de energia de desktop.
+
+</td>
+<td width="33%" valign="top">
+
+### ↩️ Tudo reversível
+Ponto de restauração e o **valor original de cada ajuste** guardado. Desfaça tudo ou só o que quiser de volta.
+
+</td>
+<td width="33%" valign="top">
+
+### 🚫 Sem placebo
+Nada de "+200 FPS com um regedit". Só ajustes com efeito real, e o manual explica o que evitamos e por quê.
+
+</td>
+</tr>
+<tr>
+<td valign="top">
+
+### 🖥️ Sem tela preta
+Cada função roda dentro do app: as perguntas viram botões e listas, e cada etapa mostra o que foi feito.
+
+</td>
+<td valign="top">
+
+### 🔄 Atualiza sozinho
+Avisa quando sai versão nova e troca com um clique, conferindo a assinatura do arquivo antes.
+
+</td>
+<td valign="top">
+
+### 📖 Código aberto
+O que o grátis faz está aqui, linha por linha, em PowerShell. Dá para ler tudo antes de rodar.
+
+</td>
+</tr>
+</table>
 
 <br>
 
@@ -43,31 +98,72 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 <td width="50%"><img src="docs/img/app_concluido.png" alt="Otimização concluída, com cada etapa e o backup"></td>
 </tr>
 <tr>
-<td align="center"><sub>As perguntas viram botões e listas, sem tela de comando</sub></td>
+<td align="center"><sub>Você escolhe o que aplicar, sem tela de comando</sub></td>
 <td align="center"><sub>Cada etapa mostra o que foi feito, com backup de tudo</sub></td>
 </tr>
 </table>
 
-- 🆓 **As funções grátis já vêm dentro do app**: Otimização recomendada, Pontuação, Limpeza, Cache de shaders, Reparos, Programas, Desfazer e o Manual. Não precisa de chave nem de internet.
-- ⭐ **As funções Pro aparecem com cadeado**: clique para ver o que cada uma faz, comprar ou ativar a chave, sem sair do app.
-- 🔄 **Atualiza sozinho**: quando sai versão nova, o app avisa e troca com um clique, conferindo a assinatura do arquivo.
-- 📦 **Já usa o pack em CMD?** Atualize pela tecla **U** e aperte **A** no menu: ele instala o app para você.
+<div align="center"><sub>Telas ilustrativas: as peças e os números mudam conforme o seu PC.</sub></div>
 
-<sub>Telas ilustrativas: as peças e os números mudam conforme o seu PC.</sub>
+<br>
+
+## 🆓 Grátis x ⭐ Pro
+
+| | 🆓 Grátis | ⭐ Pro |
+|---|:-:|:-:|
+| **Otimização recomendada** para o seu hardware, com backup | ✅ | ✅ |
+| **Pontuação de desempenho** de 0 a 100 e diagnóstico do PC | ✅ | ✅ |
+| **Limpeza** e **cache de shaders** (travadinhas depois de trocar o driver) | ✅ | ✅ |
+| **19 reparos do Windows**: internet, som, microfone, Loja, Windows Update... | ✅ | ✅ |
+| **Ferramentas e drivers** certos para o seu PC, das fontes oficiais | ✅ | ✅ |
+| **Reverter ajustes**, ponto de restauração e **manual com imagens** | ✅ | ✅ |
+| **Perfil de jogo automático**: energia no máximo e apps de fundo em modo eficiência só enquanto o jogo está aberto | — | ✅ |
+| **Benchmark de FPS**, análise de gargalo e relatório de antes e depois | — | ✅ |
+| **Raio-X da BIOS** (XMP, Resizable BAR, slot da placa) e **auditoria de input lag** | — | ✅ |
+| **Configurações gráficas** gravadas no CS2, Apex, Fortnite, Rocket League e Minecraft | — | ✅ |
+| **Perfis NVIDIA por jogo**, prioridade de processador e **Discord mais leve** | — | ✅ |
+| **Apps que tiram FPS**: o que está pesando agora, com Fechar, Forçar e modo eficiência | — | ✅ |
+| **DNS mais rápido**, latência até os servidores e teste térmico | — | ✅ |
+| **Manutenção automática** todo domingo, avisando se o Windows desfez algum ajuste | — | ✅ |
+
+<div align="center">
+
+<br>
+
+**Pagamento único de R$ 29,90 · chave para 1 PC · ativa dentro do próprio app**
+
+<a href="https://pay.kiwify.com.br/GJzVRdc"><img src="https://img.shields.io/badge/🛒%20COMPRAR%20O%20PRO-ffc43d?style=for-the-badge" alt="Comprar o AVANTIPACK Pro" height="42"></a>
+
+</div>
+
+> [!TIP]
+> Depois da compra, abra o app, vá em **Licença** e cole a chave. Não chegou o e-mail? Use **"Não recebi a chave"** com o e-mail e o código do pedido da Kiwify.
+
+<br>
+
+## 📖 Manual com imagens
+
+As configurações que só dá para mudar fora do Windows, explicadas tela por tela: painel NVIDIA, AMD e Intel, BIOS por fabricante, processador, limite de FPS e configurações de 19 jogos. O manual marca os capítulos das peças do seu PC e tem busca.
+
+<table>
+<tr>
+<td width="50%"><img src="docs/img/painel_nvidia.png" alt="Guia do Painel NVIDIA"></td>
+<td width="50%"><img src="docs/img/painel_amd.png" alt="Guia do AMD Adrenalin"></td>
+</tr>
+</table>
 
 <br>
 
 ## 🆕 Novidades
 
-> **Versão mais nova:** [veja o que mudou](../../releases/latest) · [histórico completo](core/NOVIDADES.md)
+> [Histórico completo](core/NOVIDADES.md) · [todas as versões](../../releases)
 
 <details open>
 <summary><b>v0.10.0</b> — chegou o app AVANTIPACK</summary>
 
-- 🖥️ **App AVANTIPACK**: o pack grátis agora também roda num app com visual próprio ([baixar](../../releases/latest/download/AVANTIPACK-App.exe))
-- 💬 Dentro do app, **as perguntas viram botões, listas e caixas de marcar**, sem tela de comando
-- ⭐ As funções Pro ficam no mesmo app, com cadeado: **comprar e ativar sem sair dele**
-- 🔄 O app **se atualiza sozinho**, com o arquivo conferido pela assinatura
+- 🖥️ **App AVANTIPACK**: as funções grátis num app com visual próprio, sem tela de comando
+- ⭐ **Pro no mesmo app**: funções Pro com cadeado, e dá para comprar e ativar a chave sem sair dele
+- 🔄 **Atualização automática**, com o arquivo conferido pela assinatura
 - 📦 Quem usa o pack em CMD ganha a tecla **A**, que instala o app
 
 </details>
@@ -75,201 +171,70 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 <details>
 <summary><b>v0.9.0</b> — manual com imagens e o pack não refaz o que já está certo</summary>
 
-- 📘 **Manual com imagens** (opção 5): painel da placa de vídeo, Windows, BIOS, processador, limite de FPS e 19 jogos, tela por tela
-- 🎯 O manual **marca os capítulos do seu PC** e tem **busca**
-- ✅ Antes de otimizar, o pack **confere o que já está aplicado** e pergunta antes de refazer
-- 🏷️ Categorias com **nomes mais claros** e correções de compatibilidade
-- 🧊 **Limpar cache de shaders** (opção 29) contra travadinhas depois de trocar o driver
-- 🍃 **Preparar para jogar** coloca navegador, launchers e RGB em **modo eficiência**
+- 📘 **Manual com imagens**: painéis, Windows, BIOS, processador, limite de FPS e 19 jogos
+- ✅ Antes de otimizar, **confere o que já está aplicado** e pergunta antes de refazer
+- 🧊 **Limpar cache de shaders** contra travadinhas depois de trocar o driver
+- 🍃 **Preparar para jogar** com modo eficiência para navegador, launchers e RGB
 
 </details>
 
 <br>
 
-## 🎬 Veja funcionando
-
-<div align="center">
-<img src="docs/img/demo.gif" alt="Otimização automática em ação" width="780">
-<br><sub>Modo <b>Automático</b>: o pack escolhe só o que é seguro para <i>este</i> PC e mostra cada etapa.</sub>
-</div>
-
-<br>
-
-## ✨ Por que o AVANTIPACK é diferente
-
-<table>
-<tr>
-<td width="50%" valign="top">
-
-### 🔍 Lê o seu hardware
-Detecta processador, placa de vídeo, RAM, disco e versão do Windows. Ajuste de NVIDIA não roda em placa AMD. Ajuste de SSD não roda em HD.
-
-</td>
-<td width="50%" valign="top">
-
-### ↩️ Tudo é reversível
-Cria ponto de restauração e guarda **o valor original de cada ajuste**. Desfaça tudo ou recoloque só a função que você usa.
-
-</td>
-</tr>
-<tr>
-<td valign="top">
-
-### 🎯 Feito para competitivo
-Foco em input lag: Reflex/Anti-Lag no driver, monitor no Hz máximo, mouse 1:1, dispositivos sem economia de energia e nota do PC.
-
-</td>
-<td valign="top">
-
-### 🚫 Sem placebo
-Nada de "+200 FPS com um regedit". Só ajustes com efeito comprovado. O que não funciona (ou faz mal) fica de fora e é explicado por quê no manual com imagens (`guias/MANUAL.html`, capítulo "O que evitamos").
-
-</td>
-</tr>
-<tr>
-<td valign="top">
-
-### 👶 Fácil para leigo
-Menu em português com explicação em cada opção. Guias com telas ilustradas mostrando **onde clicar**.
-
-</td>
-<td valign="top">
-
-### 🔄 Sempre atualizado
-Avisa quando sai versão nova e atualiza sozinho. Avisa também quando um update do Windows desfez seus ajustes.
-
-</td>
-</tr>
-</table>
-
-<br>
-
-## 🖥️ O que tem no grátis
-
-| | Opção | O que faz |
-|:-:|---|---|
-| 🟢 | **Otimizar meu PC** | **Automático**: aplica só o que é seguro para o seu PC, com backup. **Reaplicar** depois de update do Windows |
-| 💯 | **Verificar meu PC + Nota** | Peças, problemas (RAM sem XMP, monitor em 60 Hz, driver velho) e **nota de 0 a 100** |
-| 🧹 | **Limpeza rápida** (L) | Temporários, caches e downloads velhos do Windows. Seus arquivos não são tocados |
-| 🎮 | **Preparar para jogar** (J) | Mostra o que está gastando memória e fecha o que você marcar antes da partida |
-| 🔧 | **Consertar um problema** | 19 reparos: sem internet, sem som, microfone, Loja, Windows Update, Alt+Tab no 24H2... |
-| 📦 | **Programas úteis** | **[A] Instalar tudo automático**: programas e drivers certos para o seu PC, cada um na sua pasta |
-| 📖 | **Guias** | Painéis NVIDIA/AMD/Intel ilustrados, BIOS por fabricante, limite de FPS, config dentro dos jogos |
-| 🔴 | **Desfazer / recolocar** | Desfaz tudo ou só uma função, reinstala apps, religa funções do Windows |
-
-<br>
+## ❓ Perguntas frequentes
 
 <details>
-<summary><b>📋 O que o Automático ajusta (7 categorias)</b></summary>
+<summary><b>É seguro? Posso voltar atrás?</b></summary>
 
 <br>
 
-| Categoria | O que entra |
-|---|---|
-| 🛡️ **Segurança** | Ponto de restauração e backup de cada valor original |
-| 🧹 **Limpeza e privacidade** | Apps inúteis, telemetria, anúncios, Widgets/Copilot/Recall, serviços e tarefas desnecessários |
-| ⚡ **Sistema e input lag** | Mouse 1:1, Modo de Jogo, MMCSS, prioridade do jogo, visual leve, HPET, USB sem economia |
-| 🔋 **Energia e processador** | Plano de alto desempenho conforme a CPU (AMD/Intel, desktop/notebook) |
-| 🎮 **Placa de vídeo e monitor** | Painel NVIDIA automático, AMD Anti-Lag/Chill/ULPS, monitor no Hz máximo, agendamento da GPU |
-| 🌐 **Internet** | Ajustes conservadores de TCP e placa de rede sem economia de energia |
-| 💾 **SSD/HD e memória** | TRIM, limpeza, ajustes por tipo de disco |
+Sim. Antes de mudar qualquer coisa o app cria um ponto de restauração do Windows e guarda o valor original de cada ajuste. Em **Restauração > Reverter ajustes** você desfaz tudo, ou só a parte que quer de volta (impressora, gravar clipes, apps removidos...).
 
 </details>
-
-<br>
-
-## ↩️ Desfazer sem medo
-
-Precisa da impressora de volta? Quer gravar clipes no Xbox Game Bar? Recoloque **só aquilo**, sem desfazer o resto.
-
-<div align="center">
-<img src="docs/img/desfazer.gif" alt="Desfazer e recolocar funções" width="760">
-</div>
-
-<br>
-
-## 📖 Guias que mostram onde clicar
-
-Telas ilustradas no estilo de cada painel, com números indicando o caminho e a explicação de cada opção para quem nunca mexeu.
-
-<table>
-<tr>
-<td width="50%"><img src="docs/img/painel_nvidia.png" alt="Guia do Painel NVIDIA"></td>
-<td width="50%"><img src="docs/img/painel_amd.png" alt="Guia do AMD Adrenalin"></td>
-</tr>
-<tr>
-<td align="center"><sub><b>Painel de Controle NVIDIA</b></sub></td>
-<td align="center"><sub><b>AMD Adrenalin</b></sub></td>
-</tr>
-</table>
-
-Também tem: **BIOS** (XMP/EXPO, Resizable BAR... com o nome em cada fabricante), **limite de FPS**, **processador AMD/Intel** e **configurações dentro dos jogos** (CS2, Valorant, Fortnite, Warzone, LoL, Free Fire e mais).
-
-<br>
-
-## ⭐ AVANTIPACK PRO
-
-<div align="center">
-
-**Tudo do grátis e as funções mais avançadas, no mesmo app. Pagamento único de R$ 29,90.**
-
-<br>
-
-<a href="https://pay.kiwify.com.br/GJzVRdc"><img src="https://img.shields.io/badge/🛒%20COMPRAR%20O%20PRO%20·%20R$%2029,90-ffc43d?style=for-the-badge" alt="Comprar o AVANTIPACK Pro" height="42"></a>
-
-</div>
-
-| | Grátis | ⭐ Pro |
-|---|:-:|:-:|
-| Otimizar automático (seguro para o seu PC) | ✅ | ✅ |
-| Verificar + Nota do PC, Limpeza, Preparar para jogar | ✅ | ✅ |
-| Consertar, Programas úteis, Guias, Desfazer | ✅ | ✅ |
-| **Personalizado**: escolher cada ajuste, por categoria | — | ✅ |
-| **Teste de FPS** antes e depois (média, 1% low, travadinhas) | — | ✅ |
-| **Configurar os jogos sozinho** (CS2, Apex, Fortnite, Rocket League, Minecraft) | — | ✅ |
-| **Modo Jogo automático**: energia no máximo só enquanto o jogo está aberto | — | ✅ |
-| **Teste de temperatura**: descobre se o PC perde velocidade esquentando | — | ✅ |
-| **Prioridade dos jogos** + **perfil NVIDIA competitivo** por jogo | — | ✅ |
-| **DNS mais rápido**, **teste de input lag** com nota e **diagnóstico da internet** | — | ✅ |
-| **Ajustes avançados** (VBS, MSI, hypervisor, FSO) com explicação dos riscos | — | ✅ |
-| Programas da inicialização, manutenção semanal e relatório para ajuda | — | ✅ |
-| App com visual próprio, sem tela de comando | ✅ | ✅ |
-
-> [!TIP]
-> O Pro é **pagamento único**, com chave para **1 PC**. Trocou de PC? É só desativar no antigo e ativar no novo. Depois da compra, ative no próprio app, na tela **Licença**.
-
-<br>
-
-## 🚀 Como usar
-
-```text
-1. Baixe o AVANTIPACK-App.exe (botão "Baixar o app" lá em cima)
-2. Abra. Ele pede administrador: é para poder mudar as configurações do Windows
-3. Otimização  >  Otimização recomendada  >  Executar
-4. Reinicie o PC no final
-```
 
 <details>
-<summary><b>📦 Versão clássica em CMD (para quem já usava)</b></summary>
+<summary><b>O Windows mostrou "O Windows protegeu o computador"</b></summary>
 
 <br>
 
-```text
-1. Baixe o .zip em Releases e EXTRAIA a pasta (não rode de dentro do zip)
-2. Dê dois cliques em  AVANTIPACK.exe  (o ícone com a logo)
-3. Escolha  [1] OTIMIZAR MEU PC  >  [1] Automático
-4. Reinicie o PC no final
-```
-
-No menu da versão clássica, a tecla **A** instala o app.
+É o aviso padrão para programas novos que ainda não têm muitos downloads. Clique em **Mais informações > Executar assim mesmo**. O código do grátis está todo neste repositório para quem quiser conferir.
 
 </details>
 
-> [!TIP]
-> Depois de uma atualização grande do Windows, o menu mostra uma faixa amarela. Use **Otimizar > Reaplicar** para refazer suas escolhas.
+<details>
+<summary><b>Precisa de internet?</b></summary>
 
-> [!NOTE]
-> Se o Windows mostrar "O Windows protegeu o computador", clique em **Mais informações > Executar assim mesmo**. O pack é código aberto: dá para ler tudo neste repositório.
+<br>
+
+As funções grátis funcionam sem internet. A internet é usada para baixar programas e drivers, para ativar o Pro e para procurar atualizações.
+
+</details>
+
+<details>
+<summary><b>Funciona em notebook?</b></summary>
+
+<br>
+
+Sim. O app identifica notebook e escolhe o plano de energia e os ajustes certos para ele. Placa de vídeo integrada também é reconhecida.
+
+</details>
+
+<details>
+<summary><b>Já uso o pack em CMD. O que faço?</b></summary>
+
+<br>
+
+Ele continua funcionando. Atualize pela tecla **U** e aperte **A** no menu: o pack baixa e instala o app, com atalho na Área de Trabalho. Seus backups continuam valendo. Quem preferir ainda encontra o `.zip` em [Releases](../../releases/latest): extraia a pasta e abra o `AVANTIPACK.exe`.
+
+</details>
+
+<details>
+<summary><b>Troquei de PC. E a minha chave do Pro?</b></summary>
+
+<br>
+
+A chave vale para 1 PC por vez. No PC antigo, vá em **Licença > Desativar neste PC** e ative no novo.
+
+</details>
 
 <br>
 
@@ -277,36 +242,23 @@ No menu da versão clássica, a tecla **A** instala o app.
 
 | | |
 |---|---|
-| **Sistema** | Windows 10 (21H2+) ou Windows 11 |
-| **Permissão** | Administrador |
+| **Sistema** | Windows 10 (21H2 ou mais novo) ou Windows 11 |
+| **Permissão** | Administrador (o app pede ao abrir) |
 | **Downloads automáticos** | winget 1.8+ (já vem no Windows 11) |
 
-<br>
-
 <details>
-<summary><b>📁 Estrutura das pastas</b></summary>
+<summary><b>📁 O que tem neste repositório</b></summary>
 
 ```text
-AVANTIPACK.exe     abre o pack (ícone com a logo)
-LEIA-ME.txt        instruções
-core\              motor do pack (menu .bat, PowerShell, versão e novidades)
-guias\             MANUAL.html: manual com imagens (painéis, BIOS, jogos, limite de FPS)
+core\              as funções grátis (PowerShell), versão e novidades
+guias\             MANUAL.html: manual com imagens
 apps\              uma pasta por programa, cada uma com LEIA-ME.txt
-ferramentas\       só no GitHub: launcher do .exe
+AVANTIPACK.exe     abre a versão clássica em CMD
+ferramentas\       só no GitHub: código do AVANTIPACK.exe e do manual
 docs\              só no GitHub: imagens deste README
-core\dados\        criada no uso: backups e dados do seu PC (não vai pro Git)
 ```
 
-</details>
-
-<details>
-<summary><b>🔄 Como funciona a atualização automática</b></summary>
-
-<br>
-
-O pack consulta a última **Release** deste repositório (no máximo a cada 12 h). Se houver versão maior que a do `core/VERSION.txt`, aparece a faixa verde no menu. Ao apertar **U**, ele baixa, troca os arquivos e reabre. **Backups, logs e configuração são mantidos.**
-
-Para quem publica: [`guias/GITHUB_PASSO_A_PASSO.txt`](guias/GITHUB_PASSO_A_PASSO.txt).
+O app (`AVANTIPACK-App.exe`) fica em [Releases](../../releases/latest).
 
 </details>
 
@@ -314,7 +266,7 @@ Para quem publica: [`guias/GITHUB_PASSO_A_PASSO.txt`](guias/GITHUB_PASSO_A_PASSO
 
 ## ⚠️ Aviso
 
-Otimizações de sistema e de BIOS são **por conta e risco de quem usa**: cada PC responde de um jeito. O AVANTIPACK cria ponto de restauração e permite desfazer cada ajuste, mas recomendamos ler as explicações antes de aplicar o que está marcado como risco.
+Otimizações de sistema e de BIOS são **por conta e risco de quem usa**: cada PC responde de um jeito. O AVANTIPACK cria ponto de restauração e permite desfazer cada ajuste, mas leia as explicações antes de aplicar o que está marcado como "Use com cuidado".
 
 ## 👤 Autor
 
