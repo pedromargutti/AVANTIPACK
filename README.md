@@ -170,22 +170,21 @@ As configurações que só dá para mudar fora do Windows, explicadas tela por t
 > [Histórico completo](core/NOVIDADES.md) · [todas as versões](../../releases)
 
 <details open>
+<summary><b>v0.10.1</b> — ative o Pro com o e-mail da compra</summary>
+
+- 🔑 Na tela **Licença**, a aba **"Com o e-mail da compra"** ativa o Pro sem esperar chave
+- 🎉 A chave aparece na tela ao ativar, para você guardar
+- 🔄 Primeira **atualização automática** do app: o 1.5.0 avisa e atualiza com 1 clique
+
+</details>
+
+<details>
 <summary><b>v0.10.0</b> — chegou o app AVANTIPACK</summary>
 
 - 🖥️ **App AVANTIPACK**: as funções grátis num app com visual próprio, sem tela de comando
 - ⭐ **Pro no mesmo app**: funções Pro com cadeado, e dá para comprar e ativar a chave sem sair dele
 - 🔄 **Atualização automática**, com o arquivo conferido pela assinatura
 - 📦 Quem usa o pack em CMD ganha a tecla **A**, que instala o app
-
-</details>
-
-<details>
-<summary><b>v0.9.0</b> — manual com imagens e o pack não refaz o que já está certo</summary>
-
-- 📘 **Manual com imagens**: painéis, Windows, BIOS, processador, limite de FPS e 19 jogos
-- ✅ Antes de otimizar, **confere o que já está aplicado** e pergunta antes de refazer
-- 🧊 **Limpar cache de shaders** contra travadinhas depois de trocar o driver
-- 🍃 **Preparar para jogar** com modo eficiência para navegador, launchers e RGB
 
 </details>
 

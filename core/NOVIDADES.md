@@ -2,6 +2,12 @@
 
 Tudo o que mudou em cada versão. A mais nova fica sempre em cima.
 
+## v0.10.1 — 26/11/2026
+- 🔑 **Ativar o Pro com o e-mail da compra**: na tela Licença, a aba "Com o e-mail da compra" já vem aberta. Basta o e-mail usado na compra e o código do pedido da Kiwify, sem esperar chave
+- 🎉 **A chave aparece na tela** ao ativar pela compra, para você guardar
+- 🛒 **Cartão de compra do Pro** explica que a ativação é na hora
+- 🔄 **Primeira atualização automática do app**: quem está com o app 1.5.0 recebe o aviso "Nova versão" e atualiza com 1 clique
+
 ## v0.10.0 — 26/11/2026
 - 🖥️ **App AVANTIPACK**: o pack grátis agora também roda num app com visual próprio. Baixe o `AVANTIPACK-App.exe` nas Releases
 - 💬 **Sem tela de comando no app**: as perguntas viram botões, listas e caixas de marcar
