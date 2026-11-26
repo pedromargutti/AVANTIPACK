@@ -21,9 +21,7 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 
 <br>
 
-<a href="../../releases/latest/download/AVANTIPACK-App.exe"><img src="https://img.shields.io/badge/⬇%20BAIXAR%20O%20APP-1d43ff?style=for-the-badge" alt="Baixar o app" height="42"></a>
-&nbsp;
-<a href="../../releases/latest"><img src="https://img.shields.io/badge/📦%20PACK%20CLÁSSICO%20(.zip)-0b2a66?style=for-the-badge" alt="Pack clássico" height="42"></a>
+<a href="../../releases/latest/download/AVANTIPACK-App.exe"><img src="https://img.shields.io/badge/⬇%20BAIXAR%20O%20APP%20GRÁTIS-1d43ff?style=for-the-badge" alt="Baixar o app grátis" height="42"></a>
 &nbsp;
 <a href="#-avantipack-pro"><img src="https://img.shields.io/badge/⭐%20CONHECER%20O%20PRO-ffc43d?style=for-the-badge&logoColor=black" alt="Conhecer o Pro" height="42"></a>
 
@@ -52,7 +50,8 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 
 - 🆓 **As funções grátis já vêm dentro do app**: Otimização recomendada, Pontuação, Limpeza, Cache de shaders, Reparos, Programas, Desfazer e o Manual. Não precisa de chave nem de internet.
 - ⭐ **As funções Pro aparecem com cadeado**: clique para ver o que cada uma faz, comprar ou ativar a chave, sem sair do app.
-- 📦 **Prefere o jeito antigo?** O pack clássico em CMD continua no `.zip` das Releases, igual a antes.
+- 🔄 **Atualiza sozinho**: quando sai versão nova, o app avisa e troca com um clique, conferindo a assinatura do arquivo.
+- 📦 **Já usa o pack em CMD?** Atualize pela tecla **U** e aperte **A** no menu: ele instala o app para você.
 
 <sub>Telas ilustrativas: as peças e os números mudam conforme o seu PC.</sub>
 
@@ -68,7 +67,8 @@ Menos input lag, FPS mais estável, Windows mais leve, e **tudo pode ser desfeit
 - 🖥️ **App AVANTIPACK**: o pack grátis agora também roda num app com visual próprio ([baixar](../../releases/latest/download/AVANTIPACK-App.exe))
 - 💬 Dentro do app, **as perguntas viram botões, listas e caixas de marcar**, sem tela de comando
 - ⭐ As funções Pro ficam no mesmo app, com cadeado: **comprar e ativar sem sair dele**
-- 📦 O **pack clássico** em CMD continua no `.zip`, igual
+- 🔄 O app **se atualiza sozinho**, com o arquivo conferido pela assinatura
+- 📦 Quem usa o pack em CMD ganha a tecla **A**, que instala o app
 
 </details>
 
@@ -242,16 +242,17 @@ Também tem: **BIOS** (XMP/EXPO, Resizable BAR... com o nome em cada fabricante)
 
 ## 🚀 Como usar
 
-**App (recomendado)**
-
 ```text
-1. Baixe o AVANTIPACK-App.exe em Releases
-2. Abra (ele pede administrador: é para poder mudar as configurações do Windows)
+1. Baixe o AVANTIPACK-App.exe (botão "Baixar o app" lá em cima)
+2. Abra. Ele pede administrador: é para poder mudar as configurações do Windows
 3. Otimização  >  Otimização recomendada  >  Executar
 4. Reinicie o PC no final
 ```
 
-**Pack clássico (CMD)**
+<details>
+<summary><b>📦 Versão clássica em CMD (para quem já usava)</b></summary>
+
+<br>
 
 ```text
 1. Baixe o .zip em Releases e EXTRAIA a pasta (não rode de dentro do zip)
@@ -259,6 +260,10 @@ Também tem: **BIOS** (XMP/EXPO, Resizable BAR... com o nome em cada fabricante)
 3. Escolha  [1] OTIMIZAR MEU PC  >  [1] Automático
 4. Reinicie o PC no final
 ```
+
+No menu da versão clássica, a tecla **A** instala o app.
+
+</details>
 
 > [!TIP]
 > Depois de uma atualização grande do Windows, o menu mostra uma faixa amarela. Use **Otimizar > Reaplicar** para refazer suas escolhas.

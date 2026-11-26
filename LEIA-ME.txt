@@ -1,6 +1,14 @@
 =====================================================================
-  AVANTIPACK GRÁTIS v0.8 - Otimização do Windows para jogos
+  AVANTIPACK GRÁTIS v0.10 - Otimização do Windows para jogos
 =====================================================================
+
+  NOVO: O AVANTIPACK AGORA É UM APP
+  ---------------------------------------------------------------
+  Mesmas funções grátis, com visual próprio e sem tela preta.
+  No menu deste pack, aperte A: ele baixa, instala e abre o app
+  (e cria o atalho "AVANTIPACK App" na Área de Trabalho).
+  Ou baixe direto: github.com/pedromargutti/AVANTIPACK/releases
+
 
   COMO USAR (3 PASSOS)
   ---------------------------------------------------------------

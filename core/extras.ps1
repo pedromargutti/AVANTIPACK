@@ -265,3 +265,47 @@ function Invoke-EficienciaFundo {
     foreach ($p in $ps) { if (Set-ModoEficiencia $p) { $n++ } }
     Write-Ok ("{0} processo(s) em modo eficiencia ({1})." -f $n, ($nomes -join ', '))
 }
+
+# ---------------------------------------------------------------------
+#  App AVANTIPACK: baixa o app novo (Releases do GitHub), cria os
+#  atalhos e abre. O pack classico continua funcionando igual.
+# ---------------------------------------------------------------------
+function Mod-InstalarApp {
+    $script:CurMod = 'app'
+    Write-Title 'APP AVANTIPACK'
+    Write-Note 'O AVANTIPACK agora e um app com visual proprio: as mesmas funcoes gratis, sem tela preta,'
+    Write-Note 'com as perguntas em botoes e listas. O Pro tambem e ativado dentro dele.'
+    Write-Note 'Seus ajustes e backups continuam aqui no pack: o "Desfazer" do pack classico segue valendo.'
+    Write-Host ''
+    if (-not (Confirm-Step 'Baixar e instalar o app agora (cerca de 2 MB)?')) { Write-Skip 'Tudo bem: o pack classico continua igual.'; return }
+    $cfg = Get-PackConfig
+    $repo = if ($cfg.GITHUB_REPO) { $cfg.GITHUB_REPO } else { 'pedromargutti/AVANTIPACK' }
+    $url = "https://github.com/$repo/releases/latest/download/AVANTIPACK-App.exe"
+    $dir = Join-Path $env:LOCALAPPDATA 'Programs\AVANTIPACK'
+    $exe = Join-Path $dir 'AVANTIPACK.exe'
+    $tmp = Join-Path $env:TEMP ('avp_app_' + [guid]::NewGuid().ToString('N') + '.exe')
+    try {
+        New-Item -ItemType Directory -Path $dir -Force | Out-Null
+        try { [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12 } catch {}
+        Write-Info 'Baixando o app...'
+        Invoke-WebRequest -Uri $url -OutFile $tmp -UseBasicParsing -Headers @{ 'User-Agent' = 'AVANTIPACK' }
+        $b = [IO.File]::ReadAllBytes($tmp)
+        if ($b.Length -lt 500KB -or $b[0] -ne 0x4D -or $b[1] -ne 0x5A) { throw 'o arquivo baixado nao e o app' }
+        Get-Process -ErrorAction SilentlyContinue | Where-Object { $_.Path -eq $exe } | Stop-Process -Force -ErrorAction SilentlyContinue
+        Move-Item -Path $tmp -Destination $exe -Force
+    } catch {
+        Remove-Item $tmp -Force -ErrorAction SilentlyContinue
+        Write-Warn ("Nao consegui baixar o app: " + $_.Exception.Message)
+        Write-Note "Baixe direto pelo navegador: https://github.com/$repo/releases/latest"
+        return
+    }
+    try {
+        $sh = New-Object -ComObject WScript.Shell
+        foreach ($lnk in @((Join-Path ([Environment]::GetFolderPath('Desktop')) 'AVANTIPACK App.lnk'), (Join-Path ([Environment]::GetFolderPath('Programs')) 'AVANTIPACK.lnk'))) {
+            $s = $sh.CreateShortcut($lnk); $s.TargetPath = $exe; $s.WorkingDirectory = $dir; $s.Description = 'AVANTIPACK - otimizacao do Windows para jogos'; $s.Save()
+        }
+        Write-Ok 'Atalhos criados: "AVANTIPACK App" na Area de Trabalho e no menu Iniciar.'
+    } catch {}
+    Write-Ok 'App instalado. Abrindo...'
+    try { Start-Process -FilePath "$env:SystemRoot\explorer.exe" -ArgumentList ('"' + $exe + '"') } catch { Start-Process -FilePath $exe }
+}

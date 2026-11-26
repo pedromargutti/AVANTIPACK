@@ -651,6 +651,7 @@ switch ($Module) {
     'nota'          { Mod-Nota }
     'limpeza'       { Mod-Limpeza }
     'shaders'       { Mod-Shaders }
+    'instalarapp'   { Mod-InstalarApp }
     'prejogo'       { Mod-PreJogo }
     'manutencao'    { }
     default { Write-Warn "Modulo desconhecido: $Module" }
@@ -658,7 +659,7 @@ switch ($Module) {
 
 try { Update-StatusFile } catch {}
 try { Save-Estado } catch {}
-if ($Module -notin @('__pro', 'novidades-auto', 'novidades', 'detect-silent', 'detect', 'apps', 'guias', 'bios', 'visual', 'fix', 'manutencao', 'atualizar', 'configjogos', 'nota', 'prejogo', 'shaders')) {
+if ($Module -notin @('__pro', 'novidades-auto', 'novidades', 'detect-silent', 'detect', 'apps', 'guias', 'bios', 'visual', 'fix', 'manutencao', 'atualizar', 'configjogos', 'nota', 'prejogo', 'shaders', 'instalarapp')) {
     Write-Host ''
     if ($script:Applied -gt 0) { Write-Ok "$($script:Applied) ajuste(s) aplicado(s). Backup salvo em core\dados\backup" }
     if ($script:NeedReboot)    { Write-Warn 'Reinicie o PC para tudo entrar em vigor (opcao 8 do menu).' }
