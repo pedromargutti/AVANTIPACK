@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="64" viewBox="0 0 300 64" role="img" aria-label="Baixar o app grátis">
+<defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#2e68ff"/><stop offset="1" stop-color="#00d6ff"/></linearGradient>
+<linearGradient id="s" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".28"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<clipPath id="c"><rect width="300" height="64" rx="14"/></clipPath></defs>
+<style>.sh{animation:sw 5s ease-in-out 1s infinite}@keyframes sw{0%{transform:translateX(-160px)}35%,100%{transform:translateX(460px)}}@media (prefers-reduced-motion:reduce){.sh{display:none}}</style>
+<rect width="300" height="64" rx="14" fill="url(#g)" />
+<g clip-path="url(#c)"><rect class="sh" x="-120" y="0" width="120" height="64" fill="url(#s)" transform="skewX(-20)"/></g>
+<path d="M32 20v18m0 0l-7-7m7 7l7-7M22 44h20" fill="none" stroke="#06101f" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="62" y="29" font-family="'Segoe UI Variable Display','Segoe UI',Inter,'Helvetica Neue',Arial,sans-serif" font-size="18" font-weight="700" fill="#06101f">Baixar o app grátis</text>
+<text x="62" y="48" font-family="'Segoe UI Variable Display','Segoe UI',Inter,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#06101f" opacity=".78">Windows 10 e 11 · cerca de 2 MB</text>
+</svg>

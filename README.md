@@ -1,47 +1,31 @@
 <div align="center">
 
-<img src="docs/img/banner.svg" alt="AVANTIPACK" width="100%">
-
-<br>
-
-<a href="../../releases/latest"><img src="https://img.shields.io/github/v/release/pedromargutti/AVANTIPACK?style=for-the-badge&color=1d43ff&label=vers%C3%A3o&cacheSeconds=600" alt="versão"></a>
-<a href="../../releases"><img src="https://img.shields.io/github/downloads/pedromargutti/AVANTIPACK/total?style=for-the-badge&color=008cff&label=downloads&cacheSeconds=600" alt="downloads"></a>
-<img src="https://img.shields.io/badge/Windows-10%20%7C%2011-00b4ff?style=for-the-badge&logo=windows&logoColor=white" alt="Windows 10 e 11">
-<img src="https://img.shields.io/badge/100%25-revers%C3%ADvel-16c60c?style=for-the-badge" alt="100% reversível">
-<img src="https://img.shields.io/badge/c%C3%B3digo-aberto-16c60c?style=for-the-badge" alt="código aberto">
+<img src="docs/img/hero.svg" alt="AVANTIPACK: seu Windows pronto para jogar. Menos input lag e FPS mais estável, com ajustes para as peças do seu PC." width="100%">
 
 <br><br>
 
-## O app que deixa o Windows pronto para jogar
-
-**Menos input lag, FPS mais estável e um Windows mais leve,**<br>
-**com ajustes escolhidos para as peças do <i>seu</i> PC e tudo reversível com um clique.**
-
-<br>
-
-<a href="../../releases/latest/download/AVANTIPACK-App.exe"><img src="https://img.shields.io/badge/⬇%20BAIXAR%20O%20APP%20GRÁTIS-1d43ff?style=for-the-badge" alt="Baixar o app grátis" height="46"></a>
-&nbsp;
-<a href="https://pay.kiwify.com.br/GJzVRdc"><img src="https://img.shields.io/badge/⭐%20AVANTIPACK%20PRO%20·%20R$%2029,90-ffc43d?style=for-the-badge" alt="Comprar o AVANTIPACK Pro" height="46"></a>
-
-<sub>Windows 10 e 11 · um arquivo só, sem instalação · as funções grátis não pedem cadastro nem chave</sub>
+<a href="../../releases/latest/download/AVANTIPACK-App.exe"><img src="docs/img/btn_baixar.svg" alt="Baixar o app grátis (Windows 10 e 11)" height="64"></a>
+&nbsp;&nbsp;
+<a href="https://pay.kiwify.com.br/GJzVRdc"><img src="docs/img/btn_pro.svg" alt="Comprar o AVANTIPACK Pro por R$ 29,90" height="64"></a>
 
 <br><br>
 
-<img src="docs/img/app_painel.png" alt="Painel do app AVANTIPACK: o PC ao vivo, a pontuação e por onde começar" width="900">
+<a href="../../releases/latest"><img src="https://img.shields.io/github/v/release/pedromargutti/AVANTIPACK?style=flat-square&color=2e68ff&label=vers%C3%A3o&labelColor=14171d&cacheSeconds=600" alt="versão"></a>
+<a href="../../releases"><img src="https://img.shields.io/github/downloads/pedromargutti/AVANTIPACK/total?style=flat-square&color=00a6ff&label=downloads&labelColor=14171d&cacheSeconds=600" alt="downloads"></a>
+<img src="https://img.shields.io/badge/Windows-10%20%7C%2011-00d6ff?style=flat-square&logo=windows&logoColor=white&labelColor=14171d" alt="Windows 10 e 11">
+<a href="LICENSE"><img src="https://img.shields.io/badge/licen%C3%A7a-MIT-3ddc97?style=flat-square&labelColor=14171d" alt="licença MIT"></a>
+
+<sub>Um arquivo só, sem instalação. As funções grátis não pedem cadastro nem chave.</sub>
 
 </div>
 
 <br>
 
-## ⚡ Em 3 cliques
+## ⚡ Como funciona
 
-```text
-1. Baixe e abra o AVANTIPACK-App.exe   (ele pede administrador para mudar o Windows)
-2. Otimização  >  Otimização recomendada  >  Executar
-3. Reinicie o PC
-```
+<img src="docs/img/passos.svg" alt="1. Abra o app: ele lê as peças do seu PC. 2. Otimização recomendada: mostra o que vai mudar e pergunta antes. 3. Reinicie e jogue: backup de tudo." width="100%">
 
-O app lê o seu processador, placa de vídeo, memória e disco, mostra o que vai fazer e pergunta antes. O que já está certo no seu PC **não é refeito**.
+<p align="center"><img src="docs/img/app_painel.png" alt="Painel do app AVANTIPACK: o PC ao vivo, a pontuação e por onde começar" width="900"></p>
 
 <br>
 
@@ -140,15 +124,16 @@ O que o grátis faz está aqui, linha por linha, em PowerShell. Dá para ler tud
 
 ## 🔑 Comprou o Pro? Ative assim
 
+Depois do pagamento, a Kiwify abre a [página de ativação](https://pedromargutti.github.io/AVANTIPACK/obrigado/), que já baixa o app e mostra cada passo.
+
 ```text
-1. Abra o AVANTIPACK  (ainda não tem? botão "Baixar o app grátis" lá em cima)
-2. Clique em  Licença  >  Com o e-mail da compra
-3. Digite o e-mail que você usou na compra e o código do pedido
-   (o código está no e-mail de confirmação da Kiwify)
+1. Abra o AVANTIPACK-App.exe
+2. Licença  >  Com o e-mail da compra
+3. Digite o e-mail da compra e o código do pedido (vem no e-mail da Kiwify)
 4. Ativar. Pronto: todas as funções Pro liberadas neste PC
 ```
 
-Não precisa esperar e-mail com chave: o pedido já libera o Pro. Se a chave chegar, ela também funciona em **Licença > Com a chave**.
+Não precisa esperar chave: o pedido já libera o Pro. Se você tiver a chave, ela também funciona em **Licença > Com a chave**.
 
 <br>
 

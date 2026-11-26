@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="64" viewBox="0 0 300 64" role="img" aria-label="AVANTIPACK Pro">
+<defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#2e68ff"/><stop offset="1" stop-color="#00d6ff"/></linearGradient>
+<linearGradient id="s" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".28"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<clipPath id="c"><rect width="300" height="64" rx="14"/></clipPath></defs>
+<style>.sh{animation:sw 5s ease-in-out 1s infinite}@keyframes sw{0%{transform:translateX(-160px)}35%,100%{transform:translateX(460px)}}@media (prefers-reduced-motion:reduce){.sh{display:none}}</style>
+<rect width="300" height="64" rx="14" fill="#1a1508" stroke="#5a4316" stroke-width="1.5"/>
+<g clip-path="url(#c)"><rect class="sh" x="-120" y="0" width="120" height="64" fill="url(#s)" transform="skewX(-20)"/></g>
+<path d="M32 18l4.2 8.6 9.4 1.4-6.8 6.6 1.6 9.4L32 39.6 23.6 44l1.6-9.4-6.8-6.6 9.4-1.4z" fill="#ffb547"/>
+<text x="62" y="29" font-family="'Segoe UI Variable Display','Segoe UI',Inter,'Helvetica Neue',Arial,sans-serif" font-size="18" font-weight="700" fill="#ffd590">AVANTIPACK Pro</text>
+<text x="62" y="48" font-family="'Segoe UI Variable Display','Segoe UI',Inter,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#ffd590" opacity=".78">Pagamento único · R$ 29,90</text>
+</svg>
