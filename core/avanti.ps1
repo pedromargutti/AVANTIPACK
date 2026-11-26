@@ -612,6 +612,7 @@ function Mod-Guias { Open-Manual }
 . (Join-Path $PSScriptRoot 'manutencao.ps1')
 . (Join-Path $PSScriptRoot 'pro.ps1')
 . (Join-Path $PSScriptRoot 'extras.ps1')
+. (Join-Path $PSScriptRoot 'app.ps1')          # por ultimo: dentro do app AVANTIPACK, troca o console pelas telas do app
 
 # ---------------------------------------------------------------------
 #  Execucao
