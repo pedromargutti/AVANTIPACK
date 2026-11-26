@@ -3,125 +3,265 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Compra aprovada · AVANTIPACK Pro</title>
+<title>Pagamento aprovado · AVANTIPACK Pro</title>
 <meta name="robots" content="noindex">
+<meta name="theme-color" content="#0c0e12">
 <link rel="icon" href="../img/logo.png">
 <style>
   :root {
-    --fundo: #0c0e12; --painel: #14171d; --linha: #2e3440; --texto: #f0f2f6;
-    --suave: #9ca3b0; --azul: #2e68ff; --ciano: #00d6ff; --verde: #3ddc97; --ambar: #ffb547;
+    --fundo: #0c0e12; --lateral: #0f1116; --painel: #14171d; --painel2: #1b1f27; --linha: #2e3440;
+    --texto: #f0f2f6; --suave: #9ca3b0; --apagado: #848b99;
+    --azul: #2e68ff; --ciano: #00d6ff; --verde: #3ddc97; --ambar: #ffb547;
   }
   * { box-sizing: border-box; }
-  html { background: var(--fundo); }
+  html { background: var(--fundo); -webkit-text-size-adjust: 100%; }
   body {
     margin: 0; color: var(--texto);
-    font: 16px/1.6 "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
-    background: radial-gradient(900px 500px at 85% -10%, rgba(20, 60, 140, .45), transparent 70%);
+    font: 16px/1.6 "Segoe UI Variable Text", "Segoe UI", Inter, system-ui, -apple-system, sans-serif;
+    background:
+      radial-gradient(760px 420px at 80% -120px, rgba(0, 150, 255, .22), transparent 70%),
+      radial-gradient(600px 380px at -10% 10%, rgba(46, 104, 255, .14), transparent 70%);
     min-height: 100vh;
   }
-  main { max-width: 760px; margin: 0 auto; padding: 40px 22px 64px; }
-  .topo { width: 100%; height: auto; border-radius: 16px; border: 1px solid var(--linha); display: block; }
-  .ok { display: flex; gap: 14px; align-items: center; margin: 34px 0 6px; }
-  .ok svg { flex: none; }
-  h1 { font-size: clamp(28px, 5vw, 38px); line-height: 1.15; margin: 0; letter-spacing: -.01em; }
-  .lead { color: var(--suave); margin: 8px 0 28px; max-width: 60ch; }
+  a { color: var(--ciano); }
+  a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid var(--ciano); outline-offset: 3px; border-radius: 8px; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 28px 22px 72px; }
+
+  .marca { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--texto); }
+  .marca img { width: 36px; height: 36px; border-radius: 9px; }
+  .marca b { font-size: 17px; letter-spacing: .02em; }
+  .marca span { color: #08101e; background: linear-gradient(90deg, var(--azul), var(--ciano)); font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 99px; }
+
+  .hero { display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: center; margin: 46px 0 30px; }
+  .selo { width: 76px; height: 76px; }
+  .selo circle { fill: rgba(61, 220, 151, .12); stroke: rgba(61, 220, 151, .45); stroke-width: 1.5; }
+  .selo path { fill: none; stroke: var(--verde); stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round;
+    stroke-dasharray: 40; stroke-dashoffset: 40; animation: risca .55s .25s cubic-bezier(.65, 0, .35, 1) forwards; }
+  @keyframes risca { to { stroke-dashoffset: 0; } }
+  h1 { font-size: clamp(28px, 4.6vw, 44px); line-height: 1.12; margin: 0 0 8px; letter-spacing: -.015em; font-weight: 750; }
+  .hero p { margin: 0; color: var(--suave); font-size: 17px; max-width: 58ch; }
+
   .baixar {
-    display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between;
-    background: var(--painel); border: 1px solid var(--linha); border-radius: 16px; padding: 22px 24px;
+    display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: center;
+    background: linear-gradient(180deg, var(--painel2), var(--painel)); border: 1px solid var(--linha);
+    border-radius: 18px; padding: 20px 22px;
   }
-  .baixar p { margin: 0; color: var(--suave); }
-  .baixar strong { color: var(--texto); display: block; font-size: 18px; }
+  .arquivo { width: 52px; height: 52px; border-radius: 13px; display: grid; place-items: center; background: #0e2240; }
+  .arquivo img { width: 34px; height: 34px; border-radius: 8px; }
+  .baixar strong { display: block; font-size: 17px; }
+  .baixar small { color: var(--suave); font-size: 14px; }
+  .estado { display: flex; align-items: center; gap: 8px; margin-top: 4px; font-size: 14px; color: var(--verde); }
+  .estado::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex: none; }
+  .estado[hidden] { display: none; }
   .botao {
-    display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 700;
-    color: #08101e; background: linear-gradient(90deg, var(--azul), var(--ciano));
-    padding: 14px 22px; border-radius: 12px; white-space: nowrap;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; font-weight: 700; font-size: 16px;
+    color: #06101f; background: linear-gradient(90deg, var(--azul), var(--ciano)); border: 0; cursor: pointer;
+    padding: 14px 22px; border-radius: 12px; white-space: nowrap; font-family: inherit;
   }
   .botao:hover { filter: brightness(1.08); }
-  .botao:focus-visible, a:focus-visible { outline: 3px solid var(--ciano); outline-offset: 3px; }
-  h2 { font-size: 22px; margin: 44px 0 14px; }
-  ol.passos { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; counter-reset: p; }
+  .botao.secundario { background: var(--painel2); color: var(--texto); border: 1px solid var(--linha); padding: 9px 14px; font-size: 14px; }
+
+  .celular { display: none; margin-top: 14px; padding: 16px 20px; border-radius: 14px; background: #0e2042; border: 1px solid #1d3f7a; color: #d6e4ff; }
+  .celular b { color: #fff; }
+  .celular .linha-link { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 10px; }
+  .celular code { font-family: inherit; font-weight: 600; background: rgba(0, 0, 0, .3); padding: 6px 10px; border-radius: 8px; word-break: break-all; }
+  body.mobile .celular { display: block; }
+
+  h2 { font-size: 24px; margin: 56px 0 6px; letter-spacing: -.01em; }
+  .sub { color: var(--suave); margin: 0 0 22px; }
+  .ativar { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 28px; align-items: start; }
+  ol.passos { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; counter-reset: p; }
   ol.passos li {
-    counter-increment: p; position: relative; padding: 18px 20px 18px 66px;
-    background: var(--painel); border: 1px solid var(--linha); border-radius: 14px;
+    counter-increment: p; position: relative; padding: 16px 18px 16px 62px; border-radius: 14px;
+    background: var(--painel); border: 1px solid var(--linha);
   }
   ol.passos li::before {
-    content: counter(p); position: absolute; left: 20px; top: 18px; width: 30px; height: 30px; border-radius: 50%;
-    display: grid; place-items: center; font-weight: 700; font-size: 15px; color: var(--ciano); background: #0e2840;
+    content: counter(p); position: absolute; left: 18px; top: 16px; width: 28px; height: 28px; border-radius: 50%;
+    display: grid; place-items: center; font-weight: 700; font-size: 14px; color: #241703; background: var(--ambar);
   }
-  ol.passos b { color: var(--texto); }
-  ol.passos span { color: var(--suave); display: block; }
-  .caminho { font-family: inherit; background: #0e2042; color: #cfe0ff; padding: 1px 8px; border-radius: 6px; white-space: nowrap; }
-  .aviso {
-    margin-top: 28px; padding: 16px 20px; border-radius: 14px;
-    background: #281f0c; border: 1px solid #5a4316; color: #f5dfb4;
-  }
+  ol.passos b { display: block; }
+  ol.passos span { color: var(--suave); font-size: 15px; }
+  .tag { font-weight: 600; color: #cfe0ff; background: #0e2042; padding: 1px 7px; border-radius: 6px; white-space: nowrap; }
+
+  .app { margin: 0; border-radius: 14px; border: 1px solid var(--linha); background: var(--fundo); overflow: hidden; box-shadow: 0 24px 60px rgba(0, 0, 0, .45); position: sticky; top: 20px; }
+  .app-barra { height: 30px; display: flex; align-items: center; padding: 0 12px; font-size: 11px; color: var(--apagado); background: var(--lateral); border-bottom: 1px solid #1b1f27; }
+  .app-corpo { display: grid; grid-template-columns: 132px 1fr; min-height: 300px; }
+  .app-menu { background: var(--lateral); padding: 12px 8px; font-size: 12px; color: var(--suave); }
+  .app-menu .m { padding: 6px 10px; border-radius: 7px; }
+  .app-menu .g { font-size: 10px; color: var(--apagado); padding: 10px 10px 2px; }
+  .app-menu .ativo { background: var(--painel2); color: var(--texto); box-shadow: inset 3px 0 0 var(--ciano); }
+  .app-tela { padding: 18px 18px 20px; }
+  .app-tela h3 { margin: 0 0 10px; font-size: 16px; }
+  .abas { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+  .aba { font-size: 11.5px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--linha); color: var(--suave); }
+  .aba.on { border-color: var(--ciano); color: var(--texto); background: rgba(0, 214, 255, .08); }
+  .campos { display: grid; grid-template-columns: 1.6fr 1fr; gap: 10px; }
+  .campo label { display: block; font-size: 10.5px; color: var(--suave); margin-bottom: 4px; }
+  .campo div { height: 32px; border-radius: 8px; background: var(--painel); border: 1px solid var(--linha); font-size: 12px; color: var(--apagado); display: flex; align-items: center; padding: 0 10px; overflow: hidden; white-space: nowrap; }
+  .app-ativar { margin-top: 12px; display: inline-block; font-size: 12px; font-weight: 700; padding: 8px 18px; border-radius: 8px; background: var(--azul); color: #fff; }
+  .alvo { position: relative; }
+  .alvo::after { content: attr(data-n); position: absolute; top: -9px; right: -9px; width: 20px; height: 20px; border-radius: 50%;
+    background: var(--ambar); color: #241703; font-size: 11px; font-weight: 800; display: grid; place-items: center; box-shadow: 0 0 0 3px var(--fundo); }
+  .legenda { font-size: 12px; color: var(--apagado); text-align: right; padding: 0 12px 10px; }
+
+  .aviso { margin-top: 26px; display: grid; grid-template-columns: auto 1fr; gap: 14px; padding: 16px 20px; border-radius: 14px; background: #241c0b; border: 1px solid #5a4316; color: #f2dfb8; }
   .aviso b { color: var(--ambar); }
-  details { margin-top: 12px; background: var(--painel); border: 1px solid var(--linha); border-radius: 14px; padding: 14px 20px; }
-  summary { cursor: pointer; font-weight: 600; }
+
+  .duvidas { display: grid; gap: 10px; }
+  details { background: var(--painel); border: 1px solid var(--linha); border-radius: 14px; padding: 14px 18px; }
+  summary { cursor: pointer; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; color: var(--ciano); font-size: 20px; line-height: 1; }
+  details[open] summary::after { content: "–"; }
   details p { color: var(--suave); margin: 10px 0 2px; }
-  a { color: var(--ciano); }
-  footer { margin-top: 44px; color: var(--suave); font-size: 14px; }
-  @media (max-width: 560px) { .baixar { flex-direction: column; align-items: stretch; } .botao { justify-content: center; } }
+  footer { margin-top: 48px; padding-top: 22px; border-top: 1px solid #1b1f27; color: var(--suave); font-size: 14px; display: flex; flex-wrap: wrap; gap: 8px 22px; justify-content: space-between; }
+
+  @media (max-width: 860px) {
+    .ativar { grid-template-columns: 1fr; }
+    .app { position: static; }
+  }
+  @media (max-width: 560px) {
+    .wrap { padding-top: 20px; }
+    .hero { grid-template-columns: 1fr; gap: 14px; margin-top: 30px; }
+    .selo { width: 60px; height: 60px; }
+    .baixar { grid-template-columns: auto 1fr; }
+    .baixar .botao { grid-column: 1 / -1; }
+    .app-corpo { grid-template-columns: 1fr; }
+    .app-menu { display: none; }
+    .campos { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) { .selo path { animation: none; stroke-dashoffset: 0; } }
 </style>
 </head>
 <body>
-<main>
-  <img class="topo" src="topo.jpg" width="1200" height="450" alt="AVANTIPACK Pro: mais FPS estável e menos input lag">
+<div class="wrap">
+  <a class="marca" href="https://github.com/pedromargutti/AVANTIPACK"><img src="../img/logo.png" alt=""><b>AVANTIPACK</b><span>PRO</span></a>
 
-  <div class="ok">
-    <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#123a2a"/><path d="M12 20.5l5.5 5.5L28.5 15" fill="none" stroke="#3ddc97" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <h1>Compra aprovada. Seu Pro já está liberado.</h1>
-  </div>
-  <p class="lead">Não precisa esperar chave: você ativa agora mesmo no app, com o e-mail que usou na compra.</p>
+  <header class="hero">
+    <svg class="selo" viewBox="0 0 76 76" aria-hidden="true"><circle cx="38" cy="38" r="36"/><path d="M24 39.5l9.5 9.5L53 29.5"/></svg>
+    <div>
+      <h1>Pagamento aprovado. Agora é só ativar o seu Pro.</h1>
+      <p>Você não precisa esperar chave por e-mail: o app ativa na hora com o e-mail que você usou na compra.</p>
+    </div>
+  </header>
 
-  <div class="baixar">
-    <p><strong>O download do app começa sozinho.</strong>Se não começar, clique no botão. Funciona no Windows 10 e 11.</p>
+  <section class="baixar" aria-label="Download do app">
+    <div class="arquivo"><img src="../img/logo.png" alt=""></div>
+    <div>
+      <strong>AVANTIPACK-App.exe</strong>
+      <small>Windows 10 e 11 · cerca de 2 MB · não precisa instalar</small>
+      <div class="estado" id="estado" hidden>O download começou. Veja a barra de downloads do navegador.</div>
+    </div>
     <a class="botao" id="baixar" href="https://github.com/pedromargutti/AVANTIPACK/releases/latest/download/AVANTIPACK-App.exe">
       <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Baixar o app
     </a>
+  </section>
+
+  <div class="celular" role="note">
+    <b>Você está no celular.</b> O AVANTIPACK roda no PC com Windows. Abra este endereço no computador para baixar:
+    <div class="linha-link">
+      <code id="link">pedromargutti.github.io/AVANTIPACK/obrigado</code>
+      <button class="botao secundario" id="copiar" type="button">Copiar link</button>
+    </div>
   </div>
 
-  <h2>Como ativar o Pro</h2>
-  <ol class="passos">
-    <li><b>Abra o AVANTIPACK-App.exe que você baixou.</b><span>Se o Windows perguntar, clique em Sim para permitir.</span></li>
-    <li><b>No menu da esquerda, clique em <span class="caminho">Licença</span>.</b><span>Depois escolha a aba <span class="caminho">Com o e-mail da compra</span>.</span></li>
-    <li><b>Digite o e-mail da compra e o código do pedido.</b><span>O código está no e-mail de confirmação que a Kiwify mandou agora (procure por “Compra aprovada”, e veja o lixo eletrônico também).</span></li>
-    <li><b>Clique em Ativar.</b><span>Pronto: as funções Pro destravam na hora. A licença vale para 1 PC.</span></li>
-  </ol>
+  <h2>Ative em 1 minuto</h2>
+  <p class="sub">Tenha à mão o e-mail de confirmação que a Kiwify acabou de mandar: o código do pedido está nele.</p>
 
-  <div class="aviso">
-    <b>Apareceu “O Windows protegeu o computador”?</b> É normal para apps novos que ainda não são muito baixados. Clique em <b>Mais informações</b> e depois em <b>Executar assim mesmo</b>.
+  <div class="ativar">
+    <ol class="passos">
+      <li><b>Abra o AVANTIPACK-App.exe</b><span>Se o Windows perguntar se o app pode fazer alterações, clique em Sim.</span></li>
+      <li><b>Clique em <span class="tag">Licença</span> no menu da esquerda</b><span>Na área “Já comprou? Ative aqui”, deixe marcada a opção <span class="tag">Com o e-mail da compra</span>.</span></li>
+      <li><b>Digite o e-mail e o código do pedido</b><span>Use o mesmo e-mail da compra. O código do pedido vem no e-mail “Compra aprovada” da Kiwify.</span></li>
+      <li><b>Clique em Ativar</b><span>As funções Pro destravam na hora. A licença vale para 1 PC.</span></li>
+    </ol>
+
+    <figure class="app" aria-label="Tela de Licença do app (ilustração)">
+      <div class="app-barra">AVANTIPACK</div>
+      <div class="app-corpo">
+        <div class="app-menu" aria-hidden="true">
+          <div class="m">Painel</div>
+          <div class="g">Desempenho</div><div class="m">Otimização</div><div class="m">Jogos</div>
+          <div class="g">Cuidados</div><div class="m">Manutenção</div><div class="m">Restauração</div>
+          <div class="g">Conta</div><div class="m ativo alvo" data-n="2">Licença</div>
+        </div>
+        <div class="app-tela">
+          <h3>Já comprou? Ative aqui</h3>
+          <div class="abas"><span class="aba on">Com o e-mail da compra</span><span class="aba">Com a chave</span></div>
+          <div class="campos">
+            <div class="campo alvo" data-n="3"><label>E-mail da compra</label><div>seu e-mail</div></div>
+            <div class="campo"><label>Código do pedido</label><div>do e-mail da Kiwify</div></div>
+          </div>
+          <span class="app-ativar alvo" data-n="4">Ativar</span>
+        </div>
+      </div>
+      <figcaption class="legenda">Ilustração da tela de Licença</figcaption>
+    </figure>
   </div>
 
-  <h2>Dúvidas</h2>
-  <details>
-    <summary>Não achei o código do pedido</summary>
-    <p>Ele vem no e-mail da Kiwify, junto com o resumo da compra. Se o e-mail não chegou, procure no lixo eletrônico ou acesse sua compra em <a href="https://dashboard.kiwify.com.br/" rel="noopener">kiwify.com.br</a> com o mesmo e-mail.</p>
-  </details>
-  <details>
-    <summary>Troquei de PC ou formatei</summary>
-    <p>No app antigo, vá em Licença e clique em Desativar. Se não der mais para abrir o PC antigo, fale com a gente pelo e-mail abaixo que liberamos a licença.</p>
-  </details>
-  <details>
-    <summary>A ativação deu erro</summary>
-    <p>Confira se o e-mail é o mesmo da compra e se o PC está com internet. Pagamento por boleto só ativa depois que o boleto compensa.</p>
-  </details>
+  <div class="aviso" role="note">
+    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2L12 3z" fill="none" stroke="#ffb547" stroke-width="2" stroke-linejoin="round"/><path d="M12 10v5m0 3v.5" stroke="#ffb547" stroke-width="2.2" stroke-linecap="round"/></svg>
+    <div><b>Apareceu “O Windows protegeu o computador”?</b> Isso acontece com apps novos que ainda têm poucos downloads. Clique em <b>Mais informações</b> e depois em <b>Executar assim mesmo</b>.</div>
+  </div>
 
-  <footer>Precisa de ajuda? Escreva para <a href="mailto:avantimarketing28@gmail.com">avantimarketing28@gmail.com</a> com o código do pedido.</footer>
-</main>
+  <h2>Dúvidas rápidas</h2>
+  <p class="sub">Se não resolver, responda o e-mail de confirmação da Kiwify: ele chega direto na gente.</p>
+  <div class="duvidas">
+    <details>
+      <summary>Não acho o código do pedido</summary>
+      <p>Ele vem no e-mail de confirmação da Kiwify, junto com o resumo da compra. Procure por “Kiwify” na caixa de entrada e no lixo eletrônico. Você também pode ver suas compras em <a href="https://dashboard.kiwify.com.br/" rel="noopener">kiwify.com.br</a>, entrando com o mesmo e-mail.</p>
+    </details>
+    <details>
+      <summary>Diz que o e-mail não tem compra</summary>
+      <p>Confira se é exatamente o e-mail digitado na compra. Se pagou por boleto, a ativação libera depois que o boleto compensa (normalmente até 2 dias úteis).</p>
+    </details>
+    <details>
+      <summary>Troquei de PC ou formatei</summary>
+      <p>No PC antigo, abra Licença e clique em Desativar; depois ative no PC novo. Se o PC antigo não liga mais, fale com a gente com o código do pedido que liberamos a licença.</p>
+    </details>
+    <details>
+      <summary>Prefiro ativar com chave</summary>
+      <p>Em Licença, escolha “Com a chave”. Se ainda não tem a chave, peça com o código do pedido.</p>
+    </details>
+  </div>
+
+  <footer>
+    <span>Ajuda: responda o e-mail da Kiwify ou use o contato de suporte que aparece nele.</span>
+    <span>Garantia de 7 dias pela Kiwify</span>
+  </footer>
+</div>
 <script>
-  // começa o download sozinho, uma vez por visita
-  setTimeout(function () {
-    try {
-      if (sessionStorage.getItem('avp_baixou')) return;
-      sessionStorage.setItem('avp_baixou', '1');
-    } catch (e) {}
-    var f = document.createElement('iframe');
-    f.style.display = 'none';
-    f.src = document.getElementById('baixar').href;
-    document.body.appendChild(f);
-  }, 1200);
+  (function () {
+    var ua = navigator.userAgent || '';
+    var celular = /Android|iPhone|iPad|iPod|Mobile/i.test(ua) && !/Windows NT/i.test(ua);
+    var link = document.getElementById('baixar');
+    var estado = document.getElementById('estado');
+    function marcar() { estado.hidden = false; }
+    link.addEventListener('click', marcar);
+
+    if (celular) {
+      document.body.classList.add('mobile');
+      var bt = document.getElementById('copiar');
+      bt.addEventListener('click', function () {
+        var t = 'https://' + document.getElementById('link').textContent;
+        if (navigator.clipboard) navigator.clipboard.writeText(t).then(function () { bt.textContent = 'Link copiado'; });
+      });
+      return;
+    }
+    // no PC: o download começa sozinho, uma vez por visita
+    setTimeout(function () {
+      try {
+        if (sessionStorage.getItem('avp_baixou')) return;
+        sessionStorage.setItem('avp_baixou', '1');
+      } catch (e) {}
+      var f = document.createElement('iframe');
+      f.style.display = 'none';
+      f.src = link.href;
+      document.body.appendChild(f);
+      marcar();
+    }, 1200);
+  })();
 </script>
 </body>
 </html>
