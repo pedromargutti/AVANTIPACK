@@ -12,6 +12,7 @@ O dono do projeto (pedromargutti) pediu: **toda mudança feita no pack em uma co
 7. **Release:** esta sessão não consegue criar Releases no GitHub. Mande ao usuário o link `https://github.com/pedromargutti/AVANTIPACK/releases/new`, a tag `vX.Y.Z` e o texto da descrição pronto para colar (o mesmo do core/NOVIDADES.md).
 
 ## Cuidados
+- **Commits em nome do dono** (pedromargutti), sem linhas `Co-Authored-By`/`Claude-Session`: ele não quer o Claude aparecendo como colaborador no GitHub.
 - Nunca enviar `core/dados/` nem `core/AVANTIPACK.lnk` (são do PC de cada pessoa).
 - **Pasta principal limpa:** no pack só ficam `AVANTIPACK.exe`, `LEIA-ME.txt`, `apps/`, `core/` e `guias/`. Arquivos só do GitHub (README, docs, ferramentas, CLAUDE.md) têm `export-ignore` no `.gitattributes`.
 - O `AVANTIPACK.bat` da raiz é só um stub para o atualizador antigo (v0.7.3/0.7.4) achar o pack; o motor apaga ele na primeira execução. Pode ser removido quando ninguém mais usar essas versões.
