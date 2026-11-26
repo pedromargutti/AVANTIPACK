@@ -2,6 +2,13 @@
 
 Tudo o que mudou em cada versão. A mais nova fica sempre em cima.
 
+## v0.10.0 — 26/11/2026
+- 🖥️ **App AVANTIPACK**: o pack grátis agora também roda num app com visual próprio. Baixe o `AVANTIPACK-App.exe` nas Releases
+- 💬 **Sem tela de comando no app**: as perguntas viram botões, listas e caixas de marcar
+- 🆓 **Funções grátis já liberadas no app**: Otimização recomendada, Pontuação, Limpeza, Cache de shaders, Reparos, Programas, Desfazer e o Manual
+- ⭐ **Pro no mesmo app**: as funções Pro aparecem com cadeado, e dá para comprar e ativar a chave sem sair dele
+- 📦 **Pack clássico continua**: o .zip em CMD segue igual para quem prefere
+
 ## v0.9.0 — 25/11/2026
 - 📘 **Manual com imagens**: todos os guias viraram um manual só, com as telas desenhadas e bolinhas numeradas mostrando onde clicar (opção **5**)
 - 🖥️ **Capítulos novos com imagens**: BIOS (ASUS, MSI, Gigabyte e ASRock), processador AMD e Intel, limite de FPS e configurações de 19 jogos

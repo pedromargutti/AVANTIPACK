@@ -11,4 +11,4 @@ GITHUB_REPO=pedromargutti/AVANTIPACK
 CHECAR_ATUALIZACAO=1
 
 # Link para comprar o AVANTIPACK Pro (aparece nas opcoes do Pro)
-LOJA_PRO=
+LOJA_PRO=https://pay.kiwify.com.br/GJzVRdc
