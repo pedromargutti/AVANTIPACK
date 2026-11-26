@@ -1,0 +1,28 @@
+# Anexa o AVANTIPACK_vX.Y.Z.zip (pack classico) sozinho em toda Release nova.
+# O dono so precisa subir o AVANTIPACK-App.exe e o AVANTIPACK-App.txt.
+name: Zip do pack na Release
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag da Release (ex.: v0.10.1)'
+        required: true
+permissions:
+  contents: write
+jobs:
+  zip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name || inputs.tag }}
+      - name: Gerar e anexar o zip
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name || inputs.tag }}
+        run: |
+          nome="AVANTIPACK_${TAG}.zip"
+          git archive --format=zip --prefix=AVANTIPACK/ -o "$nome" HEAD
+          gh release upload "$TAG" "$nome" --clobber
