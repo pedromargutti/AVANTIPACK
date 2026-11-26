@@ -9,259 +9,359 @@
 <link rel="icon" href="../img/logo.png">
 <style>
   :root {
-    --fundo: #0c0e12; --lateral: #0f1116; --painel: #14171d; --painel2: #1b1f27; --linha: #2e3440;
+    --fundo: #0c0e12; --lateral: #0f1116; --painel: #14171d; --painel2: #1b1f27; --linha: #2e3440; --linha2: #232833;
     --texto: #f0f2f6; --suave: #9ca3b0; --apagado: #848b99;
     --azul: #2e68ff; --ciano: #00d6ff; --verde: #3ddc97; --ambar: #ffb547;
   }
   * { box-sizing: border-box; }
   html { background: var(--fundo); -webkit-text-size-adjust: 100%; }
   body {
-    margin: 0; color: var(--texto);
-    font: 16px/1.6 "Segoe UI Variable Text", "Segoe UI", Inter, system-ui, -apple-system, sans-serif;
-    background:
-      radial-gradient(760px 420px at 80% -120px, rgba(0, 150, 255, .22), transparent 70%),
-      radial-gradient(600px 380px at -10% 10%, rgba(46, 104, 255, .14), transparent 70%);
-    min-height: 100vh;
+    margin: 0; color: var(--texto); min-height: 100vh;
+    font: 16px/1.55 "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+    background-color: var(--fundo);
+    background-image:
+      radial-gradient(900px 480px at 85% -160px, rgba(0, 140, 255, .20), transparent 70%),
+      radial-gradient(rgba(255, 255, 255, .045) 1px, transparent 1px);
+    background-size: auto, 32px 32px;
   }
   a { color: var(--ciano); }
-  a:focus-visible, button:focus-visible, summary:focus-visible { outline: 3px solid var(--ciano); outline-offset: 3px; border-radius: 8px; }
-  .wrap { max-width: 1040px; margin: 0 auto; padding: 28px 22px 72px; }
+  :focus-visible { outline: 3px solid var(--ciano); outline-offset: 3px; border-radius: 6px; }
+  .pagina { max-width: 1120px; margin: 0 auto; padding: 22px 24px 80px; }
 
-  .marca { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: var(--texto); }
-  .marca img { width: 36px; height: 36px; border-radius: 9px; }
-  .marca b { font-size: 17px; letter-spacing: .02em; }
-  .marca span { color: #08101e; background: linear-gradient(90deg, var(--azul), var(--ciano)); font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 99px; }
+  /* barra do topo, como a do app */
+  .topo { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 18px; border-bottom: 1px solid var(--linha2); }
+  .topo .id { display: flex; align-items: center; gap: 10px; color: var(--texto); text-decoration: none; font-weight: 600; letter-spacing: .02em; }
+  .topo .id img { width: 28px; height: 28px; border-radius: 7px; }
+  .status { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--verde); background: rgba(61, 220, 151, .08); border: 1px solid rgba(61, 220, 151, .28); padding: 5px 12px 5px 10px; border-radius: 99px; }
+  .status i { width: 8px; height: 8px; border-radius: 50%; background: var(--verde); box-shadow: 0 0 0 0 rgba(61, 220, 151, .6); animation: pulso 2s infinite; }
+  @keyframes pulso { 70% { box-shadow: 0 0 0 8px rgba(61, 220, 151, 0); } 100% { box-shadow: 0 0 0 0 rgba(61, 220, 151, 0); } }
 
-  .hero { display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: center; margin: 46px 0 30px; }
-  .selo { width: 76px; height: 76px; }
-  .selo circle { fill: rgba(61, 220, 151, .12); stroke: rgba(61, 220, 151, .45); stroke-width: 1.5; }
-  .selo path { fill: none; stroke: var(--verde); stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round;
-    stroke-dasharray: 40; stroke-dashoffset: 40; animation: risca .55s .25s cubic-bezier(.65, 0, .35, 1) forwards; }
-  @keyframes risca { to { stroke-dashoffset: 0; } }
-  h1 { font-size: clamp(28px, 4.6vw, 44px); line-height: 1.12; margin: 0 0 8px; letter-spacing: -.015em; font-weight: 750; }
-  .hero p { margin: 0; color: var(--suave); font-size: 17px; max-width: 58ch; }
+  /* marca em blocos, igual ao app */
+  .abertura { padding: 44px 0 34px; }
+  .marca-px { width: min(560px, 100%); height: auto; display: block; overflow: visible; }
+  .marca-px rect { opacity: 0; transform-box: fill-box; transform-origin: center; animation: bloco .5s cubic-bezier(.2, 1.5, .4, 1) forwards; animation-delay: var(--d); }
+  @keyframes bloco { from { opacity: 0; transform: translateY(-10px) scale(.3); } to { opacity: 1; transform: none; } }
+  .pro { display: inline-block; margin-left: 4px; vertical-align: 10%; font-size: 13px; font-weight: 800; letter-spacing: .06em; color: #08101e; background: linear-gradient(90deg, var(--azul), var(--ciano)); padding: 3px 10px; border-radius: 99px; }
+  h1 { font-size: clamp(30px, 4.4vw, 46px); line-height: 1.1; letter-spacing: -.015em; margin: 26px 0 10px; font-weight: 700; max-width: 24ch; }
+  .lead { margin: 0; color: var(--suave); font-size: 18px; max-width: 52ch; }
+  .entra { opacity: 0; animation: entra .6s cubic-bezier(.2, .8, .2, 1) forwards; }
+  @keyframes entra { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 
-  .baixar {
-    display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: center;
-    background: linear-gradient(180deg, var(--painel2), var(--painel)); border: 1px solid var(--linha);
-    border-radius: 18px; padding: 20px 22px;
-  }
-  .arquivo { width: 52px; height: 52px; border-radius: 13px; display: grid; place-items: center; background: #0e2240; }
-  .arquivo img { width: 34px; height: 34px; border-radius: 8px; }
-  .baixar strong { display: block; font-size: 17px; }
-  .baixar small { color: var(--suave); font-size: 14px; }
-  .estado { display: flex; align-items: center; gap: 8px; margin-top: 4px; font-size: 14px; color: var(--verde); }
-  .estado::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex: none; }
-  .estado[hidden] { display: none; }
-  .botao {
-    display: inline-flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; font-weight: 700; font-size: 16px;
-    color: #06101f; background: linear-gradient(90deg, var(--azul), var(--ciano)); border: 0; cursor: pointer;
-    padding: 14px 22px; border-radius: 12px; white-space: nowrap; font-family: inherit;
-  }
-  .botao:hover { filter: brightness(1.08); }
-  .botao.secundario { background: var(--painel2); color: var(--texto); border: 1px solid var(--linha); padding: 9px 14px; font-size: 14px; }
+  .grade { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); gap: 36px; align-items: start; }
 
-  .celular { display: none; margin-top: 14px; padding: 16px 20px; border-radius: 14px; background: #0e2042; border: 1px solid #1d3f7a; color: #d6e4ff; }
-  .celular b { color: #fff; }
-  .celular .linha-link { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 10px; }
-  .celular code { font-family: inherit; font-weight: 600; background: rgba(0, 0, 0, .3); padding: 6px 10px; border-radius: 8px; word-break: break-all; }
+  /* download */
+  .arquivo { background: var(--painel); border: 1px solid var(--linha); border-radius: 12px; padding: 16px 16px 14px; }
+  .arquivo .linha { display: flex; align-items: center; gap: 14px; }
+  .arquivo .ico { width: 44px; height: 44px; flex: none; border-radius: 10px; background: #0e2240; display: grid; place-items: center; }
+  .arquivo .ico img { width: 30px; height: 30px; border-radius: 7px; }
+  .arquivo .nome { flex: 1; min-width: 0; }
+  .arquivo .nome b { display: block; font-size: 16px; }
+  .arquivo .nome small { color: var(--suave); font-size: 13.5px; }
+  .baixar { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 9px; font-weight: 700; font-size: 15px; text-decoration: none; color: #fff; background: var(--azul); white-space: nowrap; transition: background .15s; }
+  .baixar:hover { background: #3f77ff; }
+  .barra { height: 4px; border-radius: 4px; background: var(--linha2); margin-top: 14px; overflow: hidden; position: relative; }
+  .barra::after { content: ""; position: absolute; inset: 0; width: 0; background: linear-gradient(90deg, var(--azul), var(--ciano)); border-radius: 4px; }
+  .arquivo.baixando .barra::after { animation: enche 2.6s cubic-bezier(.3, .6, .2, 1) forwards; }
+  .arquivo.pronto .barra::after { width: 100%; }
+  @keyframes enche { from { width: 0; } to { width: 100%; } }
+  .aviso-dl { font-size: 13.5px; color: var(--apagado); margin-top: 8px; min-height: 21px; }
+  .arquivo.pronto .aviso-dl { color: var(--verde); }
+
+  .celular { display: none; margin-top: 12px; padding: 14px 16px; border-radius: 12px; background: #0e2042; border: 1px solid #1d3f7a; color: #d6e4ff; font-size: 15px; }
+  .celular .copia { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px; }
+  .celular code { font-family: inherit; font-weight: 600; background: rgba(0, 0, 0, .3); padding: 6px 10px; border-radius: 7px; word-break: break-all; }
+  .celular button { font: inherit; font-size: 14px; font-weight: 600; color: var(--texto); background: var(--painel2); border: 1px solid var(--linha); border-radius: 8px; padding: 7px 12px; cursor: pointer; }
   body.mobile .celular { display: block; }
 
-  h2 { font-size: 24px; margin: 56px 0 6px; letter-spacing: -.01em; }
-  .sub { color: var(--suave); margin: 0 0 22px; }
-  .ativar { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 28px; align-items: start; }
-  ol.passos { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; counter-reset: p; }
-  ol.passos li {
-    counter-increment: p; position: relative; padding: 16px 18px 16px 62px; border-radius: 14px;
-    background: var(--painel); border: 1px solid var(--linha);
-  }
-  ol.passos li::before {
-    content: counter(p); position: absolute; left: 18px; top: 16px; width: 28px; height: 28px; border-radius: 50%;
-    display: grid; place-items: center; font-weight: 700; font-size: 14px; color: #241703; background: var(--ambar);
-  }
-  ol.passos b { display: block; }
-  ol.passos span { color: var(--suave); font-size: 15px; }
-  .tag { font-weight: 600; color: #cfe0ff; background: #0e2042; padding: 1px 7px; border-radius: 6px; white-space: nowrap; }
+  /* passos (acendem junto com a demonstração) */
+  h2 { font-size: 21px; margin: 34px 0 12px; }
+  ol.passos { list-style: none; margin: 0; padding: 0; position: relative; }
+  ol.passos::before { content: ""; position: absolute; left: 15px; top: 18px; bottom: 18px; width: 2px; background: var(--linha2); }
+  ol.passos li { position: relative; display: grid; grid-template-columns: 32px 1fr; gap: 14px; padding: 10px 0; }
+  ol.passos .n { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-weight: 800; font-size: 14px; color: var(--apagado); background: var(--painel); border: 2px solid var(--linha); position: relative; z-index: 1; transition: all .3s; }
+  ol.passos b { display: block; font-size: 16px; color: var(--suave); transition: color .3s; }
+  ol.passos span { color: var(--apagado); font-size: 14.5px; }
+  ol.passos li.agora .n { color: #241703; background: var(--ambar); border-color: var(--ambar); box-shadow: 0 0 0 5px rgba(255, 181, 71, .16); }
+  ol.passos li.agora b { color: var(--texto); }
+  ol.passos li.feito .n { color: #06261a; background: var(--verde); border-color: var(--verde); }
+  ol.passos li.feito b { color: var(--texto); }
+  .k { font-weight: 600; color: #cfe0ff; background: #0e2042; padding: 0 6px; border-radius: 5px; white-space: nowrap; }
 
-  .app { margin: 0; border-radius: 14px; border: 1px solid var(--linha); background: var(--fundo); overflow: hidden; box-shadow: 0 24px 60px rgba(0, 0, 0, .45); position: sticky; top: 20px; }
-  .app-barra { height: 30px; display: flex; align-items: center; padding: 0 12px; font-size: 11px; color: var(--apagado); background: var(--lateral); border-bottom: 1px solid #1b1f27; }
-  .app-corpo { display: grid; grid-template-columns: 132px 1fr; min-height: 300px; }
-  .app-menu { background: var(--lateral); padding: 12px 8px; font-size: 12px; color: var(--suave); }
-  .app-menu .m { padding: 6px 10px; border-radius: 7px; }
-  .app-menu .g { font-size: 10px; color: var(--apagado); padding: 10px 10px 2px; }
-  .app-menu .ativo { background: var(--painel2); color: var(--texto); box-shadow: inset 3px 0 0 var(--ciano); }
-  .app-tela { padding: 18px 18px 20px; }
-  .app-tela h3 { margin: 0 0 10px; font-size: 16px; }
-  .abas { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
-  .aba { font-size: 11.5px; padding: 6px 10px; border-radius: 8px; border: 1px solid var(--linha); color: var(--suave); }
+  /* janela do app (demonstração animada) */
+  .janela { position: sticky; top: 18px; border-radius: 12px; border: 1px solid var(--linha); background: var(--fundo); overflow: hidden; box-shadow: 0 30px 70px rgba(0, 0, 0, .5); }
+  .titulo-jan { height: 32px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; font-size: 12px; color: var(--apagado); background: var(--lateral); border-bottom: 1px solid #1b1f27; }
+  .titulo-jan .bts { display: flex; gap: 14px; letter-spacing: 2px; }
+  .corpo { display: grid; grid-template-columns: 150px 1fr; height: 380px; position: relative; }
+  .menu { background: var(--lateral); padding: 14px 8px; font-size: 13px; color: var(--suave); }
+  .menu .logo { display: flex; align-items: center; gap: 7px; padding: 0 8px 12px; font-weight: 700; font-size: 12.5px; color: var(--texto); }
+  .menu .logo img { width: 20px; height: 20px; border-radius: 5px; }
+  .menu .g { font-size: 10.5px; color: var(--apagado); padding: 10px 10px 3px; }
+  .menu .m { padding: 6px 10px; border-radius: 7px; transition: background .2s, color .2s, box-shadow .2s; }
+  .menu .m.sel { background: var(--painel2); color: var(--texto); box-shadow: inset 3px 0 0 var(--ciano); }
+  .tela { position: relative; overflow: hidden; }
+  .vista { position: absolute; inset: 0; padding: 20px 20px; transition: opacity .35s, transform .35s; }
+  .vista.fora { opacity: 0; transform: translateX(14px); pointer-events: none; }
+  .vista h4 { margin: 0 0 4px; font-size: 18px; }
+  .vista p { margin: 0 0 14px; font-size: 12.5px; color: var(--suave); }
+  .metricas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .metricas div { background: var(--painel); border: 1px solid var(--linha2); border-radius: 9px; padding: 10px; font-size: 11px; color: var(--suave); }
+  .metricas b { display: block; font-size: 17px; color: var(--texto); }
+  .cadeados { margin-top: 12px; display: grid; gap: 7px; }
+  .cadeados div { display: flex; justify-content: space-between; align-items: center; background: var(--painel); border: 1px solid var(--linha2); border-radius: 9px; padding: 9px 12px; font-size: 12.5px; color: var(--suave); }
+  .cadeados em { font-style: normal; font-size: 10.5px; font-weight: 800; color: var(--ambar); background: rgba(255, 181, 71, .12); border-radius: 5px; padding: 2px 7px; transition: all .4s; }
+  .janela.liberado .cadeados em { color: var(--verde); background: rgba(61, 220, 151, .12); }
+  .abas { display: flex; gap: 6px; margin-bottom: 14px; }
+  .aba { font-size: 12px; padding: 6px 11px; border-radius: 8px; border: 1px solid var(--linha); color: var(--suave); }
   .aba.on { border-color: var(--ciano); color: var(--texto); background: rgba(0, 214, 255, .08); }
-  .campos { display: grid; grid-template-columns: 1.6fr 1fr; gap: 10px; }
-  .campo label { display: block; font-size: 10.5px; color: var(--suave); margin-bottom: 4px; }
-  .campo div { height: 32px; border-radius: 8px; background: var(--painel); border: 1px solid var(--linha); font-size: 12px; color: var(--apagado); display: flex; align-items: center; padding: 0 10px; overflow: hidden; white-space: nowrap; }
-  .app-ativar { margin-top: 12px; display: inline-block; font-size: 12px; font-weight: 700; padding: 8px 18px; border-radius: 8px; background: var(--azul); color: #fff; }
-  .alvo { position: relative; }
-  .alvo::after { content: attr(data-n); position: absolute; top: -9px; right: -9px; width: 20px; height: 20px; border-radius: 50%;
-    background: var(--ambar); color: #241703; font-size: 11px; font-weight: 800; display: grid; place-items: center; box-shadow: 0 0 0 3px var(--fundo); }
-  .legenda { font-size: 12px; color: var(--apagado); text-align: right; padding: 0 12px 10px; }
+  .campos { display: grid; grid-template-columns: 1.55fr 1fr; gap: 10px; }
+  .campo label { display: block; font-size: 11px; color: var(--suave); margin-bottom: 5px; }
+  .campo .cx { height: 36px; border-radius: 8px; background: var(--painel); border: 1px solid var(--linha); font-size: 13px; color: var(--texto); display: flex; align-items: center; padding: 0 10px; white-space: nowrap; overflow: hidden; transition: border-color .2s; }
+  .campo .cx.foco { border-color: var(--ciano); }
+  .campo .cx.foco::after { content: ""; width: 1px; height: 16px; background: var(--ciano); margin-left: 1px; animation: pisca 1s steps(1) infinite; }
+  @keyframes pisca { 50% { opacity: 0; } }
+  .btn-ativar { margin-top: 14px; display: inline-block; font-size: 13px; font-weight: 700; padding: 9px 22px; border-radius: 8px; background: var(--azul); color: #fff; transition: transform .1s, filter .2s; }
+  .btn-ativar.aperta { transform: scale(.95); filter: brightness(1.2); }
 
-  .aviso { margin-top: 26px; display: grid; grid-template-columns: auto 1fr; gap: 14px; padding: 16px 20px; border-radius: 14px; background: #241c0b; border: 1px solid #5a4316; color: #f2dfb8; }
-  .aviso b { color: var(--ambar); }
+  /* comemoração: blocos do logo se juntando */
+  .festa { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(circle at 50% 45%, rgba(20, 60, 140, .55), rgba(12, 14, 18, .97) 70%); opacity: 0; pointer-events: none; transition: opacity .35s; }
+  .janela.liberado .festa { opacity: 1; }
+  .festa .cartao { text-align: center; transform: scale(.92); transition: transform .45s cubic-bezier(.2, 1.4, .4, 1); }
+  .janela.liberado .festa .cartao { transform: none; }
+  .festa svg { width: 74px; height: 74px; }
+  .festa svg rect { fill: url(#gpx2); opacity: 0; transform-box: fill-box; transform-origin: center; }
+  .janela.liberado .festa svg rect { animation: bloco .45s cubic-bezier(.2, 1.6, .4, 1) forwards; animation-delay: var(--d); }
+  .festa b { display: block; font-size: 22px; margin-top: 10px; }
+  .festa small { color: var(--suave); font-size: 13px; }
+  .brilho { position: absolute; inset: 0; background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, .10) 50%, transparent 65%); transform: translateX(-100%); }
+  .janela.liberado .brilho { animation: varre 1.2s .25s ease-out; }
+  @keyframes varre { to { transform: translateX(100%); } }
 
-  .duvidas { display: grid; gap: 10px; }
-  details { background: var(--painel); border: 1px solid var(--linha); border-radius: 14px; padding: 14px 18px; }
+  .cursor { position: absolute; left: 0; top: 0; width: 20px; height: 20px; pointer-events: none; z-index: 5; transition: transform .75s cubic-bezier(.45, .05, .25, 1); filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .6)); }
+  .cursor .clique { position: absolute; left: -9px; top: -9px; width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--ciano); opacity: 0; }
+  .cursor.clicou .clique { animation: onda .45s ease-out; }
+  @keyframes onda { from { opacity: 1; transform: scale(.3); } to { opacity: 0; transform: scale(1.6); } }
+  .legenda { display: flex; justify-content: space-between; align-items: center; padding: 9px 14px; font-size: 12px; color: var(--apagado); border-top: 1px solid #1b1f27; background: var(--lateral); }
+  .legenda button { font: inherit; color: var(--suave); background: none; border: 1px solid var(--linha); border-radius: 6px; padding: 3px 10px; cursor: pointer; }
+
+  .alerta { margin-top: 30px; padding: 14px 16px; border-left: 3px solid var(--ambar); background: #1d1708; border-radius: 0 10px 10px 0; color: #f2dfb8; font-size: 15px; }
+  .alerta b { color: var(--ambar); }
+
+  .duvidas { margin-top: 48px; border-top: 1px solid var(--linha2); }
+  details { border-bottom: 1px solid var(--linha2); padding: 14px 2px; }
   summary { cursor: pointer; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
   summary::-webkit-details-marker { display: none; }
-  summary::after { content: "+"; color: var(--ciano); font-size: 20px; line-height: 1; }
-  details[open] summary::after { content: "–"; }
-  details p { color: var(--suave); margin: 10px 0 2px; }
-  footer { margin-top: 48px; padding-top: 22px; border-top: 1px solid #1b1f27; color: var(--suave); font-size: 14px; display: flex; flex-wrap: wrap; gap: 8px 22px; justify-content: space-between; }
+  summary::after { content: ""; width: 9px; height: 9px; margin-top: 7px; border-right: 2px solid var(--ciano); border-bottom: 2px solid var(--ciano); transform: rotate(45deg); transition: transform .2s; flex: none; }
+  details[open] summary::after { transform: rotate(-135deg); margin-top: 11px; }
+  details p { margin: 8px 0 2px; color: var(--suave); max-width: 70ch; }
+  footer { margin-top: 34px; color: var(--apagado); font-size: 14px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 20px; }
 
-  @media (max-width: 860px) {
-    .ativar { grid-template-columns: 1fr; }
-    .app { position: static; }
+  @media (max-width: 900px) {
+    .grade { grid-template-columns: 1fr; }
+    .janela { position: relative; top: 0; }
   }
   @media (max-width: 560px) {
-    .wrap { padding-top: 20px; }
-    .hero { grid-template-columns: 1fr; gap: 14px; margin-top: 30px; }
-    .selo { width: 60px; height: 60px; }
-    .baixar { grid-template-columns: auto 1fr; }
-    .baixar .botao { grid-column: 1 / -1; }
-    .app-corpo { grid-template-columns: 1fr; }
-    .app-menu { display: none; }
+    .pagina { padding: 16px 16px 64px; }
+    .topo .status span { display: none; }
+    .abertura { padding: 30px 0 24px; }
+    .arquivo .linha { flex-wrap: wrap; }
+    .baixar { width: 100%; justify-content: center; }
+    .corpo { grid-template-columns: 96px 1fr; height: 400px; }
+    .menu { font-size: 11px; padding: 10px 4px; }
+    .menu .logo span { display: none; }
+    .vista { padding: 14px 12px; }
+    .metricas { grid-template-columns: 1fr 1fr; }
+    .metricas div:nth-child(3) { display: none; }
     .campos { grid-template-columns: 1fr; }
   }
-  @media (prefers-reduced-motion: reduce) { .selo path { animation: none; stroke-dashoffset: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .marca-px rect, .entra { opacity: 1; }
+    .cursor { display: none; }
+  }
 </style>
 </head>
 <body>
-<div class="wrap">
-  <a class="marca" href="https://github.com/pedromargutti/AVANTIPACK"><img src="../img/logo.png" alt=""><b>AVANTIPACK</b><span>PRO</span></a>
-
-  <header class="hero">
-    <svg class="selo" viewBox="0 0 76 76" aria-hidden="true"><circle cx="38" cy="38" r="36"/><path d="M24 39.5l9.5 9.5L53 29.5"/></svg>
-    <div>
-      <h1>Pagamento aprovado. Agora é só ativar o seu Pro.</h1>
-      <p>Você não precisa esperar chave por e-mail: o app ativa na hora com o e-mail que você usou na compra.</p>
-    </div>
+<div class="pagina">
+  <header class="topo">
+    <a class="id" href="https://github.com/pedromargutti/AVANTIPACK"><img src="../img/logo.png" alt="">AVANTIPACK</a>
+    <div class="status"><i></i>Pagamento aprovado<span>&nbsp;· Pro liberado</span></div>
   </header>
 
-  <section class="baixar" aria-label="Download do app">
-    <div class="arquivo"><img src="../img/logo.png" alt=""></div>
-    <div>
-      <strong>AVANTIPACK-App.exe</strong>
-      <small>Windows 10 e 11 · cerca de 2 MB · não precisa instalar</small>
-      <div class="estado" id="estado" hidden>O download começou. Veja a barra de downloads do navegador.</div>
-    </div>
-    <a class="botao" id="baixar" href="https://github.com/pedromargutti/AVANTIPACK/releases/latest/download/AVANTIPACK-App.exe">
-      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Baixar o app
-    </a>
+  <section class="abertura">
+    <svg class="marca-px" viewBox="104 46 1189 91" role="img" aria-label="AVANTIPACK"><defs><linearGradient id="gpx" gradientUnits="userSpaceOnUse" x1="106" y1="0" x2="1291" y2="0"><stop offset="0" stop-color="#1d43ff"/><stop offset=".55" stop-color="#008cff"/><stop offset="1" stop-color="#00e1ff"/></linearGradient></defs><g fill="url(#gpx)"><rect x="106" y="66" width="15" height="15" rx="2" style="--d:0ms"/><rect x="106" y="84" width="15" height="15" rx="2" style="--d:9ms"/><rect x="106" y="102" width="15" height="15" rx="2" style="--d:18ms"/><rect x="106" y="120" width="15" height="15" rx="2" style="--d:27ms"/><rect x="124" y="48" width="15" height="15" rx="2" style="--d:36ms"/><rect x="124" y="84" width="15" height="15" rx="2" style="--d:45ms"/><rect x="142" y="48" width="15" height="15" rx="2" style="--d:54ms"/><rect x="142" y="84" width="15" height="15" rx="2" style="--d:63ms"/><rect x="160" y="48" width="15" height="15" rx="2" style="--d:72ms"/><rect x="160" y="84" width="15" height="15" rx="2" style="--d:81ms"/><rect x="178" y="66" width="15" height="15" rx="2" style="--d:90ms"/><rect x="178" y="84" width="15" height="15" rx="2" style="--d:99ms"/><rect x="178" y="102" width="15" height="15" rx="2" style="--d:108ms"/><rect x="178" y="120" width="15" height="15" rx="2" style="--d:117ms"/><rect x="232" y="48" width="15" height="15" rx="2" style="--d:126ms"/><rect x="232" y="66" width="15" height="15" rx="2" style="--d:135ms"/><rect x="232" y="84" width="15" height="15" rx="2" style="--d:144ms"/><rect x="250" y="102" width="15" height="15" rx="2" style="--d:153ms"/><rect x="268" y="120" width="15" height="15" rx="2" style="--d:162ms"/><rect x="286" y="102" width="15" height="15" rx="2" style="--d:171ms"/><rect x="304" y="48" width="15" height="15" rx="2" style="--d:180ms"/><rect x="304" y="66" width="15" height="15" rx="2" style="--d:189ms"/><rect x="304" y="84" width="15" height="15" rx="2" style="--d:198ms"/><rect x="358" y="66" width="15" height="15" rx="2" style="--d:207ms"/><rect x="358" y="84" width="15" height="15" rx="2" style="--d:216ms"/><rect x="358" y="102" width="15" height="15" rx="2" style="--d:225ms"/><rect x="358" y="120" width="15" height="15" rx="2" style="--d:234ms"/><rect x="376" y="48" width="15" height="15" rx="2" style="--d:243ms"/><rect x="376" y="84" width="15" height="15" rx="2" style="--d:252ms"/><rect x="394" y="48" width="15" height="15" rx="2" style="--d:261ms"/><rect x="394" y="84" width="15" height="15" rx="2" style="--d:270ms"/><rect x="412" y="48" width="15" height="15" rx="2" style="--d:279ms"/><rect x="412" y="84" width="15" height="15" rx="2" style="--d:288ms"/><rect x="430" y="66" width="15" height="15" rx="2" style="--d:297ms"/><rect x="430" y="84" width="15" height="15" rx="2" style="--d:306ms"/><rect x="430" y="102" width="15" height="15" rx="2" style="--d:315ms"/><rect x="430" y="120" width="15" height="15" rx="2" style="--d:324ms"/><rect x="484" y="48" width="15" height="15" rx="2" style="--d:333ms"/><rect x="484" y="66" width="15" height="15" rx="2" style="--d:342ms"/><rect x="484" y="84" width="15" height="15" rx="2" style="--d:351ms"/><rect x="484" y="102" width="15" height="15" rx="2" style="--d:360ms"/><rect x="484" y="120" width="15" height="15" rx="2" style="--d:369ms"/><rect x="502" y="66" width="15" height="15" rx="2" style="--d:378ms"/><rect x="520" y="84" width="15" height="15" rx="2" style="--d:387ms"/><rect x="538" y="102" width="15" height="15" rx="2" style="--d:396ms"/><rect x="556" y="48" width="15" height="15" rx="2" style="--d:405ms"/><rect x="556" y="66" width="15" height="15" rx="2" style="--d:414ms"/><rect x="556" y="84" width="15" height="15" rx="2" style="--d:423ms"/><rect x="556" y="102" width="15" height="15" rx="2" style="--d:432ms"/><rect x="556" y="120" width="15" height="15" rx="2" style="--d:441ms"/><rect x="610" y="48" width="15" height="15" rx="2" style="--d:450ms"/><rect x="628" y="48" width="15" height="15" rx="2" style="--d:459ms"/><rect x="646" y="48" width="15" height="15" rx="2" style="--d:468ms"/><rect x="646" y="66" width="15" height="15" rx="2" style="--d:477ms"/><rect x="646" y="84" width="15" height="15" rx="2" style="--d:486ms"/><rect x="646" y="102" width="15" height="15" rx="2" style="--d:495ms"/><rect x="646" y="120" width="15" height="15" rx="2" style="--d:504ms"/><rect x="664" y="48" width="15" height="15" rx="2" style="--d:513ms"/><rect x="682" y="48" width="15" height="15" rx="2" style="--d:522ms"/><rect x="736" y="48" width="15" height="15" rx="2" style="--d:531ms"/><rect x="736" y="120" width="15" height="15" rx="2" style="--d:540ms"/><rect x="754" y="48" width="15" height="15" rx="2" style="--d:549ms"/><rect x="754" y="66" width="15" height="15" rx="2" style="--d:558ms"/><rect x="754" y="84" width="15" height="15" rx="2" style="--d:567ms"/><rect x="754" y="102" width="15" height="15" rx="2" style="--d:576ms"/><rect x="754" y="120" width="15" height="15" rx="2" style="--d:585ms"/><rect x="772" y="48" width="15" height="15" rx="2" style="--d:594ms"/><rect x="772" y="120" width="15" height="15" rx="2" style="--d:603ms"/><rect x="826" y="48" width="15" height="15" rx="2" style="--d:612ms"/><rect x="826" y="66" width="15" height="15" rx="2" style="--d:621ms"/><rect x="826" y="84" width="15" height="15" rx="2" style="--d:630ms"/><rect x="826" y="102" width="15" height="15" rx="2" style="--d:639ms"/><rect x="826" y="120" width="15" height="15" rx="2" style="--d:648ms"/><rect x="844" y="48" width="15" height="15" rx="2" style="--d:657ms"/><rect x="844" y="84" width="15" height="15" rx="2" style="--d:666ms"/><rect x="862" y="48" width="15" height="15" rx="2" style="--d:675ms"/><rect x="862" y="84" width="15" height="15" rx="2" style="--d:684ms"/><rect x="880" y="48" width="15" height="15" rx="2" style="--d:693ms"/><rect x="880" y="84" width="15" height="15" rx="2" style="--d:702ms"/><rect x="898" y="66" width="15" height="15" rx="2" style="--d:711ms"/><rect x="952" y="66" width="15" height="15" rx="2" style="--d:720ms"/><rect x="952" y="84" width="15" height="15" rx="2" style="--d:729ms"/><rect x="952" y="102" width="15" height="15" rx="2" style="--d:738ms"/><rect x="952" y="120" width="15" height="15" rx="2" style="--d:747ms"/><rect x="970" y="48" width="15" height="15" rx="2" style="--d:756ms"/><rect x="970" y="84" width="15" height="15" rx="2" style="--d:765ms"/><rect x="988" y="48" width="15" height="15" rx="2" style="--d:774ms"/><rect x="988" y="84" width="15" height="15" rx="2" style="--d:783ms"/><rect x="1006" y="48" width="15" height="15" rx="2" style="--d:792ms"/><rect x="1006" y="84" width="15" height="15" rx="2" style="--d:801ms"/><rect x="1024" y="66" width="15" height="15" rx="2" style="--d:810ms"/><rect x="1024" y="84" width="15" height="15" rx="2" style="--d:819ms"/><rect x="1024" y="102" width="15" height="15" rx="2" style="--d:828ms"/><rect x="1024" y="120" width="15" height="15" rx="2" style="--d:837ms"/><rect x="1078" y="66" width="15" height="15" rx="2" style="--d:846ms"/><rect x="1078" y="84" width="15" height="15" rx="2" style="--d:855ms"/><rect x="1078" y="102" width="15" height="15" rx="2" style="--d:864ms"/><rect x="1096" y="48" width="15" height="15" rx="2" style="--d:873ms"/><rect x="1096" y="120" width="15" height="15" rx="2" style="--d:882ms"/><rect x="1114" y="48" width="15" height="15" rx="2" style="--d:891ms"/><rect x="1114" y="120" width="15" height="15" rx="2" style="--d:900ms"/><rect x="1132" y="48" width="15" height="15" rx="2" style="--d:909ms"/><rect x="1132" y="120" width="15" height="15" rx="2" style="--d:918ms"/><rect x="1150" y="48" width="15" height="15" rx="2" style="--d:927ms"/><rect x="1150" y="120" width="15" height="15" rx="2" style="--d:936ms"/><rect x="1204" y="48" width="15" height="15" rx="2" style="--d:945ms"/><rect x="1204" y="66" width="15" height="15" rx="2" style="--d:954ms"/><rect x="1204" y="84" width="15" height="15" rx="2" style="--d:963ms"/><rect x="1204" y="102" width="15" height="15" rx="2" style="--d:972ms"/><rect x="1204" y="120" width="15" height="15" rx="2" style="--d:981ms"/><rect x="1222" y="84" width="15" height="15" rx="2" style="--d:990ms"/><rect x="1240" y="84" width="15" height="15" rx="2" style="--d:999ms"/><rect x="1258" y="66" width="15" height="15" rx="2" style="--d:1008ms"/><rect x="1258" y="102" width="15" height="15" rx="2" style="--d:1017ms"/><rect x="1276" y="48" width="15" height="15" rx="2" style="--d:1026ms"/><rect x="1276" y="120" width="15" height="15" rx="2" style="--d:1035ms"/></g></svg>
+    <h1 class="entra" style="animation-delay:1.1s">Seu Pro está pago. <span class="pro">PRO</span><br>Falta um minuto para ativar.</h1>
+    <p class="lead entra" style="animation-delay:1.25s">Não tem chave para esperar: o app ativa com o e-mail que você usou na compra. Veja na demonstração como é rápido e repita no seu PC.</p>
   </section>
 
-  <div class="celular" role="note">
-    <b>Você está no celular.</b> O AVANTIPACK roda no PC com Windows. Abra este endereço no computador para baixar:
-    <div class="linha-link">
-      <code id="link">pedromargutti.github.io/AVANTIPACK/obrigado</code>
-      <button class="botao secundario" id="copiar" type="button">Copiar link</button>
-    </div>
-  </div>
-
-  <h2>Ative em 1 minuto</h2>
-  <p class="sub">Tenha à mão o e-mail de confirmação que a Kiwify acabou de mandar: o código do pedido está nele.</p>
-
-  <div class="ativar">
-    <ol class="passos">
-      <li><b>Abra o AVANTIPACK-App.exe</b><span>Se o Windows perguntar se o app pode fazer alterações, clique em Sim.</span></li>
-      <li><b>Clique em <span class="tag">Licença</span> no menu da esquerda</b><span>Na área “Já comprou? Ative aqui”, deixe marcada a opção <span class="tag">Com o e-mail da compra</span>.</span></li>
-      <li><b>Digite o e-mail e o código do pedido</b><span>Use o mesmo e-mail da compra. O código do pedido vem no e-mail “Compra aprovada” da Kiwify.</span></li>
-      <li><b>Clique em Ativar</b><span>As funções Pro destravam na hora. A licença vale para 1 PC.</span></li>
-    </ol>
-
-    <figure class="app" aria-label="Tela de Licença do app (ilustração)">
-      <div class="app-barra">AVANTIPACK</div>
-      <div class="app-corpo">
-        <div class="app-menu" aria-hidden="true">
-          <div class="m">Painel</div>
-          <div class="g">Desempenho</div><div class="m">Otimização</div><div class="m">Jogos</div>
-          <div class="g">Cuidados</div><div class="m">Manutenção</div><div class="m">Restauração</div>
-          <div class="g">Conta</div><div class="m ativo alvo" data-n="2">Licença</div>
+  <div class="grade">
+    <div class="entra" style="animation-delay:1.4s">
+      <div class="arquivo" id="arquivo">
+        <div class="linha">
+          <div class="ico"><img src="../img/logo.png" alt=""></div>
+          <div class="nome"><b>AVANTIPACK-App.exe</b><small>Windows 10 e 11 · 2 MB · não precisa instalar</small></div>
+          <a class="baixar" id="baixar" href="https://github.com/pedromargutti/AVANTIPACK/releases/latest/download/AVANTIPACK-App.exe">
+            <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 20h16" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Baixar
+          </a>
         </div>
-        <div class="app-tela">
-          <h3>Já comprou? Ative aqui</h3>
-          <div class="abas"><span class="aba on">Com o e-mail da compra</span><span class="aba">Com a chave</span></div>
-          <div class="campos">
-            <div class="campo alvo" data-n="3"><label>E-mail da compra</label><div>seu e-mail</div></div>
-            <div class="campo"><label>Código do pedido</label><div>do e-mail da Kiwify</div></div>
-          </div>
-          <span class="app-ativar alvo" data-n="4">Ativar</span>
-        </div>
+        <div class="barra" aria-hidden="true"></div>
+        <div class="aviso-dl" id="aviso" aria-live="polite">O download começa sozinho em instantes.</div>
       </div>
-      <figcaption class="legenda">Ilustração da tela de Licença</figcaption>
+
+      <div class="celular" role="note">
+        <b>Você está no celular.</b> O AVANTIPACK roda no PC com Windows. Abra este endereço no computador:
+        <div class="copia"><code id="link">pedromargutti.github.io/AVANTIPACK/obrigado</code><button id="copiar" type="button">Copiar</button></div>
+      </div>
+
+      <h2>Como ativar</h2>
+      <ol class="passos" id="passos">
+        <li data-p="1"><div class="n">1</div><div><b>Abra o AVANTIPACK-App.exe</b><span>Se o Windows perguntar, clique em Sim.</span></div></li>
+        <li data-p="2"><div class="n">2</div><div><b>Clique em <span class="k">Licença</span></b><span>Deixe marcada a aba <span class="k">Com o e-mail da compra</span>.</span></div></li>
+        <li data-p="3"><div class="n">3</div><div><b>Digite o e-mail e o código do pedido</b><span>O código vem no e-mail “Compra aprovada” da Kiwify.</span></div></li>
+        <li data-p="4"><div class="n">4</div><div><b>Clique em Ativar</b><span>As funções Pro destravam na hora, neste PC.</span></div></li>
+      </ol>
+
+      <div class="alerta"><b>“O Windows protegeu o computador”?</b> É normal em apps novos. Clique em <b>Mais informações</b> e depois em <b>Executar assim mesmo</b>.</div>
+    </div>
+
+    <figure class="janela entra" id="janela" style="margin:0;animation-delay:1.5s" aria-label="Demonstração da ativação no app">
+      <div class="titulo-jan"><span>AVANTIPACK</span><span class="bts" aria-hidden="true">–&nbsp;□&nbsp;✕</span></div>
+      <div class="corpo" id="corpo">
+        <nav class="menu" aria-hidden="true">
+          <div class="logo"><img src="../img/logo.png" alt=""><span>AVANTIPACK</span></div>
+          <div class="m sel" id="m-painel">Painel</div>
+          <div class="g">Desempenho</div><div class="m">Otimização</div><div class="m">Jogos</div>
+          <div class="g">Cuidados</div><div class="m">Manutenção</div>
+          <div class="g">Conta</div><div class="m" id="m-licenca">Licença</div>
+        </nav>
+        <div class="tela">
+          <section class="vista" id="v-painel">
+            <h4>Painel</h4>
+            <p>Seu PC agora, e o que dá para melhorar.</p>
+            <div class="metricas"><div>Processador<b>19%</b></div><div>Placa de vídeo<b>40%</b></div><div>Memória<b>46%</b></div></div>
+            <div class="cadeados">
+              <div>Perfil de jogo automático<em class="tag">PRO</em></div>
+              <div>Benchmark de FPS<em class="tag">PRO</em></div>
+              <div>Raio-X da BIOS<em class="tag">PRO</em></div>
+            </div>
+          </section>
+          <section class="vista fora" id="v-licenca">
+            <h4>Já comprou? Ative aqui</h4>
+            <p>Use o e-mail da compra e o código do pedido.</p>
+            <div class="abas"><span class="aba on">Com o e-mail da compra</span><span class="aba">Com a chave</span></div>
+            <div class="campos">
+              <div class="campo"><label>E-mail da compra</label><div class="cx" id="c-email"></div></div>
+              <div class="campo"><label>Código do pedido</label><div class="cx" id="c-ped"></div></div>
+            </div>
+            <span class="btn-ativar" id="b-ativar">Ativar</span>
+          </section>
+          <div class="festa" aria-hidden="true">
+            <div class="cartao">
+              <svg viewBox="0 0 5 5"><defs><linearGradient id="gpx2" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#2e68ff"/><stop offset="1" stop-color="#00d6ff"/></linearGradient></defs>
+                <rect x="1" y="0" width=".86" height=".86" rx=".15" style="--d:0ms"/><rect x="2" y="0" width=".86" height=".86" rx=".15" style="--d:40ms"/><rect x="3" y="0" width=".86" height=".86" rx=".15" style="--d:80ms"/>
+                <rect x="0" y="1" width=".86" height=".86" rx=".15" style="--d:120ms"/><rect x="4" y="1" width=".86" height=".86" rx=".15" style="--d:160ms"/>
+                <rect x="0" y="2" width=".86" height=".86" rx=".15" style="--d:200ms"/><rect x="1" y="2" width=".86" height=".86" rx=".15" style="--d:230ms"/><rect x="2" y="2" width=".86" height=".86" rx=".15" style="--d:260ms"/><rect x="3" y="2" width=".86" height=".86" rx=".15" style="--d:290ms"/><rect x="4" y="2" width=".86" height=".86" rx=".15" style="--d:320ms"/>
+                <rect x="0" y="3" width=".86" height=".86" rx=".15" style="--d:360ms"/><rect x="4" y="3" width=".86" height=".86" rx=".15" style="--d:390ms"/>
+                <rect x="0" y="4" width=".86" height=".86" rx=".15" style="--d:420ms"/><rect x="4" y="4" width=".86" height=".86" rx=".15" style="--d:450ms"/>
+              </svg>
+              <b>Pro ativado</b>
+              <small>Todas as funções liberadas neste PC</small>
+            </div>
+            <div class="brilho"></div>
+          </div>
+        </div>
+        <div class="cursor" id="cursor" aria-hidden="true"><div class="clique"></div><svg width="20" height="20" viewBox="0 0 20 20"><path d="M3 2l13 7.5-6 1.3L7 17z" fill="#fff" stroke="#0c0e12" stroke-width="1.3" stroke-linejoin="round"/></svg></div>
+      </div>
+      <figcaption class="legenda"><span>Demonstração · os dados são de exemplo</span><button type="button" id="pausar">Pausar</button></figcaption>
     </figure>
   </div>
 
-  <div class="aviso" role="note">
-    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l10 18H2L12 3z" fill="none" stroke="#ffb547" stroke-width="2" stroke-linejoin="round"/><path d="M12 10v5m0 3v.5" stroke="#ffb547" stroke-width="2.2" stroke-linecap="round"/></svg>
-    <div><b>Apareceu “O Windows protegeu o computador”?</b> Isso acontece com apps novos que ainda têm poucos downloads. Clique em <b>Mais informações</b> e depois em <b>Executar assim mesmo</b>.</div>
-  </div>
+  <section class="duvidas" aria-label="Dúvidas">
+    <details><summary>Não acho o código do pedido</summary><p>Ele vem no e-mail de confirmação da Kiwify, junto com o resumo da compra. Procure por “Kiwify” na caixa de entrada e no lixo eletrônico, ou veja suas compras em <a href="https://dashboard.kiwify.com.br/" rel="noopener">kiwify.com.br</a> com o mesmo e-mail.</p></details>
+    <details><summary>Diz que o e-mail não tem compra</summary><p>Confira se é o mesmo e-mail digitado na compra. Pagamento por boleto libera depois que o boleto compensa, normalmente em até 2 dias úteis.</p></details>
+    <details><summary>Troquei de PC ou formatei</summary><p>No PC antigo, abra Licença e clique em Desativar, depois ative no novo. Se o PC antigo não liga mais, fale com a gente com o código do pedido.</p></details>
+    <details><summary>Prefiro ativar com chave</summary><p>Em Licença, escolha “Com a chave”. Se ainda não tem a chave, peça com o código do pedido.</p></details>
+  </section>
 
-  <h2>Dúvidas rápidas</h2>
-  <p class="sub">Se não resolver, responda o e-mail de confirmação da Kiwify: ele chega direto na gente.</p>
-  <div class="duvidas">
-    <details>
-      <summary>Não acho o código do pedido</summary>
-      <p>Ele vem no e-mail de confirmação da Kiwify, junto com o resumo da compra. Procure por “Kiwify” na caixa de entrada e no lixo eletrônico. Você também pode ver suas compras em <a href="https://dashboard.kiwify.com.br/" rel="noopener">kiwify.com.br</a>, entrando com o mesmo e-mail.</p>
-    </details>
-    <details>
-      <summary>Diz que o e-mail não tem compra</summary>
-      <p>Confira se é exatamente o e-mail digitado na compra. Se pagou por boleto, a ativação libera depois que o boleto compensa (normalmente até 2 dias úteis).</p>
-    </details>
-    <details>
-      <summary>Troquei de PC ou formatei</summary>
-      <p>No PC antigo, abra Licença e clique em Desativar; depois ative no PC novo. Se o PC antigo não liga mais, fale com a gente com o código do pedido que liberamos a licença.</p>
-    </details>
-    <details>
-      <summary>Prefiro ativar com chave</summary>
-      <p>Em Licença, escolha “Com a chave”. Se ainda não tem a chave, peça com o código do pedido.</p>
-    </details>
-  </div>
-
-  <footer>
-    <span>Ajuda: responda o e-mail da Kiwify ou use o contato de suporte que aparece nele.</span>
-    <span>Garantia de 7 dias pela Kiwify</span>
-  </footer>
+  <footer><span>Precisa de ajuda? Responda o e-mail da Kiwify que chega direto na gente.</span><span>Garantia de 7 dias</span></footer>
 </div>
-<script>
-  (function () {
-    var ua = navigator.userAgent || '';
-    var celular = /Android|iPhone|iPad|iPod|Mobile/i.test(ua) && !/Windows NT/i.test(ua);
-    var link = document.getElementById('baixar');
-    var estado = document.getElementById('estado');
-    function marcar() { estado.hidden = false; }
-    link.addEventListener('click', marcar);
 
-    if (celular) {
-      document.body.classList.add('mobile');
-      var bt = document.getElementById('copiar');
-      bt.addEventListener('click', function () {
-        var t = 'https://' + document.getElementById('link').textContent;
-        if (navigator.clipboard) navigator.clipboard.writeText(t).then(function () { bt.textContent = 'Link copiado'; });
-      });
-      return;
-    }
-    // no PC: o download começa sozinho, uma vez por visita
+<script>
+(function () {
+  var ua = navigator.userAgent || '';
+  var celular = /Android|iPhone|iPad|iPod|Mobile/i.test(ua) && !/Windows NT/i.test(ua);
+  var reduz = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function (id) { return document.getElementById(id); };
+
+  // ---------- download
+  var arq = $('arquivo'), aviso = $('aviso'), link = $('baixar');
+  function baixando() {
+    arq.classList.add('baixando');
+    aviso.textContent = 'Baixando pelo navegador…';
+    setTimeout(function () { arq.classList.remove('baixando'); arq.classList.add('pronto'); aviso.textContent = 'Pronto. Abra o arquivo pela barra de downloads do navegador.'; }, 2700);
+  }
+  link.addEventListener('click', baixando);
+  if (celular) {
+    document.body.classList.add('mobile');
+    aviso.textContent = 'Abra esta página no PC para baixar.';
+    $('copiar').addEventListener('click', function () {
+      var b = this, t = 'https://' + $('link').textContent;
+      if (navigator.clipboard) navigator.clipboard.writeText(t).then(function () { b.textContent = 'Copiado'; });
+    });
+  } else {
     setTimeout(function () {
-      try {
-        if (sessionStorage.getItem('avp_baixou')) return;
-        sessionStorage.setItem('avp_baixou', '1');
-      } catch (e) {}
-      var f = document.createElement('iframe');
-      f.style.display = 'none';
-      f.src = link.href;
-      document.body.appendChild(f);
-      marcar();
-    }, 1200);
-  })();
+      try { if (sessionStorage.getItem('avp_baixou')) { aviso.textContent = 'Se precisar, baixe de novo pelo botão.'; return; } sessionStorage.setItem('avp_baixou', '1'); } catch (e) {}
+      var f = document.createElement('iframe'); f.style.display = 'none'; f.src = link.href; document.body.appendChild(f);
+      baixando();
+    }, 2200);
+  }
+
+  // ---------- demonstração da ativação
+  var jan = $('janela'), corpo = $('corpo'), cur = $('cursor');
+  var passos = [].slice.call(document.querySelectorAll('#passos li'));
+  var timers = [], parado = false;
+  function marca(n) { passos.forEach(function (li, i) { li.classList.toggle('feito', i < n - 1); li.classList.toggle('agora', i === n - 1); }); }
+  function vai(el, dx, dy) {
+    var a = el.getBoundingClientRect(), c = corpo.getBoundingClientRect();
+    cur.style.transform = 'translate(' + (a.left - c.left + (dx || a.width * 0.45)) + 'px,' + (a.top - c.top + (dy || a.height * 0.55)) + 'px)';
+  }
+  function clica() { cur.classList.remove('clicou'); void cur.offsetWidth; cur.classList.add('clicou'); }
+  function digita(el, txt, ms, fim) {
+    el.classList.add('foco'); el.textContent = '';
+    var i = 0;
+    (function um() { el.textContent = txt.slice(0, ++i); if (i < txt.length) at(um, ms); else { el.classList.remove('foco'); fim && fim(); } })();
+  }
+  function at(fn, ms) { timers.push(setTimeout(fn, ms)); }
+  function zera() {
+    timers.forEach(clearTimeout); timers = [];
+    jan.classList.remove('liberado');
+    $('v-painel').classList.remove('fora'); $('v-licenca').classList.add('fora');
+    $('m-painel').classList.add('sel'); $('m-licenca').classList.remove('sel');
+    $('c-email').textContent = ''; $('c-ped').textContent = '';
+    cur.style.transition = 'none'; cur.style.transform = 'translate(70%, 340px)'; void cur.offsetWidth; cur.style.transition = '';
+  }
+  function roda() {
+    zera(); if (parado) return;
+    marca(1);
+    at(function () { marca(2); vai($('m-licenca'), 30); }, 1300);
+    at(function () { clica(); $('m-painel').classList.remove('sel'); $('m-licenca').classList.add('sel'); $('v-painel').classList.add('fora'); $('v-licenca').classList.remove('fora'); }, 2200);
+    at(function () { marca(3); vai($('c-email'), 40); }, 3000);
+    at(function () { clica(); digita($('c-email'), 'voce@email.com', 70); }, 3800);
+    at(function () { vai($('c-ped'), 30); }, 5000);
+    at(function () { clica(); digita($('c-ped'), '8F2K19QA', 90); }, 5800);
+    at(function () { marca(4); vai($('b-ativar')); }, 6900);
+    at(function () { clica(); var b = $('b-ativar'); b.classList.add('aperta'); setTimeout(function () { b.classList.remove('aperta'); }, 140); }, 7700);
+    at(function () { jan.classList.add('liberado'); marca(5); }, 8000);
+    at(roda, 12500);
+  }
+  function final() { zera(); $('v-painel').classList.remove('fora'); $('v-licenca').classList.add('fora'); jan.classList.add('liberado'); marca(5); }
+  $('pausar').addEventListener('click', function () {
+    parado = !parado; this.textContent = parado ? 'Rever' : 'Pausar';
+    if (parado) final(); else roda();
+  });
+  if (reduz) { parado = true; $('pausar').textContent = 'Rever'; final(); }
+  else setTimeout(roda, 1900);
+})();
 </script>
 </body>
 </html>
