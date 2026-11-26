@@ -123,11 +123,11 @@
   .btn-ativar.aperta { transform: scale(.95); filter: brightness(1.2); }
 
   /* comemoração: blocos do logo se juntando */
-  .festa { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(circle at 50% 45%, rgba(20, 60, 140, .55), rgba(12, 14, 18, .97) 70%); opacity: 0; pointer-events: none; transition: opacity .35s; }
+  .festa { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(circle at 50% 45%, #112a55, #0c0e12 72%); opacity: 0; pointer-events: none; transition: opacity .35s; }
   .janela.liberado .festa { opacity: 1; }
   .festa .cartao { text-align: center; transform: scale(.92); transition: transform .45s cubic-bezier(.2, 1.4, .4, 1); }
   .janela.liberado .festa .cartao { transform: none; }
-  .festa svg { width: 74px; height: 74px; }
+  .festa svg { width: 74px; height: 74px; display: block; margin: 0 auto 14px; overflow: visible; }
   .festa svg rect { fill: url(#gpx2); opacity: 0; transform-box: fill-box; transform-origin: center; }
   .janela.liberado .festa svg rect { animation: bloco .45s cubic-bezier(.2, 1.6, .4, 1) forwards; animation-delay: var(--d); }
   .festa b { display: block; font-size: 22px; margin-top: 10px; }
