@@ -157,6 +157,14 @@ As configurações que só dá para mudar fora do Windows, explicadas tela por t
 > [Histórico completo](core/NOVIDADES.md) · [todas as versões](../../releases)
 
 <details open>
+<summary><b>v0.11.2</b> — logo novo</summary>
+
+- ✨ **Logo novo**: o "A" de quadradinhos virou um "A" de duas lâminas inclinadas, com o nome AVANTIPACK em itálico. Está no ícone do AVANTIPACK.exe, no atalho, no app, no site e no GitHub
+- 🎬 **Abertura do app animada com o logo novo**: as lâminas chegam cada uma de um lado, a barra desliza para o lugar e o nome aparece
+
+</details>
+
+<details>
 <summary><b>v0.11.1</b> — telas dos guias iguais às de verdade</summary>
 
 - 🖼️ Painel NVIDIA, NVIDIA App, AMD Adrenalin, Windows 11 e Intel redesenhados como são de verdade

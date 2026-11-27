@@ -4,88 +4,185 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>AVANTIPACK · links</title>
-<meta name="description" content="Baixe grátis o AVANTIPACK, compre o Pro, veja os guias e fale com o suporte.">
-<meta name="theme-color" content="#0c0e12">
-<meta property="og:title" content="AVANTIPACK · Otimizar o PC para jogos">
-<meta property="og:description" content="App grátis para Windows 10 e 11: menos input lag e FPS mais estável. Tudo reversível.">
-<meta property="og:image" content="https://pedromargutti.github.io/AVANTIPACK/img/app_painel.png">
-<link rel="icon" href="../img/logo.png">
+<meta name="description" content="AVANTIPACK: o app que deixa o Windows pronto para jogar. Baixe grátis, conheça o Pro e fale com a gente.">
+<meta name="theme-color" content="#07090d">
+<meta property="og:title" content="AVANTIPACK · Seu PC pronto para jogar">
+<meta property="og:description" content="App para Windows 10 e 11: menos input lag e FPS mais estável. Grátis, sem placebo e tudo reversível.">
+<meta property="og:image" content="https://pedromargutti.github.io/AVANTIPACK/img/og.png">
+<link rel="icon" href="../img/icone.svg" type="image/svg+xml">
+<link rel="icon" href="../img/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0c0e12;--bg2:#14171d;--sup:#232833;--borda:#2e3440;--tx:#f0f2f6;--tx2:#9ca3b0;--ciano:#00d6ff;--grad:linear-gradient(100deg,#2e68ff,#0096ff 55%,#00d6ff);color-scheme:dark}
+:root{--bg:#07090d;--bg2:#10141b;--sup:#1e2430;--borda:#2b3240;--tx:#f0f2f6;--tx2:#9ca3b0;--azul:#2e68ff;--ciano:#00d6ff;--ouro:#ffc43d;
+  --grad:linear-gradient(100deg,#2e68ff,#0096ff 55%,#00d6ff);color-scheme:dark}
 *{box-sizing:border-box;margin:0}
-body{min-height:100svh;background:var(--bg);color:var(--tx);font:16px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;
-  background-image:radial-gradient(60% 40% at 50% 0%,#2e68ff2e,transparent 70%),radial-gradient(40% 30% at 50% 100%,#00d6ff12,transparent 70%);
-  padding:max(40px,env(safe-area-inset-top)) 18px max(40px,env(safe-area-inset-bottom))}
-.box{max-width:480px;margin:0 auto;display:grid;gap:12px}
-header{text-align:center;margin-bottom:14px}
-.av{width:96px;height:96px;border-radius:26px;margin:0 auto 16px;display:block;box-shadow:0 18px 50px -12px #2e68ff99}
-h1{font:700 28px/1.1 "Space Grotesk",Inter,sans-serif;letter-spacing:-.02em}
-h1 b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-header p{color:var(--tx2);margin-top:8px;font-size:15px}
-a.l{display:flex;align-items:center;gap:14px;min-height:64px;padding:12px 16px;border-radius:18px;background:var(--bg2);border:1px solid var(--sup);color:var(--tx);text-decoration:none;transition:transform .15s,border-color .2s,background .2s}
-a.l:hover{border-color:var(--borda);background:#181c23}
+[hidden]{display:none!important}
+html{background:var(--bg)}
+body{min-height:100svh;color:var(--tx);font:16px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;
+  padding:max(36px,env(safe-area-inset-top)) 18px max(36px,env(safe-area-inset-bottom));overflow-x:hidden}
+
+/* fundo: brilho azul e riscos de velocidade na mesma inclinacao das laminas do logo */
+.fundo{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;
+  background:radial-gradient(70% 45% at 50% -5%,#2e68ff3d,transparent 70%),radial-gradient(50% 35% at 50% 105%,#00d6ff1c,transparent 70%)}
+.fundo i{position:absolute;top:-30%;height:160%;width:2px;border-radius:2px;transform:rotate(21.6deg);opacity:0;
+  background:linear-gradient(180deg,transparent,#00d6ff 50%,transparent);animation:risco var(--d,6s) linear var(--a,0s) infinite}
+@keyframes risco{0%{translate:0 -60%;opacity:0}15%{opacity:var(--o,.35)}85%{opacity:var(--o,.35)}100%{translate:0 60%;opacity:0}}
+
+.box{max-width:460px;margin:0 auto;display:grid;gap:12px}
+
+/* cabecalho com o logo animado */
+header{text-align:center;margin-bottom:10px}
+.icone{width:104px;height:104px;margin:0 auto 18px;border-radius:28px;display:grid;place-items:center;position:relative;
+  background:linear-gradient(180deg,#151b2b,#06080c);box-shadow:0 0 0 1px #ffffff14 inset,0 24px 60px -18px #2e68ffaa}
+.icone::after{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(55% 55% at 50% 45%,#0096ff4d,transparent 70%)}
+.simb{width:72%;height:72%;position:relative;z-index:1;overflow:visible}
+.nome{display:block;height:30px;width:auto;margin:0 auto;overflow:visible}
+.nome .na{fill:#f3f5f8}.nome .np{fill:#a9b0bc}
+header p{color:var(--tx2);margin:12px auto 0;font-size:15px;max-width:34ch;text-wrap:balance}
+
+/* cartao do produto */
+.prod{position:relative;border-radius:24px;padding:1px;margin-top:6px;background:conic-gradient(from var(--ang,0deg),#2e68ff,#00d6ff,#2e68ff22 40%,#2e68ff22 60%,#2e68ff);
+  animation:gira 6s linear infinite}
+@property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+@keyframes gira{to{--ang:360deg}}
+.prod>div{border-radius:23px;background:linear-gradient(180deg,#121826,#0b0e14);padding:18px 16px 16px;overflow:hidden}
+.prod .tela{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:16/9.6;background:#0b0e14;box-shadow:0 0 0 1px #ffffff12,0 18px 40px -18px #000}
+.prod .tela img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top left;opacity:0;transition:opacity .9s}
+.prod .tela img.on{opacity:1}
+.prod .tela::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,#ffffff1f 50%,transparent 65%);translate:-120% 0;animation:reflexo 5s ease-in-out 1.5s infinite}
+@keyframes reflexo{0%,55%{translate:-120% 0}85%,100%{translate:120% 0}}
+.prod h2{font:700 21px/1.2 "Space Grotesk",Inter,sans-serif;letter-spacing:-.02em;margin:16px 2px 4px}
+.prod .sub{color:var(--tx2);font-size:14.5px;margin:0 2px 14px}
+.prod .vant{display:flex;flex-wrap:wrap;gap:6px;margin:0 2px 16px}
+.prod .vant span{font-size:12.5px;font-weight:500;color:#cfe6ff;background:#2e68ff1f;border:1px solid #2e68ff40;border-radius:99px;padding:3px 10px}
+.acoes{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+
+/* botoes */
+a.bt{position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:58px;padding:9px 10px;border-radius:15px;
+  text-decoration:none;font-weight:600;text-align:center;transition:transform .15s,filter .2s}
+a.bt small{font-weight:500;font-size:12px;opacity:.85}
+a.bt.gr{background:var(--grad);color:#fff}
+a.bt.pro{background:var(--ouro);color:#16130a}
+a.bt::before{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,#ffffff59 50%,transparent 70%);translate:-130% 0;animation:brilho 4.5s ease-in-out infinite}
+a.bt.pro::before{animation-delay:2.2s}
+@keyframes brilho{0%,70%{translate:-130% 0}90%,100%{translate:130% 0}}
+a.bt:hover{filter:brightness(1.08)}a.bt:active{transform:scale(.97)}
+
+a.l{display:flex;align-items:center;gap:14px;min-height:66px;padding:12px 16px;border-radius:18px;background:#10141bcc;backdrop-filter:blur(6px);border:1px solid var(--sup);
+  color:var(--tx);text-decoration:none;transition:transform .2s,border-color .2s,background .2s}
+a.l:hover{border-color:#2e68ff80;background:#141a24;transform:translateX(3px)}
 a.l:active{transform:scale(.98)}
-a.l:focus-visible{outline:2px solid var(--ciano);outline-offset:3px}
-a.l .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex:none;background:#2e68ff1f;color:var(--ciano)}
-a.l .ic svg{width:22px;height:22px}
+.ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;flex:none;background:#2e68ff1f;color:var(--ciano)}
+.ic svg{width:22px;height:22px}
 a.l b{display:block;font-weight:600;font-size:16px}
 a.l small{display:block;color:var(--tx2);font-size:13px;line-height:1.35}
-a.l .seta{margin-left:auto;color:#5b6472;font-size:20px}
-a.l.prin{background:var(--grad);border:0;color:#fff}
-a.l.prin .ic{background:#ffffff26;color:#fff}
-a.l.prin small{color:#e8f1ff}
-a.l.prin .seta{color:#fff}
-a.l.pro{background:#ffc43d;border:0;color:#16130a}
-a.l.pro .ic{background:#16130a1a;color:#16130a}
-a.l.pro small{color:#4a3b12}
-a.l.pro .seta{color:#16130a}
-.email{text-align:center;color:var(--tx2);font-size:14px;margin-top:10px}
-.email b{color:var(--tx);font-weight:500;user-select:all}
-footer{text-align:center;color:#5b6472;font-size:13px;margin-top:14px}
-@media (prefers-reduced-motion:reduce){a.l{transition:none}}
+a.l .seta{margin-left:auto;color:#5b6472;font-size:22px;transition:transform .2s,color .2s}
+a.l:hover .seta{transform:translateX(3px);color:var(--ciano)}
+a.l.tt .ic{background:linear-gradient(135deg,#25f4ee33,#fe2c5533);color:#fff}
+a.l.ig .ic{background:linear-gradient(135deg,#feda7533,#d6297633,#4f5bd533);color:#fff}
+a:focus-visible{outline:2px solid var(--ciano);outline-offset:3px}
+
+.titulo{font:600 13px Inter,sans-serif;color:var(--tx2);margin:14px 4px 0}
+footer{text-align:center;color:#5b6472;font-size:13px;margin-top:16px}
+footer a{color:#8a93a3}
+
+/* entrada: o logo monta e os itens sobem um por um */
+.js .simb .b1{animation:entraE .7s cubic-bezier(.2,.9,.2,1) .1s both}
+.js .simb .b2{animation:entraD .7s cubic-bezier(.2,.9,.2,1) .25s both}
+.js .simb .b3{animation:barra .5s cubic-bezier(.2,.9,.2,1) .6s both}
+@keyframes entraE{from{transform:translate(-26px,30px);opacity:0}}
+@keyframes entraD{from{transform:translate(26px,30px);opacity:0}}
+@keyframes barra{from{transform:translateX(-30px);opacity:0}}
+.js .icone{animation:pulsa 3.2s ease-in-out 1.4s infinite}
+@keyframes pulsa{50%{box-shadow:0 0 0 1px #ffffff14 inset,0 24px 70px -12px #00b4ffcc}}
+.js .nome{animation:revela .8s cubic-bezier(.2,.9,.2,1) .55s both}
+@keyframes revela{from{clip-path:inset(0 100% 0 0);transform:translateX(-12px)}to{clip-path:inset(0 -5% 0 0)}}
+.js .sobe{opacity:0;transform:translateY(16px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.9,.2,1)}
+.js .sobe.vis{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js .sobe{opacity:1;transform:none}.fundo i{display:none}
+}
 </style>
 </head>
 <body>
+<div class="fundo" aria-hidden="true"></div>
 <main class="box">
   <header>
-    <img class="av" src="../img/logo.png" alt="Logo do AVANTIPACK" width="96" height="96">
-    <h1>AVANTI<b>PACK</b></h1>
-    <p>Seu Windows pronto para jogar: menos input lag e FPS mais estável. Grátis, sem placebo e tudo reversível.</p>
+    <div class="icone"><svg class="simb" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="gl" x1="14" y1="84" x2="86" y2="16" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2e68ff"/><stop offset=".5" stop-color="#0096ff"/><stop offset="1" stop-color="#00d6ff"/></linearGradient></defs><path class="b1" d="M14 84 L41 16 L58 16 L31 84 Z" fill="url(#gl)"/><path class="b2" d="M61 37 L86 84 L69 84 L52.5 53 Z" fill="url(#gl)"/><path class="b3" d="M37 61 L66 61 L60.5 71 L33 71 Z" fill="#00d6ff"/></svg></div>
+    <svg class="nome" viewBox="0 -70.0 558.6 70.0" role="img" aria-label="AVANTIPACK"><g transform="skewX(-10)"><path class="na" d="M1.8 0.0 20.200000000000003 -70.0H43.2L61.6 0.0H48.0L44.2 -15.4H19.200000000000003L15.4 0.0ZM22.3 -27.6H41.1L32.6 -61.7H30.8ZM75.396875 0.0 57.596875 -70.0H71.196875L85.996875 -8.5H87.396875L102.196875 -70.0H115.796875L97.996875 0.0ZM111.784375 0.0 130.184375 -70.0H153.184375L171.584375 0.0H157.984375L154.184375 -15.4H129.184375L125.384375 0.0ZM132.284375 -27.6H151.084375L142.584375 -61.7H140.784375ZM176.990625 0.0V-70.0H202.090625L215.990625 -9.0H217.790625V-70.0H230.790625V0.0H205.690625L191.790625 -61.0H189.990625V0.0ZM257.190625 0.0V-58.0H236.790625V-70.0H290.790625V-58.0H270.390625V0.0ZM296.7875 0.0V-70.0H309.9875V0.0Z"/><path class="np" d="M321.609375 0.0V-70.0H348.409375Q354.609375 -70.0 359.609375 -67.6Q364.609375 -65.2 367.509375 -60.650000000000006Q370.409375 -56.1 370.409375 -49.7V-48.400000000000006Q370.409375 -42.1 367.459375 -37.55Q364.509375 -33.0 359.509375 -30.6Q354.509375 -28.200000000000003 348.409375 -28.200000000000003H330.009375V0.0ZM330.009375 -35.800000000000004H347.509375Q354.209375 -35.800000000000004 358.109375 -39.150000000000006Q362.009375 -42.5 362.009375 -48.6V-49.6Q362.009375 -55.7 358.15937499999995 -59.050000000000004Q354.309375 -62.400000000000006 347.509375 -62.400000000000006H330.009375ZM367.5 0.0 389.1 -70.0H403.9L425.5 0.0H416.8L411.4 -17.7H381.6L376.2 0.0ZM383.8 -25.3H409.2L397.2 -64.9H395.8ZM457.3 1.4000000000000001Q444.8 1.4000000000000001 437.4 -5.8500000000000005Q430.0 -13.100000000000001 430.0 -27.0V-43.0Q430.0 -56.900000000000006 437.4 -64.15Q444.8 -71.4 457.3 -71.4Q469.7 -71.4 476.35 -64.5Q483.0 -57.6 483.0 -45.6V-45.1H474.7V-45.900000000000006Q474.7 -53.800000000000004 470.45 -58.85000000000001Q466.2 -63.900000000000006 457.3 -63.900000000000006Q448.4 -63.900000000000006 443.4 -58.45Q438.4 -53.0 438.4 -43.2V-26.8Q438.4 -17.0 443.4 -11.55Q448.4 -6.1000000000000005 457.3 -6.1000000000000005Q466.2 -6.1000000000000005 470.45 -11.15Q474.7 -16.2 474.7 -24.1V-25.700000000000003H483.0V-24.400000000000002Q483.0 -12.4 476.35 -5.5Q469.7 1.4000000000000001 457.3 1.4000000000000001ZM493.203125 0.0V-70.0H501.603125V-39.5H503.003125L532.603125 -70.0H543.803125L509.703125 -35.4L545.003125 0.0H533.503125L503.003125 -31.1H501.603125V0.0Z"/></g></svg>
+    <p class="sobe">Seu Windows pronto para jogar: menos input lag e FPS mais estável. Sem placebo, tudo reversível.</p>
   </header>
 
-  <a class="l prin" href="https://github.com/pedromargutti/AVANTIPACK/releases/latest/download/AVANTIPACK-App.exe">
-    <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg></span>
-    <span><b>Baixar grátis</b><small>Abra no PC com Windows 10 ou 11. Sem instalação.</small></span><span class="seta" aria-hidden="true">›</span></a>
+  <section class="prod sobe" aria-labelledby="t-prod"><div>
+    <div class="tela">
+      <img class="on" src="../img/app_painel.webp" alt="Tela do app AVANTIPACK: painel com a nota do PC" width="1200" height="720">
+      <img src="../img/app_execucao.webp" alt="O app aplicando um ajuste, passo a passo" width="1200" height="720" loading="lazy">
+      <img src="../img/app_concluido.webp" alt="Ajuste concluído com opção de desfazer" width="1200" height="720" loading="lazy">
+    </div>
+    <h2 id="t-prod">O app AVANTIPACK</h2>
+    <p class="sub">Otimiza o Windows para jogos em poucos cliques e mostra o que muda antes de mudar.</p>
+    <div class="vant"><span>Windows 10 e 11</span><span>Desfaz tudo com 1 clique</span><span>Guias com as telas reais</span></div>
+    <div class="acoes">
+      <a class="bt gr" href="https://github.com/pedromargutti/AVANTIPACK/releases/latest/download/AVANTIPACK-App.exe">Baixar grátis<small>Abra no PC</small></a>
+      <a class="bt pro" href="https://pay.kiwify.com.br/GJzVRdc">Quero o Pro<small>R$ 29,90 · paga 1 vez</small></a>
+    </div>
+  </div></section>
 
-  <a class="l pro" href="https://pay.kiwify.com.br/GJzVRdc">
-    <span class="ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 3 2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.4 6.8 19.2l1-5.9L3.5 9.2l5.9-.8z"/></svg></span>
-    <span><b>Comprar o Pro – R$ 29,90</b><small>Pagamento único. Ativa dentro do app.</small></span><span class="seta" aria-hidden="true">›</span></a>
-
-  <a class="l" href="https://pedromargutti.github.io/AVANTIPACK/">
+  <a class="l sobe" href="https://pedromargutti.github.io/AVANTIPACK/">
     <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-3.5 3-3.5 15 0 18M12 3c3.5 3 3.5 15 0 18"/></svg></span>
-    <span><b>Site do AVANTIPACK</b><small>Como funciona, grátis x Pro e perguntas.</small></span><span class="seta" aria-hidden="true">›</span></a>
+    <span><b>Conheça o site</b><small>Como funciona, grátis x Pro e perguntas.</small></span><span class="seta" aria-hidden="true">›</span></a>
 
-  <a class="l" href="https://pedromargutti.github.io/AVANTIPACK/guias.html">
-    <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M8 7h7M8 11h7"/></svg></span>
-    <span><b>Guias passo a passo</b><small>Painel NVIDIA, AMD e Intel, BIOS e 19 jogos.</small></span><span class="seta" aria-hidden="true">›</span></a>
+  <p class="titulo sobe">Siga e fale com a gente</p>
 
-  <a class="l" href="https://pedromargutti.github.io/AVANTIPACK/#ativar">
-    <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="m11 12 9-9M17 6l3 3M15 8l2 2"/></svg></span>
-    <span><b>Como ativar o Pro</b><small>E-mail da compra + código do pedido.</small></span><span class="seta" aria-hidden="true">›</span></a>
+  <a class="l tt sobe" data-rede="tiktok" href="#" hidden>
+    <span class="ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 3c.4 2.3 1.9 3.9 4.2 4.1v3.3c-1.5.1-2.9-.4-4.2-1.2v6.3c0 3.6-2.6 6-5.9 6-3.4 0-6-2.6-5.8-6 .2-3.1 2.9-5.4 6.2-5.2v3.4c-1.5-.3-2.9.6-3 2-.1 1.4.9 2.5 2.4 2.5s2.6-1 2.6-2.8V3z"/></svg></span>
+    <span><b>TikTok</b><small>Dicas rápidas para o PC rodar melhor.</small></span><span class="seta" aria-hidden="true">›</span></a>
 
-  <a class="l" href="mailto:avantimarketing28@gmail.com?subject=Suporte%20AVANTIPACK">
+  <a class="l ig sobe" data-rede="instagram" href="#" hidden>
+    <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.9L3 21l1.1-4.6A9 9 0 1 1 21 12z"/><path d="m8 13 3-3 2.5 2L16 9.5"/></svg></span>
+    <span><b>Mande um direct</b><small>A gente responde por aqui mesmo.</small></span><span class="seta" aria-hidden="true">›</span></a>
+
+  <a class="l sobe" href="mailto:avantimarketing28@gmail.com?subject=Contato%20AVANTIPACK">
     <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg></span>
-    <span><b>Suporte por e-mail</b><small>Dúvida para baixar, ativar ou usar.</small></span><span class="seta" aria-hidden="true">›</span></a>
+    <span><b>E-mail</b><small>avantimarketing28@gmail.com</small></span><span class="seta" aria-hidden="true">›</span></a>
 
-  <a class="l" href="https://github.com/pedromargutti/AVANTIPACK">
-    <span class="ic"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.4-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.4 1.1 2.9.8.1-.6.3-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5a3.9 3.9 0 0 1 1-2.7c-.1-.3-.5-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7a3.9 3.9 0 0 1 1 2.7c0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.8V21c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg></span>
-    <span><b>Código aberto no GitHub</b><small>Leia o que a versão grátis faz antes de rodar.</small></span><span class="seta" aria-hidden="true">›</span></a>
-
-  <p class="email">Suporte: <b>avantimarketing28@gmail.com</b></p>
-  <footer>Funciona no Windows 10 e 11 · AVANTIPACK</footer>
+  <footer class="sobe">AVANTIPACK · Windows 10 e 11 · <a href="https://github.com/pedromargutti/AVANTIPACK">código aberto</a></footer>
 </main>
+<script>
+// Preencha quando as contas existirem (so o @, sem o arroba). Vazio = o botao fica escondido.
+const TIKTOK = '';
+const INSTAGRAM = '';
+
+(() => {
+  const ok = v => /^[a-z0-9._]{1,30}$/i.test(v);
+  const links = { tiktok: ok(TIKTOK) && 'https://www.tiktok.com/@' + TIKTOK, instagram: ok(INSTAGRAM) && 'https://ig.me/m/' + INSTAGRAM };
+  document.querySelectorAll('[data-rede]').forEach(a => { const u = links[a.dataset.rede]; if (u) { a.href = u; a.hidden = false; } });
+
+  const calmo = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (calmo) return;
+  document.documentElement.classList.add('js');
+
+  // riscos de velocidade no fundo
+  const f = document.querySelector('.fundo');
+  for (let i = 0; i < 9; i++) {
+    const r = document.createElement('i');
+    r.style.left = (6 + i * 11 + Math.random() * 6) + '%';
+    r.style.setProperty('--d', (5 + Math.random() * 5).toFixed(1) + 's');
+    r.style.setProperty('--a', (-Math.random() * 8).toFixed(1) + 's');
+    r.style.setProperty('--o', (.12 + Math.random() * .25).toFixed(2));
+    f.appendChild(r);
+  }
+  // itens sobem um por um
+  document.querySelectorAll('.sobe').forEach((el, i) => setTimeout(() => el.classList.add('vis'), 700 + i * 90));
+  // telas do app trocam sozinhas
+  const imgs = [...document.querySelectorAll('.tela img')]; let k = 0;
+  setInterval(() => { imgs[k].classList.remove('on'); k = (k + 1) % imgs.length; imgs[k].classList.add('on'); }, 3200);
+})();
+</script>
 </body>
 </html>

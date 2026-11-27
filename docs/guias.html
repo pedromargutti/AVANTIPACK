@@ -6,7 +6,9 @@
 <title>Guias · AVANTIPACK</title>
 <meta name="description" content="Passo a passo do que fica fora do Windows: painel NVIDIA, AMD e Intel, BIOS, processador, programas, limite de FPS e configurações de 19 jogos.">
 <meta name="theme-color" content="#0c0e12">
-<link rel="icon" href="img/logo.png">
+<link rel="icon" href="img/icone.svg" type="image/svg+xml">
+<link rel="icon" href="img/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -30,9 +32,9 @@ h1,h2,h3{font-family:var(--disp);letter-spacing:-.02em;margin:0;text-wrap:balanc
 :focus-visible{outline:2px solid var(--ciano);outline-offset:3px;border-radius:6px}
 .nav{position:sticky;top:0;z-index:20;background:#0c0e12e6;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--sup)}
 .nav .in{max-width:1320px;margin:0 auto;padding:0 max(4vw,16px);height:66px;display:flex;align-items:center;gap:22px}
-.marca{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tx);font:700 18px/1 var(--disp)}
-.marca img{width:30px;height:30px;border-radius:8px}
-.marca b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.marca{display:flex;align-items:center;gap:10px;text-decoration:none}
+.marca img{width:28px;height:28px}
+.marca img.nm{width:auto;height:15px}
 .nav .voltar{margin-left:auto;color:var(--tx2);text-decoration:none;font-size:15px}
 .nav .voltar:hover{color:var(--tx)}
 .btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;font:600 15px/1 var(--corpo);text-decoration:none;white-space:nowrap;border:0;cursor:pointer}
@@ -126,7 +128,7 @@ ul.sec li{margin-bottom:10px}
 </head>
 <body>
 <header class="nav"><div class="in">
-  <a class="marca" href="index.html"><img src="img/logo.png" alt="" width="30" height="30"><span>AVANTI<b>PACK</b></span></a>
+  <a class="marca" href="index.html" aria-label="AVANTIPACK, página inicial"><img src="img/simbolo.svg" alt="" width="28" height="28"><img class="nm" src="img/nome_escuro.svg" alt="" width="120" height="15"></a>
   <span style="color:var(--tx3)">Guias</span>
   <a class="voltar" href="index.html">Voltar ao site</a>
   <a class="btn btn-g" href="https://github.com/pedromargutti/AVANTIPACK/releases/latest/download/AVANTIPACK-App.exe">Baixar grátis</a>

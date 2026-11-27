@@ -2,6 +2,10 @@
 
 Tudo o que mudou em cada versão. A mais nova fica sempre em cima.
 
+## v0.11.2 — 27/11/2026
+- ✨ **Logo novo**: o "A" de quadradinhos virou um "A" de duas lâminas inclinadas, com o nome AVANTIPACK em itálico. Está no ícone do AVANTIPACK.exe, no atalho, no app, no site e no GitHub
+- 🎬 **Abertura do app animada com o logo novo**: as lâminas chegam cada uma de um lado, a barra desliza para o lugar e o nome aparece
+
 ## v0.11.1 — 27/11/2026
 - 🖼️ **Telas dos guias redesenhadas iguais às de verdade**: Painel de Controle NVIDIA, NVIDIA App, AMD Adrenalin, Configurações do Windows 11, Intel e o menu do botão direito, com os mesmos menus, ícones e botões
 - 📐 **Guias mais fáceis de seguir**: mais espaço entre as partes, "Onde clicar" separado e a explicação de cada opção recolhida até você abrir
