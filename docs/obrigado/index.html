@@ -9,23 +9,29 @@
 <link rel="icon" href="../img/icone.svg" type="image/svg+xml">
 <link rel="icon" href="../img/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --fundo: #0c0e12; --lateral: #0f1116; --painel: #14171d; --painel2: #1b1f27; --linha: #2e3440; --linha2: #232833;
     --texto: #f0f2f6; --suave: #9ca3b0; --apagado: #848b99;
     --azul: #2e68ff; --ciano: #00d6ff; --verde: #3ddc97; --ambar: #ffb547;
+    --grad: linear-gradient(100deg, #2e68ff, #0096ff 55%, #00d6ff); --disp: "Space Grotesk", Inter, sans-serif;
   }
   * { box-sizing: border-box; }
   html { background: var(--fundo); -webkit-text-size-adjust: 100%; }
   body {
     margin: 0; color: var(--texto); min-height: 100vh;
-    font: 16px/1.55 "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
-    background-color: var(--fundo);
-    background-image:
-      radial-gradient(900px 480px at 85% -160px, rgba(0, 140, 255, .20), transparent 70%),
-      radial-gradient(rgba(255, 255, 255, .045) 1px, transparent 1px);
-    background-size: auto, 32px 32px;
+    font: 16px/1.55 Inter, "Segoe UI", system-ui, -apple-system, Roboto, sans-serif; -webkit-font-smoothing: antialiased;
+    background: var(--fundo);
   }
+  /* fundo: brilho azul e riscos na mesma inclinacao das laminas do logo (como o site e o mini menu) */
+  .fundo { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
+    background: radial-gradient(70% 50% at 85% -10%, #2e68ff33, transparent 70%), radial-gradient(45% 40% at 0% 100%, #00d6ff14, transparent 70%); }
+  .fundo i { position: absolute; top: -30%; height: 160%; width: 2px; border-radius: 2px; transform: rotate(21.6deg); opacity: 0;
+    background: linear-gradient(180deg, transparent, #00d6ff 50%, transparent); animation: risco var(--dur, 7s) linear var(--a, 0s) infinite; }
+  @keyframes risco { 0% { translate: 0 -60%; opacity: 0; } 15% { opacity: var(--o, .3); } 85% { opacity: var(--o, .3); } 100% { translate: 0 60%; opacity: 0; } }
   a { color: var(--ciano); }
   :focus-visible { outline: 3px solid var(--ciano); outline-offset: 3px; border-radius: 6px; }
   .pagina { max-width: 1120px; margin: 0 auto; padding: 22px 24px 80px; }
@@ -39,13 +45,20 @@
   .status i { width: 8px; height: 8px; border-radius: 50%; background: var(--verde); box-shadow: 0 0 0 0 rgba(61, 220, 151, .6); animation: pulso 2s infinite; }
   @keyframes pulso { 70% { box-shadow: 0 0 0 8px rgba(61, 220, 151, 0); } 100% { box-shadow: 0 0 0 0 rgba(61, 220, 151, 0); } }
 
-  /* marca em blocos, igual ao app */
+  /* logo: as laminas chegam, a barra desliza e o nome cai letra a letra (igual a abertura do site) */
   .abertura { padding: 44px 0 34px; }
-  .marca-px { width: min(560px, 100%); height: auto; display: block; overflow: visible; }
-  .marca-px rect { opacity: 0; transform-box: fill-box; transform-origin: center; animation: bloco .5s cubic-bezier(.2, 1.5, .4, 1) forwards; animation-delay: var(--d); }
-  @keyframes bloco { from { opacity: 0; transform: translateY(-10px) scale(.3); } to { opacity: 1; transform: none; } }
-  .pro { display: inline-block; margin-left: 4px; vertical-align: 10%; font-size: 13px; font-weight: 800; letter-spacing: .06em; color: #08101e; background: linear-gradient(90deg, var(--azul), var(--ciano)); padding: 3px 10px; border-radius: 99px; }
-  h1 { font-size: clamp(30px, 4.4vw, 46px); line-height: 1.1; letter-spacing: -.015em; margin: 26px 0 10px; font-weight: 700; max-width: 24ch; }
+  .marca-nova { width: min(470px, 100%); height: auto; display: block; overflow: visible; }
+  .marca-nova .lt { fill: #f3f5f8; animation: letra .6s cubic-bezier(.2, 1.4, .4, 1) both; animation-delay: var(--d); }
+  .marca-nova .lt.pk { fill: #a9b0bc; }
+  .marca-nova .s1, .festa .f1 { animation: lamE .7s cubic-bezier(.2, .9, .2, 1) .05s both; }
+  .marca-nova .s2, .festa .f2 { animation: lamD .7s cubic-bezier(.2, .9, .2, 1) .18s both; }
+  .marca-nova .s3, .festa .f3 { animation: barra .5s cubic-bezier(.2, .9, .2, 1) .45s both; }
+  @keyframes lamE { from { opacity: 0; transform: translate(-34px, 40px); } to { opacity: 1; transform: none; } }
+  @keyframes lamD { from { opacity: 0; transform: translate(34px, 40px); } to { opacity: 1; transform: none; } }
+  @keyframes barra { from { opacity: 0; transform: translateX(-46px); } to { opacity: 1; transform: none; } }
+  @keyframes letra { from { opacity: 0; transform: translateY(-95px); } to { opacity: 1; transform: none; } }
+  .pro { display: inline-block; margin-left: 4px; vertical-align: 10%; font: 800 13px/1.4 Inter, sans-serif; letter-spacing: .06em; color: #08101e; background: linear-gradient(90deg, var(--azul), var(--ciano)); padding: 3px 10px; border-radius: 99px; }
+  h1 { font-family: var(--disp); font-size: clamp(30px, 4.4vw, 48px); line-height: 1.08; letter-spacing: -.02em; margin: 30px 0 12px; font-weight: 700; max-width: 24ch; }
   .lead { margin: 0; color: var(--suave); font-size: 18px; max-width: 52ch; }
   .entra { opacity: 0; animation: entra .6s cubic-bezier(.2, .8, .2, 1) forwards; }
   @keyframes entra { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
@@ -53,15 +66,17 @@
   .grade { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); gap: 36px; align-items: start; }
 
   /* download */
-  .arquivo { background: var(--painel); border: 1px solid var(--linha); border-radius: 12px; padding: 16px 16px 14px; }
+  .arquivo { background: linear-gradient(180deg, #121826, #0b0e14); border: 1px solid #2e68ff66; border-radius: 18px; padding: 16px 16px 14px; box-shadow: 0 24px 50px -28px #2e68ff99; }
   .arquivo .linha { display: flex; align-items: center; gap: 14px; }
   .arquivo .ico { width: 44px; height: 44px; flex: none; border-radius: 10px; background: #0e2240; display: grid; place-items: center; }
   .arquivo .ico img { width: 30px; height: 30px; border-radius: 7px; }
   .arquivo .nome { flex: 1; min-width: 0; }
   .arquivo .nome b { display: block; font-size: 16px; }
   .arquivo .nome small { color: var(--suave); font-size: 13.5px; }
-  .baixar { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 9px; font-weight: 700; font-size: 15px; text-decoration: none; color: #fff; background: var(--azul); white-space: nowrap; transition: background .15s; }
-  .baixar:hover { background: #3f77ff; }
+  .baixar { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 13px; font-weight: 700; font-size: 15px; text-decoration: none; color: #fff; background: var(--grad); white-space: nowrap; transition: filter .2s, transform .15s; }
+  .baixar::before { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 30%, #ffffff59 50%, transparent 70%); translate: -130% 0; animation: brilhob 4.5s ease-in-out 2s infinite; }
+  @keyframes brilhob { 0%, 70% { translate: -130% 0; } 90%, 100% { translate: 130% 0; } }
+  .baixar:hover { filter: brightness(1.08); } .baixar:active { transform: scale(.97); }
   .barra { height: 4px; border-radius: 4px; background: var(--linha2); margin-top: 14px; overflow: hidden; position: relative; }
   .barra::after { content: ""; position: absolute; inset: 0; width: 0; background: linear-gradient(90deg, var(--azul), var(--ciano)); border-radius: 4px; }
   .arquivo.baixando .barra::after { animation: enche 2.6s cubic-bezier(.3, .6, .2, 1) forwards; }
@@ -77,7 +92,7 @@
   body.mobile .celular { display: block; }
 
   /* passos (acendem junto com a demonstração) */
-  h2 { font-size: 21px; margin: 34px 0 12px; }
+  h2 { font-family: var(--disp); font-size: 22px; letter-spacing: -.01em; margin: 34px 0 12px; }
   ol.passos { list-style: none; margin: 0; padding: 0; position: relative; }
   ol.passos::before { content: ""; position: absolute; left: 15px; top: 18px; bottom: 18px; width: 2px; background: var(--linha2); }
   ol.passos li { position: relative; display: grid; grid-template-columns: 32px 1fr; gap: 14px; padding: 10px 0; }
@@ -91,13 +106,14 @@
   .k { font-weight: 600; color: #cfe0ff; background: #0e2042; padding: 0 6px; border-radius: 5px; white-space: nowrap; }
 
   /* janela do app (demonstração animada) */
-  .janela { position: sticky; top: 18px; border-radius: 12px; border: 1px solid var(--linha); background: var(--fundo); overflow: hidden; box-shadow: 0 30px 70px rgba(0, 0, 0, .5); }
+  .janela { position: sticky; top: 18px; border-radius: 14px; border: 1px solid #2e68ff55; background: var(--fundo); overflow: hidden; box-shadow: 0 30px 70px rgba(0, 0, 0, .5); }
   .titulo-jan { height: 32px; display: flex; align-items: center; justify-content: space-between; padding: 0 12px; font-size: 12px; color: var(--apagado); background: var(--lateral); border-bottom: 1px solid #1b1f27; }
   .titulo-jan .bts { display: flex; gap: 14px; letter-spacing: 2px; }
   .corpo { display: grid; grid-template-columns: 150px 1fr; height: 380px; position: relative; }
   .menu { background: var(--lateral); padding: 14px 8px; font-size: 13px; color: var(--suave); }
   .menu .logo { display: flex; align-items: center; gap: 7px; padding: 0 8px 12px; font-weight: 700; font-size: 12.5px; color: var(--texto); }
-  .menu .logo img { width: 20px; height: 20px; border-radius: 5px; }
+  .menu .logo img { width: 18px; height: 18px; }
+  .menu .logo img.nm { width: auto; height: 9px; }
   .menu .g { font-size: 10.5px; color: var(--apagado); padding: 10px 10px 3px; }
   .menu .m { padding: 6px 10px; border-radius: 7px; transition: background .2s, color .2s, box-shadow .2s; }
   .menu .m.sel { background: var(--painel2); color: var(--texto); box-shadow: inset 3px 0 0 var(--ciano); }
@@ -125,14 +141,14 @@
   .btn-ativar { margin-top: 14px; display: inline-block; font-size: 13px; font-weight: 700; padding: 9px 22px; border-radius: 8px; background: var(--azul); color: #fff; transition: transform .1s, filter .2s; }
   .btn-ativar.aperta { transform: scale(.95); filter: brightness(1.2); }
 
-  /* comemoração: blocos do logo se juntando */
+  /* comemoração: o símbolo do logo se monta (lâminas e barra) */
   .festa { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(circle at 50% 45%, #112a55, #0c0e12 72%); opacity: 0; pointer-events: none; transition: opacity .35s; }
   .janela.liberado .festa { opacity: 1; }
   .festa .cartao { text-align: center; transform: scale(.92); transition: transform .45s cubic-bezier(.2, 1.4, .4, 1); }
   .janela.liberado .festa .cartao { transform: none; }
-  .festa svg { width: 74px; height: 74px; display: block; margin: 0 auto 14px; overflow: visible; }
-  .festa svg rect { fill: url(#gpx2); opacity: 0; transform-box: fill-box; transform-origin: center; }
-  .janela.liberado .festa svg rect { animation: bloco .45s cubic-bezier(.2, 1.6, .4, 1) forwards; animation-delay: var(--d); }
+  .festa svg { width: 78px; height: 74px; display: block; margin: 0 auto 14px; overflow: visible; filter: drop-shadow(0 0 18px #0096ff88); }
+  .festa svg path { opacity: 0; }
+  .janela:not(.liberado) .festa svg path { animation: none; }
   .festa b { display: block; font-size: 22px; margin-top: 10px; }
   .festa small { color: var(--suave); font-size: 13px; }
   .brilho { position: absolute; inset: 0; background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, .10) 50%, transparent 65%); transform: translateX(-100%); }
@@ -178,12 +194,14 @@
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation: none !important; transition: none !important; }
-    .marca-px rect, .entra { opacity: 1; }
+    .marca-nova path, .festa svg path, .entra { opacity: 1; }
+    .fundo i { display: none; }
     .cursor { display: none; }
   }
 </style>
 </head>
 <body>
+<div class="fundo" aria-hidden="true"></div>
 <div class="pagina">
   <header class="topo">
     <a class="id" href="https://github.com/pedromargutti/AVANTIPACK" aria-label="AVANTIPACK no GitHub"><img src="../img/simbolo.svg" alt=""><img class="nm" src="../img/nome_escuro.svg" alt=""></a>
@@ -191,7 +209,7 @@
   </header>
 
   <section class="abertura">
-    <svg class="marca-px" viewBox="104 46 1189 91" role="img" aria-label="AVANTIPACK"><defs><linearGradient id="gpx" gradientUnits="userSpaceOnUse" x1="106" y1="0" x2="1291" y2="0"><stop offset="0" stop-color="#1d43ff"/><stop offset=".55" stop-color="#008cff"/><stop offset="1" stop-color="#00e1ff"/></linearGradient></defs><g fill="url(#gpx)"><rect x="106" y="66" width="15" height="15" rx="2" style="--d:0ms"/><rect x="106" y="84" width="15" height="15" rx="2" style="--d:9ms"/><rect x="106" y="102" width="15" height="15" rx="2" style="--d:18ms"/><rect x="106" y="120" width="15" height="15" rx="2" style="--d:27ms"/><rect x="124" y="48" width="15" height="15" rx="2" style="--d:36ms"/><rect x="124" y="84" width="15" height="15" rx="2" style="--d:45ms"/><rect x="142" y="48" width="15" height="15" rx="2" style="--d:54ms"/><rect x="142" y="84" width="15" height="15" rx="2" style="--d:63ms"/><rect x="160" y="48" width="15" height="15" rx="2" style="--d:72ms"/><rect x="160" y="84" width="15" height="15" rx="2" style="--d:81ms"/><rect x="178" y="66" width="15" height="15" rx="2" style="--d:90ms"/><rect x="178" y="84" width="15" height="15" rx="2" style="--d:99ms"/><rect x="178" y="102" width="15" height="15" rx="2" style="--d:108ms"/><rect x="178" y="120" width="15" height="15" rx="2" style="--d:117ms"/><rect x="232" y="48" width="15" height="15" rx="2" style="--d:126ms"/><rect x="232" y="66" width="15" height="15" rx="2" style="--d:135ms"/><rect x="232" y="84" width="15" height="15" rx="2" style="--d:144ms"/><rect x="250" y="102" width="15" height="15" rx="2" style="--d:153ms"/><rect x="268" y="120" width="15" height="15" rx="2" style="--d:162ms"/><rect x="286" y="102" width="15" height="15" rx="2" style="--d:171ms"/><rect x="304" y="48" width="15" height="15" rx="2" style="--d:180ms"/><rect x="304" y="66" width="15" height="15" rx="2" style="--d:189ms"/><rect x="304" y="84" width="15" height="15" rx="2" style="--d:198ms"/><rect x="358" y="66" width="15" height="15" rx="2" style="--d:207ms"/><rect x="358" y="84" width="15" height="15" rx="2" style="--d:216ms"/><rect x="358" y="102" width="15" height="15" rx="2" style="--d:225ms"/><rect x="358" y="120" width="15" height="15" rx="2" style="--d:234ms"/><rect x="376" y="48" width="15" height="15" rx="2" style="--d:243ms"/><rect x="376" y="84" width="15" height="15" rx="2" style="--d:252ms"/><rect x="394" y="48" width="15" height="15" rx="2" style="--d:261ms"/><rect x="394" y="84" width="15" height="15" rx="2" style="--d:270ms"/><rect x="412" y="48" width="15" height="15" rx="2" style="--d:279ms"/><rect x="412" y="84" width="15" height="15" rx="2" style="--d:288ms"/><rect x="430" y="66" width="15" height="15" rx="2" style="--d:297ms"/><rect x="430" y="84" width="15" height="15" rx="2" style="--d:306ms"/><rect x="430" y="102" width="15" height="15" rx="2" style="--d:315ms"/><rect x="430" y="120" width="15" height="15" rx="2" style="--d:324ms"/><rect x="484" y="48" width="15" height="15" rx="2" style="--d:333ms"/><rect x="484" y="66" width="15" height="15" rx="2" style="--d:342ms"/><rect x="484" y="84" width="15" height="15" rx="2" style="--d:351ms"/><rect x="484" y="102" width="15" height="15" rx="2" style="--d:360ms"/><rect x="484" y="120" width="15" height="15" rx="2" style="--d:369ms"/><rect x="502" y="66" width="15" height="15" rx="2" style="--d:378ms"/><rect x="520" y="84" width="15" height="15" rx="2" style="--d:387ms"/><rect x="538" y="102" width="15" height="15" rx="2" style="--d:396ms"/><rect x="556" y="48" width="15" height="15" rx="2" style="--d:405ms"/><rect x="556" y="66" width="15" height="15" rx="2" style="--d:414ms"/><rect x="556" y="84" width="15" height="15" rx="2" style="--d:423ms"/><rect x="556" y="102" width="15" height="15" rx="2" style="--d:432ms"/><rect x="556" y="120" width="15" height="15" rx="2" style="--d:441ms"/><rect x="610" y="48" width="15" height="15" rx="2" style="--d:450ms"/><rect x="628" y="48" width="15" height="15" rx="2" style="--d:459ms"/><rect x="646" y="48" width="15" height="15" rx="2" style="--d:468ms"/><rect x="646" y="66" width="15" height="15" rx="2" style="--d:477ms"/><rect x="646" y="84" width="15" height="15" rx="2" style="--d:486ms"/><rect x="646" y="102" width="15" height="15" rx="2" style="--d:495ms"/><rect x="646" y="120" width="15" height="15" rx="2" style="--d:504ms"/><rect x="664" y="48" width="15" height="15" rx="2" style="--d:513ms"/><rect x="682" y="48" width="15" height="15" rx="2" style="--d:522ms"/><rect x="736" y="48" width="15" height="15" rx="2" style="--d:531ms"/><rect x="736" y="120" width="15" height="15" rx="2" style="--d:540ms"/><rect x="754" y="48" width="15" height="15" rx="2" style="--d:549ms"/><rect x="754" y="66" width="15" height="15" rx="2" style="--d:558ms"/><rect x="754" y="84" width="15" height="15" rx="2" style="--d:567ms"/><rect x="754" y="102" width="15" height="15" rx="2" style="--d:576ms"/><rect x="754" y="120" width="15" height="15" rx="2" style="--d:585ms"/><rect x="772" y="48" width="15" height="15" rx="2" style="--d:594ms"/><rect x="772" y="120" width="15" height="15" rx="2" style="--d:603ms"/><rect x="826" y="48" width="15" height="15" rx="2" style="--d:612ms"/><rect x="826" y="66" width="15" height="15" rx="2" style="--d:621ms"/><rect x="826" y="84" width="15" height="15" rx="2" style="--d:630ms"/><rect x="826" y="102" width="15" height="15" rx="2" style="--d:639ms"/><rect x="826" y="120" width="15" height="15" rx="2" style="--d:648ms"/><rect x="844" y="48" width="15" height="15" rx="2" style="--d:657ms"/><rect x="844" y="84" width="15" height="15" rx="2" style="--d:666ms"/><rect x="862" y="48" width="15" height="15" rx="2" style="--d:675ms"/><rect x="862" y="84" width="15" height="15" rx="2" style="--d:684ms"/><rect x="880" y="48" width="15" height="15" rx="2" style="--d:693ms"/><rect x="880" y="84" width="15" height="15" rx="2" style="--d:702ms"/><rect x="898" y="66" width="15" height="15" rx="2" style="--d:711ms"/><rect x="952" y="66" width="15" height="15" rx="2" style="--d:720ms"/><rect x="952" y="84" width="15" height="15" rx="2" style="--d:729ms"/><rect x="952" y="102" width="15" height="15" rx="2" style="--d:738ms"/><rect x="952" y="120" width="15" height="15" rx="2" style="--d:747ms"/><rect x="970" y="48" width="15" height="15" rx="2" style="--d:756ms"/><rect x="970" y="84" width="15" height="15" rx="2" style="--d:765ms"/><rect x="988" y="48" width="15" height="15" rx="2" style="--d:774ms"/><rect x="988" y="84" width="15" height="15" rx="2" style="--d:783ms"/><rect x="1006" y="48" width="15" height="15" rx="2" style="--d:792ms"/><rect x="1006" y="84" width="15" height="15" rx="2" style="--d:801ms"/><rect x="1024" y="66" width="15" height="15" rx="2" style="--d:810ms"/><rect x="1024" y="84" width="15" height="15" rx="2" style="--d:819ms"/><rect x="1024" y="102" width="15" height="15" rx="2" style="--d:828ms"/><rect x="1024" y="120" width="15" height="15" rx="2" style="--d:837ms"/><rect x="1078" y="66" width="15" height="15" rx="2" style="--d:846ms"/><rect x="1078" y="84" width="15" height="15" rx="2" style="--d:855ms"/><rect x="1078" y="102" width="15" height="15" rx="2" style="--d:864ms"/><rect x="1096" y="48" width="15" height="15" rx="2" style="--d:873ms"/><rect x="1096" y="120" width="15" height="15" rx="2" style="--d:882ms"/><rect x="1114" y="48" width="15" height="15" rx="2" style="--d:891ms"/><rect x="1114" y="120" width="15" height="15" rx="2" style="--d:900ms"/><rect x="1132" y="48" width="15" height="15" rx="2" style="--d:909ms"/><rect x="1132" y="120" width="15" height="15" rx="2" style="--d:918ms"/><rect x="1150" y="48" width="15" height="15" rx="2" style="--d:927ms"/><rect x="1150" y="120" width="15" height="15" rx="2" style="--d:936ms"/><rect x="1204" y="48" width="15" height="15" rx="2" style="--d:945ms"/><rect x="1204" y="66" width="15" height="15" rx="2" style="--d:954ms"/><rect x="1204" y="84" width="15" height="15" rx="2" style="--d:963ms"/><rect x="1204" y="102" width="15" height="15" rx="2" style="--d:972ms"/><rect x="1204" y="120" width="15" height="15" rx="2" style="--d:981ms"/><rect x="1222" y="84" width="15" height="15" rx="2" style="--d:990ms"/><rect x="1240" y="84" width="15" height="15" rx="2" style="--d:999ms"/><rect x="1258" y="66" width="15" height="15" rx="2" style="--d:1008ms"/><rect x="1258" y="102" width="15" height="15" rx="2" style="--d:1017ms"/><rect x="1276" y="48" width="15" height="15" rx="2" style="--d:1026ms"/><rect x="1276" y="120" width="15" height="15" rx="2" style="--d:1035ms"/></g></svg>
+    <svg class="marca-nova" viewBox="-6 -90.70 707.31 111.40" role="img" aria-label="AVANTIPACK"><defs><linearGradient id="gob" x1="14" y1="84" x2="86" y2="16" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2e68ff"/><stop offset=".5" stop-color="#0096ff"/><stop offset="1" stop-color="#00d6ff"/></linearGradient></defs><g transform="translate(-20.46 -108.09) scale(1.4618)"><path class="s1" d="M14 84 L41 16 L58 16 L31 84 Z" fill="url(#gob)"/><path class="s2" d="M61 37 L86 84 L69 84 L52.5 53 Z" fill="url(#gob)"/><path class="s3" d="M37 61 L66 61 L60.5 71 L33 71 Z" fill="#00d6ff"/></g><g transform="translate(136.75 0) skewX(-10)"><path class="lt" style="--d:485ms" d="M1.8 0.0 20.200000000000003 -70.0H43.2L61.6 0.0H48.0L44.2 -15.4H19.200000000000003L15.4 0.0ZM22.3 -27.6H41.1L32.6 -61.7H30.8Z"/><path class="lt" style="--d:540ms" d="M75.396875 0.0 57.596875 -70.0H71.196875L85.996875 -8.5H87.396875L102.196875 -70.0H115.796875L97.996875 0.0Z"/><path class="lt" style="--d:595ms" d="M111.784375 0.0 130.184375 -70.0H153.184375L171.584375 0.0H157.984375L154.184375 -15.4H129.184375L125.384375 0.0ZM132.284375 -27.6H151.084375L142.584375 -61.7H140.784375Z"/><path class="lt" style="--d:650ms" d="M176.990625 0.0V-70.0H202.090625L215.990625 -9.0H217.790625V-70.0H230.790625V0.0H205.690625L191.790625 -61.0H189.990625V0.0Z"/><path class="lt" style="--d:705ms" d="M257.190625 0.0V-58.0H236.790625V-70.0H290.790625V-58.0H270.390625V0.0Z"/><path class="lt" style="--d:760ms" d="M296.7875 0.0V-70.0H309.9875V0.0Z"/><path class="lt pk" style="--d:815ms" d="M321.609375 0.0V-70.0H348.409375Q354.609375 -70.0 359.609375 -67.6Q364.609375 -65.2 367.509375 -60.650000000000006Q370.409375 -56.1 370.409375 -49.7V-48.400000000000006Q370.409375 -42.1 367.459375 -37.55Q364.509375 -33.0 359.509375 -30.6Q354.509375 -28.200000000000003 348.409375 -28.200000000000003H330.009375V0.0ZM330.009375 -35.800000000000004H347.509375Q354.209375 -35.800000000000004 358.109375 -39.150000000000006Q362.009375 -42.5 362.009375 -48.6V-49.6Q362.009375 -55.7 358.15937499999995 -59.050000000000004Q354.309375 -62.400000000000006 347.509375 -62.400000000000006H330.009375Z"/><path class="lt pk" style="--d:870ms" d="M367.5 0.0 389.1 -70.0H403.9L425.5 0.0H416.8L411.4 -17.7H381.6L376.2 0.0ZM383.8 -25.3H409.2L397.2 -64.9H395.8Z"/><path class="lt pk" style="--d:925ms" d="M457.3 1.4000000000000001Q444.8 1.4000000000000001 437.4 -5.8500000000000005Q430.0 -13.100000000000001 430.0 -27.0V-43.0Q430.0 -56.900000000000006 437.4 -64.15Q444.8 -71.4 457.3 -71.4Q469.7 -71.4 476.35 -64.5Q483.0 -57.6 483.0 -45.6V-45.1H474.7V-45.900000000000006Q474.7 -53.800000000000004 470.45 -58.85000000000001Q466.2 -63.900000000000006 457.3 -63.900000000000006Q448.4 -63.900000000000006 443.4 -58.45Q438.4 -53.0 438.4 -43.2V-26.8Q438.4 -17.0 443.4 -11.55Q448.4 -6.1000000000000005 457.3 -6.1000000000000005Q466.2 -6.1000000000000005 470.45 -11.15Q474.7 -16.2 474.7 -24.1V-25.700000000000003H483.0V-24.400000000000002Q483.0 -12.4 476.35 -5.5Q469.7 1.4000000000000001 457.3 1.4000000000000001Z"/><path class="lt pk" style="--d:980ms" d="M493.203125 0.0V-70.0H501.603125V-39.5H503.003125L532.603125 -70.0H543.803125L509.703125 -35.4L545.003125 0.0H533.503125L503.003125 -31.1H501.603125V0.0Z"/></g></svg>
     <h1 class="entra" style="animation-delay:1.1s">Seu Pro está pago. <span class="pro">PRO</span><br>Falta um minuto para ativar.</h1>
     <p class="lead entra" style="animation-delay:1.25s">Não tem chave para esperar: o app ativa com o e-mail que você usou na compra. Veja na demonstração como é rápido e repita no seu PC.</p>
   </section>
@@ -231,7 +249,7 @@
       <div class="titulo-jan"><span>AVANTIPACK</span><span class="bts" aria-hidden="true">–&nbsp;□&nbsp;✕</span></div>
       <div class="corpo" id="corpo">
         <nav class="menu" aria-hidden="true">
-          <div class="logo"><img src="../img/logo.png" alt=""><span>AVANTIPACK</span></div>
+          <div class="logo"><img src="../img/simbolo.svg" alt=""><span><img class="nm" src="../img/nome_escuro.svg" alt=""></span></div>
           <div class="m sel" id="m-painel">Painel</div>
           <div class="g">Desempenho</div><div class="m">Otimização</div><div class="m">Jogos</div>
           <div class="g">Cuidados</div><div class="m">Manutenção</div>
@@ -260,13 +278,7 @@
           </section>
           <div class="festa" aria-hidden="true">
             <div class="cartao">
-              <svg viewBox="0 0 5 5"><defs><linearGradient id="gpx2" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#2e68ff"/><stop offset="1" stop-color="#00d6ff"/></linearGradient></defs>
-                <rect x="1" y="0" width=".86" height=".86" rx=".15" style="--d:0ms"/><rect x="2" y="0" width=".86" height=".86" rx=".15" style="--d:40ms"/><rect x="3" y="0" width=".86" height=".86" rx=".15" style="--d:80ms"/>
-                <rect x="0" y="1" width=".86" height=".86" rx=".15" style="--d:120ms"/><rect x="4" y="1" width=".86" height=".86" rx=".15" style="--d:160ms"/>
-                <rect x="0" y="2" width=".86" height=".86" rx=".15" style="--d:200ms"/><rect x="1" y="2" width=".86" height=".86" rx=".15" style="--d:230ms"/><rect x="2" y="2" width=".86" height=".86" rx=".15" style="--d:260ms"/><rect x="3" y="2" width=".86" height=".86" rx=".15" style="--d:290ms"/><rect x="4" y="2" width=".86" height=".86" rx=".15" style="--d:320ms"/>
-                <rect x="0" y="3" width=".86" height=".86" rx=".15" style="--d:360ms"/><rect x="4" y="3" width=".86" height=".86" rx=".15" style="--d:390ms"/>
-                <rect x="0" y="4" width=".86" height=".86" rx=".15" style="--d:420ms"/><rect x="4" y="4" width=".86" height=".86" rx=".15" style="--d:450ms"/>
-              </svg>
+              <svg viewBox="14 16 72 68" aria-hidden="true"><defs><linearGradient id="gfe" x1="14" y1="84" x2="86" y2="16" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#2e68ff"/><stop offset=".5" stop-color="#0096ff"/><stop offset="1" stop-color="#00d6ff"/></linearGradient></defs><path class="f1" d="M14 84 L41 16 L58 16 L31 84 Z" fill="url(#gfe)"/><path class="f2" d="M61 37 L86 84 L69 84 L52.5 53 Z" fill="url(#gfe)"/><path class="f3" d="M37 61 L66 61 L60.5 71 L33 71 Z" fill="#00d6ff"/></svg>
               <b>Pro ativado</b>
               <small>Todas as funções liberadas neste PC</small>
             </div>
@@ -295,6 +307,19 @@
   var celular = /Android|iPhone|iPad|iPod|Mobile/i.test(ua) && !/Windows NT/i.test(ua);
   var reduz = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var $ = function (id) { return document.getElementById(id); };
+
+  // ---------- riscos do fundo
+  if (!reduz) {
+    var fundo = document.querySelector('.fundo');
+    for (var r = 0; r < 8; r++) {
+      var ri = document.createElement('i');
+      ri.style.left = (8 + r * 12 + Math.random() * 6) + '%';
+      ri.style.setProperty('--dur', (6 + Math.random() * 5).toFixed(1) + 's');
+      ri.style.setProperty('--a', (-Math.random() * 9).toFixed(1) + 's');
+      ri.style.setProperty('--o', (.1 + Math.random() * .2).toFixed(2));
+      fundo.appendChild(ri);
+    }
+  }
 
   // ---------- download
   var arq = $('arquivo'), aviso = $('aviso'), link = $('baixar');
