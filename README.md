@@ -155,31 +155,20 @@ As configurações que só dá para mudar fora do Windows, explicadas tela por t
 > [Histórico completo](core/NOVIDADES.md) · [todas as versões](../../releases)
 
 <details open>
+<summary><b>v0.11.1</b> — telas dos guias iguais às de verdade</summary>
+
+- 🖼️ Painel NVIDIA, NVIDIA App, AMD Adrenalin, Windows 11 e Intel redesenhados como são de verdade
+- 📐 Guias com mais espaço, "Onde clicar" separado e a explicação de cada opção recolhida
+
+</details>
+
+<details>
 <summary><b>v0.11.0</b> — guias dentro do app</summary>
 
 - 📘 Nova página **Guias** no app: painel NVIDIA/AMD/Intel, BIOS, processador, limite de FPS, 19 jogos e ferramentas, com as telas desenhadas
 - 🎯 Mostra **só o que serve para as peças do seu PC** (e um botão para ver todos)
 - 🧰 Os tutoriais das ferramentas saíram do Bloco de Notas e viraram guias no app
 - 🖥️ App em **tela cheia** (F11 alterna) e rolagem sempre até o fim
-
-</details>
-
-<details>
-<summary><b>v0.10.1</b> — ative o Pro com o e-mail da compra</summary>
-
-- 🔑 Na tela **Licença**, a aba **"Com o e-mail da compra"** ativa o Pro sem esperar chave
-- 🎉 A chave aparece na tela ao ativar, para você guardar
-- 🔄 Primeira **atualização automática** do app: o 1.5.0 avisa e atualiza com 1 clique
-
-</details>
-
-<details>
-<summary><b>v0.10.0</b> — chegou o app AVANTIPACK</summary>
-
-- 🖥️ **App AVANTIPACK**: as funções grátis num app com visual próprio, sem tela de comando
-- ⭐ **Pro no mesmo app**: funções Pro com cadeado, e dá para comprar e ativar a chave sem sair dele
-- 🔄 **Atualização automática**, com o arquivo conferido pela assinatura
-- 📦 Quem usa o pack em CMD ganha a tecla **A**, que instala o app
 
 </details>
 

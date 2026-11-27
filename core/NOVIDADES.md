@@ -2,6 +2,10 @@
 
 Tudo o que mudou em cada versão. A mais nova fica sempre em cima.
 
+## v0.11.1 — 27/11/2026
+- 🖼️ **Telas dos guias redesenhadas iguais às de verdade**: Painel de Controle NVIDIA, NVIDIA App, AMD Adrenalin, Configurações do Windows 11, Intel e o menu do botão direito, com os mesmos menus, ícones e botões
+- 📐 **Guias mais fáceis de seguir**: mais espaço entre as partes, "Onde clicar" separado e a explicação de cada opção recolhida até você abrir
+
 ## v0.11.0 — 27/11/2026
 - 📘 **Guias dentro do app**: nova página **Guias** no menu, com o passo a passo do painel NVIDIA, AMD e Intel, da BIOS, do processador, do limite de FPS, de 19 jogos e das ferramentas, com as telas desenhadas e cada clique marcado
 - 🎯 **Só o que serve para o seu PC**: o app lê a placa de vídeo, o processador, a placa-mãe e se é notebook, e mostra só os guias e os passos dessas peças. Um botão mostra todos
