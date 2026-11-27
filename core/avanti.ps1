@@ -568,6 +568,12 @@ function Mod-Undo {
 
 # Manual ilustrado (guias\MANUAL.html). Abre uma copia com as pecas deste PC marcadas.
 function Open-Manual([string]$Cap = '') {
+    # dentro do app: o guia abre na pagina Guias do proprio app (sem navegador)
+    if ($script:AppW) {
+        $c = ($Cap -replace '[^a-z0-9/\-]', '').Split('/')
+        Send-App @{ e = 'guia'; t = 'O passo a passo com as telas esta nos Guias do app.'; cap = $(if ($c[0]) { $c[0] } else { '' }); passo = $(if ($c.Count -gt 1) { $c[1] } else { '' }) }
+        return
+    }
     $src = Join-Path $Root 'guias\MANUAL.html'
     if (-not (Test-Path $src)) { Write-Warn 'Manual nao encontrado em guias\MANUAL.html. Baixe o pack de novo.'; return }
     $pc = ''

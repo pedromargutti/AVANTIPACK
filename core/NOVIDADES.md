@@ -2,6 +2,13 @@
 
 Tudo o que mudou em cada versão. A mais nova fica sempre em cima.
 
+## v0.11.0 — 27/11/2026
+- 📘 **Guias dentro do app**: nova página **Guias** no menu, com o passo a passo do painel NVIDIA, AMD e Intel, da BIOS, do processador, do limite de FPS, de 19 jogos e das ferramentas, com as telas desenhadas e cada clique marcado
+- 🎯 **Só o que serve para o seu PC**: o app lê a placa de vídeo, o processador, a placa-mãe e se é notebook, e mostra só os guias e os passos dessas peças. Um botão mostra todos
+- 🧰 **Ferramentas explicadas no app**: HWiNFO, CPU-Z, GPU-Z, DDU, RTSS, NVCleanstall e as outras saíram do Bloco de Notas e viraram guias, com botão para instalar pela fonte oficial
+- 🧭 **Um lugar só para os guias**: o Manual ilustrado saiu de Restauração, e o Raio-X da BIOS e a instalação de programas abrem o guia certo dentro do app
+- 🖥️ **Tela cheia**: o app abre em tela cheia (F11 alterna) e a rolagem sempre chega ao fim da página
+
 ## v0.10.1 — 26/11/2026
 - 🔑 **Ativar o Pro com o e-mail da compra**: na tela Licença, a aba "Com o e-mail da compra" já vem aberta. Basta o e-mail usado na compra e o código do pedido da Kiwify, sem esperar chave
 - 🎉 **A chave aparece na tela** ao ativar pela compra, para você guardar

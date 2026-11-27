@@ -392,7 +392,9 @@ function Start-AppFlow($app) {
         if (-not (Install-App $app)) { return }
     }
     Start-Process explorer.exe $dir
-    if (Test-Path $tut) {
+    if ($script:AppW) {
+        Send-App @{ e = 'guia'; t = ('Como configurar o ' + $app.Nome + ': passo a passo nos Guias do app.'); cap = 'ferramentas'; passo = [string]$app.Pasta }
+    } elseif (Test-Path $tut) {
         Write-Note 'As MELHORES CONFIGURACOES deste app estao no LEIA-ME.txt (abrindo no Bloco de Notas).'
         Start-Process notepad.exe $tut
     }

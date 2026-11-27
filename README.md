@@ -155,6 +155,16 @@ As configurações que só dá para mudar fora do Windows, explicadas tela por t
 > [Histórico completo](core/NOVIDADES.md) · [todas as versões](../../releases)
 
 <details open>
+<summary><b>v0.11.0</b> — guias dentro do app</summary>
+
+- 📘 Nova página **Guias** no app: painel NVIDIA/AMD/Intel, BIOS, processador, limite de FPS, 19 jogos e ferramentas, com as telas desenhadas
+- 🎯 Mostra **só o que serve para as peças do seu PC** (e um botão para ver todos)
+- 🧰 Os tutoriais das ferramentas saíram do Bloco de Notas e viraram guias no app
+- 🖥️ App em **tela cheia** (F11 alterna) e rolagem sempre até o fim
+
+</details>
+
+<details>
 <summary><b>v0.10.1</b> — ative o Pro com o e-mail da compra</summary>
 
 - 🔑 Na tela **Licença**, a aba **"Com o e-mail da compra"** ativa o Pro sem esperar chave
