@@ -7,6 +7,8 @@
 <a href="../../releases/latest/download/AVANTIPACK-App.exe"><img src="docs/img/btn_baixar.svg" alt="Baixar o app grátis (Windows 10 e 11)" height="64"></a>
 &nbsp;&nbsp;
 <a href="https://pay.kiwify.com.br/GJzVRdc"><img src="docs/img/btn_pro.svg" alt="Comprar o AVANTIPACK Pro por R$ 29,90" height="64"></a>
+&nbsp;&nbsp;
+<a href="https://pedromargutti.github.io/AVANTIPACK/"><img src="docs/img/btn_site.svg" alt="Conhecer o site do AVANTIPACK: guias, telas do app e suporte" height="64"></a>
 
 <br><br>
 

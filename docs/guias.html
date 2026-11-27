@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guias · AVANTIPACK</title>
+<meta name="description" content="Passo a passo do que fica fora do Windows: painel NVIDIA, AMD e Intel, BIOS, processador, programas, limite de FPS e configurações de 19 jogos.">
+<meta name="theme-color" content="#0c0e12">
+<link rel="icon" href="img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/*
+VOICE   manual de oficina: direto, passo a passo, sem enfeite.
+IDEA    a mesma tela do app, desenhada e numerada: onde clicar, em que ordem e por quê.
+PICTURE as telas desenhadas de cada passo, com os pinos amarelos numerados.
+COLOUR  fundo #0c0e12, azul a ciano do pack; cor da marca de cada capítulo (NVIDIA verde, AMD vermelho, Intel azul).
+TYPE    Space Grotesk nos títulos, Inter no texto. LAYOUT menu lateral fixo com os capítulos; conteúdo em uma coluna.
+*/
+:root{--bg:#0c0e12;--bg2:#0f1116;--bg3:#14171d;--sup:#232833;--borda:#2e3440;--tx:#f0f2f6;--tx2:#9ca3b0;--tx3:#848b99;
+  --azul:#2e68ff;--ciano:#00d6ff;--verde:#3ddc97;--amarelo:#ffc43d;--pin:#facc15;--grad:linear-gradient(100deg,#2e68ff,#0096ff 55%,#00d6ff);
+  --disp:"Space Grotesk",system-ui,sans-serif;--corpo:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{background:var(--bg);scroll-padding-top:90px}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 var(--corpo);-webkit-font-smoothing:antialiased;overflow-x:clip}
+a{color:var(--ciano)}
+b{font-weight:600;color:var(--tx)}
+h1,h2,h3{font-family:var(--disp);letter-spacing:-.02em;margin:0;text-wrap:balance}
+:focus-visible{outline:2px solid var(--ciano);outline-offset:3px;border-radius:6px}
+.nav{position:sticky;top:0;z-index:20;background:#0c0e12e6;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--sup)}
+.nav .in{max-width:1320px;margin:0 auto;padding:0 max(4vw,16px);height:66px;display:flex;align-items:center;gap:22px}
+.marca{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--tx);font:700 18px/1 var(--disp)}
+.marca img{width:30px;height:30px;border-radius:8px}
+.marca b{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nav .voltar{margin-left:auto;color:var(--tx2);text-decoration:none;font-size:15px}
+.nav .voltar:hover{color:var(--tx)}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;font:600 15px/1 var(--corpo);text-decoration:none;white-space:nowrap;border:0;cursor:pointer}
+.btn-g{background:var(--grad);color:#fff}
+.btn-o{background:#ffffff08;color:var(--tx);border:1px solid var(--borda)}
+.app{max-width:1320px;margin:0 auto;padding:0 max(4vw,16px);display:grid;grid-template-columns:270px minmax(0,1fr);gap:48px}
+aside{position:sticky;top:66px;height:calc(100vh - 66px);overflow:auto;padding:28px 4px 40px 0;scrollbar-width:thin}
+.filtro{padding:16px;border-radius:16px;background:var(--bg2);border:1px solid var(--sup);margin-bottom:22px}
+.filtro p{margin:0 0 10px;font-size:13px;color:var(--tx3)}
+.filtro .g{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.filtro .g:last-child{margin-bottom:0}
+.chip{min-height:34px;padding:0 12px;border-radius:999px;border:1px solid var(--borda);background:transparent;color:var(--tx2);font:500 13px/1 var(--corpo);cursor:pointer}
+.chip[aria-pressed=true]{background:#2e68ff22;border-color:#2e68ff88;color:var(--tx)}
+.detectado{font-size:12.5px;color:var(--verde);margin:-4px 0 10px}
+.grupo{font:600 12.5px/1 var(--corpo);color:var(--tx3);margin:20px 10px 8px}
+.cap{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:9px 10px;border-radius:10px;border:0;background:none;color:var(--tx2);font:500 15px/1.3 var(--corpo);cursor:pointer;text-decoration:none}
+.cap i{width:8px;height:8px;border-radius:2px;flex:none}
+.cap:hover{background:var(--bg3);color:var(--tx)}
+.cap.on{background:var(--bg3);color:var(--tx);box-shadow:inset 2px 0 0 var(--ciano)}
+.cap .seu{margin-left:auto;font-size:11px;color:var(--verde);background:#3ddc971c;padding:3px 7px;border-radius:999px;white-space:nowrap}
+.cap.fora{opacity:.45}
+main{padding:34px 0 120px}
+.cab h1{font-size:clamp(32px,4vw,48px);line-height:1.05}
+.cab .res{color:var(--tx2);font-size:17px;max-width:46em;margin:12px 0 0}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin:16px 0 0;color:var(--tx3);font-size:14px}
+.meta b{color:var(--tx)}
+.aviso{display:flex;gap:12px;align-items:flex-start;padding:14px 18px;border-radius:14px;background:#2a1f0c;color:var(--tx);margin:20px 0 0;font-size:15px}
+.aviso.info{background:#0e2042}
+.toc{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 8px}
+.toc a{padding:7px 12px;border-radius:999px;border:1px solid var(--sup);color:var(--tx2);text-decoration:none;font-size:14px}
+.toc a:hover{color:var(--tx);border-color:var(--borda)}
+.passo{margin-top:32px;padding:34px 36px 36px;border-radius:22px;background:var(--bg2);border:1px solid var(--sup);line-height:1.65}
+.ph{display:flex;gap:16px;align-items:flex-start;padding-bottom:22px;border-bottom:1px solid var(--sup)}
+.num{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font:700 17px/1 var(--disp);color:#0c0e12;flex:none}
+.ph h2{font-size:22px;line-height:1.25;padding-top:4px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.tag{padding:4px 10px;border-radius:999px;font:600 12px/1.3 var(--corpo)}
+.t-auto{background:#3ddc971f;color:var(--verde)}.t-man{background:#60a5fa22;color:#93c5fd}.t-warn{background:#ffb54722;color:#ffc46b}.t-red{background:#f472b622;color:#f9a8d4}.t-cinza{background:#ffffff12;color:var(--tx2)}
+.sub{color:var(--tx2);margin:22px 0 0;max-width:60em;font-size:16.5px}
+.rot2{font:600 13px/1 var(--corpo);color:var(--ciano);margin:28px 0 0;text-transform:none}
+ol.onde{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:16px;counter-reset:o;font-size:16.5px;max-width:60em}
+ol.onde li{display:grid;grid-template-columns:30px 1fr;gap:14px;counter-increment:o}
+ol.onde li::before{content:counter(o);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#00d6ff1a;color:var(--ciano);font:600 13px/1 var(--corpo);margin-top:1px}
+.shot{margin:30px 0 6px;overflow-x:auto;border-radius:12px}
+.shot img{display:block;max-width:100%;height:auto;border-radius:12px;border:1px solid var(--sup)}
+table.fab{width:100%;border-collapse:separate;border-spacing:0 8px;margin:24px 0 0;font-size:15.5px}
+table.fab td{padding:13px 16px;background:var(--bg3)}
+table.fab td:first-child{border-radius:10px 0 0 10px;font-weight:600;width:28%}
+table.fab td:last-child{border-radius:0 10px 10px 0}
+.alerta,.dica{display:flex;gap:14px;padding:18px 22px;border-radius:14px;margin:24px 0 0;font-size:15.5px;line-height:1.6}
+.alerta{background:#2a1f0c}.dica{background:#0e2042}
+.alerta::before{content:"!";color:#ffb547;font-weight:700}.dica::before{content:"i";color:#93c5fd;font-weight:700;font-style:italic}
+details.expl{margin:26px 0 0;border-top:1px solid var(--sup);padding-top:20px}
+details.expl summary{cursor:pointer;font:600 16px/1.3 var(--disp);list-style:none;display:flex;align-items:center;gap:10px}
+details.expl summary::-webkit-details-marker{display:none}
+details.expl summary::after{content:"+";color:var(--ciano);font-size:20px;margin-left:auto}
+details.expl[open] summary::after{content:"–"}
+.it{display:grid;grid-template-columns:32px 1fr;gap:14px;margin-top:20px}
+.pin{width:26px;height:26px;border-radius:50%;background:var(--pin);color:#1e1a08;display:grid;place-items:center;font:700 12px/1 var(--corpo)}
+.pin.bul{background:none;color:var(--tx3)}
+.it .nm{font-weight:600}
+.it .vl{display:inline-block;margin-left:8px;padding:2px 9px;border-radius:7px;background:#00d6ff1f;color:var(--ciano);font:600 13px/1.5 var(--corpo)}
+.it .tx{color:var(--tx2);font-size:15px;margin-top:4px;max-width:60em}
+.grade{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-top:22px}
+.card{display:block;text-align:left;padding:18px;border-radius:16px;background:var(--bg2);border:1px solid var(--sup);color:var(--tx);cursor:pointer;font:inherit;text-decoration:none}
+.card:hover,.card.on{border-color:var(--borda);background:var(--bg3)}
+.card b{display:block;font:600 16px/1.3 var(--disp);margin-bottom:6px;border-left:3px solid var(--c,var(--ciano));padding-left:10px}
+.card small{color:var(--tx3);font-size:13.5px;display:block}
+.regras{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:22px}
+.regras div{padding:18px;border-radius:16px;background:var(--bg2);border:1px solid var(--sup)}
+.regras h3{font-size:16px;margin-bottom:8px}
+.regras ul,ul.notas,ul.sec{margin:0;padding-left:18px;color:var(--tx2);font-size:15px}
+.sec h3{font-size:18px;margin:30px 0 10px}
+ul.sec li{margin-bottom:10px}
+.lin{padding:14px 0;border-top:1px solid var(--sup)}
+.lin b{display:block}
+.lin p{margin:4px 0 0;color:var(--tx2);font-size:15px}
+.app-cta{margin-top:40px;padding:26px;border-radius:20px;border:1px dashed var(--borda);display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
+.app-cta p{margin:0;color:var(--tx2);max-width:40em}
+.menu-cel{display:none}
+@media (max-width:900px){
+  .app{grid-template-columns:minmax(0,1fr);gap:0}
+  aside{position:static;height:auto;padding:16px 0 0;display:none}
+  aside.aberto{display:block}
+  .menu-cel{display:flex;gap:10px;margin:16px 0 22px}
+  .passo{padding:20px}
+  .nav .btn{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="nav"><div class="in">
+  <a class="marca" href="index.html"><img src="img/logo.png" alt="" width="30" height="30"><span>AVANTI<b>PACK</b></span></a>
+  <span style="color:var(--tx3)">Guias</span>
+  <a class="voltar" href="index.html">Voltar ao site</a>
+  <a class="btn btn-g" href="https://github.com/pedromargutti/AVANTIPACK/releases/latest/download/AVANTIPACK-App.exe">Baixar grátis</a>
+</div></header>
+
+<div class="app">
+  <aside id="lado" aria-label="Capítulos dos guias">
+    <div class="filtro">
+      <p>Mostrar o que serve para:</p>
+      <div class="detectado" id="detectado" hidden></div>
+      <div class="g" role="group" aria-label="Placa de vídeo" id="fGpu"></div>
+      <div class="g" role="group" aria-label="Processador" id="fCpu"></div>
+      <div class="g" role="group" aria-label="Tipo de PC" id="fTipo"></div>
+    </div>
+    <nav id="caps"></nav>
+  </aside>
+  <main id="main">
+    <div class="menu-cel"><button class="btn btn-o" type="button" id="abrirMenu" aria-expanded="false" aria-controls="lado">Capítulos e filtro</button></div>
+    <div id="conteudo"><p style="color:var(--tx2)">Carregando os guias…</p></div>
+  </main>
+</div>
+
+<script>
+(() => {
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const rico = s => esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+const COR = { nvidia: '#76b900', nvapp: '#76b900', amd: '#ed1c24', ryzen: '#ed1c24', intel: '#0071c5', intelcpu: '#0071c5', bios: '#ffb547', windows: '#60a5fa', jogos: '#a78bfa', fps: '#a78bfa', ferramentas: '#f472b6' };
+const RISCO = { seguro: ['Seguro', 't-auto'], moderado: ['Risco moderado', 't-warn'], avancado: ['Avançado', 't-red'], deixe: ['Deixe como está', 't-cinza'], importante: ['Importante', 't-warn'] };
+
+// filtro: placa de vídeo detectada pelo navegador; o resto a pessoa escolhe
+const pc = { gpu: 'todas', cpu: 'todos', tipo: 'desktop' };
+try { const s = JSON.parse(localStorage.getItem('avp-guias') || 'null'); if (s) Object.assign(pc, s); } catch (e) {}
+let detectou = '';
+if (pc.gpu === 'todas') {
+  try {
+    const gl = document.createElement('canvas').getContext('webgl');
+    const ext = gl && gl.getExtension('WEBGL_debug_renderer_info');
+    const r = ext ? String(gl.getParameter(ext.UNMASKED_RENDERER_WEBGL)).toUpperCase() : '';
+    if (r.includes('NVIDIA')) pc.gpu = 'nvidia'; else if (r.includes('AMD') || r.includes('RADEON')) pc.gpu = 'amd'; else if (r.includes('INTEL')) pc.gpu = 'intel';
+    if (pc.gpu !== 'todas') detectou = 'Placa de vídeo detectada: ' + ({ nvidia: 'NVIDIA', amd: 'AMD', intel: 'Intel' })[pc.gpu];
+  } catch (e) {}
+}
+const salvar = () => { try { localStorage.setItem('avp-guias', JSON.stringify(pc)); } catch (e) {} };
+const atende = c => {
+  switch ((c || 'todos').toLowerCase()) {
+    case 'gpu-nvidia': return pc.gpu === 'todas' || pc.gpu === 'nvidia';
+    case 'gpu-amd': return pc.gpu === 'todas' || pc.gpu === 'amd';
+    case 'gpu-intel': case 'arc': case 'igpu-intel': return pc.gpu === 'todas' || pc.gpu === 'intel';
+    case 'cpu-amd': case 'x3d2': return pc.cpu === 'todos' || pc.cpu === 'amd';
+    case 'cpu-intel': return pc.cpu === 'todos' || pc.cpu === 'intel';
+    case 'notebook': case 'hibrida': return pc.tipo === 'notebook';
+    default: return true;
+  }
+};
+const chips = (el, chave, ops) => {
+  el.innerHTML = ops.map(([v, t]) => `<button class="chip" type="button" data-v="${v}" aria-pressed="${pc[chave] === v}">${t}</button>`).join('');
+  el.onclick = e => { const b = e.target.closest('.chip'); if (!b) return; pc[chave] = b.dataset.v; salvar(); filtros(); render(); };
+};
+function filtros() {
+  chips($('#fGpu'), 'gpu', [['nvidia', 'NVIDIA'], ['amd', 'AMD'], ['intel', 'Intel'], ['todas', 'Todas']]);
+  chips($('#fCpu'), 'cpu', [['amd', 'Ryzen'], ['intel', 'Intel Core'], ['todos', 'Todos']]);
+  chips($('#fTipo'), 'tipo', [['desktop', 'Desktop'], ['notebook', 'Notebook']]);
+  const d = $('#detectado'); d.hidden = !detectou; d.textContent = detectou;
+}
+
+let D = null;
+const rota = () => (location.hash || '').slice(1);
+function menu(atual) {
+  let h = '', g = null;
+  for (const c of D.caps) {
+    if (c.grupo !== g) { g = c.grupo; h += `<div class="grupo">${esc(g)}</div>`; }
+    const serve = atende(c.para), seu = c.para !== 'todos' && serve && (pc.gpu !== 'todas' || pc.cpu !== 'todos');
+    h += `<a class="cap${atual === c.id ? ' on' : ''}${serve ? '' : ' fora'}" href="#${c.id}"><i style="background:${COR[c.id] || '#2dd4bf'}"></i>${esc(c.nome)}${seu ? '<span class="seu">seu PC</span>' : ''}</a>`;
+  }
+  $('#caps').innerHTML = h;
+}
+const metaPassos = c => { const ps = (c.passos || []).filter(p => atende(p.quando)); const a = ps.filter(p => p.modo === 'auto').length;
+  return `<div class="meta"><span><b>${ps.length}</b> passos</span>${c.tempo ? `<span>cerca de <b>${esc(c.tempo)}</b></span>` : ''}${a ? `<span><b>${a}</b> o app já faz, é só conferir</span>` : ''}</div>`; };
+function passoHtml(p, i, cor) {
+  const tags = [];
+  if (p.modo === 'auto') tags.push(['O app já faz: só confira', 't-auto']); else if (p.modo === 'man') tags.push(['Você faz', 't-man']);
+  if (p.risco && RISCO[p.risco]) tags.push(RISCO[p.risco]);
+  return `<section class="passo" id="${esc(p.id)}">
+    <div class="ph"><div class="num" style="background:${cor}">${i + 1}</div><div><h2>${rico(p.tit)}</h2>${tags.length ? `<div class="tags">${tags.map(([t, c]) => `<span class="tag ${c}">${t}</span>`).join('')}</div>` : ''}</div></div>
+    ${p.sub ? `<p class="sub">${rico(p.sub)}</p>` : ''}
+    ${p.onde && p.onde.length ? `<p class="rot2">Onde clicar</p><ol class="onde">${p.onde.map(t => `<li><span>${rico(t)}</span></li>`).join('')}</ol>` : ''}
+    ${p.img ? `<div class="shot"><img src="guias/img/${esc(p.img)}.png" loading="lazy" alt="Tela desenhada do passo: ${esc(p.tit.replace(/\*\*/g, ''))}, com os pontos de clique numerados."></div>` : ''}
+    ${p.fab && p.fab.length ? `<table class="fab"><tbody>${p.fab.map(([m, t]) => `<tr><td>${esc(m)}</td><td>${rico(t)}</td></tr>`).join('')}</tbody></table>` : ''}
+    ${p.alerta ? `<div class="alerta"><span>${rico(p.alerta)}</span></div>` : ''}
+    ${p.itens && p.itens.length ? `<details class="expl"><summary>O que cada opção faz (${p.itens.length})</summary>${p.itens.map(([k, n, v, t]) => `<div class="it"><span class="pin${k ? '' : ' bul'}">${k ? esc(k) : '•'}</span><div><span class="nm">${esc(n)}</span>${v && v !== '—' ? `<span class="vl">${esc(v)}</span>` : ''}<div class="tx">${rico(t)}</div></div></div>`).join('')}</details>` : ''}
+    ${p.dica ? `<div class="dica"><span>${rico(p.dica)}</span></div>` : ''}
+  </section>`;
+}
+const cta = `<div class="app-cta"><p><b>No app, os guias já vêm filtrados.</b> O AVANTIPACK lê as peças do seu PC e mostra só os passos que servem para elas, além de fazer sozinho tudo o que está marcado como "O app já faz".</p><a class="btn btn-g" href="https://github.com/pedromargutti/AVANTIPACK/releases/latest/download/AVANTIPACK-App.exe">Baixar grátis</a></div>`;
+const cab = (c, extra) => `<div class="cab"><h1>${esc(c.tit)}</h1>${c.res ? `<p class="res">${rico(c.res)}</p>` : ''}${extra || ''}</div>`;
+
+function inicio() {
+  menu('');
+  let h = `<div class="cab"><h1>Guias do AVANTIPACK</h1><p class="res">O que o app não consegue fazer sozinho, explicado tela por tela: painel da placa de vídeo, BIOS, processador, programas, limite de FPS e as configurações de ${D.jogos.length} jogos. Escolha as suas peças no filtro e siga na ordem.</p></div>`;
+  let g = null, cards = '';
+  const fecha = () => { if (cards) { h += `<div class="grade">${cards}</div>`; cards = ''; } };
+  for (const c of D.caps) {
+    if (!atende(c.para)) continue;
+    if (c.grupo !== g) { fecha(); g = c.grupo; h += `<h2 style="font-size:20px;margin:34px 0 0">${esc(g)}</h2>`; }
+    cards += `<a class="card" href="#${c.id}" style="--c:${COR[c.id] || '#2dd4bf'}"><b>${esc(c.tit)}</b><small>${esc((c.res || '').replace(/\*\*/g, ''))}</small></a>`;
+  }
+  fecha();
+  return h + cta;
+}
+function capitulo(c, sub) {
+  const cor = COR[c.id] || '#2dd4bf';
+  if (c.tipo === 'passos') {
+    const ps = c.passos.filter(p => atende(p.quando)), esc_ = c.passos.length - ps.length;
+    let h = cab(c, metaPassos(c));
+    if (!atende(c.para)) h += `<div class="aviso"><span>!</span><div>Este guia não é para as peças marcadas no filtro. Pode pular, a não ser que esteja ajudando outra pessoa.</div></div>`;
+    h += `<div class="toc">${ps.map((p, i) => `<a href="#${c.id}/${p.id}">${i + 1}. ${esc(p.tit.replace(/\*\*/g, ''))}</a>`).join('')}</div>`;
+    h += ps.map((p, i) => passoHtml(p, i, cor)).join('');
+    if (esc_) h += `<div class="aviso info"><span>i</span><div>${esc_} ${esc_ === 1 ? 'passo escondido porque não é' : 'passos escondidos porque não são'} das peças do filtro (por exemplo, só para notebook).</div></div>`;
+    return h + cta;
+  }
+  if (c.tipo === 'jogos') {
+    const j = D.jogos.find(x => x.id === sub);
+    let h = cab(c, `<div class="meta"><span><b>${D.jogos.length}</b> jogos</span><span><b>${D.jogos.filter(x => x.auto).length}</b> o app Pro configura sozinho</span></div>`);
+    h += `<div class="regras">${D.regrasJogos.map(([t, l]) => `<div><h3>${esc(t)}</h3><ul>${l.map(x => `<li>${rico(x)}</li>`).join('')}</ul></div>`).join('')}</div>`;
+    h += `<div class="grade">${D.jogos.map(x => `<a class="card${j && j.id === x.id ? ' on' : ''}" href="#jogos/${x.id}" style="--c:${x.cor}"><b>${esc(x.nome)}</b><small>${x.auto ? 'o app Pro configura sozinho' : esc(x.onde)}</small></a>`).join('')}</div>`;
+    if (j) h += `<section class="passo" id="jogo"><div class="ph"><div class="num" style="background:${j.cor}">▶</div><div><h2>${esc(j.nome)}</h2></div></div>
+      <p class="sub">Onde: <b>${esc(j.onde)}</b>. Os nomes estão como no jogo em inglês; em português é a mesma opção, no mesmo lugar.</p>
+      <div class="shot"><img src="guias/img/${esc(j.img)}.png" loading="lazy" alt="Tela de configurações de ${esc(j.nome)} com os valores recomendados."></div>
+      ${j.notas && j.notas.length ? `<ul class="notas">${j.notas.map(n => `<li>${rico(n)}</li>`).join('')}</ul>` : ''}</section>`;
+    return h + cta;
+  }
+  if (c.tipo === 'ferramentas') {
+    const fs = D.ferramentas.filter(f => atende(f.para)), f = D.ferramentas.find(x => x.id === sub);
+    let h = cab(c) + `<div class="grade">${fs.map(x => `<a class="card${f && f.id === x.id ? ' on' : ''}" href="#ferramentas/${x.id}" style="--c:#f472b6"><b>${esc(x.nome)}</b><small>${esc(x.oque)}</small></a>`).join('')}</div>`;
+    if (f) h += `<section class="passo sec" id="ferr"><div class="ph"><div class="num" style="background:#f472b6">▶</div><div><h2>${esc(f.nome)}</h2>${f.avancado ? '<div class="tags"><span class="tag t-warn">Avançado</span></div>' : ''}</div></div>
+      <p class="sub">${rico(f.oque)}</p>${f.secoes.map(([t, l]) => `<h3>${esc(t)}</h3><ul class="sec">${l.map(x => `<li>${rico(x.replace(/^(\d+\. |• )/, ''))}</li>`).join('')}</ul>`).join('')}
+      ${f.site ? `<p style="margin:20px 0 0"><a class="btn btn-o" href="${esc(f.site)}">Site oficial</a></p>` : ''}</section>`;
+    return h + cta;
+  }
+  if (c.tipo === 'ajustes') {
+    return cab(c) + Object.entries(D.categorias).map(([k, n]) => { const its = D.ajustes.filter(a => a.cat === k); if (!its.length) return '';
+      return `<section class="passo"><h2 style="font-size:20px">${esc(n)}</h2>${its.map(a => `<div class="lin"><b>${esc(a.nome)} <span class="tag ${a.risco ? 't-red' : a.padrao ? 't-auto' : 't-cinza'}">${a.risco ? 'Com risco' : a.padrao ? 'Recomendado' : 'Opcional'}</span></b><p>${esc(a.desc)}</p></div>`).join('')}</section>`; }).join('') + cta;
+  }
+  if (c.tipo === 'evitamos') return cab(c) + `<section class="passo">${D.evitamos.map(([t, x]) => `<div class="lin"><b>${esc(t)}</b><p>${esc(x)}</p></div>`).join('')}</section>` + cta;
+  return cab(c);
+}
+function render() {
+  if (!D) return;
+  const [capId, sub] = rota().split('/');
+  const c = D.caps.find(x => x.id === capId);
+  $('#conteudo').innerHTML = c ? capitulo(c, sub) : inicio();
+  if (c) menu(c.id);
+  document.title = (c ? c.tit + ' · ' : '') + 'Guias · AVANTIPACK';
+  if (sub) { const alvo = document.getElementById(c && c.tipo === 'passos' ? sub : (c && c.tipo === 'jogos' ? 'jogo' : 'ferr')); if (alvo) alvo.scrollIntoView(); }
+  else scrollTo(0, 0);
+}
+$('#abrirMenu').addEventListener('click', e => { const a = $('#lado').classList.toggle('aberto'); e.currentTarget.setAttribute('aria-expanded', a); });
+$('#caps').addEventListener('click', e => { if (e.target.closest('a') && innerWidth <= 900) { $('#lado').classList.remove('aberto'); $('#abrirMenu').setAttribute('aria-expanded', 'false'); } });
+addEventListener('hashchange', render);
+filtros();
+fetch('guias/guias.json').then(r => r.json()).then(d => { D = d; render(); })
+  .catch(() => { $('#conteudo').innerHTML = '<p class="aviso">Não consegui carregar os guias. Recarregue a página.</p>'; });
+})();
+</script>
+</body>
+</html>

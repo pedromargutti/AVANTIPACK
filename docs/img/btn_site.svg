@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="64" viewBox="0 0 300 64" role="img" aria-label="Site do AVANTIPACK">
+<defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#2e68ff"/><stop offset="1" stop-color="#00d6ff"/></linearGradient></defs>
+<rect width="300" height="64" rx="14" fill="#0f1116" stroke="url(#g)" stroke-width="1.5"/>
+<g fill="none" stroke="#00d6ff" stroke-width="2.2" stroke-linecap="round"><circle cx="34" cy="32" r="12"/><path d="M22 32h24M34 20c-4.5 4-4.5 20 0 24M34 20c4.5 4 4.5 20 0 24"/></g>
+<text x="62" y="29" font-family="'Segoe UI Variable Display','Segoe UI',Inter,'Helvetica Neue',Arial,sans-serif" font-size="18" font-weight="700" fill="#f0f2f6">Conhecer o site</text>
+<text x="62" y="48" font-family="'Segoe UI Variable Display','Segoe UI',Inter,'Helvetica Neue',Arial,sans-serif" font-size="13" fill="#9ca3b0">Guias, telas do app e suporte</text>
+</svg>
